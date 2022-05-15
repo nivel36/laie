@@ -11,11 +11,9 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.candidate.CandidateService;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.job.meeting.Meeting;
 import es.nivel36.laie.ejb.job.meeting.MeetingService;
-import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.web.core.view.AbstractView;
 import es.nivel36.laie.web.core.view.UserActionsLazyDataModel;
@@ -36,17 +34,14 @@ public class IndexView extends AbstractView {
 	@Inject
 	private UserActionsLazyDataModel actions;
 	
+	@Inject
 	private CandidateLazyDataModel candidates;
 	
 	@Inject
-	private transient CandidateService candidateService;
-
 	private EventLazyDataModel events;
 
-	private JobOfferLazyDataModel jobOffers;
-
 	@Inject
-	private transient JobOfferService jobService;
+	private JobOfferLazyDataModel jobOffers;
 
 	private List<Meeting> meetings;
 
@@ -77,16 +72,10 @@ public class IndexView extends AbstractView {
 	public void init() {
 		logger.trace("Index init");
 		final User user = this.sessionUser.get();
-		this.candidates = new CandidateLazyDataModel(this.candidateService);
-		this.jobOffers = new JobOfferLazyDataModel(jobService);
 		this.meetings = this.meetingService.findPlannedMeetings(user, Page.FIRST_TEN_RESULTS);
 		this.events = null;
 	}
 
-	public void setJobService(final JobOfferService jobService) {
-		Objects.requireNonNull(jobService);
-		this.jobService = jobService;
-	}
 
 	public void setMeetingService(final MeetingService meetingService) {
 		Objects.requireNonNull(meetingService);

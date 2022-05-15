@@ -1,6 +1,5 @@
 package es.nivel36.laie.web.view.candidate;
 
-import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +8,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.primefaces.PrimeFaces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,24 +19,20 @@ import es.nivel36.laie.web.core.view.AbstractView;
 @ViewScoped
 public class SelectCandidateView extends AbstractView {
 
-	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
+	private static final long serialVersionUID = 4743050394594927246L;
 
-	private static final long serialVersionUID = 1L;
+	private static final Logger logger = LoggerFactory.getLogger(SelectCandidateView.class);
 
 	private List<Long> alredySelected;
 
+	@Inject
 	private CandidateLazyDataModel candidates;
 
-	@Inject
 	protected transient CandidateService candidateService;
 
 	private String searchText;
 
 	private List<Candidate> selectedCandidates;
-
-	public void cancel() {
-		PrimeFaces.current().dialog().closeDynamic(null);
-	}
 
 	public CandidateLazyDataModel getCandidates() {
 		return this.candidates;
@@ -55,7 +49,6 @@ public class SelectCandidateView extends AbstractView {
 	@PostConstruct
 	public void init() {
 		logger.trace("Select candidate init");
-		this.candidates = this.initCandidates();
 		this.alredySelected = this.initAlredySelectedCandidates();
 	}
 
@@ -71,10 +64,6 @@ public class SelectCandidateView extends AbstractView {
 		return candidateIds;
 	}
 
-	private CandidateLazyDataModel initCandidates() {
-		return new CandidateLazyDataModel(this.candidateService);
-	}
-
 	public boolean isAlredySelected(final Long id) {
 		return this.alredySelected.contains(id);
 	}
@@ -82,10 +71,6 @@ public class SelectCandidateView extends AbstractView {
 	public void search() {
 		logger.debug("Searching for candidates");
 		this.candidates.setSearchText(this.searchText);
-	}
-
-	public void select() {
-		PrimeFaces.current().dialog().closeDynamic(this.selectedCandidates);
 	}
 
 	public void setCandidateService(final CandidateService candidateService) {

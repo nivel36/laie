@@ -2,7 +2,6 @@ package es.nivel36.laie.web.view.job;
 
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -10,7 +9,6 @@ import javax.inject.Named;
 import org.primefaces.PrimeFaces;
 
 import es.nivel36.laie.ejb.job.offer.JobOffer;
-import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.web.core.view.AbstractView;
 
 @Named
@@ -19,10 +17,8 @@ public class SelectJobView extends AbstractView {
 
 	private static final long serialVersionUID = 1L;
 
-	private JobOfferLazyDataModel jobOffers;
-
 	@Inject
-	private JobOfferService jobOfferService;
+	private JobOfferLazyDataModel jobOffers;
 
 	private String searchText;
 
@@ -45,21 +41,12 @@ public class SelectJobView extends AbstractView {
 		return this.selectedJobOffers;
 	}
 
-	@PostConstruct
-	public void init() {
-		this.jobOffers = new JobOfferLazyDataModel(this.jobOfferService);
-	}
-
 	public void search() {
 		this.jobOffers.setSearchText(this.searchText);
 	}
 
 	public void select() {
 		PrimeFaces.current().dialog().closeDynamic(this.selectedJobOffers);
-	}
-
-	public void setJobOfferService(final JobOfferService jobOfferService) {
-		this.jobOfferService = jobOfferService;
 	}
 
 	public void setSearchText(final String searchText) {

@@ -1,6 +1,6 @@
 package es.nivel36.laie.web.view.user;
 
-import java.util.Objects;
+import javax.inject.Inject;
 
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.search.SearchFacets;
@@ -14,6 +14,7 @@ public class UserLazyDataModel extends AbstractLazyDataModel<User> {
 
 	private static final long serialVersionUID = 6698863542667375365L;
 	
+	@Inject
 	private transient UserService userService;
 
 	@Override
@@ -25,10 +26,5 @@ public class UserLazyDataModel extends AbstractLazyDataModel<User> {
 	@Override
 	protected User find(Long id) {
 		return userService.findUserById(id);
-	}
-	
-	public UserLazyDataModel(final UserService userService) {
-		Objects.requireNonNull(userService);
-		this.userService = userService;
-	}
+	}	
 }

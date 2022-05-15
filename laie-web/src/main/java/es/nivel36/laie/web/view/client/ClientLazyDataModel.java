@@ -1,6 +1,6 @@
 package es.nivel36.laie.web.view.client;
 
-import java.util.Objects;
+import javax.inject.Inject;
 
 import es.nivel36.laie.ejb.client.Client;
 import es.nivel36.laie.ejb.client.ClientService;
@@ -14,12 +14,8 @@ public class ClientLazyDataModel extends AbstractLazyDataModel<Client> {
 
 	private static final long serialVersionUID = 4434716428350786274L;
 	
+	@Inject
 	private transient ClientService clientService;
-
-	public ClientLazyDataModel(final ClientService clientService) {
-		Objects.requireNonNull(clientService);
-		this.clientService = clientService;
-	}
 
 	@Override
 	protected SearchResult<Client> search(String searchText, Page page, SortField sortField,

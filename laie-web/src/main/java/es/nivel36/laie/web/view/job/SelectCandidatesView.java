@@ -15,7 +15,6 @@ import org.omnifaces.cdi.Param;
 import org.omnifaces.util.Faces;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
-import es.nivel36.laie.ejb.candidate.CandidateService;
 import es.nivel36.laie.ejb.job.candidature.JobCandidature;
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureService;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
@@ -31,6 +30,7 @@ public class SelectCandidatesView extends AbstractView {
 
 	private final Map<Long, Candidate> alredySelectedCandidates = new HashMap<>();
 
+	@Inject
 	private CandidateLazyDataModel candidates;
 
 	@Param
@@ -39,9 +39,6 @@ public class SelectCandidatesView extends AbstractView {
 	private String searchText;
 
 	private List<Candidate> selectedCandidates;
-
-	@Inject
-	private transient CandidateService candidateService;
 
 	@Inject
 	private transient JobCandidatureService jobCandidatureService;
@@ -58,7 +55,6 @@ public class SelectCandidatesView extends AbstractView {
 				this.alredySelectedCandidates.put(candidate.getId(), candidate);
 			}
 		}
-		this.candidates = new CandidateLazyDataModel(this.candidateService);
 		this.search();
 	}
 
@@ -105,11 +101,6 @@ public class SelectCandidatesView extends AbstractView {
 
 	public void setSelectedCandidates(final List<Candidate> selectedCandidates) {
 		this.selectedCandidates = selectedCandidates;
-	}
-
-	public void setCandidateService(final CandidateService candidateService) {
-		Objects.requireNonNull(candidateService);
-		this.candidateService = candidateService;
 	}
 
 	public void setJobCandidatureService(final JobCandidatureService jobCandidatureService) {

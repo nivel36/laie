@@ -1,6 +1,6 @@
 package es.nivel36.laie.web.view.candidate;
 
-import java.util.Objects;
+import javax.inject.Inject;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.candidate.CandidateService;
@@ -13,13 +13,9 @@ import es.nivel36.laie.web.core.view.AbstractLazyDataModel;
 public class CandidateLazyDataModel extends AbstractLazyDataModel<Candidate> {
 
 	private static final long serialVersionUID = -4871133088132391207L;
-	
-	private transient CandidateService candidateService;
 
-	public CandidateLazyDataModel(final CandidateService candidateService) {
-		Objects.requireNonNull(candidateService, "CandidateService can't be null");
-		this.candidateService = candidateService;
-	}
+	@Inject
+	private transient CandidateService candidateService;
 
 	@Override
 	protected SearchResult<Candidate> search(String searchText, Page page, SortField sortField,

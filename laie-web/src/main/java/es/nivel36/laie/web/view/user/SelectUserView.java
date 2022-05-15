@@ -1,6 +1,5 @@
 package es.nivel36.laie.web.view.user;
 
-import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,14 +13,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.user.User;
-import es.nivel36.laie.ejb.user.UserService;
 import es.nivel36.laie.web.core.view.AbstractView;
 
 @Named
 @ViewScoped
 public class SelectUserView extends AbstractView {
 
-	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
+	private static final Logger logger = LoggerFactory.getLogger(SelectUserView.class);
 
 	private static final long serialVersionUID = 1L;
 
@@ -31,14 +29,8 @@ public class SelectUserView extends AbstractView {
 
 	private User selectedUser;
 
-	private UserLazyDataModel users;
-
 	@Inject
-	private transient UserService userService;
-
-	public void cancel() {
-		PrimeFaces.current().dialog().closeDynamic(null);
-	}
+	private UserLazyDataModel users;
 
 	public void export() {
 		logger.debug("Export users action performed");
@@ -63,7 +55,6 @@ public class SelectUserView extends AbstractView {
 	@PostConstruct
 	public void init() {
 		logger.trace("User search init");
-		this.users = this.initUsers();
 		this.alredySelected = this.initAlredySelectedCandidates();
 	}
 
@@ -77,10 +68,6 @@ public class SelectUserView extends AbstractView {
 			}
 		}
 		return userIds;
-	}
-
-	private UserLazyDataModel initUsers() {
-		return new UserLazyDataModel(this.userService);
 	}
 
 	public void onUserSelect() {
@@ -102,9 +89,5 @@ public class SelectUserView extends AbstractView {
 
 	public void setUsers(final UserLazyDataModel users) {
 		this.users = users;
-	}
-
-	public void setUserService(final UserService userService) {
-		this.userService = userService;
 	}
 }

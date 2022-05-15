@@ -1,6 +1,6 @@
 package es.nivel36.laie.web.view.job;
 
-import java.util.Objects;
+import javax.inject.Inject;
 
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.search.SearchFacets;
@@ -14,12 +14,8 @@ public class JobOfferLazyDataModel extends AbstractLazyDataModel<JobOffer> {
 
 	private static final long serialVersionUID = 6084482828895151751L;
 
+	@Inject
 	private transient JobOfferService jobOfferService;
-
-	public JobOfferLazyDataModel(final JobOfferService jobOfferService) {
-		Objects.requireNonNull(jobOfferService, "JobOfferService can't be null");
-		this.jobOfferService = jobOfferService;
-	}
 
 	@Override
 	protected SearchResult<JobOffer> search(String searchText, Page page, SortField sortField,

@@ -1,6 +1,6 @@
 package es.nivel36.laie.web.view.client.contact;
 
-import java.util.Objects;
+import javax.inject.Inject;
 
 import es.nivel36.laie.ejb.client.Contact;
 import es.nivel36.laie.ejb.client.ContactService;
@@ -14,12 +14,8 @@ public class ContactLazyDataModel extends AbstractLazyDataModel<Contact> {
 
 	private static final long serialVersionUID = -4218300046788680778L;
 	
+	@Inject
 	private transient ContactService contactService;
-
-	public ContactLazyDataModel(final ContactService contactService) {
-		Objects.requireNonNull(contactService, "ContactService can't be null");
-		this.contactService = contactService;
-	}
 
 	@Override
 	protected SearchResult<Contact> search(String searchText, Page page, SortField sortField,

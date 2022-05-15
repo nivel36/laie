@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -18,7 +17,6 @@ import org.slf4j.LoggerFactory;
 import es.nivel36.laie.ejb.export.acquirer.ExportData;
 import es.nivel36.laie.ejb.export.acquirer.ExportData.Item;
 import es.nivel36.laie.ejb.export.service.ExportService;
-import es.nivel36.laie.ejb.user.UserService;
 import es.nivel36.laie.excel.write.ExcelData;
 import es.nivel36.laie.excel.write.ExcelData.ItemData;
 import es.nivel36.laie.excel.write.GenerateReport;
@@ -36,20 +34,12 @@ public class SearchUserView extends AbstractView {
 
 	private String searchText;
 
+	@Inject
 	private UserLazyDataModel users;
 	
 	@Inject
 	private transient ExportService exportService;
 
-	@Inject
-	private transient UserService userService;
-	
-	@PostConstruct
-	public void init() {
-		logger.trace("User search init");
-		this.users = new UserLazyDataModel(this.userService);
-	}
-	
 	public void search() {
 		logger.debug("Search users action performed");
 		this.users.setSearchText(this.searchText);
@@ -115,10 +105,5 @@ public class SearchUserView extends AbstractView {
 	public void setExportService(final ExportService exportService) {
 		Objects.requireNonNull(exportService);
 		this.exportService = exportService;
-	}
-
-	public void setUserService(final UserService userService) {
-		Objects.requireNonNull(userService);
-		this.userService = userService;
 	}
 }
