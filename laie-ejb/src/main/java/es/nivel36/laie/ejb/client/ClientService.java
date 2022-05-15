@@ -3,15 +3,16 @@ package es.nivel36.laie.ejb.client;
 import java.util.Objects;
 
 import javax.ejb.Stateless;
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.core.action.ActionType;
-import es.nivel36.laie.ejb.core.action.Audited;
+import es.nivel36.laie.ejb.core.action.Auditable;
+import es.nivel36.laie.ejb.core.action.Create;
+import es.nivel36.laie.ejb.core.action.Update;
 import es.nivel36.laie.ejb.core.model.Page;
-
 import es.nivel36.laie.ejb.core.model.search.SearchFacets;
 import es.nivel36.laie.ejb.core.model.search.SearchResult;
 import es.nivel36.laie.ejb.core.model.search.SortField;
@@ -21,11 +22,12 @@ public class ClientService {
 
 	private static final Logger logger = LoggerFactory.getLogger(ClientService.class);
 
-	@Inject
+	private @Inject ClientDao clientDao;
 
-	private ClientDao clientDao;
+	private @Inject @Create Event<Auditable> createClientEvent;
 
-	@Audited(action = ActionType.CREATE)
+	private @Inject @Update Event<Auditable> updateClientEvent;
+
 	public void addClient(final Client client) throws DuplicateCifException {
 		Objects.requireNonNull(client);
 		logger.debug("Add new client {}", client);
@@ -34,9 +36,9 @@ public class ClientService {
 			throw new DuplicateCifException();
 		}
 		this.clientDao.insert(client);
+		this.createClientEvent.fireAsync(client);
 	}
 
-	@Audited(action = ActionType.UPDATE)
 	public Client updateClient(final Client client) throws DuplicateCifException {
 		Objects.requireNonNull(client);
 		logger.debug("Update client {}", client);
@@ -46,7 +48,9 @@ public class ClientService {
 				throw new DuplicateCifException();
 			}
 		}
-		return clientDao.update(client);
+		final Client updatedClient = clientDao.update(client);
+		this.updateClientEvent.fireAsync(updatedClient);
+		return updatedClient;
 	}
 
 	public Client findClientById(final Long clientId) {

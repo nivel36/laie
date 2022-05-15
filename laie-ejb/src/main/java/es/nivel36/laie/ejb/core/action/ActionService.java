@@ -7,14 +7,13 @@ import java.util.Objects;
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
-import javax.enterprise.event.Observes;
+import javax.enterprise.event.ObservesAsync;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.core.model.Page;
-
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserService;
 
@@ -33,19 +32,19 @@ public class ActionService {
 	@Inject
 	private UserService userService;
 
-	public void createAction(@Create @Observes final Auditable auditedEntity) {
+	public void createAction(@Create @ObservesAsync final Auditable auditedEntity) {
 		Objects.requireNonNull(auditedEntity);
 		logger.debug("Create action class {} with id {}", auditedEntity.getEntityName(), auditedEntity.getId());
 		this.saveData(ActionType.CREATE, auditedEntity);
 	}
 
-	public void updateAction(@Update @Observes final Auditable auditedEntity) {
+	public void updateAction(@Update @ObservesAsync final Auditable auditedEntity) {
 		Objects.requireNonNull(auditedEntity);
 		logger.debug("Update action class {} with id {}", auditedEntity.getEntityName(), auditedEntity.getId());
 		this.saveData(ActionType.UPDATE, auditedEntity);
 	}
 
-	public void deleteAction(@Delete @Observes final Auditable auditedEntity) {
+	public void deleteAction(@Delete @ObservesAsync final Auditable auditedEntity) {
 		Objects.requireNonNull(auditedEntity);
 		logger.debug("Delete action class {} with id {}", auditedEntity.getEntityName(), auditedEntity.getId());
 		this.saveData(ActionType.DELETE, auditedEntity);

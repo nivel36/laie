@@ -25,20 +25,17 @@ public class ContactService {
 	@Inject
 	private ClientDao clientDao;
 
-	@Audited(action = ActionType.CREATE)
 	public void addContact(final Contact contact) {
 		logger.debug("Add contact {}", contact);
 		contactDao.insert(contact);
 	}
 
-	@Audited(action = ActionType.UPDATE)
 	public Contact updateContact(final Contact contact) {
 		Objects.requireNonNull(contact);
 		logger.debug("Update contact {}", contact);
 		return this.contactDao.update(contact);
 	}
 
-	@Audited(action = ActionType.DELETE)
 	public void deleteContact(final Contact contact) {
 		Objects.requireNonNull(contact);
 		logger.debug("Delete contact {}", contact);

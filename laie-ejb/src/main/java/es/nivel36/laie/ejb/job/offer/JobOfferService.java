@@ -34,28 +34,18 @@ public class JobOfferService {
 
 	private static final Logger logger = LoggerFactory.getLogger(JobOffer.class);
 
-	@Inject
-	private JobCandidatureDao jobCandidatureDao;
+	private @Inject JobCandidatureDao jobCandidatureDao;
 
-	@Inject
-	private JobOfferDao jobOfferDao;
+	private @Inject JobOfferDao jobOfferDao;
 
-	@Inject
-	private JobOfferStateChangeEventDao jobOfferStateChangeEventDao;
+	private @Inject JobOfferStateChangeEventDao jobOfferStateChangeEventDao;
 
-	@Inject
-	@JobOfferCompletedEvent
-	private Event<JobOffer> completedEvent;
+	private @Inject @JobOfferCompletedEvent Event<JobOffer> completedEvent;
 
-	@Inject
-	@JobOfferCreatedEvent
-	private Event<JobOffer> createdEvent;
+	private @Inject @JobOfferCreatedEvent Event<JobOffer> createdEvent;
 
-	@Inject
-	@JobOfferStateChangedEvent
-	private Event<JobOffer> stateChangedEvent;
+	private @Inject @JobOfferStateChangedEvent Event<JobOffer> stateChangedEvent;
 
-	@Audited(action = ActionType.CREATE)
 	public void addJobOffer(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer);
 		jobOffer.setState(JobOfferState.CREATED);
@@ -66,7 +56,6 @@ public class JobOfferService {
 		this.createdEvent.fire(jobOffer);
 	}
 
-	@Audited(action = ActionType.UPDATE)
 	public JobOffer updateJobOffer(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer);
 		return jobOfferDao.update(jobOffer);
@@ -147,7 +136,7 @@ public class JobOfferService {
 		this.stateChangedEvent.fire(jobOffer);
 		return jobOfferDao.update(jobOffer);
 	}
-	
+
 	public SearchResult<JobOffer> search(final String searchText, final Page page) {
 		return this.search(searchText, page, null, null);
 	}
