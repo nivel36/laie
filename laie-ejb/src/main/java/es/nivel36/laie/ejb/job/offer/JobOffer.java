@@ -30,6 +30,7 @@ import org.hibernate.search.annotations.Store;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.client.Client;
+import es.nivel36.laie.ejb.core.action.Auditable;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
 import es.nivel36.laie.ejb.core.model.Address;
 import es.nivel36.laie.ejb.core.model.Ownerable;
@@ -39,7 +40,9 @@ import es.nivel36.laie.ejb.user.User;
 @Entity
 @Indexed
 @Table(name = "JOB_OFFER")
-public class JobOffer extends AbstractEntity implements Ownerable {
+public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
+
+	private static final String JOB_OFFER = "JOB_OFFER";
 
 	private static final long serialVersionUID = 1529439068651089035L;
 
@@ -262,5 +265,15 @@ public class JobOffer extends AbstractEntity implements Ownerable {
 	@Override
 	public String toString() {
 		return this.title + "-" + this.client.getName();
+	}
+
+	@Override
+	public String getEntityName() {
+		return JOB_OFFER;
+	}
+
+	@Override
+	public String getEntityTitle() {
+		return this.title;
 	}
 }

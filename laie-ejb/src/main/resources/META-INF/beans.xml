@@ -6,6 +6,8 @@
 	bean-discovery-mode="all">
 	<interceptors>
 		<class>es.nivel36.laie.ejb.core.action.CreateInterceptor</class>
+		<class>es.nivel36.laie.ejb.core.action.UpdateInterceptor</class>
+		<class>es.nivel36.laie.ejb.core.action.DeleteInterceptor</class>
 	</interceptors>
 
 </beans>

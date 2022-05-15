@@ -15,6 +15,8 @@ import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.client.Client;
+import es.nivel36.laie.ejb.core.action.ActionType;
+import es.nivel36.laie.ejb.core.action.Audited;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.search.SearchFacets;
 import es.nivel36.laie.ejb.core.model.search.SearchResult;
@@ -33,11 +35,9 @@ public class JobOfferService {
 	private static final Logger logger = LoggerFactory.getLogger(JobOffer.class);
 
 	@Inject
-	
 	private JobCandidatureDao jobCandidatureDao;
 
 	@Inject
-	
 	private JobOfferDao jobOfferDao;
 
 	@Inject
@@ -55,6 +55,7 @@ public class JobOfferService {
 	@JobOfferStateChangedEvent
 	private Event<JobOffer> stateChangedEvent;
 
+	@Audited(action = ActionType.CREATE)
 	public void addJobOffer(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer);
 		jobOffer.setState(JobOfferState.CREATED);
@@ -65,6 +66,7 @@ public class JobOfferService {
 		this.createdEvent.fire(jobOffer);
 	}
 
+	@Audited(action = ActionType.UPDATE)
 	public JobOffer updateJobOffer(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer);
 		return jobOfferDao.update(jobOffer);
@@ -82,6 +84,7 @@ public class JobOfferService {
 		this.stateChangedEvent.fire(jobOffer);
 	}
 
+	@Audited(action = ActionType.UPDATE)
 	public void closeJobOffer(final JobOffer jobOffer) {
 		jobOffer.setCloseDate(LocalDate.now());
 		jobOffer.setState(JobOfferState.CLOSED);

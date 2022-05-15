@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	xmlns:composite="http://xmlns.jcp.org/jsf/composite" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://nivel.36/laie/ui" xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:composite="http://xmlns.jcp.org/jsf/composite" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:g="http://nivel.36/laie/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<composite:interface>
 		<composite:attribute name="value" required="true" />
@@ -13,19 +14,26 @@
 	<composite:implementation>
 		<div id="#{cc.clientId}" class="card card-w-title events #{cc.attrs.styleClass}">
 			<h5>#{cc.attrs.title}</h5>
-			<p:dataTable var="event" id="events" value="#{cc.attrs.value}" emptyMessage="#{i18n['event.no_events_found']}" reflow="true" paginator="true" paginatorPosition="bottom"
-				rows="#{cc.attrs.rows}" sortBy="#{event.date}" sortOrder="ascending" lazy="true" styleClass="ui-datatable-borderless">
+			<p:dataTable var="event" id="events" value="#{cc.attrs.value}" emptyMessage="#{i18n['event.no_events_found']}" reflow="true" paginator="true"
+				paginatorPosition="bottom" rows="#{cc.attrs.rows}" sortBy="#{event.date}" sortOrder="ascending" lazy="true" styleClass="ui-datatable-borderless">
+
+				<p:column headerText="">
+					<h:link value="#{event.entityTitle}" outcome="/client/view.xhtml" rendered="#{event.entityName eq 'CLIENT'}">
+						<f:param name="client" value="#{event.entityId}" />
+					</h:link>
+					<h:link value="#{event.entityTitle}" outcome="/candidate/view.xhtml" rendered="#{event.entityName eq 'CANDIDATE'}">
+						<f:param name="candidate" value="#{event.entityId}" />
+					</h:link>
+					<h:link value="#{event.entityTitle}" outcome="/contact/view.xhtml" rendered="#{event.entityName eq 'CONTACT'}">
+						<f:param name="contact" value="#{event.entityId}" />
+					</h:link>
+					<h:link value="#{event.entityTitle}" outcome="/job/view.xhtml" rendered="#{event.entityName eq 'JOB_OFFER'}">
+						<f:param name="jobOffer" value="#{event.entityId}" />
+					</h:link>
+				</p:column>
 
 				<p:column headerText="#{i18n['event.type']}">
-					<h:outputText value="#{i18n[event.type]}" />
-				</p:column>
-
-				<p:column headerText="">
-					<h:outputText value="#{i18n[event.entityName]}" />
-				</p:column>
-				
-				<p:column headerText="">
-					<h:outputText value="#{i18n[event.entityTitle]}" />
+					<h:outputText value="#{i18n['event.'.concat(event.type)]}" />
 				</p:column>
 
 				<p:column headerText="#{i18n['event.user']}" sortBy="#{event.user.name}" priority="5">

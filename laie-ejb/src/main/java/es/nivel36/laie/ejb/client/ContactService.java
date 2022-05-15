@@ -9,6 +9,8 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import es.nivel36.laie.ejb.core.action.ActionType;
+import es.nivel36.laie.ejb.core.action.Audited;
 import es.nivel36.laie.ejb.core.model.Page;
 
 
@@ -18,24 +20,25 @@ public class ContactService {
 	private static final Logger logger = LoggerFactory.getLogger(ContactService.class);
 
 	@Inject
-	
 	private ContactDao contactDao;
 
 	@Inject
-	
 	private ClientDao clientDao;
 
+	@Audited(action = ActionType.CREATE)
 	public void addContact(final Contact contact) {
 		logger.debug("Add contact {}", contact);
 		contactDao.insert(contact);
 	}
 
+	@Audited(action = ActionType.UPDATE)
 	public Contact updateContact(final Contact contact) {
 		Objects.requireNonNull(contact);
 		logger.debug("Update contact {}", contact);
 		return this.contactDao.update(contact);
 	}
 
+	@Audited(action = ActionType.DELETE)
 	public void deleteContact(final Contact contact) {
 		Objects.requireNonNull(contact);
 		logger.debug("Delete contact {}", contact);

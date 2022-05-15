@@ -21,12 +21,15 @@ import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
 import es.nivel36.laie.ejb.core.Subject;
+import es.nivel36.laie.ejb.core.action.Auditable;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
 import es.nivel36.laie.ejb.job.meeting.Meeting;
 
 @Entity
 @Indexed
-public class Contact extends AbstractEntity implements Subject {
+public class Contact extends AbstractEntity implements Subject, Auditable {
+
+	private static final String CONTACT = "CONTACT";
 
 	private static final long serialVersionUID = -2403549918176092142L;
 
@@ -170,6 +173,16 @@ public class Contact extends AbstractEntity implements Subject {
 
 	@Override
 	public String toString() {
+		return this.getFullName();
+	}
+
+	@Override
+	public String getEntityName() {
+		return CONTACT;
+	}
+
+	@Override
+	public String getEntityTitle() {
 		return this.getFullName();
 	}
 }

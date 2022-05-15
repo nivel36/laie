@@ -45,7 +45,7 @@ public class ActionService {
 		this.saveData(ActionType.UPDATE, auditedEntity);
 	}
 
-	public void deleteAction(@Update @Observes final Auditable auditedEntity) {
+	public void deleteAction(@Delete @Observes final Auditable auditedEntity) {
 		Objects.requireNonNull(auditedEntity);
 		logger.debug("Delete action class {} with id {}", auditedEntity.getEntityName(), auditedEntity.getId());
 		this.saveData(ActionType.DELETE, auditedEntity);

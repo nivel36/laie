@@ -12,6 +12,8 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import es.nivel36.laie.ejb.core.action.ActionType;
+import es.nivel36.laie.ejb.core.action.Audited;
 import es.nivel36.laie.ejb.core.file.File;
 import es.nivel36.laie.ejb.core.file.FileService;
 import es.nivel36.laie.ejb.core.model.Page;
@@ -38,6 +40,7 @@ public class CandidateService {
 	@Inject	
 	private TagDao tagDao;
 
+	@Audited(action = ActionType.CREATE)
 	public void addCandidate(final Candidate candidate) throws DuplicateEmailException {
 		Objects.requireNonNull(candidate);
 		final String email = candidate.getEmail();
@@ -63,6 +66,7 @@ public class CandidateService {
 		candidate.setTags(normalizedTags);
 	}
 
+	@Audited(action = ActionType.UPDATE)
 	public Candidate updateCandidate(final Candidate candidate) throws DuplicateEmailException {
 		Objects.requireNonNull(candidate);
 		logger.debug("Update candidate {}", candidate);
@@ -78,6 +82,7 @@ public class CandidateService {
 		return this.candidateDao.update(candidate);
 	}
 
+	@Audited(action = ActionType.UPDATE)
 	public Candidate changeCandidatesImage(final Candidate candidate, final InputStream image) {
 		Objects.requireNonNull(candidate);
 		Objects.requireNonNull(image);
