@@ -22,25 +22,26 @@ public class ClientService {
 	private static final Logger logger = LoggerFactory.getLogger(ClientService.class);
 
 	@Inject
-	
+
 	private ClientDao clientDao;
 
 	@Audited(action = ActionType.CREATE)
 	public void addClient(final Client client) throws DuplicateCifException {
 		Objects.requireNonNull(client);
 		logger.debug("Add new client {}", client);
-		if (clientDao.checkDuplicatedCif(client.getCif())) {
+
+		if (client.getCif() != null && this.clientDao.checkDuplicatedCif(client.getCif())) {
 			throw new DuplicateCifException();
 		}
 		this.clientDao.insert(client);
 	}
-	
+
 	@Audited(action = ActionType.UPDATE)
 	public Client updateClient(final Client client) throws DuplicateCifException {
 		Objects.requireNonNull(client);
 		logger.debug("Update client {}", client);
 		final Client clientInDatabase = clientDao.find(Client.class, client.getId());
-		if (!clientInDatabase.getCif().equals(client.getCif())) {
+		if (client.getCif() != null && !client.getCif().equals(clientInDatabase.getCif())) {
 			if (clientDao.checkDuplicatedCif(client.getCif())) {
 				throw new DuplicateCifException();
 			}
