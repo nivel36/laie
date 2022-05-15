@@ -12,14 +12,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
-import es.nivel36.laie.ejb.candidate.CandidateDao;
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.core.model.Repository;
 import es.nivel36.laie.ejb.job.candidature.event.JobCandidatureCompletedEvent;
 import es.nivel36.laie.ejb.job.candidature.event.JobCandidatureCreatedEvent;
 import es.nivel36.laie.ejb.job.candidature.event.JobCandidatureStateChangedEvent;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
-import es.nivel36.laie.ejb.job.offer.JobOfferDao;
 import es.nivel36.laie.ejb.user.User;
 
 @Stateless
@@ -40,16 +37,8 @@ public class JobCandidatureService {
 	private Event<JobCandidature> stateChangedEvent;
 
 	@Inject
-	@Repository
+	
 	private JobCandidatureDao jobCandidatureDao;
-
-	@Inject
-	@Repository
-	private JobOfferDao jobOfferDao;
-
-	@Inject
-	@Repository
-	private CandidateDao candidateDao;
 
 	@Inject
 	private JobCandidatureStateService jobCandidatureStateService;

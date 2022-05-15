@@ -10,7 +10,7 @@ import java.util.Objects;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import es.nivel36.laie.ejb.core.model.Repository;
+
 import es.nivel36.laie.ejb.core.security.LoginToken.TokenType;
 import es.nivel36.laie.ejb.user.Credential;
 import es.nivel36.laie.ejb.user.UserService;
@@ -19,7 +19,7 @@ import es.nivel36.laie.ejb.user.UserService;
 public class LoginTokenService {
 
 	@Inject
-	@Repository
+	
 	private LoginTokenDao loginTokenDao;
 
 	@Inject

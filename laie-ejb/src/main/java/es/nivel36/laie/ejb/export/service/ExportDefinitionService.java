@@ -12,7 +12,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.core.model.Repository;
+
 import es.nivel36.laie.ejb.export.acquirer.ReportInfo;
 import es.nivel36.laie.ejb.export.dao.ExportDao;
 import es.nivel36.laie.ejb.export.dto.ExportFieldsOutputBean;
@@ -28,7 +28,7 @@ import es.nivel36.laie.ejb.export.util.ExportNotFieldFoundException;
 public class ExportDefinitionService {
 
 	@Inject
-	@Repository
+	
 	private ExportDao exportDao;
 	
 	public void saveDefinition(final ExportSaveDefinitionInputBean newDefinition) {

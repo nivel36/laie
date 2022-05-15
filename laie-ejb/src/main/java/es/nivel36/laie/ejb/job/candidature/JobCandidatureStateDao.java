@@ -5,10 +5,10 @@ import static es.nivel36.laie.ejb.core.util.Parameters.map;
 import java.util.Objects;
 
 import es.nivel36.laie.ejb.core.model.AbstractDao;
-import es.nivel36.laie.ejb.core.model.Repository;
+
 import es.nivel36.laie.ejb.core.util.Parameters;
 
-@Repository
+
 public class JobCandidatureStateDao extends AbstractDao {
 
 	public JobCandidatureState findInitialState() {

@@ -15,9 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.client.Client;
-import es.nivel36.laie.ejb.client.ClientDao;
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.core.model.Repository;
 import es.nivel36.laie.ejb.core.model.search.SearchFacets;
 import es.nivel36.laie.ejb.core.model.search.SearchResult;
 import es.nivel36.laie.ejb.core.model.search.SortField;
@@ -28,7 +26,6 @@ import es.nivel36.laie.ejb.job.offer.event.JobOfferCompletedEvent;
 import es.nivel36.laie.ejb.job.offer.event.JobOfferCreatedEvent;
 import es.nivel36.laie.ejb.job.offer.event.JobOfferStateChangedEvent;
 import es.nivel36.laie.ejb.user.User;
-import es.nivel36.laie.ejb.user.UserDao;
 
 @Stateless
 public class JobOfferService {
@@ -36,23 +33,14 @@ public class JobOfferService {
 	private static final Logger logger = LoggerFactory.getLogger(JobOffer.class);
 
 	@Inject
-	@Repository
-	private ClientDao clientDao;
-
-	@Inject
-	@Repository
+	
 	private JobCandidatureDao jobCandidatureDao;
 
 	@Inject
-	@Repository
+	
 	private JobOfferDao jobOfferDao;
 
 	@Inject
-	@Repository
-	private UserDao userDao;
-
-	@Inject
-	@Repository
 	private JobOfferStateChangeEventDao jobOfferStateChangeEventDao;
 
 	@Inject

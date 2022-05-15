@@ -7,12 +7,12 @@ import java.util.Objects;
 
 import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.core.model.Repository;
+
 import es.nivel36.laie.ejb.core.util.Parameters;
 import es.nivel36.laie.ejb.export.entity.Export;
 import es.nivel36.laie.ejb.export.util.ExportConstants.FindExportByExportName;
 
-@Repository
+
 public class ExportDao extends AbstractDao {
 
 	public Export findByExportName(final String exportName) {

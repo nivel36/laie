@@ -5,7 +5,7 @@ import java.util.Objects;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import es.nivel36.laie.ejb.core.model.Repository;
+
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserDao;
 
@@ -13,11 +13,11 @@ import es.nivel36.laie.ejb.user.UserDao;
 public class BookmarkService {
 
 	@Inject
-	@Repository
+	
 	private UserDao userDao;
 
 	@Inject
-	@Repository
+	
 	private BookmarkDao bookmarkDao;
 
 	public User addBookmark(final Bookmark bookmark, final User user) {

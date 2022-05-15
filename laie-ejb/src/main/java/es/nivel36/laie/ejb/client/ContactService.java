@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.core.model.Repository;
+
 
 @Stateless
 public class ContactService {
@@ -18,11 +18,11 @@ public class ContactService {
 	private static final Logger logger = LoggerFactory.getLogger(ContactService.class);
 
 	@Inject
-	@Repository
+	
 	private ContactDao contactDao;
 
 	@Inject
-	@Repository
+	
 	private ClientDao clientDao;
 
 	public void addContact(final Contact contact) {

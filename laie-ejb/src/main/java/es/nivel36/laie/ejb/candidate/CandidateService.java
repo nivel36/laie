@@ -13,10 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.core.file.File;
-import es.nivel36.laie.ejb.core.file.FileJpaDao;
 import es.nivel36.laie.ejb.core.file.FileService;
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.core.model.Repository;
 import es.nivel36.laie.ejb.core.model.search.SearchFacets;
 import es.nivel36.laie.ejb.core.model.search.SearchResult;
 import es.nivel36.laie.ejb.core.model.search.SortField;
@@ -24,7 +22,6 @@ import es.nivel36.laie.ejb.core.tag.Tag;
 import es.nivel36.laie.ejb.core.tag.TagDao;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.user.DuplicateEmailException;
-import es.nivel36.laie.ejb.user.UserDao;
 
 @Stateless
 public class CandidateService {
@@ -32,23 +29,14 @@ public class CandidateService {
 	private static final Logger logger = LoggerFactory.getLogger(CandidateService.class);
 
 	@Inject
-	@Repository
+	
 	private CandidateDao candidateDao;
 
 	@Inject
 	private FileService fileService;
 
-	@Inject
-	@Repository
+	@Inject	
 	private TagDao tagDao;
-
-	@Inject
-	@Repository
-	private FileJpaDao fileDao;
-
-	@Inject
-	@Repository
-	private UserDao userDao;
 
 	public void addCandidate(final Candidate candidate) throws DuplicateEmailException {
 		Objects.requireNonNull(candidate);
@@ -174,15 +162,5 @@ public class CandidateService {
 	public void setFileService(final FileService fileService) {
 		Objects.requireNonNull(fileService);
 		this.fileService = fileService;
-	}
-
-	public void setFileDao(final FileJpaDao fileDao) {
-		Objects.requireNonNull(fileDao);
-		this.fileDao = fileDao;
-	}
-
-	public void setUserDao(final UserDao userDao) {
-		Objects.requireNonNull(userDao);
-		this.userDao = userDao;
 	}
 }

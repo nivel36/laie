@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.core.model.Repository;
+
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserService;
 
@@ -24,7 +24,7 @@ public class ActionService {
 	private static final Logger logger = LoggerFactory.getLogger(ActionService.class);
 
 	@Inject
-	@Repository
+	
 	private ActionDao actionDao;
 
 	@Resource

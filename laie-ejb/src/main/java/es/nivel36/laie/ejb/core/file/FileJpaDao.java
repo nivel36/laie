@@ -7,10 +7,10 @@ import java.util.Objects;
 import javax.persistence.NoResultException;
 
 import es.nivel36.laie.ejb.core.model.AbstractDao;
-import es.nivel36.laie.ejb.core.model.Repository;
+
 import es.nivel36.laie.ejb.core.util.Parameters;
 
-@Repository
+
 public class FileJpaDao extends AbstractDao {
 
 	public boolean isOrphanPhysicalFile(final PhysicalFile physicalFile) {

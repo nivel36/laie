@@ -16,9 +16,7 @@ import es.nivel36.laie.ejb.client.Contact;
 import es.nivel36.laie.ejb.client.ContactDao;
 import es.nivel36.laie.ejb.core.Subject;
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.core.model.Repository;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
-import es.nivel36.laie.ejb.job.offer.JobOfferDao;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserDao;
 
@@ -28,24 +26,20 @@ public class MeetingService {
 	private static final Logger logger = LoggerFactory.getLogger(MeetingService.class);
 
 	@Inject
-	@Repository
+	
 	private MeetingDao meetingDao;
 
 	@Inject
-	@Repository
+	
 	private UserDao userDao;
 
 	@Inject
-	@Repository
+	
 	private CandidateDao candidateDao;
 
 	@Inject
-	@Repository
 	private ContactDao contactDao;
 
-	@Inject
-	@Repository
-	private JobOfferDao jobOfferDao;
 
 	public void addMeeting(final Meeting meeting) {
 		Objects.requireNonNull(meeting);

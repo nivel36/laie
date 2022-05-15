@@ -14,7 +14,7 @@ import es.nivel36.laie.ejb.core.file.File;
 import es.nivel36.laie.ejb.core.file.FileJpaDao;
 import es.nivel36.laie.ejb.core.file.FileService;
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.core.model.Repository;
+
 import es.nivel36.laie.ejb.core.model.search.SearchFacets;
 import es.nivel36.laie.ejb.core.model.search.SearchResult;
 import es.nivel36.laie.ejb.core.model.search.SortField;
@@ -28,11 +28,11 @@ public class UserService {
 	private FileService fileService;
 
 	@Inject
-	@Repository
+	
 	private FileJpaDao fileDao;
 
 	@Inject
-	@Repository
+	
 	private UserDao userDao;
 
 	public void addUser(final User user) throws DuplicateEmailException, BadManagerException {

@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.core.model.Repository;
+
 import es.nivel36.laie.ejb.core.model.search.SearchFacets;
 import es.nivel36.laie.ejb.core.model.search.SearchResult;
 import es.nivel36.laie.ejb.core.model.search.SortField;
@@ -19,7 +19,7 @@ public class TagService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(TagService.class);
 	
-	@Inject @Repository
+	@Inject 
 	private TagDao tagDao;
 	
 	public Tag findByLabel(final String label) {

@@ -14,7 +14,7 @@ import java.util.UUID;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import es.nivel36.laie.ejb.core.model.Repository;
+
 import es.nivel36.laie.ejb.core.util.ConfigurationProperty;
 
 @Stateless
@@ -27,7 +27,7 @@ public class FileService {
 	private static final FileBucket PUBLIC_BUCKET = PublicFileBucket.getInstance();
 
 	@Inject
-	@Repository
+	
 	private FileJpaDao fileDao;
 
 	@Inject

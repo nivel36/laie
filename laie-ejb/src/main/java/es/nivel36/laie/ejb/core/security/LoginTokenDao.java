@@ -7,10 +7,10 @@ import java.util.Objects;
 
 import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.core.model.Repository;
+
 import es.nivel36.laie.ejb.core.util.Parameters;
 
-@Repository
+
 public class LoginTokenDao extends AbstractDao {
 
 	public void insert(final LoginToken loginToken) {

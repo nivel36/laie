@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import es.nivel36.laie.ejb.core.action.ActionType;
 import es.nivel36.laie.ejb.core.action.Audited;
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.core.model.Repository;
+
 import es.nivel36.laie.ejb.core.model.search.SearchFacets;
 import es.nivel36.laie.ejb.core.model.search.SearchResult;
 import es.nivel36.laie.ejb.core.model.search.SortField;
@@ -22,7 +22,7 @@ public class ClientService {
 	private static final Logger logger = LoggerFactory.getLogger(ClientService.class);
 
 	@Inject
-	@Repository
+	
 	private ClientDao clientDao;
 
 	@Audited(action = ActionType.CREATE)

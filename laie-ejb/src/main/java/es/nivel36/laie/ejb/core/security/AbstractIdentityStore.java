@@ -9,13 +9,11 @@ import java.util.Set;
 import javax.inject.Inject;
 import javax.security.enterprise.identitystore.CredentialValidationResult;
 
-import es.nivel36.laie.ejb.core.model.Repository;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserDao;
 
 public abstract class AbstractIdentityStore {
 
-	@Repository
 	@Inject
 	protected UserDao userDao;
 

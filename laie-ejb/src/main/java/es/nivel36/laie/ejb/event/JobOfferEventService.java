@@ -9,10 +9,8 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.core.model.Repository;
 import es.nivel36.laie.ejb.core.security.GedSecurityContext;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
-import es.nivel36.laie.ejb.job.offer.JobOfferDao;
 import es.nivel36.laie.ejb.job.offer.JobOfferState;
 import es.nivel36.laie.ejb.user.User;
 
@@ -25,11 +23,6 @@ public class JobOfferEventService  {
 	private GedSecurityContext gedSecurityContext;
 	
 	@Inject
-	@Repository
-	private JobOfferDao jobOfferDao;
-
-	@Inject
-	@Repository
 	private JobOfferEventDao jobOfferEventDao;
 
 	public JobOfferEvent createEvent(final JobOffer jobOffer, final JobOfferState jobOfferState, final String notes) {
@@ -53,11 +46,6 @@ public class JobOfferEventService  {
 		jobOfferEvent.setNotes(notes);
 	}
 	
-	public void setJobOfferDao(final JobOfferDao jobOfferDao) {
-		Objects.requireNonNull(jobOfferDao);
-		this.jobOfferDao = jobOfferDao;
-	}
-
 	public void setJobOfferEventDao(final JobOfferEventDao jobOfferEventDao) {
 		Objects.requireNonNull(jobOfferEventDao);
 		this.jobOfferEventDao = jobOfferEventDao;

@@ -13,8 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
-import es.nivel36.laie.ejb.candidate.CandidateDao;
-import es.nivel36.laie.ejb.core.model.Repository;
 import es.nivel36.laie.ejb.curriculum.export.CurriculumExporter;
 import es.nivel36.laie.ejb.curriculum.skill.Skill;
 
@@ -24,12 +22,7 @@ public class CurriculumService {
 	private static final Logger logger = LoggerFactory.getLogger(CurriculumService.class);
 
 	@Inject
-	@Repository
 	private CurriculumDao curriculumDao;
-
-	@Inject
-	@Repository
-	private CandidateDao candidateDao;
 
 	@Inject
 	private CurriculumExporter exporter;
@@ -53,8 +46,7 @@ public class CurriculumService {
 			final Skill skillInDatabase = this.curriculumDao.findSkill(skill.getName());
 			if (skillInDatabase != null) {
 				normlizedSkill.add(skillInDatabase);
-			}
-			else {
+			} else {
 				normlizedSkill.add(skill);
 			}
 		}
