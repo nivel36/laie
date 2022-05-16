@@ -9,10 +9,8 @@
 
 		<ul class="topbar-menu fadeInDown">
 			<li class="user-profile"><a href="#"> <cc:avatar path="#{sessionUser.get().picture.path}" name="#{sessionUser.get().fullName}"
-						styleClass="user-image" id="userImage" />
-					<div class="layout-profile-userinfo">
-						<span class="layout-profile-name">#{sessionUser.get().fullName}</span>
-					</div>
+						styleClass="user-image" id="userImage" /><span class="layout-profile-userinfo"> <span class="layout-profile-name">#{sessionUser.get().fullName}</span>
+				</span>
 			</a>
 				<ul>
 					<li><h:link outcome="/user/view.xhtml">
