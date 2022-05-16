@@ -21,7 +21,7 @@
 								<div class="p-col-12">
 									<g:input label="#{i18n['job.title']}" value="#{editJobView.jobOffer.title}" required="true" />
 								</div>
-								<div class="p-col-12 p-sm-6">
+								<div class="p-col-12">
 									<cc:autocomplete id="client" label="#{i18n['job.client']}" value="#{editJobView.jobOffer.client}"
 										completeMethod="#{editJobView.completeClient}" required="true">
 										<p:column>
@@ -30,7 +30,10 @@
 									</cc:autocomplete>
 								</div>
 								<div class="p-col-12 p-sm-6">
-									<g:input id="salary" label="#{i18n['job.salary']}" value="#{editJobView.jobOffer.salary}" type="money" />
+									<g:input id="min_salary" label="#{i18n['job.min_salary']}" value="#{editJobView.jobOffer.minSalary}" type="money" />
+								</div>
+								<div class="p-col-12 p-sm-6">
+									<g:input id="max_salary" label="#{i18n['job.max_salary']}" value="#{editJobView.jobOffer.maxSalary}" type="money" />
 								</div>
 								<div class="p-col-12 p-sm-6">
 									<g:input id="places" label="#{i18n['job.places']}" value="#{editJobView.jobOffer.places}" type="number" min="0" />

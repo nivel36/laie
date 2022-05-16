@@ -22,19 +22,23 @@
 									<g:input label="#{i18n['job.title']}" value="#{addJobView.jobOffer.title}" required="true" />
 								</div>
 								<div class="p-col-12">
-									<cc:autocomplete id="client" label="#{i18n['job.client']}" value="#{addJobView.jobOffer.client}" completeMethod="#{addJobView.completeClient}"
-										required="true">
+									<cc:autocomplete id="client" label="#{i18n['job.client']}" value="#{addJobView.jobOffer.client}"
+										completeMethod="#{addJobView.completeClient}" required="true">
 										<p:column>
 											#{var.name}
 										</p:column>
 									</cc:autocomplete>
 								</div>
 								<div class="p-col-12 p-sm-6">
-									<g:input id="salary" label="#{i18n['job.salary']}" value="#{addJobView.jobOffer.salary}" type="money" />
+									<g:input id="min_salary" label="#{i18n['job.min_salary']}" value="#{addJobView.jobOffer.minSalary}" type="money" />
+								</div>
+								<div class="p-col-12 p-sm-6">
+									<g:input id="max_salary" label="#{i18n['job.max_salary']}" value="#{addJobView.jobOffer.maxSalary}" type="money" />
 								</div>
 								<div class="p-col-12 p-sm-6">
 									<g:input id="places" label="#{i18n['job.places']}" value="#{addJobView.jobOffer.places}" type="number" min="0" />
 								</div>
+								<div class="p-col-12 p-sm-6"></div>
 								<div class="p-col-12 p-sm-6">
 									<g:input id="city" label="#{i18n['job.city']}" value="#{addJobView.jobOffer.address.city}" required="true" />
 								</div>

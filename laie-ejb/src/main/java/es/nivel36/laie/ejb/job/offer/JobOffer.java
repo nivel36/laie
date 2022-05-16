@@ -88,7 +88,9 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	@JoinTable(name = "job_user", joinColumns = @JoinColumn(name = "job_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private Set<User> recruiters = new HashSet<>();;
 
-	private Integer salary;
+	private Integer maxSalary;
+	
+	private Integer minSalary;
 
 	@NotNull
 	private JobOfferState state;
@@ -140,8 +142,12 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 		return this.recruiters;
 	}
 
-	public Integer getSalary() {
-		return this.salary;
+	public Integer getMaxSalary() {
+		return this.maxSalary;
+	}
+	
+	public Integer getMinSalary() {
+		return this.minSalary;
 	}
 
 	public JobOfferState getState() {
@@ -229,8 +235,12 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 		this.recruiters = recruiters;
 	}
 
-	public void setSalary(final Integer salary) {
-		this.salary = salary;
+	public void setMaxSalary(final Integer maxSalary) {
+		this.maxSalary = maxSalary;
+	}
+	
+	public void setMinSalary(final Integer minSalary) {
+		this.minSalary = minSalary;
 	}
 
 	public void setState(final JobOfferState state) {

@@ -50,9 +50,20 @@
 			<div class="p-col-12 p-xl-4">
 				<div class="card card-w-title">
 					<h5>#{i18n['job.data']}</h5>
-					<cc:outputText label="#{i18n['job.salary']}" value="#{viewJobView.jobOffer.salary}">
-						<f:convertNumber for="text" currencyCode="EUR" maxFractionDigits="0" type="currency" />
-					</cc:outputText>
+					<div class="data">
+						<div class="label-container">
+							<span class="label">#{i18n['job.salary']}</span>
+						</div>
+						<div class="text-container">
+							<h:outputText id="min_salary" value="#{viewJobView.jobOffer.minSalary}" styleClass="text">
+								<f:convertNumber for="text" currencyCode="EUR" maxFractionDigits="0" type="currency" />
+							</h:outputText>
+							<h:outputText value=" - " styleClass="text" />
+							<h:outputText id="max_salary" value="#{viewJobView.jobOffer.maxSalary}" styleClass="text">
+								<f:convertNumber for="text" currencyCode="EUR" maxFractionDigits="0" type="currency" />
+							</h:outputText>
+						</div>
+					</div>
 					<cc:outputText label="#{i18n['job.places']}" value="#{viewJobView.jobOffer.places}" />
 					<cc:outputLink label="#{i18n['job.preview']}" value="#{i18n['job.preview']}" outcome="/job/preview.xhtml" target="new">
 						<f:param name="jobOffer" value="#{viewJobView.jobOffer.id}" />
