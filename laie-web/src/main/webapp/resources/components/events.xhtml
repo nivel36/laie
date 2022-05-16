@@ -9,6 +9,7 @@
 		<composite:attribute name="styleClass" required="false" default="" />
 		<composite:attribute name="title" required="false" default="#{i18n['event.events']}" />
 		<composite:attribute name="rows" required="false" default="10" />
+		<composite:attribute name="showUser" required="false" default="true" />
 	</composite:interface>
 
 	<composite:implementation>
@@ -36,13 +37,13 @@
 					<h:outputText value="#{i18n['event.'.concat(event.type)]}" />
 				</p:column>
 
-				<p:column headerText="#{i18n['event.user']}" sortBy="#{event.user.name}" priority="5">
+				<p:column headerText="#{i18n['event.user']}" priority="5" rendered="#{cc.attrs.showUser}" >
 					<h:link value="#{event.user.fullName}" outcome="/user/view.xhtml">
-						<f:param name="id" value="#{event.user.id}" />
+						<f:param name="user" value="#{event.user.id}" />
 					</h:link>
 				</p:column>
 
-				<p:column headerText="#{i18n['event.date']}" sortBy="#{event.date}" priority="4">
+				<p:column headerText="#{i18n['event.date']}" priority="4">
 					<h:outputText value="#{event.date}">
 						<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
 					</h:outputText>

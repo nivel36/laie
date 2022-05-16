@@ -11,6 +11,30 @@
 			SELECT a 
 			FROM Action a
 			WHERE a.user = :user
+			ORDER BY a.date DESC
+		]]></query>
+	</named-query>
+	
+	<named-query name="Action.countByUser">
+		<query><![CDATA[
+			SELECT count(a) 
+			FROM Action a
+			WHERE a.user = :user
+		]]></query>
+	</named-query>
+	
+	<named-query name="Action.findAll">
+		<query><![CDATA[
+			SELECT a 
+			FROM Action a
+			ORDER BY a.date DESC
+		]]></query>
+	</named-query>
+	
+	<named-query name="Action.countAll">
+		<query><![CDATA[
+			SELECT count(a) 
+			FROM Action a
 		]]></query>
 	</named-query>
 	

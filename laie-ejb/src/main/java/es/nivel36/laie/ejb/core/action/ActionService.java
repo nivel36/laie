@@ -69,12 +69,25 @@ public class ActionService {
 		return this.actionDao.findAllByUser(user, page);
 	}
 
-	public List<Action> findLastActions() {
-		logger.debug("Find last actions");
-		return this.actionDao.findLastActions();
+	public long countAllByUser(final User user) {
+		Objects.requireNonNull(user);
+		logger.debug("Count all actions by user {}", user);
+		return this.actionDao.countAllByUser(user);
+	}
+
+	public List<Action> findAll(final Page page) {
+		Objects.requireNonNull(page);
+		logger.debug("Find all actions");
+		return this.actionDao.findAll(page);
+	}
+
+	public long countAll() {
+		logger.debug("Count all actions");
+		return this.actionDao.countAll();
 	}
 
 	public void setSessionContext(final SessionContext sessionContext) {
+		Objects.requireNonNull(sessionContext);
 		this.sessionContext = sessionContext;
 	}
 }

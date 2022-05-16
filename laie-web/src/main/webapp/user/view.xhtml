@@ -21,9 +21,9 @@
 								<div class="title">#{viewUserView.user.fullName}</div>
 								<div class="subtitle">#{i18n[viewUserView.user.role]}</div>
 								<div class="text">
-									<span class="email"><i class="pi pi-envelope" aria-hidden="true"/> #{viewUserView.user.email}</span>
+									<span class="email"><i class="pi pi-envelope" aria-hidden="true" /> #{viewUserView.user.email}</span>
 									<h:panelGroup rendered="#{not empty viewUserView.user.phoneNumber}" styleClass="phone">
-										<i class="pi pi-phone" aria-hidden="true"/>#{viewUserView.user.phoneNumber}</h:panelGroup>
+										<i class="pi pi-phone" aria-hidden="true" />#{viewUserView.user.phoneNumber}</h:panelGroup>
 								</div>
 							</div>
 
@@ -39,6 +39,8 @@
 				<cc:jobOffers value="#{viewUserView.jobOffers}" rows="5">
 					<p:button icon="pi pi-plus" outcome="/job/add.xhtml" rendered="#{viewUserView.logedUser}" styleClass="ui-button-success ui-button-outlined" />
 				</cc:jobOffers>
+
+				<cc:events title="#{i18n['event.last_events']}" rows="5" value="#{viewUserView.actions}" showUser="#{false}" />
 			</div>
 			<div class="p-col-12 p-xl-4">
 				<div class="card card-w-title">

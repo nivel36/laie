@@ -1,4 +1,4 @@
-package es.nivel36.laie.web.core.view;
+package es.nivel36.laie.web.view.action;
 
 import java.util.List;
 import java.util.Map;
@@ -13,23 +13,20 @@ import es.nivel36.laie.ejb.core.action.Action;
 import es.nivel36.laie.ejb.core.action.ActionService;
 import es.nivel36.laie.ejb.core.model.Page;
 
-public class UserActionsLazyDataModel extends LazyDataModel<Action>  {
-	
-	private static final long serialVersionUID = 6835795236994934142L;
+public class ActionsLazyDataModel extends LazyDataModel<Action> {
 
+	private static final long serialVersionUID = 7176885377018794354L;
+	
 	@Inject
 	private transient ActionService actionService;
-	
-	@Inject
-	private transient SessionUser sessionUser;
-	
+
 	@Override
 	public int count(Map<String, FilterMeta> filterBy) {
-		return 10;
+		return (int) actionService.countAll();
 	}
 
 	@Override
 	public List<Action> load(int first, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) {
-		return actionService.findAllByUser(sessionUser.get(), Page.of(first, pageSize));
+		return actionService.findAll(Page.of(first, pageSize));
 	}
 }

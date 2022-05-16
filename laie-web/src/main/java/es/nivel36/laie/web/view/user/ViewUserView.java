@@ -23,6 +23,7 @@ import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserService;
 import es.nivel36.laie.web.core.view.AbstractView;
 import es.nivel36.laie.web.reports.UserReport;
+import es.nivel36.laie.web.view.action.UserActionsLazyDataModel;
 
 @Named
 @ViewScoped
@@ -46,6 +47,9 @@ public class ViewUserView extends AbstractView {
 	private List<User> team;
 
 	private boolean loggedUser;
+	
+	@Inject
+	private UserActionsLazyDataModel actions;
 
 	@Inject
 	private transient MeetingService meetingService;
@@ -78,6 +82,10 @@ public class ViewUserView extends AbstractView {
 
 	public boolean isLogedUser() {
 		return loggedUser;
+	}
+	
+	public UserActionsLazyDataModel getActions() {
+		return actions;
 	}
 
 	public List<JobOffer> getJobOffers() {
