@@ -4,36 +4,17 @@
 
 	<div class="layout-topbar">
 		<a class="layout-menu-button layout-topbar-icon" href="#"> <i class="pi pi-bars" aria-hidden="true" /></a>
-
 		<ui:include src="./menu.xhtml" />
-
-		<ul class="topbar-menu fadeInDown">
-			<li class="user-profile"><a href="#"> <cc:avatar path="#{sessionUser.get().picture.path}" name="#{sessionUser.get().fullName}"
-						styleClass="user-image" id="userImage" /><span class="layout-profile-userinfo"> <span class="layout-profile-name">#{sessionUser.get().fullName}</span>
-				</span>
-			</a>
-				<ul>
-					<li><h:link outcome="/user/view.xhtml">
-							<i class="pi pi-user" aria-hidden="true" />
-							<span>#{i18n['menu.profile']}</span>
-							<f:param name="user" value="#{sessionUser.get().id}" />
-						</h:link></li>
-					<li><h:link outcome="/meeting/search.xhtml">
-							<i class="pi pi-calendar" aria-hidden="true" />
-							<span>#{i18n['menu.meetings']}</span>
-						</h:link></li>
-					<li><h:link outcome="/config.xhtml">
-							<i class="pi pi-cog" aria-hidden="true" />
-							<span>#{i18n['menu.settings']}</span>
-						</h:link></li>
-					<li><h:form>
-							<h:commandLink action="#{sessionUser.logout}">
-								<i class="pi pi-sign-out" aria-hidden="true" />
-								<span>#{i18n['user.logout']}</span>
-							</h:commandLink>
-						</h:form></li>
-				</ul></li>
-		</ul>
+		<h:form>
+			<p:menuButton styleClass="topbar-menu" id="menu-button" value="#{sessionUser.get().fullName}">
+				<p:menuitem value="#{i18n['menu.profile']}" outcome="/user/view.xhtml" icon="pi pi-user">
+					<f:param name="user" value="#{sessionUser.get().id}" />
+				</p:menuitem>
+				<p:menuitem value="#{i18n['menu.meetings']}" outcome="/meeting/search.xhtml" icon="pi pi-calendar" />
+				<p:menuitem value="#{i18n['menu.settings']}" outcome="/config.xhtml" icon="pi pi-cog" />
+				<p:menuitem value="#{i18n['user.logout']}" action="#{sessionUser.logout}" icon="pi pi-sign-out" />
+			</p:menuButton>
+		</h:form>
 	</div>
 
 </ui:composition>
