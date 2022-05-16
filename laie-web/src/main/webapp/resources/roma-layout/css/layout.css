@@ -3057,15 +3057,12 @@ a {
     display: none; } }
 .form-card {
   box-shadow: none;
-  border-radius: 0;
-  padding: 1rem 1rem 0 1rem;
-  border-right: 1px solid #f0f0f0; }
-  .form-card .form-card-body {
-    padding: 1rem; }
-  .form-card .form-card-title {
+  padding: 2rem 1rem 0 1rem;
+  border: 1px solid #f0f0f0;
+  border-radius: 5px;
+  margin-bottom: 2rem; }
+  .form-card h5 {
     margin-bottom: 2rem; }
-  .form-card .form-card-content {
-    padding: 1rem; }
 
 .card-w-title {
   position: relative; }
