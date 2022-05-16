@@ -391,7 +391,7 @@ public class RomaMenuRenderer extends BaseMenuRenderer {
     }
     
     protected AjaxRequestBuilder getAjaxRequestBuilder() {
-        Class rootContext;
+        Class<?> rootContext;
         Object requestContextInstance;
         AjaxRequestBuilder builder;
 
