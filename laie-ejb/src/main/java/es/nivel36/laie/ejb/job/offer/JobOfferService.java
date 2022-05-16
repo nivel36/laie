@@ -15,8 +15,8 @@ import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.client.Client;
-import es.nivel36.laie.ejb.core.action.ActionType;
-import es.nivel36.laie.ejb.core.action.Audited;
+import es.nivel36.laie.ejb.core.action.Create;
+import es.nivel36.laie.ejb.core.action.Update;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.search.SearchFacets;
 import es.nivel36.laie.ejb.core.model.search.SearchResult;
@@ -40,11 +40,13 @@ public class JobOfferService {
 
 	private @Inject JobOfferStateChangeEventDao jobOfferStateChangeEventDao;
 
-	private @Inject @JobOfferCompletedEvent Event<JobOffer> completedEvent;
+	private @Inject @Update @JobOfferCompletedEvent Event<JobOffer> completedEvent;
 
-	private @Inject @JobOfferCreatedEvent Event<JobOffer> createdEvent;
+	private @Inject @Update Event<JobOffer> updateEvent;
 
-	private @Inject @JobOfferStateChangedEvent Event<JobOffer> stateChangedEvent;
+	private @Inject @Create @JobOfferCreatedEvent Event<JobOffer> createdEvent;
+
+	private @Inject @Update @JobOfferStateChangedEvent Event<JobOffer> stateChangedEvent;
 
 	public void addJobOffer(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer);
@@ -53,12 +55,14 @@ public class JobOfferService {
 			this.openJobOffer(jobOffer);
 		}
 		this.jobOfferDao.insert(jobOffer);
-		this.createdEvent.fire(jobOffer);
+		this.createdEvent.fireAsync(jobOffer);
 	}
 
 	public JobOffer updateJobOffer(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer);
-		return jobOfferDao.update(jobOffer);
+		final JobOffer updatedJobOffer = jobOfferDao.update(jobOffer);
+		this.updateEvent.fireAsync(jobOffer);
+		return updatedJobOffer;
 	}
 
 	private boolean openDateHasCome(final JobOffer jobOffer) {
@@ -73,7 +77,6 @@ public class JobOfferService {
 		this.stateChangedEvent.fire(jobOffer);
 	}
 
-	@Audited(action = ActionType.UPDATE)
 	public void closeJobOffer(final JobOffer jobOffer) {
 		jobOffer.setCloseDate(LocalDate.now());
 		jobOffer.setState(JobOfferState.CLOSED);

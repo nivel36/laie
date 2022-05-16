@@ -31,7 +31,6 @@ public class ClientService {
 	public void addClient(final Client client) throws DuplicateCifException {
 		Objects.requireNonNull(client);
 		logger.debug("Add new client {}", client);
-
 		if (client.getCif() != null && this.clientDao.checkDuplicatedCif(client.getCif())) {
 			throw new DuplicateCifException();
 		}

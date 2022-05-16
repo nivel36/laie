@@ -22,15 +22,11 @@ public class ActionService {
 
 	private static final Logger logger = LoggerFactory.getLogger(ActionService.class);
 
-	@Inject
-	
-	private ActionDao actionDao;
+	private @Inject ActionDao actionDao;
 
-	@Resource
-	private SessionContext sessionContext;
+	private @Resource SessionContext sessionContext;
 
-	@Inject
-	private UserService userService;
+	private @Inject UserService userService;
 
 	public void createAction(@Create @ObservesAsync final Auditable auditedEntity) {
 		Objects.requireNonNull(auditedEntity);
@@ -49,7 +45,7 @@ public class ActionService {
 		logger.debug("Delete action class {} with id {}", auditedEntity.getEntityName(), auditedEntity.getId());
 		this.saveData(ActionType.DELETE, auditedEntity);
 	}
-	
+
 	private void saveData(final ActionType actionType, final Auditable auditedEntity) {
 		final User user = this.userService.findUserByEmail(loggedUser());
 		final Action action = new Action();

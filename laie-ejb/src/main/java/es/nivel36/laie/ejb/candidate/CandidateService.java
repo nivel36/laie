@@ -7,11 +7,15 @@ import java.util.Objects;
 import java.util.Set;
 
 import javax.ejb.Stateless;
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import es.nivel36.laie.ejb.core.action.Auditable;
+import es.nivel36.laie.ejb.core.action.Create;
+import es.nivel36.laie.ejb.core.action.Update;
 import es.nivel36.laie.ejb.core.file.File;
 import es.nivel36.laie.ejb.core.file.FileService;
 import es.nivel36.laie.ejb.core.model.Page;
@@ -34,6 +38,10 @@ public class CandidateService {
 
 	private @Inject TagDao tagDao;
 
+	private @Inject @Create Event<Auditable> createCandidateEvent;
+
+	private @Inject @Update Event<Auditable> updateCandidateEvent;
+
 	public void addCandidate(final Candidate candidate) throws DuplicateEmailException {
 		Objects.requireNonNull(candidate);
 		final String email = candidate.getEmail();
@@ -43,6 +51,7 @@ public class CandidateService {
 		logger.debug("Add candidate {}", candidate);
 		this.normalizeTags(candidate);
 		this.candidateDao.insert(candidate);
+		this.createCandidateEvent.fireAsync(candidate);
 	}
 
 	private void normalizeTags(final Candidate candidate) {
@@ -71,7 +80,13 @@ public class CandidateService {
 			}
 		}
 		this.normalizeTags(candidate);
-		return this.candidateDao.update(candidate);
+		return updateAndFireEvent(candidate);
+	}
+
+	private Candidate updateAndFireEvent(final Candidate candidate) {
+		final Candidate updatedCandidate = this.candidateDao.update(candidate);
+		this.updateCandidateEvent.fireAsync(updatedCandidate);
+		return updatedCandidate;
 	}
 
 	public Candidate changeCandidatesImage(final Candidate candidate, final InputStream image) {
@@ -87,7 +102,7 @@ public class CandidateService {
 			logger.trace("Remove user {} old image", candidate);
 			this.fileService.removeFile(oldImage);
 		}
-		return this.candidateDao.update(candidate);
+		return updateAndFireEvent(candidate);
 	}
 
 	public List<Origin> findCandidateOrigins() {
@@ -101,7 +116,7 @@ public class CandidateService {
 		logger.debug("Find candidates by jobOffer {} ", jobOffer);
 		return this.candidateDao.findCandidatesByJobOffer(jobOffer, page);
 	}
-	
+
 	public Candidate findCandidateByEmail(final String email) {
 		Objects.requireNonNull(email);
 		logger.debug("Find candidate by email {} ", email);
@@ -121,7 +136,7 @@ public class CandidateService {
 		logger.debug("Add file {} to candidate {}", filename, candidate);
 		final File file = fileService.uploadFile(inputStream, filename, false);
 		candidate.addFile(file);
-		return candidateDao.update(candidate);
+		return this.updateAndFireEvent(candidate);
 	}
 
 	public Candidate removeFileFromCandidate(final Candidate candidate, final File file) {
@@ -131,6 +146,7 @@ public class CandidateService {
 		candidate.removeFile(file);
 		final Candidate updatedCandidate = this.candidateDao.update(candidate);
 		this.fileService.removeFile(file);
+		this.updateCandidateEvent.fireAsync(updatedCandidate);
 		return updatedCandidate;
 	}
 

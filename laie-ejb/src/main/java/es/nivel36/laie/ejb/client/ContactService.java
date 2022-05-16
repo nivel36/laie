@@ -4,45 +4,53 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.ejb.Stateless;
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.core.action.ActionType;
-import es.nivel36.laie.ejb.core.action.Audited;
+import es.nivel36.laie.ejb.core.action.Auditable;
+import es.nivel36.laie.ejb.core.action.Create;
+import es.nivel36.laie.ejb.core.action.Update;
 import es.nivel36.laie.ejb.core.model.Page;
-
 
 @Stateless
 public class ContactService {
 
 	private static final Logger logger = LoggerFactory.getLogger(ContactService.class);
 
-	@Inject
-	private ContactDao contactDao;
+	private @Inject ContactDao contactDao;
 
-	@Inject
-	private ClientDao clientDao;
+	private @Inject ClientDao clientDao;
+
+	private @Inject @Create Event<Auditable> createClientEvent;
+
+	private @Inject @Update Event<Auditable> updateClientEvent;
 
 	public void addContact(final Contact contact) {
 		logger.debug("Add contact {}", contact);
 		contactDao.insert(contact);
+		this.createClientEvent.fireAsync(contact.getClient());
 	}
 
 	public Contact updateContact(final Contact contact) {
 		Objects.requireNonNull(contact);
 		logger.debug("Update contact {}", contact);
-		return this.contactDao.update(contact);
+		final Contact updatedContact = this.contactDao.update(contact);
+		this.updateClientEvent.fireAsync(contact.getClient());
+		return updatedContact;
 	}
 
-	public void deleteContact(final Contact contact) {
+	public Client deleteContact(final Contact contact) {
 		Objects.requireNonNull(contact);
 		logger.debug("Delete contact {}", contact);
 		contact.getClient().getContacts().remove(contact);
-		this.clientDao.update(contact.getClient());
+		final Client updatedClient = this.clientDao.update(contact.getClient());
+		this.updateClientEvent.fireAsync(updatedClient);
+		return updatedClient;
 	}
-	
+
 	public Contact findContactByEmail(final String email) {
 		Objects.requireNonNull(email);
 		logger.debug("Find contact by email {}", email);
