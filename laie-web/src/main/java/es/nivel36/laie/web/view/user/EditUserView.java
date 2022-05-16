@@ -39,7 +39,7 @@ public class EditUserView extends AbstractUserView {
 	}
 	
 	public static String getUrl(long userId) {
-		return URL + "?userId=" + userId;
+		return URL + "?user=" + userId;
 	}
 
 	public void save() {

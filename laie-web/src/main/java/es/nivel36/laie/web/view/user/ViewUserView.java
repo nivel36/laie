@@ -77,7 +77,7 @@ public class ViewUserView extends AbstractView {
 	}
 
 	public static String getUrl(long userId) {
-		return URL + "?userId=" + userId;
+		return URL + "?user=" + userId;
 	}
 
 	public boolean isLogedUser() {
