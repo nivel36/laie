@@ -37,6 +37,7 @@ public class EditJobView extends AbstractJobView {
 
 	public void save() {
 		logger.debug("Save job offer action performed");
+		this.convertRecruiters();
 		this.jobOfferService.updateJobOffer(jobOffer);
 		Faces.redirect(ViewJobView.getUrl(this.jobOffer.getId()));
 	}
