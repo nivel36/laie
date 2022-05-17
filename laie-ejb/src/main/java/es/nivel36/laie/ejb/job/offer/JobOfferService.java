@@ -52,11 +52,11 @@ public class JobOfferService {
 	public void addJobOffer(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer);
 		jobOffer.setState(JobOfferState.CREATED);
-		if (this.openDateHasCome(jobOffer)) {
-			this.openJobOffer(jobOffer);
-		}
 		this.jobOfferDao.insert(jobOffer);
 		this.createdEvent.fireAsync(jobOffer);
+		if (this.openDateHasCome(jobOffer)) {
+			this.openJobOffer(jobOffer, jobOffer.getOwner());
+		}
 	}
 
 	public JobOffer updateJobOffer(final JobOffer jobOffer) {
@@ -88,12 +88,13 @@ public class JobOfferService {
 		return !now.isBefore(dateOpened);
 	}
 
-	private JobOffer openJobOffer(final JobOffer jobOffer) {
+	private JobOffer openJobOffer(final JobOffer jobOffer, final User user) {
 		logger.debug("The open date has come. Opening the job offer");
 		final JobOfferStateEvent openStateEvent = new JobOfferStateEvent();
 		openStateEvent.setDate(LocalDateTime.now());
 		openStateEvent.setJobOffer(jobOffer);
 		openStateEvent.setPrevious(jobOffer.getState());
+		openStateEvent.setUser(user);
 		openStateEvent.setState(JobOfferState.OPENED);
 		jobOffer.setState(JobOfferState.OPENED);
 		return this.changeState(jobOffer, openStateEvent);
@@ -158,7 +159,18 @@ public class JobOfferService {
 		this.stateChangedEvent.fire(jobOffer);
 		return jobOfferDao.update(jobOffer);
 	}
-
+	
+	public long countJobOfferStateEventsByJobOffer(final JobOffer jobOffer) {
+		Objects.requireNonNull(jobOffer);
+		return jobOfferDao.countJobOfferStateEventsByJobOffer(jobOffer);
+	}
+	
+	public List<JobOfferStateEvent> findJobOfferStateEventsByJobOffer(final JobOffer jobOffer, final Page page) {
+		Objects.requireNonNull(jobOffer);
+		Objects.requireNonNull(page);
+		return jobOfferDao.findJobOfferStateEventsByJobOffer(jobOffer, page);
+	}
+	
 	public SearchResult<JobOffer> search(final String searchText, final Page page) {
 		return this.search(searchText, page, null, null);
 	}
@@ -198,5 +210,4 @@ public class JobOfferService {
 		Objects.requireNonNull(jobOfferStateChangeEventDao);
 		this.jobOfferStateChangeEventDao = jobOfferStateChangeEventDao;
 	}
-
 }

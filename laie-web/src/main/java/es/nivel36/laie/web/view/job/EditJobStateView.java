@@ -1,5 +1,6 @@
 package es.nivel36.laie.web.view.job;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -11,6 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.omnifaces.cdi.Param;
+import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +20,7 @@ import es.nivel36.laie.ejb.event.JobOfferEventService;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.ejb.job.offer.JobOfferState;
+import es.nivel36.laie.ejb.job.offer.JobOfferStateEvent;
 import es.nivel36.laie.web.core.view.AbstractView;
 
 @Named
@@ -73,7 +76,15 @@ public class EditJobStateView extends AbstractView {
 
 	public void save() {
 		logger.debug("Save job offer action performed");
-		this.jobOfferService.updateJobOffer(this.jobOffer);
+		JobOfferStateEvent event = new JobOfferStateEvent();
+		event.setDate(LocalDateTime.now());
+		event.setUser(this.sessionUser.get());
+		event.setNotes(notes);
+		event.setPrevious(jobOffer.getState());
+		event.setState(state);
+		event.setJobOffer(jobOffer);
+		this.jobOfferService.changeState(jobOffer, state);
+		Faces.redirect(ViewJobView.getUrl(this.jobOffer.getId()));
 	}
 
 	public JobOffer getJobOffer() {

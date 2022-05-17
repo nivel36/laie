@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<entity-mappings
-	xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
-        http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd"
-	version="2.1">
-		
+        http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd" version="2.1">
+
 	<named-query name="Action.findByUser">
 		<query><![CDATA[
 			SELECT a 
@@ -14,7 +11,7 @@
 			ORDER BY a.date DESC
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="Action.countByUser">
 		<query><![CDATA[
 			SELECT count(a) 
@@ -22,7 +19,7 @@
 			WHERE a.user = :user
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="Action.findAll">
 		<query><![CDATA[
 			SELECT a 
@@ -30,14 +27,14 @@
 			ORDER BY a.date DESC
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="Action.countAll">
 		<query><![CDATA[
 			SELECT count(a) 
 			FROM Action a
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="Bookmark.findByUrl">
 		<query><![CDATA[
 			SELECT b 
@@ -158,8 +155,7 @@
 		]]></query>
 	</named-query>
 
-	<named-query
-		name="JobCandidature.findByJobOfferAndCandidate">
+	<named-query name="JobCandidature.findByJobOfferAndCandidate">
 		<query><![CDATA[
 			SELECT j 
 			FROM JobCandidature j 
@@ -198,8 +194,7 @@
 		]]></query>
 	</named-query>
 
-	<named-query
-		name="JobCandidatureState.findFirstJobCandidatureState">
+	<named-query name="JobCandidatureState.findFirstJobCandidatureState">
 		<query><![CDATA[
 			SELECT j 
 			FROM JobCandidatureState j 
@@ -230,6 +225,22 @@
 			SELECT j 
 			FROM JobOffer j 
 			WHERE j.client = :client
+		]]></query>
+	</named-query>
+
+	<named-query name="JobOffer.findJobOfferStateEventsByJobOffer">
+		<query><![CDATA[
+			SELECT j 
+			FROM JobOfferStateEvent j 
+			WHERE j.jobOffer = :jobOffer
+		]]></query>
+	</named-query>
+
+	<named-query name="JobOffer.countJobOfferStateEventsByJobOffer">
+		<query><![CDATA[
+			SELECT COUNT(j) 
+			FROM JobOfferStateEvent j 
+			WHERE j.jobOffer = :jobOffer
 		]]></query>
 	</named-query>
 

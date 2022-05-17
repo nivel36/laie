@@ -2,6 +2,7 @@ package es.nivel36.laie.web.core.util;
 
 import java.text.MessageFormat;
 import java.util.Locale;
+import java.util.MissingResourceException;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -30,7 +31,11 @@ public class Translator {
 
 	public String message(final String message) {
 		final ResourceBundle bundle = this.getResourceBundle(FILE_NAME);
-		return bundle.getString(message);
+		try {
+			return bundle.getString(message);
+		} catch (MissingResourceException e) {
+			return "?" + message + "?";
+		}
 	}
 
 	public String message(final String message, final Object[] params) {

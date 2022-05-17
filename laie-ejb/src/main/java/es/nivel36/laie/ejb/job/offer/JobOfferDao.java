@@ -19,9 +19,8 @@ import es.nivel36.laie.ejb.core.model.search.SortField;
 import es.nivel36.laie.ejb.core.util.Parameters;
 import es.nivel36.laie.ejb.user.User;
 
-
 public class JobOfferDao extends AbstractDao {
-	
+
 	@Inject
 	private SearchFacade searchFacade;
 
@@ -52,6 +51,21 @@ public class JobOfferDao extends AbstractDao {
 		final String namedQuery = "JobOffer.findJobOffersByOwnerOrRecruiter";
 		final Parameters parameters = map("user", user);
 		return this.findByQuery(JobOffer.class, namedQuery, parameters, page);
+	}
+
+	public long countJobOfferStateEventsByJobOffer(final JobOffer jobOffer) {
+		Objects.requireNonNull(jobOffer);
+		final String namedQuery = "JobOffer.countJobOfferStateEventsByJobOffer";
+		final Parameters parameters = map("jobOffer", jobOffer);
+		return this.findByQuery(Long.class, namedQuery, parameters).longValue();
+	}
+	
+	public List<JobOfferStateEvent> findJobOfferStateEventsByJobOffer(final JobOffer jobOffer, final Page page) {
+		Objects.requireNonNull(jobOffer);
+		Objects.requireNonNull(page);
+		final String namedQuery = "JobOffer.findJobOfferStateEventsByJobOffer";
+		final Parameters parameters = map("jobOffer", jobOffer);
+		return this.findByQuery(JobOfferStateEvent.class, namedQuery, parameters, page);
 	}
 
 	public SearchResult<JobOffer> search(final String searchText, final Page page, SortField sortOrder,

@@ -25,6 +25,7 @@ public class JobOfferStateEvent extends AbstractEntity {
 
 	private JobOfferState state;
 
+	@ManyToOne
 	private User user;
 
 	public LocalDateTime getDate() {

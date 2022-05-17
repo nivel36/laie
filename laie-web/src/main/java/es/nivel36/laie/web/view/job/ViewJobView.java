@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.omnifaces.cdi.Param;
@@ -26,9 +27,8 @@ public class ViewJobView extends AbstractView {
 	private static final Logger logger = LoggerFactory.getLogger(ViewJobView.class);
 
 	private static String URL = "/job/view.xhtml";
-	
-	@Param(required = true)
-	private JobOffer jobOffer;
+
+	private @Param(required = true) JobOffer jobOffer;
 
 	private boolean editable;
 
@@ -38,6 +38,8 @@ public class ViewJobView extends AbstractView {
 
 	private List<JobCandidature> jobCandidatures;
 
+	private @Inject JobOfferStateEventsLazyDataModel jobOfferStateEvents;
+
 	@PostConstruct
 	public void init() {
 		logger.trace("JobOffer {} init", this.jobOffer);
@@ -46,8 +48,9 @@ public class ViewJobView extends AbstractView {
 		this.bookmarkable = !this.sessionUser.hasBookamrk(bookmark);
 		final User user = this.sessionUser.get();
 		this.editable = jobOffer.getRecruiters().contains(user) || jobOffer.getOwner().equals(user);
+		this.jobOfferStateEvents.setJobOffer(jobOffer);
 	}
-	
+
 	public void export() {
 		logger.debug("Export job action performed");
 	}
@@ -81,6 +84,10 @@ public class ViewJobView extends AbstractView {
 		this.bookmarkable = true;
 	}
 	
+	public JobOfferStateEventsLazyDataModel getJobOfferStateEvents() {
+		return jobOfferStateEvents;
+	}
+
 	public JobOffer getJobOffer() {
 		return jobOffer;
 	}

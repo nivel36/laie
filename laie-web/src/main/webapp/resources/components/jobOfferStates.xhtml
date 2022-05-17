@@ -18,10 +18,10 @@
 				paginatorPosition="bottom" rows="#{cc.attrs.rows}" sortBy="#{event.date}" sortOrder="ascending" lazy="true" styleClass="ui-datatable-borderless">
 
 				<p:column headerText="#{i18n['event.type']}">
-					<h:outputText value="#{i18n['event.'.concat(event.type)]}" />
+					<h:outputText value="#{i18n['job_offer_state.'.concat(event.state)]}" />
 				</p:column>
 
-				<p:column headerText="#{i18n['event.user']}" priority="5" rendered="#{cc.attrs.showUser}" >
+				<p:column headerText="#{i18n['event.user']}" priority="5" >
 					<h:link value="#{event.user.fullName}" outcome="/user/view.xhtml">
 						<f:param name="user" value="#{event.user.id}" />
 					</h:link>
