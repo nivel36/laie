@@ -1,6 +1,7 @@
 package es.nivel36.laie.ejb.job.offer;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -65,24 +66,37 @@ public class JobOfferService {
 		return updatedJobOffer;
 	}
 
+	public JobOffer changeState(final JobOffer jobOffer, final JobOfferStateEvent newState) {
+		Objects.requireNonNull(jobOffer);
+		if (newState.getState().isCloseState()) {
+			jobOffer.setCloseDate(LocalDate.now());
+			jobOffer.setState(JobOfferState.CLOSED);
+			jobOffer.setPublished(false);
+		}
+		jobOffer.getJobOfferStateEvents().add(newState);
+		final JobOffer updatedJobOffer = jobOfferDao.update(jobOffer);
+		if (newState.getState().isCloseState()) {
+			this.completedEvent.fire(jobOffer);
+		}
+		this.stateChangedEvent.fire(jobOffer);
+		return updatedJobOffer;
+	}
+
 	private boolean openDateHasCome(final JobOffer jobOffer) {
 		final LocalDate dateOpened = jobOffer.getOpenDate();
 		final LocalDate now = LocalDate.now();
 		return !now.isBefore(dateOpened);
 	}
 
-	private void openJobOffer(final JobOffer jobOffer) {
+	private JobOffer openJobOffer(final JobOffer jobOffer) {
 		logger.debug("The open date has come. Opening the job offer");
+		final JobOfferStateEvent openStateEvent = new JobOfferStateEvent();
+		openStateEvent.setDate(LocalDateTime.now());
+		openStateEvent.setJobOffer(jobOffer);
+		openStateEvent.setPrevious(jobOffer.getState());
+		openStateEvent.setState(JobOfferState.OPENED);
 		jobOffer.setState(JobOfferState.OPENED);
-		this.stateChangedEvent.fire(jobOffer);
-	}
-
-	public void closeJobOffer(final JobOffer jobOffer) {
-		jobOffer.setCloseDate(LocalDate.now());
-		jobOffer.setState(JobOfferState.CLOSED);
-		jobOffer.setPublished(false);
-		jobOfferDao.update(jobOffer);
-		this.completedEvent.fire(jobOffer);
+		return this.changeState(jobOffer, openStateEvent);
 	}
 
 	public JobOffer findJobOfferById(final Long id) {
@@ -128,7 +142,12 @@ public class JobOfferService {
 		Objects.requireNonNull(jobCandidature, "Job candidature can't be null");
 		final JobOffer jobOffer = jobCandidature.getJobOffer();
 		if (this.isCompleted(jobOffer)) {
-			this.closeJobOffer(jobOffer);
+			final JobOfferStateEvent closeStateEvent = new JobOfferStateEvent();
+			closeStateEvent.setDate(LocalDateTime.now());
+			closeStateEvent.setJobOffer(jobOffer);
+			closeStateEvent.setPrevious(jobOffer.getState());
+			closeStateEvent.setState(JobOfferState.CLOSED);
+			this.changeState(jobOffer, closeStateEvent);
 		}
 	}
 

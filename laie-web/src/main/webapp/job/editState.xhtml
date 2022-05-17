@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://nivel.36/laie/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://nivel.36/laie/ui"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
@@ -9,55 +10,37 @@
 
 	<ui:param name="selectedMenu" value="offers" />
 
-	<ui:define name="breadcrumb">
-		<p:breadCrumb>
-			<p:menuitem value="#{i18n['menu.index']}" outcome="/index.xhtml" />
-			<p:menuitem value="#{i18n['job.job_offers']}" outcome="/job/search.xhtml" />
-			<p:menuitem value="#{editJobStateView.jobOffer}" outcome="/job/view.xhtml">
-				<f:param name="id" value="#{editJobStateView.jobOffer.id}" />
-			</p:menuitem>
-			<p:menuitem value="#{i18n['job.edit_job_state']}" disabled="true" />
-		</p:breadCrumb>
-	</ui:define>
-	<ui:define name="buttons">
-		<h:form>
-			<p:button value="#{i18n['action.cancel']}" outcome="/job/view.xhtml" styleClass="ui-button-secondary ui-button-outlined">
-				<f:param name="id" value="#{editJobStateView.jobOffer.id}" />
-			</p:button>
-			<p:commandButton value="#{i18n['action.save']}" onclick="processForm()" styleClass="ui-button-success ui-button-outlined" />
-		</h:form>
-	</ui:define>
-
 	<ui:define name="content">
-		<div class="p-grid">
-			<div class="p-col-12 p-xl-6">
-				<h:form id="eventForm">
-					<p:remoteCommand name="processForm" process="@form" update="@form growl" action="#{editJobStateView.save}" />
-					<div class="card card-w-title ui-fluid">
-						<h1>#{i18n['job.new_state']}</h1>
-						<div class="p-grid">
+		<h:form id="userForm">
+			<div class="card">
+				<div class="p-grid">
 
-							<div class="p-col-12">
-								<g:input id="notes" label="#{i18n['job.edit_state.notes']}" value="#{editJobStateView.notes}" type="textarea" />
-							</div>
-
-							<div class="p-col-12 p-xl-6">
-								<div class="input-group input-group-select">
-									<div class="label-container">
-										<p:outputLabel id="label" value="#{i18n['event.state']}" for="state" styleClass="label" />
-									</div>
-									<p:selectOneMenu id="state" value="#{editJobStateView.state}" styleClass="input input-select" panelStyleClass="jobCandidatureStates" var="state">
-										<f:selectItems value="#{jobOfferStates.list}" var="jobOfferState" itemValue="#{jobOfferState}" itemLabel="#{i18n['job_offer_state.'.concat(jobOfferState.name)]}" />
-										<p:column>
-											<cc:jobOfferState value="#{state}" />
-										</p:column>
-									</p:selectOneMenu>
+					<div class="p-col-12 p-md-6">
+						<div class="form-card ui-fluid">
+							<h5>#{i18n['job.new_state']}</h5>
+							<div class="p-grid p-formgrid">
+								<div class="p-col-12">
+									<g:input label="#{i18n['event.state']}" value="#{editJobStateView.state}" required="true" type="selectOneMenu">
+										<f:selectItems value="#{editJobStateView.states}" />
+									</g:input>
+								</div>
+								<div class="p-col-12">
+									<g:input id="notes" label="#{i18n['job.edit_state.notes']}" value="#{editJobStateView.notes}" type="textarea" />
 								</div>
 							</div>
 						</div>
 					</div>
-				</h:form>
+					<div class="p-col-12">
+						<div class="form-buttons">
+							<p:button value="#{i18n['action.cancel']}" outcome="/job/view.xhtml" styleClass="ui-button-secondary ui-button-outlined">
+								<f:param name="jobOffer" value="#{editJobStateView.jobOffer.id}" />
+							</p:button>
+							<p:commandButton value="#{i18n['action.save']}" process="@form" update="@form growl" action="#{editJobStateView.save}"
+								styleClass="ui-button-success ui-button-outlined" />
+						</div>
+					</div>
+				</div>
 			</div>
-		</div>
+		</h:form>
 	</ui:define>
 </ui:composition>

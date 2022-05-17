@@ -45,6 +45,7 @@
 						</p:button>
 					</cc:jobCandidatures>
 				</h:form>
+				<cc:jobOfferStates value="#{viewJobView.jobOfferStates}" showJobOffer="false" rows="5" />
 			</div>
 
 			<div class="p-col-12 p-xl-4">
@@ -82,9 +83,10 @@
 						<div class="text-container">
 							<h:form>
 								<div class="job-state">
-									<p:commandLink action="#{viewJobView.editJobOfferState}">
+									<p:link outcome="/job/editState.xhtml">
 										<cc:jobOfferState value="#{viewJobView.jobOffer.state}" />
-									</p:commandLink>
+										<f:param name="jobOffer" value="#{viewJobView.jobOffer.id}" />
+									</p:link>
 								</div>
 							</h:form>
 						</div>

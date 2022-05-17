@@ -60,18 +60,25 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	@SortableField
 	private LocalDate closeDate;
 
-	@NotNull
-	@Field(analyze = Analyze.NO)
-	@SortableField
-	@Column(nullable = false)
-	private LocalDate openDate;
-
 	@Lob
 	@Field
 	private String description;
 
 	@OneToMany(mappedBy = "jobOffer", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<JobCandidature> jobCandidatures = new HashSet<>();
+
+	@OneToMany(mappedBy = "jobOffer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<JobOfferStateEvent> jobOfferStateEvents = new HashSet<>();
+
+	private Integer maxSalary;
+
+	private Integer minSalary;
+
+	@NotNull
+	@Field(analyze = Analyze.NO)
+	@SortableField
+	@Column(nullable = false)
+	private LocalDate openDate;
 
 	@NotNull
 	@ManyToOne
@@ -88,10 +95,6 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	@JoinTable(name = "job_user", joinColumns = @JoinColumn(name = "job_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private Set<User> recruiters = new HashSet<>();;
 
-	private Integer maxSalary;
-	
-	private Integer minSalary;
-
 	@NotNull
 	private JobOfferState state;
 
@@ -101,6 +104,22 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	@Field(name = "title", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "title")
 	private String title;
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (this.getClass() != obj.getClass()) {
+			return false;
+		}
+		final JobOffer other = (JobOffer) obj;
+		return Objects.equals(this.openDate, other.openDate) && Objects.equals(this.title, other.title)
+				&& Objects.equals(this.places, other.places);
+	}
 
 	public Address getAddress() {
 		if (this.address == null) {
@@ -117,16 +136,38 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 		return this.closeDate;
 	}
 
-	public LocalDate getOpenDate() {
-		return this.openDate;
-	}
-
 	public String getDescription() {
 		return this.description;
 	}
 
+	@Override
+	public String getEntityName() {
+		return JOB_OFFER;
+	}
+
+	@Override
+	public String getEntityTitle() {
+		return this.title;
+	}
+
 	public Set<JobCandidature> getJobCandidatures() {
 		return this.jobCandidatures;
+	}
+
+	public Set<JobOfferStateEvent> getJobOfferStateEvents() {
+		return jobOfferStateEvents;
+	}
+
+	public Integer getMaxSalary() {
+		return this.maxSalary;
+	}
+
+	public Integer getMinSalary() {
+		return this.minSalary;
+	}
+
+	public LocalDate getOpenDate() {
+		return this.openDate;
 	}
 
 	@Override
@@ -140,14 +181,6 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 
 	public Set<User> getRecruiters() {
 		return this.recruiters;
-	}
-
-	public Integer getMaxSalary() {
-		return this.maxSalary;
-	}
-	
-	public Integer getMinSalary() {
-		return this.minSalary;
 	}
 
 	public JobOfferState getState() {
@@ -169,6 +202,11 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return 31 * Objects.hash(this.openDate, this.title, this.places);
 	}
 
 	public boolean hasState(final JobOfferState state) {
@@ -199,16 +237,28 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 		this.closeDate = closeDate;
 	}
 
-	public void setOpenDate(final LocalDate openDate) {
-		this.openDate = openDate;
-	}
-
 	public void setDescription(final String description) {
 		this.description = description;
 	}
 
 	public void setJobCandidatures(final Set<JobCandidature> jobCandidatures) {
 		this.jobCandidatures = jobCandidatures;
+	}
+
+	public void setJobOfferStateEvents(Set<JobOfferStateEvent> jobOfferStateEvents) {
+		this.jobOfferStateEvents = jobOfferStateEvents;
+	}
+
+	public void setMaxSalary(final Integer maxSalary) {
+		this.maxSalary = maxSalary;
+	}
+
+	public void setMinSalary(final Integer minSalary) {
+		this.minSalary = minSalary;
+	}
+
+	public void setOpenDate(final LocalDate openDate) {
+		this.openDate = openDate;
 	}
 
 	@Override
@@ -235,14 +285,6 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 		this.recruiters = recruiters;
 	}
 
-	public void setMaxSalary(final Integer maxSalary) {
-		this.maxSalary = maxSalary;
-	}
-	
-	public void setMinSalary(final Integer minSalary) {
-		this.minSalary = minSalary;
-	}
-
 	public void setState(final JobOfferState state) {
 		this.state = state;
 	}
@@ -250,40 +292,9 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	public void setTitle(final String title) {
 		this.title = title;
 	}
-	
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (this.getClass() != obj.getClass()) {
-			return false;
-		}
-		final JobOffer other = (JobOffer) obj;
-		return Objects.equals(this.openDate, other.openDate) && Objects.equals(this.title, other.title)
-				&& Objects.equals(this.places, other.places);
-	}
-	
-	@Override
-	public int hashCode() {
-		return 31*Objects.hash(this.openDate, this.title, this.places);
-	}
 
 	@Override
 	public String toString() {
 		return this.title + "-" + this.client.getName();
-	}
-
-	@Override
-	public String getEntityName() {
-		return JOB_OFFER;
-	}
-
-	@Override
-	public String getEntityTitle() {
-		return this.title;
 	}
 }

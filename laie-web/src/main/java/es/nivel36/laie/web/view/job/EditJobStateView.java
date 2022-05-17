@@ -1,8 +1,11 @@
 package es.nivel36.laie.web.view.job;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.annotation.PostConstruct;
+import javax.faces.model.SelectItem;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -15,7 +18,6 @@ import es.nivel36.laie.ejb.event.JobOfferEventService;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.ejb.job.offer.JobOfferState;
-import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
 
 @Named
@@ -26,40 +28,52 @@ public class EditJobStateView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(EditJobStateView.class);
 
-	@Param
+	@Param(required = true)
 	private JobOffer jobOffer;
 
 	private String notes;
 
 	private JobOfferState state;
 
+	private List<SelectItem> states;
+
 	@Inject
 	protected transient JobOfferEventService jobOfferEventService;
-	
+
 	@Inject
 	protected transient JobOfferService jobOfferService;
-	
+
 	@PostConstruct
 	public void init() {
-		this.checkNonNullJobOffer();
 		logger.trace("Edit job state {} init", this.jobOffer);
-	}
-
-	private void checkNonNullJobOffer() {
-		if (this.jobOffer == null) {
-			logger.error("Trying to edit a job offer but job is null");
-			throw new IllegalPageStateException();
+		states = new ArrayList<>();
+		if (jobOffer.getState().equals(JobOfferState.OPENED)) {
+			states.add(new SelectItem(JobOfferState.CLOSED, this.translator.message("job_offer_state.close")));
+			states.add(new SelectItem(JobOfferState.FINISHED, this.translator.message("job_offer_state.finish")));
+			states.add(new SelectItem(JobOfferState.PAUSED, this.translator.message("job_offer_state.pause")));
+		} else if (jobOffer.getState().equals(JobOfferState.CLOSED)) {
+			states.add(new SelectItem(JobOfferState.OPENED, this.translator.message("job_offer_state.open")));
+		} else if (jobOffer.getState().equals(JobOfferState.FINISHED)) {
+			states.add(new SelectItem(JobOfferState.OPENED, this.translator.message("job_offer_state.open")));
+		} else if (jobOffer.getState().equals(JobOfferState.PAUSED)) {
+			states.add(new SelectItem(JobOfferState.OPENED, this.translator.message("job_offer_state.open")));
+			states.add(new SelectItem(JobOfferState.CLOSED, this.translator.message("job_offer_state.close")));
+			states.add(new SelectItem(JobOfferState.FINISHED, this.translator.message("job_offer_state.finish")));
+		} else if (jobOffer.getState().equals(JobOfferState.CREATED)) {
+			states.add(new SelectItem(JobOfferState.OPENED, this.translator.message("job_offer_state.open")));
+			states.add(new SelectItem(JobOfferState.CLOSED, this.translator.message("job_offer_state.close")));
+			states.add(new SelectItem(JobOfferState.FINISHED, this.translator.message("job_offer_state.finish")));
+			states.add(new SelectItem(JobOfferState.PAUSED, this.translator.message("job_offer_state.close")));
 		}
 	}
 
-	private String jobUrl() {
-		return null;
+	public List<SelectItem> getStates() {
+		return states;
 	}
 
-	public String save() {
+	public void save() {
 		logger.debug("Save job offer action performed");
 		this.jobOfferService.updateJobOffer(this.jobOffer);
-		return this.jobUrl();
 	}
 
 	public JobOffer getJobOffer() {
@@ -85,12 +99,12 @@ public class EditJobStateView extends AbstractView {
 	public void setState(final JobOfferState state) {
 		this.state = state;
 	}
-	
+
 	public void setJobOfferService(final JobOfferService jobOfferService) {
 		Objects.requireNonNull(jobOfferService);
 		this.jobOfferService = jobOfferService;
 	}
-	
+
 	public void setJobOfferEventService(final JobOfferEventService jobOfferEventService) {
 		Objects.requireNonNull(jobOfferEventService);
 		this.jobOfferEventService = jobOfferEventService;
