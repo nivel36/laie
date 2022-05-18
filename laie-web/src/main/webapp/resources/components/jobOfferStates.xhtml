@@ -21,16 +21,13 @@
 					<h:outputText value="#{i18n['job_offer_state.'.concat(event.state)]}" />
 				</p:column>
 
-				<p:column headerText="#{i18n['event.user']}" priority="5" >
-					<h:link value="#{event.user.fullName}" outcome="/user/view.xhtml">
-						<f:param name="user" value="#{event.user.id}" />
-					</h:link>
-				</p:column>
-
 				<p:column headerText="#{i18n['event.date']}" priority="4">
 					<h:outputText value="#{event.date}">
 						<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
 					</h:outputText>
+				</p:column>
+				<p:column headerText="#{i18n['event.notes']}" priority="4">
+					<h:outputText value="#{event.notes}" />
 				</p:column>
 
 			</p:dataTable>

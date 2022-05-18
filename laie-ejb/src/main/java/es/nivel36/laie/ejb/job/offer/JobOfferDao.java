@@ -23,6 +23,11 @@ public class JobOfferDao extends AbstractDao {
 
 	@Inject
 	private SearchFacade searchFacade;
+	
+	public void addJobOfferStateEvent(JobOfferStateEvent jobOfferStateEvent) {
+		Objects.requireNonNull(jobOfferStateEvent);
+		em.persist(jobOfferStateEvent);
+	}
 
 	public JobOfferState findFirstJobOfferState() {
 		final String namedQuery = "JobOfferState.findFirst";

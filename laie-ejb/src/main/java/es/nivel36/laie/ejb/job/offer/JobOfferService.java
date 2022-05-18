@@ -55,7 +55,7 @@ public class JobOfferService {
 		this.jobOfferDao.insert(jobOffer);
 		this.createdEvent.fireAsync(jobOffer);
 		if (this.openDateHasCome(jobOffer)) {
-			this.openJobOffer(jobOffer, jobOffer.getOwner());
+			this.changeState(jobOffer, JobOfferState.OPENED, null);
 		}
 	}
 
@@ -66,38 +66,10 @@ public class JobOfferService {
 		return updatedJobOffer;
 	}
 
-	public JobOffer changeState(final JobOffer jobOffer, final JobOfferStateEvent newState) {
-		Objects.requireNonNull(jobOffer);
-		if (newState.getState().isCloseState()) {
-			jobOffer.setCloseDate(LocalDate.now());
-			jobOffer.setState(JobOfferState.CLOSED);
-			jobOffer.setPublished(false);
-		}
-		jobOffer.getJobOfferStateEvents().add(newState);
-		final JobOffer updatedJobOffer = jobOfferDao.update(jobOffer);
-		if (newState.getState().isCloseState()) {
-			this.completedEvent.fire(jobOffer);
-		}
-		this.stateChangedEvent.fire(jobOffer);
-		return updatedJobOffer;
-	}
-
 	private boolean openDateHasCome(final JobOffer jobOffer) {
 		final LocalDate dateOpened = jobOffer.getOpenDate();
 		final LocalDate now = LocalDate.now();
 		return !now.isBefore(dateOpened);
-	}
-
-	private JobOffer openJobOffer(final JobOffer jobOffer, final User user) {
-		logger.debug("The open date has come. Opening the job offer");
-		final JobOfferStateEvent openStateEvent = new JobOfferStateEvent();
-		openStateEvent.setDate(LocalDateTime.now());
-		openStateEvent.setJobOffer(jobOffer);
-		openStateEvent.setPrevious(jobOffer.getState());
-		openStateEvent.setUser(user);
-		openStateEvent.setState(JobOfferState.OPENED);
-		jobOffer.setState(JobOfferState.OPENED);
-		return this.changeState(jobOffer, openStateEvent);
 	}
 
 	public JobOffer findJobOfferById(final Long id) {
@@ -143,34 +115,49 @@ public class JobOfferService {
 		Objects.requireNonNull(jobCandidature, "Job candidature can't be null");
 		final JobOffer jobOffer = jobCandidature.getJobOffer();
 		if (this.isCompleted(jobOffer)) {
-			final JobOfferStateEvent closeStateEvent = new JobOfferStateEvent();
-			closeStateEvent.setDate(LocalDateTime.now());
-			closeStateEvent.setJobOffer(jobOffer);
-			closeStateEvent.setPrevious(jobOffer.getState());
-			closeStateEvent.setState(JobOfferState.CLOSED);
-			this.changeState(jobOffer, closeStateEvent);
+			this.changeState(jobOffer, JobOfferState.CLOSED, null);
 		}
 	}
 
-	public JobOffer changeState(final JobOffer jobOffer, final JobOfferState newState) {
+	public JobOffer changeState(final JobOffer jobOffer, final JobOfferState newState, final String notes) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(newState);
+		final JobOfferStateEvent newStateEvent = builJobOfferStateEvent(jobOffer, newState, notes);
+		jobOfferDao.addJobOfferStateEvent(newStateEvent);
 		jobOffer.setState(newState);
-		this.stateChangedEvent.fire(jobOffer);
-		return jobOfferDao.update(jobOffer);
+		if (newState.isCloseState()) {
+			jobOffer.setCloseDate(LocalDate.now());
+			jobOffer.setState(JobOfferState.CLOSED);
+		}
+		this.stateChangedEvent.fireAsync(jobOffer);
+		final JobOffer updatedJobOffer = jobOfferDao.update(jobOffer);
+		if (newState.isCloseState()) {
+			this.completedEvent.fireAsync(jobOffer);
+		}
+		return updatedJobOffer;
 	}
-	
+
+	private JobOfferStateEvent builJobOfferStateEvent(final JobOffer jobOffer, final JobOfferState newState,
+			final String notes) {
+		final JobOfferStateEvent newStateEvent = new JobOfferStateEvent();
+		newStateEvent.setDate(LocalDateTime.now());
+		newStateEvent.setJobOffer(jobOffer);
+		newStateEvent.setState(newState);
+		newStateEvent.setNotes(notes);
+		return newStateEvent;
+	}
+
 	public long countJobOfferStateEventsByJobOffer(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer);
 		return jobOfferDao.countJobOfferStateEventsByJobOffer(jobOffer);
 	}
-	
+
 	public List<JobOfferStateEvent> findJobOfferStateEventsByJobOffer(final JobOffer jobOffer, final Page page) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(page);
 		return jobOfferDao.findJobOfferStateEventsByJobOffer(jobOffer, page);
 	}
-	
+
 	public SearchResult<JobOffer> search(final String searchText, final Page page) {
 		return this.search(searchText, page, null, null);
 	}

@@ -21,12 +21,7 @@ public class JobOfferStateEvent extends AbstractEntity {
 
 	private String notes;
 
-	private JobOfferState previous;
-
 	private JobOfferState state;
-
-	@ManyToOne
-	private User user;
 
 	public LocalDateTime getDate() {
 		return date;
@@ -40,16 +35,8 @@ public class JobOfferStateEvent extends AbstractEntity {
 		return notes;
 	}
 
-	public JobOfferState getPrevious() {
-		return previous;
-	}
-
 	public JobOfferState getState() {
 		return state;
-	}
-
-	public User getUser() {
-		return user;
 	}
 
 	public void setDate(LocalDateTime date) {
@@ -64,16 +51,8 @@ public class JobOfferStateEvent extends AbstractEntity {
 		this.notes = notes;
 	}
 
-	public void setPrevious(JobOfferState previous) {
-		this.previous = previous;
-	}
-
 	public void setState(JobOfferState state) {
 		this.state = state;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
 	}
 
 	@Override

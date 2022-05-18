@@ -47,7 +47,8 @@ public class ViewJobView extends AbstractView {
 		this.bookmark = buildBookmark();
 		this.bookmarkable = !this.sessionUser.hasBookamrk(bookmark);
 		final User user = this.sessionUser.get();
-		this.editable = jobOffer.getRecruiters().contains(user) || jobOffer.getOwner().equals(user);
+		this.editable = !jobOffer.getState().isCloseState()
+				&& (jobOffer.getRecruiters().contains(user) || jobOffer.getOwner().equals(user));
 		this.jobOfferStateEvents.setJobOffer(jobOffer);
 	}
 
@@ -83,7 +84,7 @@ public class ViewJobView extends AbstractView {
 		this.sessionUser.removeFromBookmarks(bookmark);
 		this.bookmarkable = true;
 	}
-	
+
 	public JobOfferStateEventsLazyDataModel getJobOfferStateEvents() {
 		return jobOfferStateEvents;
 	}
