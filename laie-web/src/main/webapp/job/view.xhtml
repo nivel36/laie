@@ -39,7 +39,7 @@
 				</div>
 				<h:form>
 					<cc:jobCandidatures value="#{viewJobView.jobCandidatures}" showJobOffer="false" rows="5">
-						<p:button outcome="/job/selectCandidates.xhtml" process="@this" rendered="#{viewJobView.jobOffer.open}" icon="pi pi-plus"
+						<p:button outcome="/job/selectCandidates.xhtml" process="@this" rendered="#{viewJobView.addCandidature}" icon="pi pi-plus"
 							styleClass="ui-button-success ui-button-outlined">
 							<f:param name="jobOffer" value="#{viewJobView.jobOffer.id}" />
 						</p:button>
@@ -83,10 +83,13 @@
 						<div class="text-container">
 							<h:form>
 								<div class="job-state">
-									<p:link outcome="/job/editState.xhtml">
+									<p:link outcome="/job/editState.xhtml" rendered="#{viewJobView.owner}">
 										<cc:jobOfferState value="#{viewJobView.jobOffer.state}" />
 										<f:param name="jobOffer" value="#{viewJobView.jobOffer.id}" />
 									</p:link>
+									<h:panelGroup rendered="#{not viewJobView.owner}">
+										<cc:jobOfferState value="#{viewJobView.jobOffer.state}" />
+									</h:panelGroup>
 								</div>
 							</h:form>
 						</div>

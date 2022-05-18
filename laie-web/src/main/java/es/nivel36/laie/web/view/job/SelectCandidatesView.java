@@ -18,6 +18,7 @@ import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.job.candidature.JobCandidature;
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureService;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
+import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
 import es.nivel36.laie.web.view.candidate.CandidateLazyDataModel;
@@ -47,6 +48,10 @@ public class SelectCandidatesView extends AbstractView {
 	public void init() {
 		if (this.jobOffer == null) {
 			throw new IllegalPageStateException();
+		}
+		final User user = sessionUser.get();
+		if (!this.jobOffer.getOwner().equals(user) || !this.jobOffer.getRecruiters().contains(user)) {
+			throw new SecurityException();
 		}
 		final Set<JobCandidature> jobCandidatures = this.jobOffer.getJobCandidatures();
 		if (jobCandidatures != null) {

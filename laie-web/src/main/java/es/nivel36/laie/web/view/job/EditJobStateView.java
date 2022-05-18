@@ -19,6 +19,7 @@ import es.nivel36.laie.ejb.event.JobOfferEventService;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.ejb.job.offer.JobOfferState;
+import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.web.core.view.AbstractView;
 
 @Named
@@ -47,6 +48,10 @@ public class EditJobStateView extends AbstractView {
 	@PostConstruct
 	public void init() {
 		logger.trace("Edit job state {} init", this.jobOffer);
+		final User user = sessionUser.get();
+		if (!this.jobOffer.getOwner().equals(user)) {
+			throw new SecurityException();
+		}
 		states = new ArrayList<>();
 		if (jobOffer.getState().equals(JobOfferState.OPENED)) {
 			states.add(new SelectItem(JobOfferState.CLOSED, this.translator.message("job_offer_state.close")));
