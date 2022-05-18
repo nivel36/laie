@@ -3925,6 +3925,20 @@ a {
   src: url("#{resource['roma-layout:fonts/Inter-UI-Bold.otf']}") format("opentype"), url("#{resource['roma-layout:fonts/Inter-UI-Bold.woff2']}") format("woff2"), url("#{resource['roma-layout:fonts/Inter-UI-Bold.woff']}") format("woff"), url("#{resource['roma-layout:fonts/Inter-UI-Bold.ttf']}") format("truetype");
   /* Safari, Android, iOS */
 }
+.login-body .login-panel {
+  display: flex;
+  align-items: center;
+}
+.login-body .login-panel .login-panel-content {
+  margin: 0;
+}
+
+.attendee {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2em;
+}
+
 .layout-aside {
   float: left;
   width: 20%;
@@ -3938,6 +3952,75 @@ a {
     display: none;
   }
 }
+.form-card {
+  box-shadow: none;
+  padding: 2rem 1rem 0 1rem;
+  border: 1px solid #ebedef;
+  border-radius: 5px;
+  margin-bottom: 2rem;
+}
+.form-card h5 {
+  margin-bottom: 2rem;
+}
+
+.card-w-title {
+  position: relative;
+}
+.card-w-title h1, .card-w-title h2, .card-w-title h3, .card-w-title h4, .card-w-title h5 {
+  margin-bottom: 2rem;
+}
+.card-w-title .card-header-buttons {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+.curriculum {
+  display: flex;
+  flex-direction: column;
+  padding: 2em;
+}
+.curriculum .buttons {
+  justify-content: flex-end;
+  display: flex;
+  margin-top: -3em;
+}
+.curriculum .section {
+  display: flex;
+  flex-direction: column;
+}
+.curriculum .section.skills ul {
+  flex-direction: row;
+}
+.curriculum .section.skills ul li {
+  display: flex;
+  border-bottom: 0px;
+}
+.curriculum .section .text-content {
+  margin-right: 10em;
+}
+.curriculum ul {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1em;
+}
+.curriculum ul li {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid #ebedef;
+  margin-bottom: 2em;
+  padding-bottom: 2em;
+}
+.curriculum ul li:last-child {
+  border-bottom: 0;
+  margin-bottom: inherit;
+}
+.curriculum .language-name {
+  font-size: 1.1em;
+  font-weight: 800;
+  padding-bottom: 0.2em;
+}
+
 .layout-wrapper .layout-topbar {
   height: 4rem;
 }
@@ -3977,62 +4060,83 @@ a {
   margin-left: 1em;
 }
 
-.buttons {
-  padding: 1rem;
-  text-align: right;
+.searchBar-buttons {
+  display: flex;
+  padding-bottom: 2rem;
 }
-.buttons .ui-button {
+.searchBar-buttons .input-search-group {
+  flex: 1;
+}
+.searchBar-buttons .buttons {
+  flex: 1;
+  display: flex;
+  padding: 0rem;
+  justify-content: flex-end;
+  margin-left: auto;
+}
+.searchBar-buttons .buttons .ui-button {
   margin-left: 1rem;
 }
 
-.candidate-card {
-  padding: 0;
+.title-card {
+  background: #ffffff;
+  box-sizing: border-box;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
 }
-.candidate-card .candidate-card-header {
-  height: 9rem;
-  overflow: hidden;
+.title-card .title-card-content {
+  height: 10rem;
+  padding: 1.5rem;
   background: linear-gradient(30deg, #0f97c7 0%, #91dcf7 150%);
   background-color: #0f97c7;
   color: #ffffff;
+  display: flex;
+  justify-content: space-between;
 }
-.candidate-card .candidate-card-content .label-container {
-  font-size: 0.9em;
-  padding-bottom: 0.3em;
-}
-.candidate-card .candidate-card-content .label-container .label {
-  color: #252529;
-}
-.candidate-card .candidate-card-content .text {
-  color: #666666;
-}
-.candidate-card .candidate-card-content .candidate-image {
-  margin: -2.5rem 0 0 3rem;
+.title-card .title-card-content .title-card-content-image {
   width: 5rem;
   height: 5rem;
+  order: 2;
+  margin-left: auto;
+  margin-right: 1.5rem;
 }
-.candidate-card .candidate-card-content .candidate-image img {
+.title-card .title-card-content .title-card-content-image img {
   margin: 0;
   width: 5rem;
   height: 5rem;
 }
-.candidate-card .candidate-card-content .candidate-card-name {
-  font-size: 13px;
-  color: #ffffff;
-  position: relative;
-  top: -4.2rem;
-  margin-left: 9rem;
+.title-card .title-card-content .title-card-content-info {
+  display: flex;
+  flex-direction: column;
+}
+.title-card .title-card-content .title-card-content-info .title {
+  font-size: 1.5rem;
   font-weight: 700;
   white-space: nowrap;
 }
-.candidate-card .candidate-card-content .candidate-card-profile {
-  position: relative;
-  top: -3.8rem;
-  margin-left: 9rem;
-  font-weight: 700;
+.title-card .title-card-content .title-card-content-info .subtitle {
+  font-size: 1.2rem;
+  font-weight: 500;
   white-space: nowrap;
 }
-.candidate-card .candidate-card-content .candidate-detail {
-  padding: 0 2.5em 2em 2.5em;
+.title-card .title-card-content .title-card-content-info .text {
+  font-size: 0.9rem;
+  margin-top: 2.5rem;
+}
+.title-card .title-card-content .menu-button {
+  order: 3;
+}
+.title-card .title-card-content .menu-button button.ui-button {
+  background-color: transparent;
+  border: 0px;
+}
+.title-card .title-card-content .menu-button button.ui-button.ui-state-focus {
+  box-shadow: none;
+}
+.title-card .title-card-content .menu-button button.ui-button .ui-icon {
+  font-size: 1.5rem;
 }
 
 .card.client-card {
@@ -4068,22 +4172,61 @@ a {
   padding: 0 2.5em 2em 2.5em;
 }
 
-.contacts .ui-dataview-row {
-  border-top: 1px solid #ddd;
+.linkedin {
+  margin-right: 1rem;
 }
-.contacts .ui-dataview-column {
-  border-bottom: 1px solid #ddd;
+.linkedin i {
+  margin-right: 0.3rem;
+}
+.linkedin a {
+  color: #ffffff;
+}
+
+.skype {
+  margin-right: 1rem;
+}
+.skype i {
+  margin-right: 0.3rem;
+}
+
+.phone {
+  margin-right: 1rem;
+}
+.phone i {
+  margin-right: 0.3rem;
+}
+
+.email {
+  margin-right: 1rem;
+}
+.email i {
+  margin-right: 0.3rem;
+}
+
+.region {
+  margin-right: 1rem;
+}
+.region i {
+  margin-right: 0.3rem;
+}
+
+.data {
+  display: flex;
+  margin-bottom: 1rem;
+  justify-content: space-between;
+}
+.data .label-container {
+  font-weight: 400;
+  margin-right: 1rem;
+}
+.data .text-container {
+  font-weight: 500;
 }
 
 .contact {
   position: relative;
-  padding: 1rem;
   display: flex;
   justify-content: space-between;
-}
-.contact:hover {
-  background-color: #f5f5f5;
-  transition: 0.3s ease;
 }
 .contact .contact-box {
   display: flex;
@@ -4124,6 +4267,13 @@ a {
 }
 .contact .buttons button {
   background-color: white;
+}
+
+.jobOffers {
+  display: flex;
+  padding: 1rem;
+  flex-grow: 1;
+  flex-basis: 0;
 }
 
 .card.job-card {
@@ -4170,13 +4320,13 @@ a {
 
 .input-avatar {
   position: relative;
-  height: 200px;
-  width: 200px;
+  height: 10rem;
+  width: 10rem;
 }
 .input-avatar img {
   cursor: pointer;
-  width: 200px;
-  height: 200px;
+  width: 10rem;
+  height: 10rem;
   object-fit: cover;
 }
 .input-avatar .camera-button {
@@ -4193,15 +4343,18 @@ a {
   display: none;
 }
 
-.person .ui-avatar {
-  float: left;
+.person {
+  display: flex;
+  align-items: center;
 }
-.person .person-box {
-  float: left;
-  margin: 0.35rem 0 0 1rem;
+.person .ui-avatar {
+  margin-right: 1rem;
 }
 .person .person-box .person-description-text {
   font-size: 0.9rem;
+}
+.person .person-data {
+  margin-left: 1rem;
 }
 
 .user-card {
@@ -4253,6 +4406,46 @@ a {
 }
 .users .ui-dataview-row a {
   color: #252529;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: right;
+  border-top: 1px solid #f0f0f0;
+  padding-top: 1rem;
+}
+.form-buttons .ui-button {
+  margin-left: 1rem;
+}
+
+.ui-tag.user-role {
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.3px;
+}
+.ui-tag.user-role.role-ADMIN {
+  background: #FEEDAF;
+  color: #8A5340;
+}
+.ui-tag.user-role.role-USER {
+  background: #C8E6C9;
+  color: #256029;
+}
+
+.files .ui-fileupload-simple .ui-fileupload-filename {
+  display: none;
+}
+.files .ui-fileupload-simple .ui-button {
+  background-color: transparent;
+  color: #689F38;
+  border: 1px solid;
+}
+.files .ui-fileupload-simple .ui-button.ui-button-text-icon-left .ui-button-text {
+  padding: 0.5rem 1rem 0.5rem 1rem;
+}
+.files .ui-fileupload-simple .ui-button.ui-button-text-icon-left .ui-icon {
+  left: 0.65rem;
 }
 
 /*# sourceMappingURL=layout.css.map */
