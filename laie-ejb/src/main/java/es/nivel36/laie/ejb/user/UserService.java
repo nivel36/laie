@@ -11,10 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.core.file.File;
-import es.nivel36.laie.ejb.core.file.FileJpaDao;
 import es.nivel36.laie.ejb.core.file.FileService;
 import es.nivel36.laie.ejb.core.model.Page;
-
 import es.nivel36.laie.ejb.core.model.search.SearchFacets;
 import es.nivel36.laie.ejb.core.model.search.SearchResult;
 import es.nivel36.laie.ejb.core.model.search.SortField;
@@ -24,16 +22,9 @@ public class UserService {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
-	@Inject
-	private FileService fileService;
+	private @Inject FileService fileService;
 
-	@Inject
-	
-	private FileJpaDao fileDao;
-
-	@Inject
-	
-	private UserDao userDao;
+	private @Inject UserDao userDao;
 
 	public void addUser(final User user) throws DuplicateEmailException, BadManagerException {
 		Objects.requireNonNull(user);
@@ -135,14 +126,14 @@ public class UserService {
 		logger.debug("Change image to user {}", user);
 		final Long userId = user.getId();
 		final File newImage = this.fileService.uploadFile(image, userId + "_picture", true);
-		final File file = fileDao.find(File.class, newImage.getId());
 		final File oldImage = user.getPicture();
+		user.setPicture(newImage);
+		final User updatedUser = userDao.update(user);
 		if (oldImage != null) {
 			logger.trace("Remove user {} old image", user);
 			this.fileService.removeFile(oldImage);
 		}
-		user.setPicture(file);
-		return userDao.update(user);
+		return updatedUser;
 	}
 
 	public void changePassword(final String email, final String oldPassword, final String newPassword) {

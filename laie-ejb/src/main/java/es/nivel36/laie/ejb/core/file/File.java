@@ -1,6 +1,7 @@
 package es.nivel36.laie.ejb.core.file;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
@@ -55,7 +56,7 @@ public class File extends AbstractEntity {
 	}
 
 	public void setCreated(final LocalDateTime created) {
-		this.created = created;
+		this.created = created.truncatedTo(ChronoUnit.SECONDS);
 	}
 
 	public void setDescription(final String description) {

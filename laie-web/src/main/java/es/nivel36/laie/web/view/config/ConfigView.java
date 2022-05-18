@@ -8,11 +8,11 @@ import java.util.Locale;
 import java.util.Objects;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.omnifaces.util.Faces;
 import org.primefaces.event.CaptureEvent;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.file.UploadedFile;
@@ -55,12 +55,6 @@ public class ConfigView extends AbstractView {
 		this.user = this.sessionUser.get();
 		this.userImage = this.user.getPicture();
 		logger.debug("Config user {} init", this.user);
-	}
-
-	private void refreshUser() {
-		this.user = this.userService.findUserByEmail(this.sessionUser.get().getEmail());
-		this.sessionUser.refresh();
-		this.userImage = this.user.getPicture();
 	}
 
 	public void captureImage(final CaptureEvent event) {
@@ -118,9 +112,9 @@ public class ConfigView extends AbstractView {
 		logger.debug("Save user {} action performed", this.user);
 		try {
 			this.saveImage();
-			this.userService.updateUser(user);
-			this.refreshUser();
-			this.addMessage(FacesMessage.SEVERITY_INFO, "action.save_action_performed", "action.save_action_performed");
+			this.user = this.userService.updateUser(user);
+			this.sessionUser.refresh();
+			Faces.redirect("/index.xhtml");
 		} catch (final DuplicateEmailException e) {
 			this.addErrorToField("configForm:email", "user.error.email_exists");
 		} catch (final BadManagerException e) {
