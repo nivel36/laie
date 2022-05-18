@@ -50,7 +50,17 @@
 				<div class="card card-w-title">
 					<h5>Detalles</h5>
 					<cc:outputText label="#{i18n['candidate.skype']}" value="#{viewCandidateView.candidate.skype}" />
-					<cc:outputText label="#{i18n['candidate.linkedin']}" value="#{viewCandidateView.candidate.linkedinProfileUrl}" />
+					<div class="data">
+						<div class="label-container">
+							<span class="label">#{i18n['candidate.linkedin']}</span>
+						</div>
+						<div class="text-container">
+							<a href="#{viewCandidateView.candidate.linkedinProfileUrl}" target="new"> <h:outputText id="linkedin-text"
+									value="#{i18n['candidate.linkedin']}" rendered="#{not empty viewCandidateView.candidate.linkedinProfileUrl}" />
+							</a>
+							<h:outputText id="linkedin-emptyText" value="---" styleClass="text" rendered="#{empty viewCandidateView.candidate.linkedinProfileUrl}" />
+						</div>
+					</div>
 					<cc:outputText label="#{i18n['candidate.bornDate']}" value="#{viewCandidateView.candidate.bornDate}">
 						<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" for="text" />
 					</cc:outputText>
