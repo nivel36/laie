@@ -31,7 +31,10 @@ public class AddJobView extends AbstractJobView {
 	public void init() {
 		logger.trace("New job offer init");
 		this.jobOffer = new JobOffer();
-		this.jobOffer.setClient(client);
+		if( client != null ) {
+			this.jobOffer.setClient(client);
+			this.jobOffer.setAddress(client.getAddress());			
+		}
 		this.jobOffer.setOpenDate(LocalDate.now());
 		this.jobOffer.setOwner(this.sessionUser.get());
 		this.recruiters = this.sessionUser.getTeam().stream().map(User::getEmail).collect(Collectors.toList());

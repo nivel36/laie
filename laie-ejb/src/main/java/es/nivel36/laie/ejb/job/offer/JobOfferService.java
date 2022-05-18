@@ -131,6 +131,9 @@ public class JobOfferService {
 			jobOffer.setCloseDate(LocalDate.now());
 			jobOffer.setState(JobOfferState.CLOSED);
 		}
+		if (newState.isOpenState()) {
+			jobOffer.setCloseDate(null);
+		}
 		this.stateChangedEvent.fireAsync(jobOffer);
 		final JobOffer updatedJobOffer = jobOfferDao.update(jobOffer);
 		if (newState.isCloseState()) {

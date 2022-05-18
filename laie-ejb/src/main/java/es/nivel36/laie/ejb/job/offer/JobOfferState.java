@@ -7,8 +7,8 @@ public enum JobOfferState implements EventState {
 	CLOSED("closed", false, true), //
 	CREATED("created", true, false), //
 	FINISHED("finished", false, true), //
-	OPENED("opened"), //
-	PAUSED("paused");
+	OPENED("opened", true, false), //
+	PAUSED("paused", false, false);
 
 	private boolean closeState;
 
