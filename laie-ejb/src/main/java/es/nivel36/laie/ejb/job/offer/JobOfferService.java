@@ -53,6 +53,8 @@ public class JobOfferService {
 		Objects.requireNonNull(jobOffer);
 		jobOffer.setState(JobOfferState.CREATED);
 		this.jobOfferDao.insert(jobOffer);
+		final JobOfferStateEvent newStateEvent = builJobOfferStateEvent(jobOffer, JobOfferState.CREATED, null);
+		jobOfferDao.addJobOfferStateEvent(newStateEvent);
 		this.createdEvent.fireAsync(jobOffer);
 		if (this.openDateHasCome(jobOffer)) {
 			this.changeState(jobOffer, JobOfferState.OPENED, null);
