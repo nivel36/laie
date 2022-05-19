@@ -106,7 +106,7 @@ public class ViewJobView extends AbstractView {
 	}
 
 	public boolean isAddCandidature() {
-		return jobOffer.isOpen() && (recruiter || owner );
+		return this.addCandidature;
 	}
 
 	public JobOffer getJobOffer() {
