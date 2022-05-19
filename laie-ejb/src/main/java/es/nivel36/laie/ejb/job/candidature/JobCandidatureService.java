@@ -24,25 +24,16 @@ public class JobCandidatureService {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	@Inject
-	@JobCandidatureCompletedEvent
-	private Event<JobCandidature> completedEvent;
+	private @Inject @JobCandidatureCompletedEvent Event<JobCandidature> completedEvent;
 
-	@Inject
-	@JobCandidatureCreatedEvent
-	private Event<JobCandidature> createdEvent;
+	private @Inject @JobCandidatureCreatedEvent Event<JobCandidature> createdEvent;
 
-	@Inject
-	@JobCandidatureStateChangedEvent
-	private Event<JobCandidature> stateChangedEvent;
+	private @Inject @JobCandidatureStateChangedEvent Event<JobCandidature> stateChangedEvent;
 
-	@Inject
+	private @Inject JobCandidatureDao jobCandidatureDao;
+
+	private @Inject JobCandidatureStateService jobCandidatureStateService;
 	
-	private JobCandidatureDao jobCandidatureDao;
-
-	@Inject
-	private JobCandidatureStateService jobCandidatureStateService;
-
 	public void addJobCandidature(final JobOffer jobOffer, final Candidate candidate) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(candidate);
@@ -100,7 +91,8 @@ public class JobCandidatureService {
 		this.jobCandidatureDao.delete(jobOffer, candidate);
 	}
 
-	public JobCandidature changeState(final JobOffer jobOffer, final Candidate candidate, final JobCandidatureState newState) {
+	public JobCandidature changeState(final JobOffer jobOffer, final Candidate candidate,
+			final JobCandidatureState newState) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(candidate);
 		final JobCandidature jobCandidature = jobCandidatureDao.findByJobOfferAndCandidate(jobOffer, candidate);
