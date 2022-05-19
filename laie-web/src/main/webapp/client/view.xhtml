@@ -52,6 +52,13 @@
 			</div>
 
 			<div class="p-col-12 p-xl-4">
+				<div class="card card-w-title">
+					<h5>#{i18n['client.other_data']}</h5>
+					<cc:outputLink label="#{i18n['job.owner']}" value="#{viewClientView.client.owner.fullName}" outcome="/user/view.xhtml">
+						<f:param name="user" value="#{viewClientView.client.owner.id}" />
+					</cc:outputLink>
+				</div>
+
 				<cc:contacts value="#{viewClientView.client.contacts}">
 					<p:button icon="pi pi-plus" outcome="/client/contact/add.xhtml" process="@this" styleClass="ui-button-success ui-button-outlined">
 						<f:param name="client" value="#{viewClientView.client.id}" />
