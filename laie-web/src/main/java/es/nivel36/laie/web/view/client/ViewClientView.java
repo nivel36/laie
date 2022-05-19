@@ -21,6 +21,7 @@ import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.ejb.user.User;
+import es.nivel36.laie.ejb.user.UserService;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
 
@@ -41,14 +42,16 @@ public class ViewClientView extends AbstractView {
 	private boolean bookmarkable;
 
 	private Bookmark bookmark;
+	
+	private boolean addJobOffer;
 
 	private List<JobOffer> jobOffers;
 
-	@Param
-	protected Client client;
+	private @Param Client client;
 
-	@Inject
-	protected transient JobOfferService jobOfferService;
+	private @Inject transient UserService userService;
+	
+	private @Inject transient JobOfferService jobOfferService;
 
 	@PostConstruct
 	public void init() {
@@ -61,7 +64,9 @@ public class ViewClientView extends AbstractView {
 		this.jobOffers = jobOfferService.findJobOffersByClient(client, Page.ALL_RESULTS);
 		this.checkDeleted();
 		final User user = this.sessionUser.get();
-		this.editable = user.isAdmin() || user.equals(client.getOwner());
+		final boolean owner = user.equals(client.getOwner());
+		this.editable = user.isAdmin() || owner;
+		this.addJobOffer = editable || userService.isSubordinateUser(user, client.getOwner());
 		this.bookmark = this.buildBookmark();
 		this.bookmarkable = !this.sessionUser.hasBookamrk(bookmark);
 	}
@@ -72,7 +77,7 @@ public class ViewClientView extends AbstractView {
 			this.addMessage(FacesMessage.SEVERITY_WARN, "message.erased_entity", "message.erased_entity");
 		}
 	}
-	
+
 	public static String getUrl(long clientId) {
 		return URL + "?client=" + clientId;
 	}
@@ -104,6 +109,10 @@ public class ViewClientView extends AbstractView {
 
 	public boolean isBookmarkable() {
 		return this.bookmarkable;
+	}
+	
+	public boolean isAddJobOffer() {
+		return addJobOffer;
 	}
 
 	public boolean isEditable() {

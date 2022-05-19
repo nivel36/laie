@@ -29,7 +29,7 @@
 							</div>
 
 							<p:menuButton styleClass="menu-button" icon="pi pi-ellipsis-v" id="menu-button">
-								<p:menuitem value="#{i18n['action.edit']}" outcome="/client/edit.xhtml" icon="pi pi-pencil">
+								<p:menuitem value="#{i18n['action.edit']}" outcome="/client/edit.xhtml" icon="pi pi-pencil" rendered="#{viewClientView.editable}">
 									<f:param name="client" value="#{viewClientView.client.id}" />
 								</p:menuitem>
 								<p:menuitem value="#{i18n['bookmark.add_to_bookmarks']}" action="#{viewClientView.addBookmark}" rendered="#{viewClientView.bookmarkable}"
@@ -44,7 +44,8 @@
 
 				<cc:jobOffers id="jobOffers" value="#{viewClientView.jobOffers}" rows="5" showClient="false">
 					<h:form id="jobOffersForm">
-						<p:button icon="pi pi-plus" outcome="/job/add.xhtml" process="@this" styleClass="ui-button-success ui-button-outlined">
+						<p:button icon="pi pi-plus" outcome="/job/add.xhtml" process="@this" styleClass="ui-button-success ui-button-outlined"
+							rendered="#{viewClientView.addJobOffer}">
 							<f:param name="client" value="#{viewClientView.client.id}" />
 						</p:button>
 					</h:form>

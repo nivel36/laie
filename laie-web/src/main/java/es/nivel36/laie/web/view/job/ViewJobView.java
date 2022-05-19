@@ -37,6 +37,8 @@ public class ViewJobView extends AbstractView {
 	private boolean owner;
 
 	private boolean recruiter;
+	
+	private boolean addCandidature;
 
 	private Bookmark bookmark;
 
@@ -58,7 +60,8 @@ public class ViewJobView extends AbstractView {
 		final User owner = jobOffer.getOwner();
 		this.owner = user.equals(owner);
 		this.recruiter = jobOffer.getRecruiters().contains(user);
-		this.editable = !jobOffer.getState().isCloseState() && isOwner();
+		this.editable = !jobOffer.getState().isCloseState() && ( isOwner() || user.isAdmin());
+		this.addCandidature = jobOffer.isOpen() && ( this.recruiter || this.owner || user.isAdmin());
 	}
 
 	public void export() {
@@ -103,7 +106,7 @@ public class ViewJobView extends AbstractView {
 	}
 
 	public boolean isAddCandidature() {
-		return jobOffer.isOpen() && (recruiter || owner);
+		return jobOffer.isOpen() && (recruiter || owner );
 	}
 
 	public JobOffer getJobOffer() {
