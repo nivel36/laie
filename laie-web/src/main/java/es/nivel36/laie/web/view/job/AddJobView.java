@@ -31,15 +31,15 @@ public class AddJobView extends AbstractJobView {
 	public void init() {
 		logger.trace("New job offer init");
 		this.jobOffer = new JobOffer();
-		if( client != null ) {
+		if (client != null) {
 			this.jobOffer.setClient(client);
-			this.jobOffer.setAddress(client.getAddress());			
+			this.jobOffer.setAddress(client.getAddress());
 		}
 		this.jobOffer.setOpenDate(LocalDate.now());
 		this.jobOffer.setOwner(this.sessionUser.get());
 		this.recruiters = this.sessionUser.getTeam().stream().map(User::getEmail).collect(Collectors.toList());
 	}
-	
+
 	public void next() {
 		logger.debug("Create new job Offer action performed");
 		this.convertRecruiters();
@@ -47,9 +47,20 @@ public class AddJobView extends AbstractJobView {
 		Faces.redirect("/job/addDetails.xhtml?jobOffer=" + this.jobOffer.getId());
 	}
 
+	private boolean canAddJobOfferToClient() {
+		final User user = sessionUser.get();
+		final User owner = client.getOwner();
+		final boolean isOwnersTeam = userService.isSubordinateUser(user, owner);
+		return user.isAdmin() || user.equals(owner) || isOwnersTeam;
+	}
+
 	public void save() {
-		this.jobOfferService.updateJobOffer(this.jobOffer);
-		Faces.redirect(ViewJobView.getUrl(this.jobOffer.getId()));
+		if (canAddJobOfferToClient()) {
+			this.jobOfferService.updateJobOffer(this.jobOffer);
+			Faces.redirect(ViewJobView.getUrl(this.jobOffer.getId()));
+		} else {
+			this.addErrorToField("jobOfferForm:client", "job.error.no_permissions");
+		}
 	}
 
 	public void setClient(final Client client) {

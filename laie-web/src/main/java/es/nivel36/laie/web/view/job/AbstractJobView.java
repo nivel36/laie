@@ -23,19 +23,15 @@ public abstract class AbstractJobView extends AbstractView {
 
 	private static final long serialVersionUID = 3680467978756165892L;
 
-	@Param
-	protected JobOffer jobOffer;
+	protected @Param JobOffer jobOffer;
 
 	protected transient List<String> recruiters = new ArrayList<>();
 
-	@Inject
-	protected transient ClientService clientService;
+	protected transient @Inject ClientService clientService;
 
-	@Inject
-	protected transient JobOfferService jobOfferService;
+	protected transient @Inject JobOfferService jobOfferService;
 
-	@Inject
-	protected transient UserService userService;
+	protected transient @Inject UserService userService;
 
 	public List<Client> completeClient(final String query) {
 		return this.clientService.search(query, Page.FIRST_TEN_RESULTS).getResultData();
@@ -65,7 +61,7 @@ public abstract class AbstractJobView extends AbstractView {
 					break;
 				}
 			}
-			if(!oldRecruiter) {
+			if (!oldRecruiter) {
 				final User newRecruiter = this.userService.findUserByEmail(email);
 				newJobOfferRecruiters.add(newRecruiter);
 			}

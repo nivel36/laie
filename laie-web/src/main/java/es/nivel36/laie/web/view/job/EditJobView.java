@@ -41,9 +41,20 @@ public class EditJobView extends AbstractJobView {
 
 	public void save() {
 		logger.debug("Save job offer action performed");
-		this.convertRecruiters();
-		this.jobOfferService.updateJobOffer(jobOffer);
-		Faces.redirect(ViewJobView.getUrl(this.jobOffer.getId()));
+		if (canAddJobOfferToClient()) {
+			this.convertRecruiters();
+			this.jobOfferService.updateJobOffer(jobOffer);
+			Faces.redirect(ViewJobView.getUrl(this.jobOffer.getId()));
+		} else {
+			this.addErrorToField("jobOfferForm:client", "job.error.no_permissions");
+		}
+	}
+
+	private boolean canAddJobOfferToClient() {
+		final User user = sessionUser.get();
+		final User owner = jobOffer.getClient().getOwner();
+		final boolean isOwnersTeam = userService.isSubordinateUser(user, owner);
+		return user.isAdmin() || user.equals(owner) || isOwnersTeam;
 	}
 
 	public void next() {
