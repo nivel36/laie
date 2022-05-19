@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.client.DuplicateCifException;
+import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 
 @Named
@@ -23,6 +24,10 @@ public class EditClientView extends AbstractClientView {
 	public void init() {
 		if (this.client == null) {
 			throw new IllegalPageStateException();
+		}
+		final User user = sessionUser.get();
+		if (!this.client.getOwner().equals(user)) {
+			throw new SecurityException();
 		}
 		logger.trace("Client {} edit init", this.client);
 	}
