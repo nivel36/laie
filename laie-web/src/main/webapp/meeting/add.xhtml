@@ -43,7 +43,9 @@
 										<f:selectItems value="#{addMeetingView.meetingTypes}" var="meetingType" itemValue="#{meetingType}" itemLabel="#{i18n[meetingType]}" />
 									</g:input>
 								</div>
-
+								<div class="p-col-12">
+									<g:input label="#{i18n['meeting.description']}" value="#{addMeetingView.meeting.description}" type="textarea"/>
+								</div>
 							</div>
 						</div>
 					</div>

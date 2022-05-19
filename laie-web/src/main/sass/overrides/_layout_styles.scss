@@ -1,3 +1,60 @@
+.meeting {
+	display: flex;
+	.meeting-date {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		.meeting-date-day {
+			display: flex;
+			font-size:3rem;
+			padding: 0.2rem 0.5rem;
+			background-color: $primaryColor;
+			color: $primaryTextColor;
+		}
+		.meeting-date-month {
+			font-size:1.5rem;
+			text-transform: uppercase
+		}
+	}
+	.meeting-content {
+		display: flex;
+		margin-left: 1.2rem;
+		flex-direction: column;
+		.meeting-title {
+			font-size:1.5rem;
+			font-weight: 600;
+		}
+		.meeting-day {
+			font-size:1rem;
+		}
+		.meeting-time {
+			font-size:1rem;
+		}
+		.meeting-detail {
+			font-size:1rem;
+			line-height: 2rem;
+			.meeting-detail-data {
+				margin-right: 1rem;	
+				i {
+					margin-right: 0.2rem;
+				}
+			}
+			.meeting-detail-day_of_week {
+				text-transform: capitalize;
+			}
+			.meeting-detail-data {
+				font-size:1rem;
+			}
+			.meeting-detail-time {
+				font-size:1rem;
+			}
+		}
+		.meeting-description {
+			font-size:1rem;
+		}
+	}
+}
+
 .login-body {
 	.login-panel {
 		display: flex;

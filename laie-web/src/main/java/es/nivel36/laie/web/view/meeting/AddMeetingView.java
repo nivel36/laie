@@ -66,6 +66,7 @@ public class AddMeetingView extends AbstractView {
 		this.hours = this.initHours();
 		this.durations = this.initDurations();
 		this.meetingHour = this.initActualMeetingHour();
+		this.meetingDate = LocalDate.now();
 	}
 
 	private Meeting initMeeting() {

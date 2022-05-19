@@ -1,8 +1,7 @@
 <ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:composite="http://xmlns.jcp.org/jsf/composite"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://nivel.36/laie/ui" xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:composite="http://xmlns.jcp.org/jsf/composite" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:g="http://nivel.36/laie/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<composite:interface>
 		<composite:attribute name="value" type="es.nivel36.laie.ejb.job.meeting.Meeting" required="true" />
@@ -13,20 +12,36 @@
 	<composite:implementation>
 		<div id="#{cc.clientId}" class="meeting #{cc.attrs.styleClass}">
 			<div class="meeting-date">
-				<h:outputText value="#{cc.attrs.value.datePlanned}">
-					<f:convertDateTime type="localDate" locale="#{cc.attrs.locale}" dateStyle="full" />
-				</h:outputText>
+				<span class="meeting-date-day"><h:outputText value="#{cc.attrs.value.datePlanned}">
+						<f:convertDateTime type="localDate" locale="#{cc.attrs.locale}" pattern="dd" />
+					</h:outputText></span> <span class="meeting-date-month"><h:outputText value="#{cc.attrs.value.datePlanned}">
+						<f:convertDateTime type="localDate" locale="#{cc.attrs.locale}" pattern="MMM" />
+					</h:outputText></span>
 			</div>
 			<div class="meeting-content">
-				<div class="meeting-time">
-					<h:outputText value="#{cc.attrs.value.datePlanned}">
-						<f:convertDateTime type="localDateTime" pattern="HH:mm" />
-					</h:outputText>
+				<span class="meeting-title">
+						#{cc.attrs.value.title}
+					</span> 
+				<div class="meeting-detail">	
+					<span class="meeting-detail-data meeting-detail-time"> 
+						<i class="pi pi-calendar " />
+						<h:outputText value="#{cc.attrs.value.datePlanned}">
+							<f:convertDateTime type="localDateTime" pattern="HH:mm" />
+						</h:outputText>
+					</span> 
+					<span class="meeting-detail-data meeting-detail-day_of_week">
+						<i class="pi pi-clock" />
+						<h:outputText value="#{cc.attrs.value.datePlanned}">
+							<f:convertDateTime type="localDate" locale="#{cc.attrs.locale}" pattern="EEEE" />
+						</h:outputText>
+					</span>
+					<h:panelGroup styleClass="meeting-detail-data meeting-detail-location" rendered="#{not empty cc.attrs.value.location}">
+						<i class="pi pi-map-marker" />#{cc.attrs.value.location}
+					</h:panelGroup>
 				</div>
-				<div class="meeting-detail">
-					<div class="meeting-title">#{cc.attrs.value.title}</div>
-					<h:panelGroup layout="block" styleClass="meeting-data" rendered="#{not empty cc.attrs.value.location}"><em class="icon fa fa-map-marker"/>#{cc.attrs.value.location}</h:panelGroup>
-				</div>
+					<span class="meeting-description">
+						#{cc.attrs.value.description}
+					</span>
 			</div>
 		</div>
 	</composite:implementation>

@@ -56,7 +56,8 @@ public class Meeting extends AbstractEntity implements Ownerable {
 	@IndexedEmbedded
 	private User owner;
 
-	private String result;
+	@Column(length = 2048)
+	private String description;
 
 	@NotNull
 	@Column(nullable = false)
@@ -84,7 +85,7 @@ public class Meeting extends AbstractEntity implements Ownerable {
 		final Meeting other = (Meeting) obj;
 		return Objects.equals(this.datePlanned, other.datePlanned) && Objects.equals(this.title, other.title)
 				&& Objects.equals(this.jobOffer, other.jobOffer)
-				&& Objects.equals(this.result, other.result);
+				&& Objects.equals(this.description, other.description);
 	}
 
 	public Set<String> getAttendeesEmails() {
@@ -116,8 +117,8 @@ public class Meeting extends AbstractEntity implements Ownerable {
 		return this.owner;
 	}
 
-	public String getResult() {
-		return this.result;
+	public String getDescription() {
+		return this.description;
 	}
 
 	public String getTitle() {
@@ -127,7 +128,7 @@ public class Meeting extends AbstractEntity implements Ownerable {
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.datePlanned, this.title, this.jobOffer
-				, this.result);
+				, this.description);
 	}
 
 	public void removeAttendee(final String email) {
@@ -164,8 +165,8 @@ public class Meeting extends AbstractEntity implements Ownerable {
 		this.owner = owner;
 	}
 
-	public void setResult(final String result) {
-		this.result = result;
+	public void setDescription(final String description) {
+		this.description = description;
 	}
 
 	public void setTitle(final String title) {

@@ -10,19 +10,13 @@
 
 	<ui:param name="selectedMenu" value="meetings" />
 
-	<ui:define name="breadcrumb">
-		<p:breadCrumb>
-			<p:menuitem value="#{i18n['menu.index']}" outcome="/index.xhtml" />
-			<p:menuitem value="#{i18n['meeting.meetings']}" disabled="true" />
-		</p:breadCrumb>
-	</ui:define>
-
 	<ui:define name="content">
 		<h:form>
 			<div class="p-grid">
 				<div class="p-col-12 p-xl-6">
 					<cc:meetings value="#{searchMeetingView.plannedMeetings}" title="#{i18n['meeting.planned_meetings']}"
 						emptyMessage="#{i18n['meeting.no_planned']}">
+						<p:button icon="pi pi-plus" outcome="/meeting/add.xhtml" styleClass="ui-button-success ui-button-outlined" />
 					</cc:meetings>
 				</div>
 				<div class="p-col-12 p-xl-6">
