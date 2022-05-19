@@ -17,6 +17,12 @@
 					<cc:jobOffers value="#{indexView.jobOffers}" rows="5" showClient="#{true}">
 						<p:button icon="pi pi-plus" outcome="/job/add.xhtml" styleClass="ui-button-success ui-button-outlined" />
 					</cc:jobOffers>
+
+					<cc:candidates value="#{indexView.candidates}" title="#{i18n['candidate.last_candidates']}" rows="5">
+						<p:button icon="pi pi-plus" outcome="/candidate/add.xhtml" styleClass="ui-button-success ui-button-outlined" />
+					</cc:candidates>
+					
+					<cc:events title="#{i18n['event.last_events']}" rows="5" value="#{indexView.actions}" />
 				</div>
 
 				<div class="p-col-12 p-xl-4">
@@ -25,15 +31,6 @@
 					</cc:meetings>
 				</div>
 
-				<div class="p-col-12 p-xl-8">
-					<cc:candidates value="#{indexView.candidates}" title="#{i18n['candidate.last_candidates']}" rows="5">
-						<p:button icon="pi pi-plus" outcome="/candidate/add.xhtml" styleClass="ui-button-success ui-button-outlined" />
-					</cc:candidates>
-				</div>
-
-				<div class="p-col-12 p-xl-8">
-					<cc:events title="#{i18n['event.last_events']}" rows="5"  value="#{indexView.actions}"/>
-				</div>
 			</div>
 		</h:form>
 	</ui:define>

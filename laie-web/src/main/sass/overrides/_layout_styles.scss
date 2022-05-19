@@ -1,9 +1,11 @@
 .meeting {
 	display: flex;
+	margin-bottom: 1rem;
 	.meeting-date {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		flex: 1;
 		.meeting-date-day {
 			display: flex;
 			font-size:3rem;
@@ -20,8 +22,9 @@
 		display: flex;
 		margin-left: 1.2rem;
 		flex-direction: column;
+		flex: 4;
 		.meeting-title {
-			font-size:1.5rem;
+			font-size:1.2rem;
 			font-weight: 600;
 		}
 		.meeting-day {
