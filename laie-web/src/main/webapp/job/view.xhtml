@@ -18,7 +18,11 @@
 						<div class="title-card-content">
 							<div class="title-card-content-info">
 								<div class="title">#{viewJobView.jobOffer.title}</div>
-								<div class="subtitle">#{viewJobView.jobOffer.client.name}</div>
+								<div class="subtitle">
+									<p:link outcome="/client/view.xhtml" >#{viewJobView.jobOffer.client.name}<f:param name="client"
+											value="#{viewJobView.jobOffer.client.id}" />
+									</p:link>
+								</div>
 								<div class="text">
 									<span class="region"><i class="pi pi-map-marker" aria-hidden="true" />#{viewJobView.jobOffer.address.city}</span>
 								</div>
