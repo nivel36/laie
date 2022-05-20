@@ -1,4 +1,4 @@
-package es.nivel36.laie.ejb.core.security;
+package es.nivel36.login;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;

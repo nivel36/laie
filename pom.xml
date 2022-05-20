@@ -7,6 +7,7 @@
 	<packaging>pom</packaging>
 	<name>laie</name>
 	<modules>
+        <module>nivel36-login</module>
 		<module>laie-commons-excel</module>
 		<module>laie-ear</module>
 		<module>laie-ejb</module>

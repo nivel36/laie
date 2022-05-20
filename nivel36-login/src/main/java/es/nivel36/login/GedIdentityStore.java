@@ -1,4 +1,4 @@
-package es.nivel36.laie.ejb.core.security;
+package es.nivel36.login;
 
 import static javax.security.enterprise.identitystore.CredentialValidationResult.NOT_VALIDATED_RESULT;
 
@@ -49,7 +49,7 @@ public class GedIdentityStore extends AbstractIdentityStore implements IdentityS
 	private User findUserFromUsernamePasswordCredential(final Credential credential) throws LoginException {
 		final UsernamePasswordCredential usernamePasswordCredential = (UsernamePasswordCredential) credential;
 		final String email = usernamePasswordCredential.getCaller();
-		final es.nivel36.laie.ejb.user.Credential laieCredential = this.userDao.findCredential(email);
+		final es.nivel36.login.Credential laieCredential = this.userDao.findCredential(email);
 		if (laieCredential == null) {
 			throw new LoginException("Invalid email");
 		}

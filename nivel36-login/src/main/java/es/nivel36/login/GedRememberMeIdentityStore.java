@@ -1,4 +1,4 @@
-package es.nivel36.laie.ejb.core.security;
+package es.nivel36.laie.web.core;
 
 import java.util.Objects;
 import java.util.Set;
@@ -11,20 +11,23 @@ import javax.security.enterprise.identitystore.CredentialValidationResult;
 import javax.security.enterprise.identitystore.RememberMeIdentityStore;
 import javax.servlet.http.HttpServletRequest;
 
-import es.nivel36.laie.ejb.core.security.LoginToken.TokenType;
 import es.nivel36.laie.ejb.user.User;
+import es.nivel36.login.AbstractIdentityStore;
+import es.nivel36.login.CriptoUtil;
+import es.nivel36.login.GedIdentityStore;
+import es.nivel36.login.LoginTokenService;
+import es.nivel36.login.LoginToken.TokenType;
 
 @ApplicationScoped
 public class GedRememberMeIdentityStore extends AbstractIdentityStore implements RememberMeIdentityStore {
+	
+	private @Inject GedIdentityStore gedIdentityStore;
 
-	@Inject
-	private GedIdentityStore gedIdentityStore;
+	private @Inject LoginTokenService loginTokenService;
 
-	@Inject
-	private LoginTokenService loginTokenService;
-
-	@Inject
-	private HttpServletRequest request;
+	private @Inject HttpServletRequest request;
+	
+	private @Inject CredentialService credentialService;
 
 	@Override
 	public String generateLoginToken(final CallerPrincipal callerPrincipal, final Set<String> groups) {
@@ -58,11 +61,11 @@ public class GedRememberMeIdentityStore extends AbstractIdentityStore implements
 	}
 
 	@Override
-	public CredentialValidationResult validate(final RememberMeCredential credential) {
-		Objects.requireNonNull(credential);
-		final String token = credential.getToken();
+	public CredentialValidationResult validate(final RememberMeCredential rememberMeCredential) {
+		Objects.requireNonNull(rememberMeCredential);
+		final String token = rememberMeCredential.getToken();
 		final byte[] tokenHash = CriptoUtil.digestPassword(token);
-		final User user = userDao.findUserByTokenHashAndType(tokenHash, TokenType.REMEMBER_ME);
-		return gedIdentityStore.validate(user);
+		final Credential credential = credentialService.findUserByTokenHashAndType(tokenHash, TokenType.REMEMBER_ME);
+		return gedIdentityStore.validate(credential);
 	}
 }

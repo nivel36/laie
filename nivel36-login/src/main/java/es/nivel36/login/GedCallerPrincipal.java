@@ -1,4 +1,4 @@
-package es.nivel36.laie.ejb.core.security;
+package es.nivel36.login;
 
 import javax.security.enterprise.CallerPrincipal;
 

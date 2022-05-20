@@ -1,4 +1,4 @@
-package es.nivel36.laie.ejb.core.security;
+package es.nivel36.login;
 
 import static javax.security.enterprise.identitystore.CredentialValidationResult.NOT_VALIDATED_RESULT;
 
@@ -14,8 +14,7 @@ import es.nivel36.laie.ejb.user.UserDao;
 
 public abstract class AbstractIdentityStore {
 
-	@Inject
-	protected UserDao userDao;
+	protected @Inject UserDao userDao;
 
 	private Set<String> getRoles(final User user) {
 		final Set<String> roles = new HashSet<>();
@@ -23,7 +22,7 @@ public abstract class AbstractIdentityStore {
 		return roles;
 	}
 
-	protected CredentialValidationResult validate(final User user) {
+	public CredentialValidationResult validate(final User user) {
 		if (user == null) {
 			return NOT_VALIDATED_RESULT;
 		}
@@ -31,7 +30,7 @@ public abstract class AbstractIdentityStore {
 		final GedCallerPrincipal callerPrincipal = new GedCallerPrincipal(user);
 		return new CredentialValidationResult(callerPrincipal.getName(), roles);
 	}
-	
+
 	public void setUserDao(final UserDao userDao) {
 		Objects.requireNonNull(userDao);
 		this.userDao = userDao;

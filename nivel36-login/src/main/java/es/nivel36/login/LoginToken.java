@@ -1,57 +1,48 @@
-package es.nivel36.laie.ejb.core.security;
+package es.nivel36.login;
 
-import static java.time.temporal.ChronoUnit.MONTHS;
 import static javax.persistence.EnumType.STRING;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.Arrays;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
-import javax.persistence.ManyToOne;
-import javax.persistence.PrePersist;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-import es.nivel36.laie.ejb.core.model.AbstractEntity;
-import es.nivel36.laie.ejb.user.User;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Entity
-public class LoginToken extends AbstractEntity {
+public class LoginToken  implements Serializable {
 
 	public enum TokenType {
-		API, REMEMBER_ME, RESET_PASSWORD, SIGNUP_GDPR
+		GUEST, REMEMBER_ME, RESET_PASSWORD
 	}
 
-	public static final int DESCRIPTION_MAXLENGTH = 255;
-
-	private static final int HASH_LENGTH = 32;
-
-	public static final int IP_ADDRESS_MAXLENGTH = 45;
-
-	private static final long serialVersionUID = -8763367136110624639L;
+	private static final long serialVersionUID = 6700658371126462629L;
 
 	@Column(nullable = false)
-	private @NotNull Instant created;
+	private Instant created;
 
-	@Column(length = DESCRIPTION_MAXLENGTH)
-	private @Size(max = DESCRIPTION_MAXLENGTH) String description;
+	private String description;
 
 	@Column(nullable = false)
-	private @NotNull Instant expiration;
+	private Instant expiration;
 
-	@Column(length = IP_ADDRESS_MAXLENGTH, nullable = false)
-	private @NotNull @Size(max = IP_ADDRESS_MAXLENGTH) String ipAddress;
+	@Id
+	@GeneratedValue
+	private long id;
 
-	@Column(length = HASH_LENGTH, nullable = false, unique = true)
-	private @NotNull byte[] tokenHash;
+	@Column(nullable = false)
+	private String ipAddress;
+
+	@Column(nullable = false, unique = true)
+	private byte[] tokenHash;
 
 	@Enumerated(STRING)
 	private TokenType type;
 
-	@ManyToOne(optional = false)
-	private User user;
+	private String username;
 
 	@Override
 	public boolean equals(Object obj) {
@@ -77,6 +68,10 @@ public class LoginToken extends AbstractEntity {
 		return this.expiration;
 	}
 
+	public long getId() {
+		return id;
+	}
+
 	public String getIpAddress() {
 		return this.ipAddress;
 	}
@@ -89,8 +84,8 @@ public class LoginToken extends AbstractEntity {
 		return this.type;
 	}
 
-	public User getUser() {
-		return this.user;
+	public String getUsername() {
+		return this.username;
 	}
 
 	@Override
@@ -110,27 +105,23 @@ public class LoginToken extends AbstractEntity {
 		this.expiration = expiration;
 	}
 
-	public void setIpAddress(final String ipAddress) {
-		this.ipAddress = ipAddress;
+	public void setId(long id) {
+		this.id = id;
 	}
 
-	@PrePersist
-	public void setTimestamps() {
-		this.created = Instant.now();
-		if (this.expiration == null) {
-			this.expiration = this.created.plus(1, MONTHS);
-		}
+	public void setIpAddress(final String ipAddress) {
+		this.ipAddress = ipAddress;
 	}
 
 	public void setTokenHash(final byte[] tokenHash) {
 		this.tokenHash = tokenHash;
 	}
-
+	
 	public void setType(final TokenType type) {
 		this.type = type;
 	}
 
-	public void setUser(final User user) {
-		this.user = user;
+	public void setUsername(final String username) {
+		this.username = username;
 	}
 }

@@ -1,4 +1,4 @@
-package es.nivel36.laie.ejb.core.security;
+package es.nivel36.login;
 
 import java.security.Principal;
 import java.util.Objects;
@@ -16,12 +16,9 @@ import es.nivel36.laie.ejb.user.UserDao;
 @Stateless
 public class GedSecurityContext {
 
-	@Resource
-	protected SessionContext sessionContext;
-	
-	@Inject
-	
-	private UserDao userDao;
+	protected @Resource SessionContext sessionContext;
+
+	private @Inject UserDao userDao;
 
 	public boolean canEdit(final Ownerable entity) {
 		Objects.requireNonNull(entity);

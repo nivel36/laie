@@ -9,10 +9,10 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.core.security.GedSecurityContext;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.job.offer.JobOfferState;
 import es.nivel36.laie.ejb.user.User;
+import es.nivel36.login.GedSecurityContext;
 
 @Stateless
 public class JobOfferEventService  {

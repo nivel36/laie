@@ -18,8 +18,9 @@ import es.nivel36.laie.ejb.core.model.SearchFacade;
 import es.nivel36.laie.ejb.core.model.search.SearchFacets;
 import es.nivel36.laie.ejb.core.model.search.SearchResult;
 import es.nivel36.laie.ejb.core.model.search.SortField;
-import es.nivel36.laie.ejb.core.security.LoginToken.TokenType;
 import es.nivel36.laie.ejb.core.util.Parameters;
+import es.nivel36.login.Credential;
+import es.nivel36.login.LoginToken.TokenType;
 
 
 public class UserDao extends AbstractDao {
@@ -48,13 +49,6 @@ public class UserDao extends AbstractDao {
 		return this.checkDuplicateField(User.class, "email", email);
 	}
 
-	public Credential findCredential(final String email) {
-		Objects.requireNonNull(email);
-		final String namedQuery = "User.findCredential";
-		final Parameters parameters = map("email", email);
-		return this.findByQuery(Credential.class, namedQuery, parameters);
-	}
-
 	public List<User> findSubordinateUsers(final User user) {
 		Objects.requireNonNull(user);
 		final String namedQuery = "User.findSubordinateUsers";
@@ -71,14 +65,6 @@ public class UserDao extends AbstractDao {
 		} catch (final NoResultException e) {
 			return null;
 		}
-	}
-
-	public User findUserByTokenHashAndType(final byte[] tokenHash, final TokenType type) {
-		Objects.requireNonNull(tokenHash);
-		Objects.requireNonNull(type);
-		final String namedQuery = "User.findByTokenHashAndType";
-		final Parameters parameters = map("tokenHash", tokenHash).and("type", type);
-		return this.findByQuery(User.class, namedQuery, parameters);
 	}
 
 	public boolean isSubordinateUser(final User user, final User subordinate) {

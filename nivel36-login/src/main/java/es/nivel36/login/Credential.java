@@ -1,5 +1,6 @@
-package es.nivel36.laie.ejb.user;
+package es.nivel36.login;
 
+import java.io.Serializable;
 import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -8,49 +9,38 @@ import java.util.Random;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.validation.constraints.NotNull;
-
-import es.nivel36.laie.ejb.core.model.AbstractEntity;
-import es.nivel36.laie.ejb.core.security.CriptoUtil;
 
 @Entity
-public class Credential extends AbstractEntity {
-
-	private static final long serialVersionUID = -8152563037703749834L;
-
+public class Credential implements Serializable {
+	
+	private static final long serialVersionUID = -7213946632987932359L;
+	
 	private static final Random RANDOM = new SecureRandom();
 
-	@NotNull
 	private LocalDate created;
 
 	private LocalDate expired;
 
 	@Column(length = 32, nullable = false)
-	@NotNull
 	private byte[] hashPassword;
 
+	private Long id;
+
 	@Column(length = 16, nullable = false)
-	@NotNull
 	private byte[] salt;
 
-	@OneToOne(fetch = FetchType.EAGER, optional = false, orphanRemoval = true)
-	@JoinColumn(name = "userId", unique = true, nullable = false, updatable = false)
-	@NotNull
-	private User user;
+	private String username;
 
 	public Credential() {
 	}
 
-	public Credential(final User user, final String password) {
+	public Credential(final String username, final String password) {
 		Objects.requireNonNull(password);
-		Objects.requireNonNull(user);
+		Objects.requireNonNull(username);
 		this.hashPassword = new byte[32];
 		this.salt = new byte[16];
 		this.created = LocalDate.now();
-		this.user = user;
+		this.username = username;
 		this.salt = this.getRandomSalt();
 		this.hashPassword = this.buildHashPassword(password);
 	}
@@ -82,14 +72,18 @@ public class Credential extends AbstractEntity {
 		return this.created;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
 	private byte[] getRandomSalt() {
 		final byte[] randmoSalt = new byte[16];
 		RANDOM.nextBytes(randmoSalt);
 		return randmoSalt;
 	}
 
-	public User getUser() {
-		return this.user;
+	public String getUsername() {
+		return this.username;
 	}
 
 	@Override
@@ -111,12 +105,16 @@ public class Credential extends AbstractEntity {
 		this.created = created;
 	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public void setPassword(final String password) {
 		this.salt = this.getRandomSalt();
 		this.hashPassword = this.buildHashPassword(password);
 	}
 
-	public void setUser(final User user) {
-		this.user = user;
+	public void setUserName(final String username) {
+		this.username = username;
 	}
 }

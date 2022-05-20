@@ -1,13 +1,13 @@
-package es.nivel36.laie.web.core;
+package es.nivel36.login;
 
 import static javax.security.enterprise.authentication.mechanism.http.AuthenticationParameters.withParams;
 import static org.omnifaces.util.Faces.getRequest;
 import static org.omnifaces.util.Faces.getResponse;
 
 import java.lang.invoke.MethodHandles;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
+import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -24,40 +24,18 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.core.SessionUsers;
-
-import es.nivel36.laie.ejb.user.User;
-import es.nivel36.laie.ejb.user.UserDao;
-
 @Stateless
 public class LoginService {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
 
-	@Inject
-	private ExternalContext externalContext;
+	private @Inject ExternalContext externalContext;
 
-	@Inject
-	private FacesContext facesContext;
+	private @Inject FacesContext facesContext;
 
-	@Inject
-	private RememberMeIdentityStore rememberMeIdentityStore;
+	private @Inject RememberMeIdentityStore rememberMeIdentityStore;
 
-	@Inject
-	private SecurityContext securityContext;
-
-	@Inject
-	private SessionUsers sessionUsers;
-
-	@Inject
-	
-	private UserDao userDao;
-
-	private void addSessionUser(final String username) {
-		this.facesContext.getExternalContext().getSessionMap().put("username", username);
-		final String sessionId = this.externalContext.getSessionId(true);
-		this.sessionUsers.add(username, sessionId);
-	}
+	private @Resource SecurityContext securityContext;
 
 	private AuthenticationStatus authenticate(final AuthenticationParameters parameters) {
 		final AuthenticationStatus status = this.securityContext.authenticate(getRequest(), getResponse(), parameters);
@@ -84,8 +62,6 @@ public class LoginService {
 			logger.error("Login error for username {}", username);
 		} else {
 			logger.info("User {} login", username);
-			this.addSessionUser(username);
-			this.setLastConnectionDateTime(username);
 		}
 		return authenticationStatus;
 	}
@@ -93,7 +69,6 @@ public class LoginService {
 	public void logout(final String username) {
 		Objects.requireNonNull(username);
 		logger.info("User {} logout", username);
-		this.removeSessionUser(username);
 		this.removeRememberMeCookie();
 		this.invalidateSession();
 	}
@@ -113,15 +88,5 @@ public class LoginService {
 				break;
 			}
 		}
-	}
-
-	private void removeSessionUser(final String username) {
-		final String sessionId = this.externalContext.getSessionId(false);
-		this.sessionUsers.remove(username, sessionId);
-	}
-
-	private void setLastConnectionDateTime(final String username) {
-		final User user = this.userDao.findUserByEmail(username);
-		user.setLastConnection(LocalDateTime.now());
 	}
 }
