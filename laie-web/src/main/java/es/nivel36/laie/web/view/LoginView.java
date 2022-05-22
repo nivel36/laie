@@ -14,8 +14,8 @@ import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.web.core.LoginService;
 import es.nivel36.laie.web.core.view.AbstractView;
+import es.nivel36.login.LoginService;
 
 @Named
 @ViewScoped

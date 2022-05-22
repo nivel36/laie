@@ -11,15 +11,17 @@ import java.util.Objects;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import es.nivel36.laie.ejb.user.UserDao;
 import es.nivel36.login.LoginToken.TokenType;
 
 @Stateless
 public class LoginTokenService {
 
-	private @Inject EntityManager em;
+	private @PersistenceContext(unitName = "nivel36-login") EntityManager em;
+
+	private @Inject AccountService accountService;
 
 	public LoginToken findByTokenHash(final byte[] tokenHash) {
 		Objects.requireNonNull(tokenHash);
@@ -38,8 +40,8 @@ public class LoginTokenService {
 
 	public String generate(final String email, final String ipAddress, final String description,
 			final TokenType tokenType, final Instant expiration) {
-		final Credential credential = this.userDao.findCredential(email);
-		if (credential == null) {
+		final Account account = this.accountService.findAccount(email);
+		if (account == null) {
 			throw new IllegalStateException();
 		}
 		final String rawToken = randomUUID().toString();
@@ -50,7 +52,7 @@ public class LoginTokenService {
 		loginToken.setDescription(description);
 		loginToken.setType(tokenType);
 		loginToken.setIpAddress(ipAddress);
-		loginToken.setUser(credential.getUser());
+		loginToken.setAccount(account);
 		final Instant created = Instant.now();
 		loginToken.setCreated(created);
 		loginToken.setExpiration(expiration);

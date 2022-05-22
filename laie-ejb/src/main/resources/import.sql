@@ -11,23 +11,14 @@ insert into ORIGIN( id, version, code ) values ( 21, 0, 'origin.linkedin');
 insert into ORIGIN( id, version, code ) values ( 22, 0, 'origin.reference');
 insert into ORIGIN( id, version, code ) values ( 23, 0, 'origin.other');
 
-insert into USER( id, version, name, surname, phoneNumber, email, language, rowsPerPage, role, managerId ) values( 500, 0, 'Abel', 'Ferrer Jiménez','685555276', 'abel.ferrer.jimenez@gmail.com', 'es', 10, 'ADMIN', null);
-insert into USER( id, version, name, surname, phoneNumber, email, language, rowsPerPage, role, managerId ) values( 501, 0, 'Isabel', 'Vallejo Medina','685555276', 'isabel.vallejo.medina@gmail.com', 'es', 10, 'ADMIN', null);
-insert into USER( id, version, name, surname, phoneNumber, email, language, rowsPerPage, role, managerId ) values( 502, 0, 'Juan', 'Fernández','685555276', 'jfernandez@gmail.com', 'es', 10, 'USER', 500);
-insert into USER( id, version, name, surname, phoneNumber, email, language, rowsPerPage, role, managerId ) values( 503, 0, 'Pedro', 'Smith','685555276', 'psmith@gmail.com', 'es', 10, 'USER', 500);
-insert into USER( id, version, name, surname, phoneNumber, email, language, rowsPerPage, role, managerId ) values( 504, 0, 'Luis', 'Carrasco','685555276', 'lcarrasco@gmail.com', 'es', 10, 'USER', 500);
-insert into USER( id, version, name, surname, phoneNumber, email, language, rowsPerPage, role, managerId ) values( 505, 0, 'Ana', 'Casoras','685555276', 'acasoras@gmail.com', 'es', 10, 'USER', 500);
-insert into USER( id, version, name, surname, phoneNumber, email, language, rowsPerPage, role, managerId ) values( 506, 0, 'Luis Ángel', 'Nuestra Señora del manto','685555276', 'lantrasenora@gmail.com', 'es', 10, 'USER', 500);
-insert into USER( id, version, name, surname, phoneNumber, email, language, rowsPerPage, role, managerId ) values( 507, 0, 'Anabel', 'Villafafila','685555276', 'anabel@gmail.com', 'es', 10, 'USER', 500);
-
-insert into CREDENTIAL( id, version, hashPassword, salt, created, userid ) values( 600, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')), 500);
-insert into CREDENTIAL( id, version, hashPassword, salt, created, userid ) values( 601, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')), 501);
-insert into CREDENTIAL( id, version, hashPassword, salt, created, userid ) values( 602, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')), 502);
-insert into CREDENTIAL( id, version, hashPassword, salt, created, userid ) values( 603, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')), 503);
-insert into CREDENTIAL( id, version, hashPassword, salt, created, userid ) values( 604, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')), 504);
-insert into CREDENTIAL( id, version, hashPassword, salt, created, userid ) values( 605, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')), 505);
-insert into CREDENTIAL( id, version, hashPassword, salt, created, userid ) values( 606, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')), 506);
-insert into CREDENTIAL( id, version, hashPassword, salt, created, userid ) values( 607, 0, '16AFB50A06A958ACEC2EDA9D70283139BC7B7372E21CC83F619CCF169E6E7956', 'FFFFFF', (TO_DATE('17/12/2015', 'DD/MM/YYYY')), 507);
+insert into USER( id, version, name, surname, phoneNumber, email, language, rowsPerPage, managerId ) values( 500, 0, 'Abel', 'Ferrer Jiménez','685555276', 'abel.ferrer.jimenez@gmail.com', 'es', 10, null);
+insert into USER( id, version, name, surname, phoneNumber, email, language, rowsPerPage, managerId ) values( 501, 0, 'Isabel', 'Vallejo Medina','685555276', 'isabel.vallejo.medina@gmail.com', 'es', 10, null);
+insert into USER( id, version, name, surname, phoneNumber, email, language, rowsPerPage, managerId ) values( 502, 0, 'Juan', 'Fernández','685555276', 'jfernandez@gmail.com', 'es', 10, 500);
+insert into USER( id, version, name, surname, phoneNumber, email, language, rowsPerPage, managerId ) values( 503, 0, 'Pedro', 'Smith','685555276', 'psmith@gmail.com', 'es', 10, 500);
+insert into USER( id, version, name, surname, phoneNumber, email, language, rowsPerPage, managerId ) values( 504, 0, 'Luis', 'Carrasco','685555276', 'lcarrasco@gmail.com', 'es', 10, 500);
+insert into USER( id, version, name, surname, phoneNumber, email, language, rowsPerPage, managerId ) values( 505, 0, 'Ana', 'Casoras','685555276', 'acasoras@gmail.com', 'es', 10, 500);
+insert into USER( id, version, name, surname, phoneNumber, email, language, rowsPerPage, managerId ) values( 506, 0, 'Luis Ángel', 'Nuestra Señora del manto','685555276', 'lantrasenora@gmail.com', 'es', 10, 500);
+insert into USER( id, version, name, surname, phoneNumber, email, language, rowsPerPage, managerId ) values( 507, 0, 'Anabel', 'Villafafila','685555276', 'anabel@gmail.com', 'es', 10, 500);
 
 insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 700, 0, 500, 500, 0 );
 insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 701, 0, 501, 501, 0 );

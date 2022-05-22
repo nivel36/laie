@@ -21,17 +21,17 @@
 		</web-resource-collection>
 
 		<auth-constraint>
-			<role-name>USER</role-name>
-			<role-name>ADMIN</role-name>
+			<role-name>laie.user</role-name>
+			<role-name>laie.admin</role-name>
 		</auth-constraint>
 	</security-constraint>
 
 	<security-role>
-		<role-name>ADMIN</role-name>
+		<role-name>laie.admin</role-name>
 	</security-role>
 
 	<security-role>
-		<role-name>USER</role-name>
+		<role-name>laie.user</role-name>
 	</security-role>
 	
 	<listener>

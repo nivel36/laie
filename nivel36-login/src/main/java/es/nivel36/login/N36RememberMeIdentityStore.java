@@ -1,4 +1,4 @@
-package es.nivel36.laie.web.core;
+package es.nivel36.login;
 
 import java.util.Objects;
 import java.util.Set;
@@ -11,23 +11,18 @@ import javax.security.enterprise.identitystore.CredentialValidationResult;
 import javax.security.enterprise.identitystore.RememberMeIdentityStore;
 import javax.servlet.http.HttpServletRequest;
 
-import es.nivel36.laie.ejb.user.User;
-import es.nivel36.login.AbstractIdentityStore;
-import es.nivel36.login.CriptoUtil;
-import es.nivel36.login.GedIdentityStore;
-import es.nivel36.login.LoginTokenService;
 import es.nivel36.login.LoginToken.TokenType;
 
 @ApplicationScoped
-public class GedRememberMeIdentityStore extends AbstractIdentityStore implements RememberMeIdentityStore {
+public class N36RememberMeIdentityStore extends AbstractIdentityStore implements RememberMeIdentityStore {
 	
-	private @Inject GedIdentityStore gedIdentityStore;
+	private @Inject N36IdentityStore n36IdentityStore;
 
 	private @Inject LoginTokenService loginTokenService;
 
 	private @Inject HttpServletRequest request;
 	
-	private @Inject CredentialService credentialService;
+	private @Inject AccountService accountService;
 
 	@Override
 	public String generateLoginToken(final CallerPrincipal callerPrincipal, final Set<String> groups) {
@@ -45,9 +40,9 @@ public class GedRememberMeIdentityStore extends AbstractIdentityStore implements
 		loginTokenService.remove(loginToken);
 	}
 
-	public void setGedIdentityStore(final GedIdentityStore gedIdentityStore) {
-		Objects.requireNonNull(gedIdentityStore);
-		this.gedIdentityStore = gedIdentityStore;
+	public void setdIdentityStore(final N36IdentityStore n36IdentityStore) {
+		Objects.requireNonNull(n36IdentityStore);
+		this.n36IdentityStore = n36IdentityStore;
 	}
 
 	public void setLoginTokenService(final LoginTokenService loginTokenService) {
@@ -65,7 +60,7 @@ public class GedRememberMeIdentityStore extends AbstractIdentityStore implements
 		Objects.requireNonNull(rememberMeCredential);
 		final String token = rememberMeCredential.getToken();
 		final byte[] tokenHash = CriptoUtil.digestPassword(token);
-		final Credential credential = credentialService.findUserByTokenHashAndType(tokenHash, TokenType.REMEMBER_ME);
-		return gedIdentityStore.validate(credential);
+		final Account credential = accountService.findUserByTokenHashAndType(tokenHash, TokenType.REMEMBER_ME);
+		return n36IdentityStore.validate(credential);
 	}
 }

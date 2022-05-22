@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class LoginToken  implements Serializable {
@@ -42,7 +43,8 @@ public class LoginToken  implements Serializable {
 	@Enumerated(STRING)
 	private TokenType type;
 
-	private String username;
+	@ManyToOne
+	private Account account;
 
 	@Override
 	public boolean equals(Object obj) {
@@ -84,8 +86,8 @@ public class LoginToken  implements Serializable {
 		return this.type;
 	}
 
-	public String getUsername() {
-		return this.username;
+	public Account getAccount() {
+		return this.account;
 	}
 
 	@Override
@@ -121,7 +123,7 @@ public class LoginToken  implements Serializable {
 		this.type = type;
 	}
 
-	public void setUsername(final String username) {
-		this.username = username;
+	public void setAccount(final Account account) {
+		this.account = account;
 	}
 }

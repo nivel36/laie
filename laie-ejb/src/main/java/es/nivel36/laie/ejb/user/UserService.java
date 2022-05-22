@@ -16,7 +16,6 @@ import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.search.SearchFacets;
 import es.nivel36.laie.ejb.core.model.search.SearchResult;
 import es.nivel36.laie.ejb.core.model.search.SortField;
-import es.nivel36.login.Credential;
 
 @Stateless
 public class UserService {
@@ -137,15 +136,6 @@ public class UserService {
 		return updatedUser;
 	}
 
-	public void changePassword(final String email, final String oldPassword, final String newPassword) {
-		Objects.requireNonNull(email);
-		Objects.requireNonNull(newPassword);
-		logger.debug("Change password for user {}", email);
-		// TODO: añadir lógica con el password antiguo
-		final Credential credential = this.userDao.findCredential(email);
-		credential.setPassword(newPassword);
-	}
-
 	public User findUserById(final Long id) {
 		Objects.requireNonNull(id);
 		logger.debug("Find user by id {}", id);
@@ -156,12 +146,6 @@ public class UserService {
 		Objects.requireNonNull(email);
 		logger.debug("Find user by email {}", email);
 		return this.userDao.findUserByEmail(email);
-	}
-
-	public Credential findCredential(final String email) {
-		Objects.requireNonNull(email);
-		logger.debug("Find credential for user with email {}", email);
-		return this.userDao.findCredential(email);
 	}
 
 	public List<User> findSubordinateUsers(final User user) {

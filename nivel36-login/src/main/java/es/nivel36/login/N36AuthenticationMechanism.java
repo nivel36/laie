@@ -1,4 +1,4 @@
-package es.nivel36.laie.web.core.security;
+package es.nivel36.login;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -19,9 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 @AutoApplySession
 @RememberMe(cookieSecureOnly = false, // Remove this when login is served over HTTPS.
 		cookieMaxAgeSeconds = 60 * 60 * 24 * 14, isRememberMeExpression = "#{self.isRememberMe(httpMessageContext)}")
-@LoginToContinue(loginPage = LaieAuthenticationMechanism.LOGIN_URL, errorPage = "", useForwardToLogin = false)
+@LoginToContinue(loginPage = N36AuthenticationMechanism.LOGIN_URL, errorPage = "", useForwardToLogin = false)
 @RequestScoped
-public class LaieAuthenticationMechanism implements HttpAuthenticationMechanism {
+public class N36AuthenticationMechanism implements HttpAuthenticationMechanism {
 
 	static final String LOGIN_URL = "/login.xhtml";
 

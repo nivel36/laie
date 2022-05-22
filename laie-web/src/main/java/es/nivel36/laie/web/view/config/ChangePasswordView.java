@@ -1,7 +1,5 @@
 package es.nivel36.laie.web.view.config;
 
-import java.lang.invoke.MethodHandles;
-
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
@@ -13,17 +11,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.user.User;
-import es.nivel36.laie.ejb.user.UserService;
 import es.nivel36.laie.web.core.view.AbstractView;
-import es.nivel36.login.Credential;
+import es.nivel36.login.Account;
+import es.nivel36.login.AccountService;
 
 @Named
 @ViewScoped
 public class ChangePasswordView extends AbstractView {
 
-	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
-
-	private static final long serialVersionUID = 1L;
+	private static final Logger logger = LoggerFactory.getLogger(ChangePasswordView.class);
+	
+	private static final long serialVersionUID = 8828033864577618433L;
 
 	private String newPassword;
 
@@ -33,10 +31,10 @@ public class ChangePasswordView extends AbstractView {
 
 	private User user;
 
-	private Credential userCredential;
+	private Account userAccount;
 
 	@Inject
-	private transient UserService userService;
+	private transient AccountService accountService;
 
 	public void change() {
 		logger.debug("Change password for user {} action performed", this.user);
@@ -51,7 +49,7 @@ public class ChangePasswordView extends AbstractView {
 			this.facesContext.validationFailed();
 			return;
 		}
-		this.userService.changePassword(this.user.getEmail(), this.newPassword, null);
+		this.accountService.changePassword(this.user.getEmail(), this.newPassword);
 		this.sessionUser.refresh();
 		Faces.redirect(ConfigView.URL);
 	}
@@ -71,7 +69,7 @@ public class ChangePasswordView extends AbstractView {
 	@PostConstruct
 	public void init() {
 		this.user = this.sessionUser.get();
-		this.userCredential = this.userService.findCredential(this.user.getEmail());
+		this.userAccount = this.accountService.findAccount(this.user.getEmail());
 		logger.debug("Change password for user {} init", this.user);
 	}
 
@@ -80,7 +78,7 @@ public class ChangePasswordView extends AbstractView {
 	}
 
 	private boolean isValidPassword() {
-		return this.userCredential.isValid(this.password);
+		return this.userAccount.isValid(this.password);
 	}
 
 	public void setNewPassword(final String newPassword) {
@@ -95,7 +93,7 @@ public class ChangePasswordView extends AbstractView {
 		this.repeatPassword = repeatPassword;
 	}
 
-	public void setUserService(final UserService userService) {
-		this.userService = userService;
+	public void setAccountService(final AccountService accountService) {
+		this.accountService = accountService;
 	}
 }

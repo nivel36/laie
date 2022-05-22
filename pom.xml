@@ -139,10 +139,8 @@
 
 			<dependency>
 				<groupId>es.nivel36</groupId>
-				<artifactId>laie-api</artifactId>
+				<artifactId>nivel36-login</artifactId>
 				<version>${laie.version}</version>
-				<type>war</type>
-				<scope>compile</scope>
 			</dependency>
 
 			<dependency>

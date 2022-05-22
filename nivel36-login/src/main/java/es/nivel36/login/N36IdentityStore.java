@@ -12,51 +12,49 @@ import javax.security.enterprise.credential.UsernamePasswordCredential;
 import javax.security.enterprise.identitystore.CredentialValidationResult;
 import javax.security.enterprise.identitystore.IdentityStore;
 
-import es.nivel36.laie.ejb.user.User;
-
-public class GedIdentityStore extends AbstractIdentityStore implements IdentityStore {
+public class N36IdentityStore extends AbstractIdentityStore implements IdentityStore {
 	
 	@Override
 	public CredentialValidationResult validate(final Credential credential) {
 		Objects.requireNonNull(credential);
 		try {
-			final User user;
+			final Account account;
 			if (credential instanceof UsernamePasswordCredential) {
-				user = this.findUserFromUsernamePasswordCredential(credential);
+				account = this.findUserFromUsernamePasswordCredential(credential);
 			} else if (credential instanceof CallerOnlyCredential) {
-				user = this.findUserFromCallerOnlyCredential(credential);
+				account = this.findUserFromCallerOnlyCredential(credential);
 			}
 			else {
 				return NOT_VALIDATED_RESULT;	
 			}
-			return this.validate(user);
+			return this.validate(account);
 		} catch (final LoginException e) {
 			return NOT_VALIDATED_RESULT;
 		}
 	}
 
-	private User findUserFromCallerOnlyCredential(final Credential credential) throws LoginException {
+	private Account findUserFromCallerOnlyCredential(final Credential credential) throws LoginException {
 		try {
 			final CallerOnlyCredential callerOnlyCredential = (CallerOnlyCredential) credential;
 			final String email = callerOnlyCredential.getCaller();
-			return this.userDao.findUserByEmail(email);
+			return this.accountService.findAccount(email);
 		}
 		catch(NoResultException e) {
 			throw new LoginException("Invalid email");
 		}
 	}
 
-	private User findUserFromUsernamePasswordCredential(final Credential credential) throws LoginException {
+	private Account findUserFromUsernamePasswordCredential(final Credential credential) throws LoginException {
 		final UsernamePasswordCredential usernamePasswordCredential = (UsernamePasswordCredential) credential;
 		final String email = usernamePasswordCredential.getCaller();
-		final es.nivel36.login.Credential laieCredential = this.userDao.findCredential(email);
-		if (laieCredential == null) {
+		final Account account = this.accountService.findAccount(email);
+		if (account == null) {
 			throw new LoginException("Invalid email");
 		}
 		final String password = usernamePasswordCredential.getPasswordAsString();
-		if (!laieCredential.isValid(password)) {
+		if (!account.isValid(password)) {
 			throw new LoginException("Passwords doesn't match");
 		}
-		return laieCredential.getUser();
+		return account;
 	}
 }

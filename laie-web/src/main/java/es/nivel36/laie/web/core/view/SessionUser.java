@@ -21,7 +21,7 @@ import es.nivel36.laie.ejb.core.bookmark.BookmarkService;
 import es.nivel36.laie.ejb.user.Role;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserService;
-import es.nivel36.laie.web.core.LoginService;
+import es.nivel36.login.LoginService;
 
 @Named
 @SessionScoped
@@ -77,7 +77,6 @@ public class SessionUser implements Serializable {
 
 	public void logout() throws ServletException, IOException {
 		loginService.logout(this.user.getEmail());
-		Faces.logout();
 		Faces.redirect("/");
 	}
 

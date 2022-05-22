@@ -9,14 +9,13 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
@@ -82,10 +81,7 @@ public class User extends AbstractEntity implements Subject {
 	@JoinColumn(name = "picture")
 	private File picture;
 
-	@Enumerated(EnumType.STRING)
-	@Column(nullable = false)
-	@Field(name = "role", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
-	@SortableField(forField = "role")
+	@Transient
 	private Role role;
 
 	@Column(nullable = false)

@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import javax.inject.Inject;
 import javax.persistence.CacheStoreMode;
 import javax.persistence.EntityManager;
 import javax.persistence.FlushModeType;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -23,19 +23,18 @@ public abstract class AbstractDao {
 
 	private static final String CACHE_STORE_MODE = "javax.persistence.cache.storeMode";
 
-	@Inject
-	protected EntityManager em;
-	
+	protected @PersistenceContext(unitName = "laie") EntityManager em;
+
 	public <E extends Identifiable> void insert(E entity) {
 		Objects.requireNonNull(entity);
 		this.em.persist(entity);
 	}
-	
+
 	public <E extends Identifiable> E update(E entity) {
 		Objects.requireNonNull(entity);
 		return this.em.merge(entity);
 	}
-	
+
 	public <T extends Identifiable> void delete(final Class<T> type, final T entity) {
 		Objects.requireNonNull(entity);
 		Objects.requireNonNull(type);
@@ -49,7 +48,7 @@ public abstract class AbstractDao {
 			this.em.remove(this.em.merge(entity));
 		}
 	}
-	
+
 	protected <E extends Identifiable> boolean checkDuplicateField(final Class<E> type, final String fieldName,
 			final Object fieldValue) {
 		final CriteriaBuilder cb = this.em.getCriteriaBuilder();
@@ -60,7 +59,7 @@ public abstract class AbstractDao {
 		final List<E> elements = this.findByCriteria(cq, new Page(0, 1));
 		return elements.size() > 0;
 	}
-	
+
 	public <E> E find(final Class<E> type, final Long id) {
 		Objects.requireNonNull(type);
 		Objects.requireNonNull(id);

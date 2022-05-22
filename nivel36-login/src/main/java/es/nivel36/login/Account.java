@@ -6,35 +6,46 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Random;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
-public class Credential implements Serializable {
-	
-	private static final long serialVersionUID = -7213946632987932359L;
+public class Account implements Serializable {
 	
 	private static final Random RANDOM = new SecureRandom();
+	
+	private static final long serialVersionUID = -7213946632987932359L;
 
 	private LocalDate created;
 
 	private LocalDate expired;
 
-	@Column(length = 32, nullable = false)
+	@Column(nullable = false)
 	private byte[] hashPassword;
 
+	@Id
+	@GeneratedValue
 	private Long id;
+	
+	@OneToMany(mappedBy = "account", orphanRemoval = true)
+	private Set<LoginToken> loginTokens;
 
-	@Column(length = 16, nullable = false)
+	private String role;
+
+	@Column(nullable = false)
 	private byte[] salt;
-
+	
 	private String username;
 
-	public Credential() {
+	public Account() {
 	}
 
-	public Credential(final String username, final String password) {
+	public Account(final String username, final String password) {
 		Objects.requireNonNull(password);
 		Objects.requireNonNull(username);
 		this.hashPassword = new byte[32];
@@ -48,7 +59,7 @@ public class Credential implements Serializable {
 	private byte[] buildHashPassword(final String password) {
 		return CriptoUtil.digestPassword(password, this.salt);
 	}
-
+	
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
@@ -60,7 +71,7 @@ public class Credential implements Serializable {
 		if (this.getClass() != obj.getClass()) {
 			return false;
 		}
-		final Credential other = (Credential) obj;
+		final Account other = (Account) obj;
 		return Objects.equals(this.hashPassword, other.hashPassword) && Objects.equals(this.salt, other.salt);
 	}
 
@@ -76,10 +87,18 @@ public class Credential implements Serializable {
 		return id;
 	}
 
+	public Set<LoginToken> getLoginTokens() {
+		return loginTokens;
+	}
+
 	private byte[] getRandomSalt() {
 		final byte[] randmoSalt = new byte[16];
 		RANDOM.nextBytes(randmoSalt);
 		return randmoSalt;
+	}
+
+	public String getRole() {
+		return role;
 	}
 
 	public String getUsername() {
@@ -109,9 +128,17 @@ public class Credential implements Serializable {
 		this.id = id;
 	}
 
+	public void setLoginTokens(Set<LoginToken> loginTokens) {
+		this.loginTokens = loginTokens;
+	}
+
 	public void setPassword(final String password) {
 		this.salt = this.getRandomSalt();
 		this.hashPassword = this.buildHashPassword(password);
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	public void setUserName(final String username) {

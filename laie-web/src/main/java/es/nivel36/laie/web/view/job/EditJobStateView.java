@@ -15,7 +15,6 @@ import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.event.JobOfferEventService;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.ejb.job.offer.JobOfferState;
@@ -38,9 +37,6 @@ public class EditJobStateView extends AbstractView {
 	private JobOfferState state;
 
 	private List<SelectItem> states;
-
-	@Inject
-	protected transient JobOfferEventService jobOfferEventService;
 
 	@Inject
 	protected transient JobOfferService jobOfferService;
@@ -110,10 +106,5 @@ public class EditJobStateView extends AbstractView {
 	public void setJobOfferService(final JobOfferService jobOfferService) {
 		Objects.requireNonNull(jobOfferService);
 		this.jobOfferService = jobOfferService;
-	}
-
-	public void setJobOfferEventService(final JobOfferEventService jobOfferEventService) {
-		Objects.requireNonNull(jobOfferEventService);
-		this.jobOfferEventService = jobOfferEventService;
 	}
 }

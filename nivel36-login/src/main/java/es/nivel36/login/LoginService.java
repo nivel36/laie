@@ -1,13 +1,9 @@
 package es.nivel36.login;
 
 import static javax.security.enterprise.authentication.mechanism.http.AuthenticationParameters.withParams;
-import static org.omnifaces.util.Faces.getRequest;
-import static org.omnifaces.util.Faces.getResponse;
 
-import java.lang.invoke.MethodHandles;
 import java.util.Objects;
 
-import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -17,8 +13,10 @@ import javax.security.enterprise.SecurityContext;
 import javax.security.enterprise.authentication.mechanism.http.AuthenticationParameters;
 import javax.security.enterprise.credential.UsernamePasswordCredential;
 import javax.security.enterprise.identitystore.RememberMeIdentityStore;
+import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -27,7 +25,7 @@ import org.slf4j.LoggerFactory;
 @Stateless
 public class LoginService {
 
-	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
+	private static final Logger logger = LoggerFactory.getLogger(LoginService.class);
 
 	private @Inject ExternalContext externalContext;
 
@@ -35,10 +33,12 @@ public class LoginService {
 
 	private @Inject RememberMeIdentityStore rememberMeIdentityStore;
 
-	private @Resource SecurityContext securityContext;
+	private @Inject SecurityContext securityContext;
 
 	private AuthenticationStatus authenticate(final AuthenticationParameters parameters) {
-		final AuthenticationStatus status = this.securityContext.authenticate(getRequest(), getResponse(), parameters);
+		final HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
+		final HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
+		final AuthenticationStatus status = this.securityContext.authenticate(request, response, parameters);
 		if (status == AuthenticationStatus.SEND_CONTINUE) {
 			// Prevent JSF from rendering a response so authentication mechanism can
 			// continue.
@@ -69,8 +69,14 @@ public class LoginService {
 	public void logout(final String username) {
 		Objects.requireNonNull(username);
 		logger.info("User {} logout", username);
-		this.removeRememberMeCookie();
-		this.invalidateSession();
+		try {
+			this.removeRememberMeCookie();
+			this.invalidateSession();
+			((HttpServletRequest) this.externalContext.getRequest()).logout();
+		} catch (final ServletException e) {
+			logger.error("Error in the users {} logout", username);
+			logger.error("Error trace: ", e);
+		}
 	}
 
 	private void removeLoginToken(final Cookie cookie) {

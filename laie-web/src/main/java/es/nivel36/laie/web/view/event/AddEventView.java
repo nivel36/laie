@@ -2,11 +2,9 @@ package es.nivel36.laie.web.view.event;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 
 import es.nivel36.laie.ejb.event.JobCandidatureEvent;
-import es.nivel36.laie.ejb.job.candidature.JobCandidatureService;
 import es.nivel36.laie.web.core.view.AbstractView;
 
 @Named

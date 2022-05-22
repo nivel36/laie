@@ -24,7 +24,7 @@ public class RemoveExpiredTokensSchedule {
 
 	private static final Logger logger = LoggerFactory.getLogger(RemoveExpiredTokensSchedule.class);
 
-	private @Inject LoginTokenDao loginTokenDao;
+	private @Inject LoginTokenService loginTokenservice;
 
 	/**
 	 * Elimina los tokens de sesión que han expirado.
@@ -32,20 +32,20 @@ public class RemoveExpiredTokensSchedule {
 	@Schedule(persistent = false)
 	public void removeExpiredTokens() {
 		logger.info("Removing expired tokens");
-		final List<LoginToken> loginTokens = this.loginTokenDao.findExpiredTokens();
+		final List<LoginToken> loginTokens = this.loginTokenservice.findExpiredTokens();
 		for (final LoginToken loginToken : loginTokens) {
 			logger.trace("Removing expired token {}", loginToken);
-			this.loginTokenDao.delete(loginToken);
+			this.loginTokenservice.delete(loginToken);
 		}
 	}
 
 	/**
-	 * Inserta una instancia no nula de la clase de tipo <tt>LoginTokenDao</tt>.
+	 * Inserta una instancia no nula de la clase de tipo <tt>LoginTokenService</tt>.
 	 * 
-	 * @param loginTokenDao <tt>LoginTokenDao</tt> no nula
+	 * @param loginTokenDao <tt>LoginTokenService</tt> no nula
 	 */
-	public void setLoginTokenDao(final LoginTokenDao loginTokenDao) {
-		Objects.requireNonNull(loginTokenDao);
-		this.loginTokenDao = loginTokenDao;
+	public void setLoginTokenService(final LoginTokenService loginTokenservice) {
+		Objects.requireNonNull(loginTokenservice);
+		this.loginTokenservice = loginTokenservice;
 	}
 }

@@ -13,14 +13,11 @@ import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
-
 import es.nivel36.laie.ejb.core.model.SearchFacade;
 import es.nivel36.laie.ejb.core.model.search.SearchFacets;
 import es.nivel36.laie.ejb.core.model.search.SearchResult;
 import es.nivel36.laie.ejb.core.model.search.SortField;
 import es.nivel36.laie.ejb.core.util.Parameters;
-import es.nivel36.login.Credential;
-import es.nivel36.login.LoginToken.TokenType;
 
 
 public class UserDao extends AbstractDao {

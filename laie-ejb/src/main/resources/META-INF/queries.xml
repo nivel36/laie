@@ -244,22 +244,6 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="LoginToken.findExpired">
-		<query><![CDATA[
-			SELECT l 
-			FROM LoginToken l 
-			WHERE l.expiration >= :now
-		]]></query>
-	</named-query>
-
-	<named-query name="LoginToken.findByTokenHash">
-		<query><![CDATA[
-			SELECT l 
-			FROM LoginToken l 
-			WHERE l.tokenHash = :tokenHash
-		]]></query>
-	</named-query>
-
 	<named-query name="Meeting.findByJobOffer">
 		<query><![CDATA[
 			SELECT m 
@@ -302,15 +286,6 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="User.findCredential">
-		<query><![CDATA[
-			SELECT c
-			FROM Credential c
-			LEFT JOIN FETCH c.user
-			WHERE c.user.email = :email
-		]]></query>
-	</named-query>
-
 	<named-query name="User.findSubordinateUsers">
 		<query><![CDATA[
 			SELECT u 
@@ -337,16 +312,6 @@
 			FROM User u
 			LEFT JOIN FETCH u.bookmarks
 			WHERE u.email = :email
-		]]></query>
-	</named-query>
-
-	<named-query name="User.findByTokenHashAndType">
-		<query><![CDATA[
-			SELECT u
-			FROM User u, LoginToken l
-			WHERE l.tokenHash = :tokenHash
-			AND l.type = :type
-			AND l.user = u
 		]]></query>
 	</named-query>
 
