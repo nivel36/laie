@@ -60,7 +60,7 @@ public class N36RememberMeIdentityStore extends AbstractIdentityStore implements
 		Objects.requireNonNull(rememberMeCredential);
 		final String token = rememberMeCredential.getToken();
 		final byte[] tokenHash = CriptoUtil.digestPassword(token);
-		final Account credential = accountService.findUserByTokenHashAndType(tokenHash, TokenType.REMEMBER_ME);
+		final Account credential = accountService.findAccountByTokenHashAndType(tokenHash, TokenType.REMEMBER_ME);
 		return n36IdentityStore.validate(credential);
 	}
 }
