@@ -56,9 +56,13 @@ public class LoginView extends AbstractView {
 		if (AuthenticationStatus.SEND_FAILURE.equals(status)) {
 			loginError();
 		} else {
-			this.sessionUser.load(this.username);
-			this.gotoIndex();
+			if (this.externalContext.isUserInRole("laie.admin")) {
+				this.sessionUser.load(this.username, "laie.admin");
+			} else {
+				this.sessionUser.load(this.username, "laie.user");
+			}
 		}
+		this.gotoIndex();
 	}
 
 	private void loginError() {

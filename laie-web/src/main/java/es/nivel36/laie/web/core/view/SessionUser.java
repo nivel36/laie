@@ -38,7 +38,7 @@ public class SessionUser implements Serializable {
 	private User user;
 
 	private List<Bookmark> bookmarks;
-	
+
 	@Inject
 	private transient BookmarkService bookmarkService;
 
@@ -48,10 +48,15 @@ public class SessionUser implements Serializable {
 	@Inject
 	private transient LoginService loginService;
 
-	public void load(final String username) {
+	public void load(final String username, final String role) {
 		Objects.requireNonNull(username);
 		logger.info("User {} has init his/her session", username);
-		this.loadUserData(username);
+
+		if ("laie.admin".equals(role)) {
+			this.loadUserData(username, Role.ADMIN);
+		} else {
+			this.loadUserData(username, Role.USER);
+		}
 	}
 
 	public boolean isActive() {
@@ -63,8 +68,9 @@ public class SessionUser implements Serializable {
 		return this.team.contains(subordinate);
 	}
 
-	private void loadUserData(final String email) {
+	private void loadUserData(final String email, final Role role) {
 		this.user = this.userService.findUserByEmail(email);
+		this.user.setRole(role);
 		this.locale = new Locale(this.user.getLanguage());
 		this.team = this.userService.findSubordinateUsers(user);
 		this.bookmarks = new ArrayList<>(this.user.getBookmarks());
@@ -72,7 +78,7 @@ public class SessionUser implements Serializable {
 
 	public void refresh() {
 		logger.trace("Refreshing session for user {}", this.user);
-		this.loadUserData(this.user.getEmail());
+		this.loadUserData(this.user.getEmail(), this.user.getRole());
 	}
 
 	public void logout() throws ServletException, IOException {
@@ -106,19 +112,19 @@ public class SessionUser implements Serializable {
 		}
 		return this.user.getRole().equals(Role.ADMIN);
 	}
-	
+
 	public void addBookmark(final Bookmark bookmark) {
 		Objects.requireNonNull(bookmark);
 		this.user = this.bookmarkService.addBookmark(bookmark, user);
 		this.bookmarks.add(bookmark);
 	}
-	
-	public void removeFromBookmarks(final Bookmark bookmark)  {
+
+	public void removeFromBookmarks(final Bookmark bookmark) {
 		Objects.requireNonNull(bookmark);
 		this.user = this.bookmarkService.deleteBookmark(bookmark, user);
 		this.bookmarks.remove(bookmark);
 	}
-	
+
 	public boolean hasBookamrk(final Bookmark bookmark) {
 		Objects.requireNonNull(bookmark);
 		return this.bookmarks.contains(bookmark);
@@ -131,7 +137,7 @@ public class SessionUser implements Serializable {
 		}
 		return this.user.toString();
 	}
-	
+
 	public void setUserService(final UserService userService) {
 		Objects.requireNonNull(userService);
 		this.userService = userService;
@@ -141,7 +147,7 @@ public class SessionUser implements Serializable {
 		Objects.requireNonNull(loginService);
 		this.loginService = loginService;
 	}
-	
+
 	public void setBookmarkService(final BookmarkService bookmarkService) {
 		Objects.requireNonNull(bookmarkService);
 		this.bookmarkService = bookmarkService;
