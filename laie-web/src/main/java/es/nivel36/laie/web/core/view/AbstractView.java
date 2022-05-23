@@ -19,24 +19,18 @@ import es.nivel36.laie.web.core.util.Translator;
 public abstract class AbstractView implements Serializable {
 
 	private static final long serialVersionUID = -75092582490831905L;
+	
+	protected transient @Inject ApplicationView applicationView;
 
-	@Inject
-	protected transient ApplicationView applicationView;
+	protected transient @Inject ExternalContext externalContext;
 
-	@Inject
-	protected transient ExternalContext externalContext;
+	protected transient @Inject FacesContext facesContext;
 
-	@Inject
-	protected transient FacesContext facesContext;
+	protected transient @Inject Flash flash;
 
-	@Inject
-	protected transient Flash flash;
+	protected transient @Inject SessionUser sessionUser;
 
-	@Inject
-	protected transient SessionUser sessionUser;
-
-	@Inject
-	protected transient Translator translator;
+	protected transient @Inject Translator translator;
 
 	protected void addErrorToField(final String componentId, final String message) {
 		final UIComponent component = getUIComponent(componentId);

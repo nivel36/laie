@@ -33,8 +33,7 @@ public class LoginView extends AbstractView {
 
 	private String username;
 
-	@Inject
-	private transient LoginService loginService;
+	private transient @Inject LoginService loginService;
 
 	@PostConstruct
 	public void init() {
