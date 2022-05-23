@@ -6,7 +6,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,7 +19,7 @@ import es.nivel36.login.AccountService;
 public class ChangePasswordView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(ChangePasswordView.class);
-	
+
 	private static final long serialVersionUID = 8828033864577618433L;
 
 	private String newPassword;
@@ -49,9 +48,8 @@ public class ChangePasswordView extends AbstractView {
 			this.facesContext.validationFailed();
 			return;
 		}
-		this.accountService.changePassword(this.user.getEmail(), this.newPassword);
-		this.sessionUser.refresh();
-		Faces.redirect(ConfigView.URL);
+		this.accountService.changePassword(this.user.getEmail(), this.password, this.newPassword);
+		sessionUser.logout();
 	}
 
 	public String getNewPassword() {

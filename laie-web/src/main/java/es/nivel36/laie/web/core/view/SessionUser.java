@@ -1,6 +1,5 @@
 package es.nivel36.laie.web.core.view;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +9,6 @@ import java.util.Objects;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.ServletException;
 
 import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
@@ -81,7 +79,7 @@ public class SessionUser implements Serializable {
 		this.loadUserData(this.user.getEmail(), this.user.getRole());
 	}
 
-	public void logout() throws ServletException, IOException {
+	public void logout() {
 		loginService.logout(this.user.getEmail());
 		Faces.redirect("/");
 	}

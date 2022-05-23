@@ -68,6 +68,16 @@
 	}
 }
 
+.change-password-body {
+	.login-panel {
+		display: flex;
+		align-items: center;
+		.login-panel-content {
+			margin: 0;
+		}
+	}
+}
+
 .attendee {
 	display: flex;
 	justify-content: space-between;
