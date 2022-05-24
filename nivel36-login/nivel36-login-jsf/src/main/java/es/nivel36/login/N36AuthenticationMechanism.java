@@ -25,8 +25,7 @@ public class N36AuthenticationMechanism implements HttpAuthenticationMechanism {
 
 	static final String LOGIN_URL = "/login.xhtml";
 
-	@Inject
-	private IdentityStore identityStore;
+	private @Inject IdentityStore identityStore;
 
 	@Override
 	public AuthenticationStatus validateRequest(final HttpServletRequest request, final HttpServletResponse response,

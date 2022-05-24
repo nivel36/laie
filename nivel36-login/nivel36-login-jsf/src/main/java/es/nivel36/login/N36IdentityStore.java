@@ -4,6 +4,7 @@ import static javax.security.enterprise.identitystore.CredentialValidationResult
 
 import java.util.Objects;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.security.auth.login.LoginException;
 import javax.security.enterprise.credential.CallerOnlyCredential;
 import javax.security.enterprise.credential.Credential;
@@ -11,6 +12,7 @@ import javax.security.enterprise.credential.UsernamePasswordCredential;
 import javax.security.enterprise.identitystore.CredentialValidationResult;
 import javax.security.enterprise.identitystore.IdentityStore;
 
+@ApplicationScoped
 public class N36IdentityStore extends AbstractIdentityStore implements IdentityStore {
 
 	@Override

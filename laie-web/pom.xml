@@ -30,7 +30,6 @@
 		<dependency>
 			<groupId>es.nivel36</groupId>
 			<artifactId>nivel36-login-jsf</artifactId>
-			<scope>provided</scope>
 		</dependency>
 
 		<dependency>

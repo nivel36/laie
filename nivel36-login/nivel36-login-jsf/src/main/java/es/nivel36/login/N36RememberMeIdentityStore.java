@@ -16,13 +16,18 @@ import es.nivel36.login.LoginToken.TokenType;
 @ApplicationScoped
 public class N36RememberMeIdentityStore extends AbstractIdentityStore implements RememberMeIdentityStore {
 	
-	private @Inject N36IdentityStore n36IdentityStore;
-
 	private @Inject LoginTokenService loginTokenService;
 
 	private @Inject HttpServletRequest request;
 	
-	private @Inject AccountService accountService;
+	@Override
+	public CredentialValidationResult validate(final RememberMeCredential rememberMeCredential) {
+		Objects.requireNonNull(rememberMeCredential);
+		final String token = rememberMeCredential.getToken();
+		final byte[] tokenHash = CriptoUtil.digestPassword(token);
+		final Account credential = accountService.findAccountByTokenHashAndType(tokenHash, TokenType.REMEMBER_ME);
+		return this.validate(credential);
+	}
 
 	@Override
 	public String generateLoginToken(final CallerPrincipal callerPrincipal, final Set<String> groups) {
@@ -40,11 +45,6 @@ public class N36RememberMeIdentityStore extends AbstractIdentityStore implements
 		loginTokenService.remove(loginToken);
 	}
 
-	public void setdIdentityStore(final N36IdentityStore n36IdentityStore) {
-		Objects.requireNonNull(n36IdentityStore);
-		this.n36IdentityStore = n36IdentityStore;
-	}
-
 	public void setLoginTokenService(final LoginTokenService loginTokenService) {
 		Objects.requireNonNull(loginTokenService);
 		this.loginTokenService = loginTokenService;
@@ -53,14 +53,5 @@ public class N36RememberMeIdentityStore extends AbstractIdentityStore implements
 	public void setRequest(final HttpServletRequest request) {
 		Objects.requireNonNull(request);
 		this.request = request;
-	}
-
-	@Override
-	public CredentialValidationResult validate(final RememberMeCredential rememberMeCredential) {
-		Objects.requireNonNull(rememberMeCredential);
-		final String token = rememberMeCredential.getToken();
-		final byte[] tokenHash = CriptoUtil.digestPassword(token);
-		final Account credential = accountService.findAccountByTokenHashAndType(tokenHash, TokenType.REMEMBER_ME);
-		return n36IdentityStore.validate(credential);
 	}
 }
