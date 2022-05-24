@@ -37,14 +37,11 @@ public class SessionUser implements Serializable {
 
 	private List<Bookmark> bookmarks;
 
-	@Inject
-	private transient BookmarkService bookmarkService;
+	private transient @Inject BookmarkService bookmarkService;
 
-	@Inject
-	private transient UserService userService;
+	private transient @Inject UserService userService;
 
-	@Inject
-	private transient LoginService loginService;
+	private transient @Inject LoginService loginService;
 
 	public void load(final String username, final String role) {
 		Objects.requireNonNull(username);

@@ -4,7 +4,7 @@ import static javax.security.enterprise.authentication.mechanism.http.Authentica
 
 import java.util.Objects;
 
-import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -22,7 +22,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Stateless
+@ApplicationScoped
 public class LoginService {
 
 	private static final Logger logger = LoggerFactory.getLogger(LoginService.class);

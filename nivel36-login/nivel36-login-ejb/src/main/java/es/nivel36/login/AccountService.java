@@ -7,6 +7,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
+import javax.transaction.Transactional.TxType;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +50,7 @@ public class AccountService {
 		}
 	}
 
+	@Transactional(value = TxType.MANDATORY)
 	public void changePassword(final String email, final String oldPassword, final String newPassword) {
 		Objects.requireNonNull(email);
 		Objects.requireNonNull(oldPassword);
@@ -55,6 +58,7 @@ public class AccountService {
 		final Account account = this.findAccount(email);
 		if (account.isValid(oldPassword)) {
 			account.setPassword(newPassword);
+			this.em.merge(account);
 		}
 	}
 }

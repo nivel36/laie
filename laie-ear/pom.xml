@@ -14,16 +14,17 @@
 	<dependencies>
 		<dependency>
 			<groupId>es.nivel36</groupId>
-			<artifactId>nivel36-login</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>es.nivel36</groupId>
 			<artifactId>laie-web</artifactId>
 			<type>war</type>
 		</dependency>
 		<dependency>
 			<groupId>es.nivel36</groupId>
 			<artifactId>laie-ejb</artifactId>
+			<type>ejb</type>
+		</dependency>
+		<dependency>
+			<groupId>es.nivel36</groupId>
+			<artifactId>nivel36-login-ejb</artifactId>
 			<type>ejb</type>
 		</dependency>
 	</dependencies>
@@ -46,6 +47,10 @@
 						<ejbModule>
 							<groupId>es.nivel36</groupId>
 							<artifactId>laie-ejb</artifactId>
+						</ejbModule>
+						<ejbModule>
+							<groupId>es.nivel36</groupId>
+							<artifactId>nivel36-login-ejb</artifactId>
 						</ejbModule>
 					</modules>
 					<outputFileNameMapping>@{artifactId}@-@{version}@@{dashClassifier?}@.@{extension}@</outputFileNameMapping>

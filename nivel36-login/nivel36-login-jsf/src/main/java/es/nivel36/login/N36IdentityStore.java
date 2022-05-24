@@ -4,7 +4,6 @@ import static javax.security.enterprise.identitystore.CredentialValidationResult
 
 import java.util.Objects;
 
-import javax.persistence.NoResultException;
 import javax.security.auth.login.LoginException;
 import javax.security.enterprise.credential.CallerOnlyCredential;
 import javax.security.enterprise.credential.Credential;
@@ -13,7 +12,7 @@ import javax.security.enterprise.identitystore.CredentialValidationResult;
 import javax.security.enterprise.identitystore.IdentityStore;
 
 public class N36IdentityStore extends AbstractIdentityStore implements IdentityStore {
-	
+
 	@Override
 	public CredentialValidationResult validate(final Credential credential) {
 		Objects.requireNonNull(credential);
@@ -23,9 +22,8 @@ public class N36IdentityStore extends AbstractIdentityStore implements IdentityS
 				account = this.findUserFromUsernamePasswordCredential(credential);
 			} else if (credential instanceof CallerOnlyCredential) {
 				account = this.findUserFromCallerOnlyCredential(credential);
-			}
-			else {
-				return NOT_VALIDATED_RESULT;	
+			} else {
+				return NOT_VALIDATED_RESULT;
 			}
 			return this.validate(account);
 		} catch (final LoginException e) {
@@ -34,14 +32,13 @@ public class N36IdentityStore extends AbstractIdentityStore implements IdentityS
 	}
 
 	private Account findUserFromCallerOnlyCredential(final Credential credential) throws LoginException {
-		try {
-			final CallerOnlyCredential callerOnlyCredential = (CallerOnlyCredential) credential;
-			final String email = callerOnlyCredential.getCaller();
-			return this.accountService.findAccount(email);
-		}
-		catch(NoResultException e) {
+		final CallerOnlyCredential callerOnlyCredential = (CallerOnlyCredential) credential;
+		final String email = callerOnlyCredential.getCaller();
+		final Account account = this.accountService.findAccount(email);
+		if (account == null) {
 			throw new LoginException("Invalid email");
 		}
+		return account;
 	}
 
 	private Account findUserFromUsernamePasswordCredential(final Credential credential) throws LoginException {

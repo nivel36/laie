@@ -139,7 +139,14 @@
 
 			<dependency>
 				<groupId>es.nivel36</groupId>
-				<artifactId>nivel36-login</artifactId>
+				<artifactId>nivel36-login-ejb</artifactId>
+				<version>${laie.version}</version>
+				<type>ejb</type>
+			</dependency>
+			
+			<dependency>
+				<groupId>es.nivel36</groupId>
+				<artifactId>nivel36-login-jsf</artifactId>
 				<version>${laie.version}</version>
 			</dependency>
 
