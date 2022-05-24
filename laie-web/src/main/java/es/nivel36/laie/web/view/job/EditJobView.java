@@ -27,12 +27,23 @@ public class EditJobView extends AbstractJobView {
 			logger.error("Trying to edit a job offer but job is null");
 			throw new IllegalPageStateException();
 		}
+		checkEditPermissions();
+		logger.trace("Edit job offer {} init", this.jobOffer);
+		this.fillRecruiters();
+	}
+
+	private void checkEditPermissions() {
 		final User user = sessionUser.get();
+		if (user.isAdmin()) {
+			return;
+		}
+		final User owner = this.jobOffer.getOwner();
+		if( userService.isSubordinateUser(owner, user) ) {
+			return;
+		}
 		if (!this.jobOffer.getOwner().equals(user)) {
 			throw new SecurityException();
 		}
-		logger.trace("Edit job offer {} init", this.jobOffer);
-		this.fillRecruiters();
 	}
 
 	private void fillRecruiters() {

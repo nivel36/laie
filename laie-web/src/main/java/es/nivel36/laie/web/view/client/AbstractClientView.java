@@ -14,7 +14,7 @@ import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserService;
 import es.nivel36.laie.web.core.view.AbstractView;
 
-public class AbstractClientView extends AbstractView {
+public abstract class AbstractClientView extends AbstractView {
 
 	private static final long serialVersionUID = -7192538193827969820L;
 

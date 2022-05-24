@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.core.tag.Tag;
 import es.nivel36.laie.ejb.user.DuplicateEmailException;
+import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 
 @Named
@@ -29,8 +30,23 @@ public class EditCandidateView extends AbstractCandidateView {
 			throw new IllegalPageStateException();
 		}
 		logger.trace("Candidate {} edit init", this.candidate);
+		this.checkEditPermissions();
 		this.initTags();
 		this.candidateImage = this.candidate.getPicture();
+	}
+
+	private void checkEditPermissions() {
+		final User user = sessionUser.get();
+		if (user.isAdmin()) {
+			return;
+		}
+		final User owner = this.candidate.getOwner();
+		if( userService.isSubordinateUser(owner, user) ) {
+			return;
+		}
+		if (!owner.equals(user)) {
+			throw new SecurityException();
+		}
 	}
 
 	private void initTags() {

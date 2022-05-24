@@ -84,6 +84,14 @@
 							<h5>#{i18n['candidate.other_data']}</h5>
 							<div class="p-grid p-formgrid">
 								<div class="p-col-12 p-sm-6">
+									<cc:autocomplete id="owner" label="#{i18n['client.owner']}" value="#{addCandidateView.candidate.owner}"
+										completeMethod="#{addCandidateView.queryOwner}" required="true">
+										<p:column styleClass="user-select image">
+											<cc:person name="#{var.fullName}" path="#{var.picture.path}" />
+										</p:column>
+									</cc:autocomplete>
+								</div>
+								<div class="p-col-12 p-sm-6">
 									<div class="input-group p-field">
 										<p:outputLabel id="rating_label" for="rating" value="#{i18n['candidate.rating']}" />
 										<p:rating id="rating" value="#{addCandidateView.candidate.rating}" cancel="false">

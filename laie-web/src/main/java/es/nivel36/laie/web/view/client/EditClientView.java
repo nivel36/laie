@@ -25,11 +25,22 @@ public class EditClientView extends AbstractClientView {
 		if (this.client == null) {
 			throw new IllegalPageStateException();
 		}
+		this.checkEditPermissions();
+		logger.trace("Client {} edit init", this.client);
+	}
+
+	private void checkEditPermissions() {
 		final User user = sessionUser.get();
-		if (!this.client.getOwner().equals(user)) {
+		if (user.isAdmin()) {
+			return;
+		}
+		final User owner = this.client.getOwner();
+		if (userService.isSubordinateUser(owner, user)) {
+			return;
+		}
+		if (!owner.equals(user)) {
 			throw new SecurityException();
 		}
-		logger.trace("Client {} edit init", this.client);
 	}
 
 	public void save() {

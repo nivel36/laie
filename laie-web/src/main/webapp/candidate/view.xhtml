@@ -48,7 +48,7 @@
 			</div>
 			<div class="p-col-12 p-xl-4">
 				<div class="card card-w-title">
-					<h5>Detalles</h5>
+					<h5>#{i18n['candidate.details']}</h5>
 					<cc:outputText label="#{i18n['candidate.skype']}" value="#{viewCandidateView.candidate.skype}" />
 					<div class="data">
 						<div class="label-container">
@@ -127,6 +127,15 @@
 						<h:outputText id="emptyText" value="---" styleClass="text" rendered="#{empty viewCandidateView.candidate.tags}" />
 					</div>
 				</div>
+
+
+				<div class="card card-w-title">
+					<h5>#{i18n['candidate.other_data']}</h5>
+					<cc:outputLink label="#{i18n['job.owner']}" value="#{viewCandidateView.candidate.owner.fullName}" outcome="/user/view.xhtml">
+						<f:param name="user" value="#{viewCandidateView.candidate.owner.id}" />
+					</cc:outputLink>
+				</div>
+
 			</div>
 		</div>
 	</ui:define>

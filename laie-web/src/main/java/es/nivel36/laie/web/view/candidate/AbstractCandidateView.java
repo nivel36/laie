@@ -20,7 +20,10 @@ import es.nivel36.laie.ejb.candidate.CandidateService;
 import es.nivel36.laie.ejb.core.file.File;
 import es.nivel36.laie.ejb.core.file.FileService;
 import es.nivel36.laie.ejb.core.file.FileUploadException;
+import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.tag.TagService;
+import es.nivel36.laie.ejb.user.User;
+import es.nivel36.laie.ejb.user.UserService;
 import es.nivel36.laie.web.core.view.AbstractView;
 
 public abstract class AbstractCandidateView extends AbstractView {
@@ -38,14 +41,13 @@ public abstract class AbstractCandidateView extends AbstractView {
 
 	protected File candidateImage;
 
-	@Inject
 	protected transient CandidateService candidateService;
 
-	@Inject
-	protected transient FileService fileService;
+	protected transient @Inject FileService fileService;
 
-	@Inject
-	protected transient TagService tagService;
+	protected transient @Inject TagService tagService;
+
+	protected transient @Inject UserService userService;
 
 	public void deleteImage() {
 		logger.trace("Delete user image");
@@ -84,6 +86,10 @@ public abstract class AbstractCandidateView extends AbstractView {
 		} catch (final IOException e) {
 			throw new FileUploadException(e);
 		}
+	}
+
+	public List<User> queryOwner(final String query) {
+		return this.userService.search(query, Page.FIRST_TEN_RESULTS).getResultData();
 	}
 
 	public void onrate(final RateEvent<Integer> rateEvent) {
