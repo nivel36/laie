@@ -2,6 +2,7 @@ package es.nivel36.laie.ejb.permissions;
 
 import javax.inject.Inject;
 
+import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserService;
 
@@ -10,7 +11,7 @@ public class EditCandidatePermission extends AbstractCandidatePermission {
 	private @Inject UserService userService;
 
 	@Override
-	public boolean validate(final User user) {
+	public boolean validate(final Candidate candidate, final User user) {
 		if (user.isAdmin()) {
 			return true;
 		}

@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.client.Client;
 import es.nivel36.laie.ejb.client.DuplicateCifException;
+import es.nivel36.laie.ejb.user.User;
 
 @Named
 @ViewScoped
@@ -22,8 +23,16 @@ public class AddClientView extends AbstractClientView {
 	@PostConstruct
 	public void init() {
 		logger.trace("New client init");
+		final User user = this.sessionUser.get();
+		this.checkPermissions(user);
 		this.client = new Client();
-		this.client.setOwner(this.sessionUser.get());
+		this.client.setOwner(user);
+	}
+
+	private void checkPermissions(final User user) {
+		if (!this.securityService.canAddClient(client, user)) {
+			throw new SecurityException();
+		}
 	}
 
 	public void save() {
