@@ -61,9 +61,7 @@ public class ViewClientView extends AbstractView {
 		this.jobOffers = jobOfferService.findJobOffersByClient(client, Page.ALL_RESULTS);
 		this.checkDeleted();
 		final User user = this.sessionUser.get();
-		final User owner = client.getOwner();
-		final boolean isOwner = user.equals(owner);
-		this.editable = user.isAdmin() || isOwner || this.sessionUser.isManagerOf(owner);
+		this.editable = securityService.canAddClient(client, user);
 		this.addJobOffer = editable;
 		this.bookmark = this.buildBookmark();
 		this.bookmarkable = !this.sessionUser.hasBookamrk(bookmark);

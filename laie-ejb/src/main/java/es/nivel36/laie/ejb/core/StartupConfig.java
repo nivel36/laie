@@ -24,20 +24,13 @@ public class StartupConfig {
 
 	private static final Logger logger = LoggerFactory.getLogger(StartupConfig.class);
 
-	@Inject
-	private Indexer indexer;
+	private @Inject Indexer indexer;
 
-	@Inject
-	@ConfigurationProperty(value = "file.directory")
-	private String fileDirectory;
+	private @Inject @ConfigurationProperty(value = "file.directory") String fileDirectory;
 
-	@Inject
-	@ConfigurationProperty(value = "image.directory")
-	private String imageDirectory;
+	private @Inject @ConfigurationProperty(value = "image.directory") String imageDirectory;
 
-	@Inject
-	@ConfigurationProperty(value = "lucene.directory")
-	private String luceneDirectory;
+	private @Inject @ConfigurationProperty(value = "lucene.directory") String luceneDirectory;
 
 	@PostConstruct
 	public void init() {
@@ -77,7 +70,7 @@ public class StartupConfig {
 		Objects.requireNonNull(indexer);
 		this.indexer = indexer;
 	}
-	
+
 	public void setFileDirectory(final String fileDirectory) {
 		Objects.requireNonNull(fileDirectory);
 		this.fileDirectory = fileDirectory;
