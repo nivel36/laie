@@ -21,7 +21,6 @@ import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.ejb.user.User;
-import es.nivel36.laie.ejb.user.UserService;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
 
@@ -42,16 +41,14 @@ public class ViewClientView extends AbstractView {
 	private boolean bookmarkable;
 
 	private Bookmark bookmark;
-	
+
 	private boolean addJobOffer;
 
 	private List<JobOffer> jobOffers;
 
 	private @Param Client client;
 
-	private @Inject transient UserService userService;
-	
-	private @Inject transient JobOfferService jobOfferService;
+	private transient @Inject JobOfferService jobOfferService;
 
 	@PostConstruct
 	public void init() {
@@ -66,8 +63,8 @@ public class ViewClientView extends AbstractView {
 		final User user = this.sessionUser.get();
 		final User owner = client.getOwner();
 		final boolean isOwner = user.equals(owner);
-		this.editable = user.isAdmin() || isOwner || userService.isSubordinateUser(owner, user);
-		this.addJobOffer = editable || userService.isSubordinateUser(user, owner);
+		this.editable = user.isAdmin() || isOwner || this.sessionUser.isManagerOf(owner);
+		this.addJobOffer = editable;
 		this.bookmark = this.buildBookmark();
 		this.bookmarkable = !this.sessionUser.hasBookamrk(bookmark);
 	}
@@ -111,7 +108,7 @@ public class ViewClientView extends AbstractView {
 	public boolean isBookmarkable() {
 		return this.bookmarkable;
 	}
-	
+
 	public boolean isAddJobOffer() {
 		return addJobOffer;
 	}

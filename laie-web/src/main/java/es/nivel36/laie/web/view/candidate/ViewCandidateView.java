@@ -43,8 +43,7 @@ public class ViewCandidateView extends AbstractView {
 
 	private static final String URL = "/candidate/view.xhtml";
 
-	@Param
-	private Candidate candidate;
+	private @Param Candidate candidate;
 
 	private boolean editable;
 
@@ -58,17 +57,13 @@ public class ViewCandidateView extends AbstractView {
 
 	private Bookmark bookmark;
 
-	@Inject
-	private transient CandidateService candidateService;
+	private transient @Inject CandidateService candidateService;
 
-	@Inject
-	private transient FileService fileUploadService;
+	private transient @Inject FileService fileUploadService;
 
-	@Inject
-	private transient MeetingService meetingService;
+	private transient @Inject MeetingService meetingService;
 
-	@Inject
-	private transient JobCandidatureService jobCandidatureService;
+	private transient @Inject JobCandidatureService jobCandidatureService;
 
 	@PostConstruct
 	public void init() {
@@ -79,13 +74,15 @@ public class ViewCandidateView extends AbstractView {
 		logger.trace("Candidate {} init", this.candidate);
 		this.jobCandidatures = jobCandidatureService.findCandidatesJobCandidatures(candidate, Page.ALL_RESULTS);
 		final User user = this.sessionUser.get();
-		this.editable = user.isAdmin() || user.equals(candidate.getOwner());
+		final User owner = this.candidate.getOwner();
+		final boolean isManagerOfoWner = this.sessionUser.isManagerOf(owner);
+		this.editable = user.isAdmin() || user.equals(owner) || isManagerOfoWner;
 		this.meetings = this.meetingService.findMeetingsByCandidate(this.candidate, Page.ALL_RESULTS);
 		this.files = new ArrayList<>(this.candidate.getFiles());
 		this.bookmark = this.buildBookmark();
 		this.bookmarkable = !this.sessionUser.getBookmarks().contains(this.bookmark);
 	}
-	
+
 	public static String getUrl(long candidateId) {
 		return URL + "?candidate=" + candidateId;
 	}
@@ -159,6 +156,7 @@ public class ViewCandidateView extends AbstractView {
 
 	public Candidate getCandidate() {
 		return this.candidate;
+		
 	}
 
 	public List<File> getFiles() {
