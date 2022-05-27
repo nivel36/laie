@@ -28,7 +28,6 @@ import es.nivel36.laie.ejb.job.candidature.JobCandidature;
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureService;
 import es.nivel36.laie.ejb.job.meeting.Meeting;
 import es.nivel36.laie.ejb.job.meeting.MeetingService;
-import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
 import es.nivel36.laie.web.view.meeting.AddMeetingView;
@@ -64,6 +63,8 @@ public class ViewCandidateView extends AbstractView {
 	private transient @Inject MeetingService meetingService;
 
 	private transient @Inject JobCandidatureService jobCandidatureService;
+	
+	private @Inject transient EditCandidatePermission editCandidatePermission;
 
 	@PostConstruct
 	public void init() {
@@ -73,10 +74,7 @@ public class ViewCandidateView extends AbstractView {
 		}
 		logger.trace("Candidate {} init", this.candidate);
 		this.jobCandidatures = jobCandidatureService.findCandidatesJobCandidatures(candidate, Page.ALL_RESULTS);
-		final User user = this.sessionUser.get();
-		final User owner = this.candidate.getOwner();
-		final boolean isManagerOfoWner = this.sessionUser.isManagerOf(owner);
-		this.editable = user.isAdmin() || user.equals(owner) || isManagerOfoWner;
+		this.editable = editCandidatePermission.validate(candidate);
 		this.meetings = this.meetingService.findMeetingsByCandidate(this.candidate, Page.ALL_RESULTS);
 		this.files = new ArrayList<>(this.candidate.getFiles());
 		this.bookmark = this.buildBookmark();

@@ -25,5 +25,4 @@ public class EditCandidatePermission extends AbstractCandidatePermission {
 		}
 		return false;
 	}
-
 }

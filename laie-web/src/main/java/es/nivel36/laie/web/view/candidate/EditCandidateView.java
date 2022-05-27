@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.omnifaces.util.Faces;
@@ -13,7 +14,6 @@ import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.core.tag.Tag;
 import es.nivel36.laie.ejb.user.DuplicateEmailException;
-import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 
 @Named
@@ -23,6 +23,8 @@ public class EditCandidateView extends AbstractCandidateView {
 	private static final long serialVersionUID = -5736997599473134307L;
 
 	private static final Logger logger = LoggerFactory.getLogger(EditCandidateView.class);
+
+	private @Inject transient EditCandidatePermission editCandidatePermission;
 
 	@PostConstruct
 	public void init() {
@@ -36,15 +38,7 @@ public class EditCandidateView extends AbstractCandidateView {
 	}
 
 	private void checkEditPermissions() {
-		final User user = sessionUser.get();
-		if (user.isAdmin()) {
-			return;
-		}
-		final User owner = this.candidate.getOwner();
-		if( userService.isSubordinateUser(owner, user) ) {
-			return;
-		}
-		if (!owner.equals(user)) {
+		if (!editCandidatePermission.validate(candidate)) {
 			throw new SecurityException();
 		}
 	}
