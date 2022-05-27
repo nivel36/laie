@@ -34,7 +34,7 @@ public class EditClientView extends AbstractClientView {
 	}
 
 	private void checkEditPermissions() {
-		if (!permission.validate(client, this.sessionUser.get())) {
+		if (!permission.validate(client)) {
 			throw new SecurityException();
 		}
 	}

@@ -64,7 +64,7 @@ public class ViewClientView extends AbstractView {
 		this.jobOffers = jobOfferService.findJobOffersByClient(client, Page.ALL_RESULTS);
 		this.checkDeleted();
 		final User user = this.sessionUser.get();
-		this.editable = editClientPermission.validate(client, user);
+		this.editable = editClientPermission.validate(client);
 		this.addJobOffer = editable;
 		this.bookmark = this.buildBookmark();
 		this.bookmarkable = !this.sessionUser.hasBookamrk(bookmark);

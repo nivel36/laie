@@ -34,7 +34,7 @@ public class AddClientView extends AbstractClientView {
 	}
 
 	private void checkPermissions(final User user) {
-		if (!this.addClientPermission.validate(client, user)) {
+		if (!this.addClientPermission.validate(client)) {
 			throw new SecurityException();
 		}
 	}
