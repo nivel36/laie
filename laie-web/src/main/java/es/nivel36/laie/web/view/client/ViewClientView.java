@@ -20,7 +20,6 @@ import es.nivel36.laie.ejb.core.bookmark.Bookmark;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.job.offer.JobOfferService;
-import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
 import es.nivel36.laie.web.permissions.EditClientPermission;
@@ -63,7 +62,6 @@ public class ViewClientView extends AbstractView {
 		this.contacts = new ArrayList<>(this.client.getContacts());
 		this.jobOffers = jobOfferService.findJobOffersByClient(client, Page.ALL_RESULTS);
 		this.checkDeleted();
-		final User user = this.sessionUser.get();
 		this.editable = editClientPermission.validate(client);
 		this.addJobOffer = editable;
 		this.bookmark = this.buildBookmark();
