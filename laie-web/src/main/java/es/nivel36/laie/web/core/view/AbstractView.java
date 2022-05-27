@@ -13,7 +13,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.inject.Inject;
 
-import es.nivel36.laie.ejb.permissions.SecurityService;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.util.Translator;
 
@@ -33,8 +32,6 @@ public abstract class AbstractView implements Serializable {
 
 	protected transient @Inject Translator translator;
 	
-	protected transient @Inject SecurityService securityService;
-
 	protected void addErrorToField(final String componentId, final String message) {
 		final UIComponent component = getUIComponent(componentId);
 		this.addMessage(component, FacesMessage.SEVERITY_ERROR, message, message, null);

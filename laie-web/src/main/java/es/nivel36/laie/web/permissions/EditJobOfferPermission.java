@@ -1,21 +1,21 @@
-package es.nivel36.laie.ejb.permissions;
+package es.nivel36.laie.web.permissions;
 
 import javax.inject.Inject;
 
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.user.User;
-import es.nivel36.laie.ejb.user.UserService;
+import es.nivel36.laie.web.core.view.SessionUser;
 
 public class EditJobOfferPermission extends AbstractJobOfferPermission {
 
-
-	private @Inject UserService userService;
+	private @Inject SessionUser sessionUser;
 
 	@Override
-	public boolean validate(JobOffer jobOffer, User user) {
+	public boolean validate(JobOffer jobOffer) {
 		if (!jobOffer.isOpen()) {
 			return false;
 		}
+		final User user = sessionUser.get();
 		if (user.isAdmin()) {
 			return true;
 		}
@@ -23,11 +23,10 @@ public class EditJobOfferPermission extends AbstractJobOfferPermission {
 		if (owner.equals(user)) {
 			return true;
 		}
-		if (this.userService.isSubordinateUser(owner, user)) {
+		if (this.sessionUser.isManagerOf(owner)) {
 			return true;
 		}
 		return false;
 	}
-	
-	
+
 }

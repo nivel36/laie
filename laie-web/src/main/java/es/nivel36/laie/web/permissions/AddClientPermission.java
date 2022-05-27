@@ -1,12 +1,11 @@
-package es.nivel36.laie.ejb.permissions;
+package es.nivel36.laie.web.permissions;
 
 import es.nivel36.laie.ejb.client.Client;
-import es.nivel36.laie.ejb.user.User;
 
 public class AddClientPermission extends AbstractClientPermission {
 
 	@Override
-	public boolean validate(Client entity, User user) {
+	public boolean validate(Client entity) {
 		return true;
 	}
 }

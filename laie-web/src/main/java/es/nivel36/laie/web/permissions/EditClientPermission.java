@@ -1,16 +1,17 @@
-package es.nivel36.laie.ejb.permissions;
+package es.nivel36.laie.web.permissions;
 
 import javax.inject.Inject;
 
 import es.nivel36.laie.ejb.client.Client;
 import es.nivel36.laie.ejb.user.User;
-import es.nivel36.laie.ejb.user.UserService;
+import es.nivel36.laie.web.core.view.SessionUser;
 
 public class EditClientPermission extends AbstractClientPermission {
 
-	private @Inject UserService userService;
+	private @Inject SessionUser sessionUser;
 
-	public boolean validate(final Client client, final User user) {
+	public boolean validate(final Client client) {
+		final User user = sessionUser.get();
 		if (user.isAdmin()) {
 			return true;
 		}
@@ -18,7 +19,7 @@ public class EditClientPermission extends AbstractClientPermission {
 		if (owner.equals(user)) {
 			return true;
 		}
-		if (userService.isSubordinateUser(owner, user)) {
+		if (sessionUser.isManagerOf(owner)) {
 			return true;
 		}
 		return false;

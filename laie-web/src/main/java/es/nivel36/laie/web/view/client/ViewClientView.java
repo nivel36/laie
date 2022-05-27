@@ -23,12 +23,13 @@ import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
+import es.nivel36.laie.web.permissions.EditClientPermission;
 
 @Named
 @ViewScoped
 public class ViewClientView extends AbstractView {
 
-	private static final long serialVersionUID = 7741542000560705248L;
+	private static final long serialVersionUID = -3020432572054873614L;
 
 	private static final Logger logger = LoggerFactory.getLogger(ViewClientView.class);
 
@@ -50,6 +51,8 @@ public class ViewClientView extends AbstractView {
 
 	private transient @Inject JobOfferService jobOfferService;
 
+	private transient @Inject EditClientPermission editClientPermission;
+
 	@PostConstruct
 	public void init() {
 		if (this.client == null) {
@@ -61,7 +64,7 @@ public class ViewClientView extends AbstractView {
 		this.jobOffers = jobOfferService.findJobOffersByClient(client, Page.ALL_RESULTS);
 		this.checkDeleted();
 		final User user = this.sessionUser.get();
-		this.editable = securityService.canAddClient(client, user);
+		this.editable = editClientPermission.validate(client, user);
 		this.addJobOffer = editable;
 		this.bookmark = this.buildBookmark();
 		this.bookmarkable = !this.sessionUser.hasBookamrk(bookmark);

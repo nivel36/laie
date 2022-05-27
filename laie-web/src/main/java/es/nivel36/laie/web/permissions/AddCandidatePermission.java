@@ -1,12 +1,11 @@
-package es.nivel36.laie.ejb.permissions;
+package es.nivel36.laie.web.permissions;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
-import es.nivel36.laie.ejb.user.User;
 
 public class AddCandidatePermission extends AbstractCandidatePermission {
 
 	@Override
-	public boolean validate(Candidate entity, User user) {
+	public boolean validate(Candidate entity) {
 		return true;
 	}
 }
