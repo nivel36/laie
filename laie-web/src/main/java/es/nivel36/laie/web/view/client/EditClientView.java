@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.client.DuplicateCifException;
 import es.nivel36.laie.web.core.IllegalPageStateException;
-import es.nivel36.laie.web.permissions.EditClientPermission;
 
 @Named
 @ViewScoped

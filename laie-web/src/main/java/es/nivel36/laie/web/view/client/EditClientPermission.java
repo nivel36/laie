@@ -1,4 +1,4 @@
-package es.nivel36.laie.web.permissions;
+package es.nivel36.laie.web.view.client;
 
 import javax.inject.Inject;
 

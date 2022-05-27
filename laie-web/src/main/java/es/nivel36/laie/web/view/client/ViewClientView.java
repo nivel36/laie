@@ -22,7 +22,6 @@ import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
-import es.nivel36.laie.web.permissions.EditClientPermission;
 
 @Named
 @ViewScoped

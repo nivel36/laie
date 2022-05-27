@@ -1,4 +1,4 @@
-package es.nivel36.laie.web.permissions;
+package es.nivel36.laie.web.core;
 
 public interface Permission<T> {
 	

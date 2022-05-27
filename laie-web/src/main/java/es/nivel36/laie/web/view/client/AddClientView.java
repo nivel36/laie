@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import es.nivel36.laie.ejb.client.Client;
 import es.nivel36.laie.ejb.client.DuplicateCifException;
 import es.nivel36.laie.ejb.user.User;
-import es.nivel36.laie.web.permissions.AddClientPermission;
 
 @Named
 @ViewScoped
