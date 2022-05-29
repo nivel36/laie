@@ -17,6 +17,7 @@ import es.nivel36.laie.ejb.job.meeting.MeetingService;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.web.core.view.AbstractView;
 import es.nivel36.laie.web.view.action.ActionsLazyDataModel;
+import es.nivel36.laie.web.view.candidate.AddCandidatePermission;
 import es.nivel36.laie.web.view.candidate.CandidateLazyDataModel;
 import es.nivel36.laie.web.view.event.EventLazyDataModel;
 import es.nivel36.laie.web.view.job.JobOfferLazyDataModel;
@@ -31,27 +32,39 @@ public class IndexView extends AbstractView {
 
 	public static final String URL = "/index.xhtml";
 
-	@Inject
-	private ActionsLazyDataModel actions;
-	
-	@Inject
-	private CandidateLazyDataModel candidates;
-	
-	@Inject
-	private EventLazyDataModel events;
+	private @Inject ActionsLazyDataModel actions;
 
-	@Inject
-	private JobOfferLazyDataModel jobOffers;
+	private @Inject CandidateLazyDataModel candidates;
+
+	private @Inject EventLazyDataModel events;
+
+	private @Inject JobOfferLazyDataModel jobOffers;
 
 	private List<Meeting> meetings;
 
-	@Inject
-	private transient MeetingService meetingService;
+	private transient @Inject MeetingService meetingService;
+	
+	private transient @Inject AddCandidatePermission addCandidatePermission;
+	
+	private boolean candidateInsertable;
+
+	@PostConstruct
+	public void init() {
+		logger.trace("Index init");
+		final User user = this.sessionUser.get();
+		this.meetings = this.meetingService.findPlannedMeetings(user, Page.FIRST_TEN_RESULTS);
+		this.events = null;
+		this.candidateInsertable = addCandidatePermission.validate(null);
+	}
+	
+	public boolean isCandidateInsertable() {
+		return candidateInsertable;
+	}
 
 	public ActionsLazyDataModel getActions() {
 		return actions;
 	}
-	
+
 	public CandidateLazyDataModel getCandidates() {
 		return this.candidates;
 	}
@@ -67,18 +80,14 @@ public class IndexView extends AbstractView {
 	public List<Meeting> getMeetings() {
 		return this.meetings;
 	}
-
-	@PostConstruct
-	public void init() {
-		logger.trace("Index init");
-		final User user = this.sessionUser.get();
-		this.meetings = this.meetingService.findPlannedMeetings(user, Page.FIRST_TEN_RESULTS);
-		this.events = null;
-	}
-
-
+	
 	public void setMeetingService(final MeetingService meetingService) {
 		Objects.requireNonNull(meetingService);
 		this.meetingService = meetingService;
+	}
+	
+	public void setAddCandidatePermission(AddCandidatePermission addCandidatePermission) {
+		Objects.requireNonNull(addCandidatePermission);
+		this.addCandidatePermission = addCandidatePermission;
 	}
 }

@@ -6,7 +6,7 @@ import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.web.core.view.SessionUser;
 
-public class EditCandidatePermission extends AbstractCandidatePermission {
+public class EditCandidatePermission implements CandidatePermission {
 
 	private @Inject SessionUser sessionUser;
 

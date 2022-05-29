@@ -1,10 +1,12 @@
 package es.nivel36.laie.web.view.candidate;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.omnifaces.util.Faces;
@@ -23,11 +25,20 @@ public class AddCandidateView extends AbstractCandidateView {
 
 	private static final Logger logger = LoggerFactory.getLogger(AddCandidateView.class);
 
+	private transient @Inject AddCandidatePermission addCandidatePermission;
+
 	@PostConstruct
 	public void init() {
 		logger.trace("New candidate init");
+		this.checkAddPermissions();
 		this.candidate = new Candidate();
 		this.tags = new ArrayList<>();
+	}
+
+	private void checkAddPermissions() {
+		if(!addCandidatePermission.validate(null)) {
+			throw new SecurityException();
+		}
 	}
 
 	public void save() {
@@ -45,5 +56,10 @@ public class AddCandidateView extends AbstractCandidateView {
 		} catch (final DuplicateEmailException e) {
 			this.addErrorToField("candidateForm:email", "candidate.error.email_exists");
 		}
+	}
+
+	public void setAddCandidatePermission(final AddCandidatePermission addCandidatePermission) {
+		Objects.requireNonNull(addCandidatePermission);
+		this.addCandidatePermission = addCandidatePermission;
 	}
 }

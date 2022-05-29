@@ -1,6 +1,7 @@
 package es.nivel36.laie.web.view.candidate;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
@@ -24,7 +25,7 @@ public class EditCandidateView extends AbstractCandidateView {
 
 	private static final Logger logger = LoggerFactory.getLogger(EditCandidateView.class);
 
-	private @Inject transient EditCandidatePermission editCandidatePermission;
+	private transient @Inject EditCandidatePermission editCandidatePermission;
 
 	@PostConstruct
 	public void init() {
@@ -65,5 +66,10 @@ public class EditCandidateView extends AbstractCandidateView {
 		} catch (final DuplicateEmailException e) {
 			this.addErrorToField("candidateForm:email", "candidate.error.email_exists");
 		}
+	}
+
+	public void setEditCandidatePermission(final EditCandidatePermission editCandidatePermission) {
+		Objects.requireNonNull(editCandidatePermission);
+		this.editCandidatePermission = editCandidatePermission;
 	}
 }

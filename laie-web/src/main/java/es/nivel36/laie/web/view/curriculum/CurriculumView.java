@@ -6,13 +6,13 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.faces.component.UIViewRoot;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -29,6 +29,7 @@ import es.nivel36.laie.ejb.curriculum.language.LanguageLevel;
 import es.nivel36.laie.ejb.curriculum.skill.Skill;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
+import es.nivel36.laie.web.view.candidate.EditCandidatePermission;
 
 @Named
 @ViewScoped
@@ -36,8 +37,7 @@ public class CurriculumView extends AbstractView {
 
 	private static final long serialVersionUID = -4824952921251852587L;
 
-	@Param
-	private Candidate candidate;
+	private @Param Candidate candidate;
 
 	private Curriculum curriculum;
 
@@ -62,15 +62,17 @@ public class CurriculumView extends AbstractView {
 	private List<Integer> years;
 
 	private List<Month> months;
-
-	@Inject
-	private CurriculumService curriculumService;
+	
+	private transient @Inject CurriculumService curriculumService;
+	
+	private transient @Inject EditCandidatePermission editCandidatePermission;
 
 	@PostConstruct
 	public void init() {
 		if (this.candidate == null) {
 			throw new IllegalPageStateException();
 		}
+		this.chekEditPermission();
 		this.curriculum = this.curriculumService.findCandidatesCurriculum(candidate);
 		if (this.curriculum == null) {
 			this.curriculum = new Curriculum();
@@ -105,6 +107,12 @@ public class CurriculumView extends AbstractView {
 
 		this.months = this.buildMonthsCombo();
 		this.years = this.buildYearsCombo(50, 0);
+	}
+
+	private void chekEditPermission() {
+		if(!editCandidatePermission.validate(candidate)) {
+			throw new SecurityException();
+		}
 	}
 
 	public Candidate getCandidate() {
@@ -330,7 +338,7 @@ public class CurriculumView extends AbstractView {
 	}
 
 	private Locale getLocale() {
-		final UIViewRoot uIViewRoot = FacesContext.getCurrentInstance().getViewRoot();
+		final UIViewRoot uIViewRoot = this.facesContext.getViewRoot();
 		final Locale locale;
 		if (uIViewRoot != null) {
 			locale = uIViewRoot.getLocale();
@@ -348,5 +356,19 @@ public class CurriculumView extends AbstractView {
 	private String message(final String message) {
 		final ResourceBundle bundle = this.getResourceBundle(FILE_NAME);
 		return bundle.getString(message);
+	}
+	
+	////////////////////////////////////////////////////////////////////////////
+	// SET
+	////////////////////////////////////////////////////////////////////////////
+	
+	public void setCurriculumService(final CurriculumService curriculumService) {
+		Objects.requireNonNull(curriculumService);
+		this.curriculumService = curriculumService;
+	}
+
+	public void setEditCandidatePermission(final EditCandidatePermission editCandidatePermission) {
+		Objects.requireNonNull(editCandidatePermission);
+		this.editCandidatePermission = editCandidatePermission;
 	}
 }

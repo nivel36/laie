@@ -64,7 +64,7 @@ public class ViewCandidateView extends AbstractView {
 
 	private transient @Inject JobCandidatureService jobCandidatureService;
 	
-	private @Inject transient EditCandidatePermission editCandidatePermission;
+	private transient @Inject EditCandidatePermission editCandidatePermission;
 
 	@PostConstruct
 	public void init() {
@@ -154,7 +154,7 @@ public class ViewCandidateView extends AbstractView {
 
 	public Candidate getCandidate() {
 		return this.candidate;
-		
+
 	}
 
 	public List<File> getFiles() {
@@ -187,5 +187,10 @@ public class ViewCandidateView extends AbstractView {
 	public void setJobCandidatureService(final JobCandidatureService jobCandidatureService) {
 		Objects.requireNonNull(jobCandidatureService);
 		this.jobCandidatureService = jobCandidatureService;
+	}
+
+	public void setEditCandidatePermission(final EditCandidatePermission editCandidatePermission) {
+		Objects.requireNonNull(editCandidatePermission);
+		this.editCandidatePermission = editCandidatePermission;
 	}
 }

@@ -1,7 +1,8 @@
 package es.nivel36.laie.web.view.candidate;
 
-import java.lang.invoke.MethodHandles;
+import java.util.Objects;
 
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -15,14 +16,23 @@ import es.nivel36.laie.web.core.view.AbstractView;
 @ViewScoped
 public class SearchCandidateView extends AbstractView {
 
-	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
+	private static final long serialVersionUID = -5639850911652213337L;
 
-	private static final long serialVersionUID = 1L;
+	private static final Logger logger = LoggerFactory.getLogger(SearchCandidateView.class);
 
-	@Inject
-	private CandidateLazyDataModel candidates;
+	private transient @Inject AddCandidatePermission addCandidatePermission;
+
+	private @Inject CandidateLazyDataModel candidates;
+
+	private boolean insertable;
 
 	private String searchText;
+
+	@PostConstruct
+	public void init() {
+		logger.debug("Search candidate init");
+		this.insertable = addCandidatePermission.validate(null);
+	}
 
 	public void export() {
 		logger.debug("Export candidates action performed");
@@ -44,4 +54,14 @@ public class SearchCandidateView extends AbstractView {
 	public void setSearchText(final String searchText) {
 		this.searchText = searchText;
 	}
+
+	public boolean isInsertable() {
+		return this.insertable;
+	}
+
+	public void setAddCandidatePermission(AddCandidatePermission addCandidatePermission) {
+		Objects.requireNonNull(addCandidatePermission);
+		this.addCandidatePermission = addCandidatePermission;
+	}
+
 }
