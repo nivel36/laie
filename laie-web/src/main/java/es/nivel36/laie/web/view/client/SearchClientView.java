@@ -17,14 +17,26 @@ public class SearchClientView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(SearchClientView.class);
 
-	@Inject
-	private ClientLazyDataModel clients;
+	private @Inject ClientLazyDataModel clients;
+	
+	private transient @Inject AddClientPermission addClientPermission;
+	
+	private boolean insertable;
 	
 	private String searchText;
 
 	public void search() {
 		logger.debug("Search clients action performed");
+		this.insertable = addClientPermission.validate(null);
 		this.clients.setSearchText(this.searchText);
+	}
+
+	public boolean isInsertable() {
+		return insertable;
+	}
+
+	public void setAddClientPermission(AddClientPermission addClientPermission) {
+		this.addClientPermission = addClientPermission;
 	}
 
 	public void export() {
@@ -42,5 +54,4 @@ public class SearchClientView extends AbstractView {
 	public void setSearchText(final String searchText) {
 		this.searchText = searchText;
 	}
-	
 }

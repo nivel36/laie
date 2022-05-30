@@ -48,9 +48,8 @@
 				</p:column>
 				<p:column headerText="#{i18n['job_candidature.job_candidature_state']}">
 					<p:link outcome="/event/add.xhtml">
-						<f:param name="candidate" value="#{jobCandidature.candidate.id}" />
-						<f:param name="client" value="#{jobCandidature.jobOffer.client.id}" />
-						<div class="tag">#{i18n[jobCandidature.state.name]}</div>
+						<f:param name="jobCandidature" value="#{jobCandidature.id}" />
+						<div class="tag">#{i18n['job_candidature_state.'.concat(jobCandidature.state.name)]}</div>
 					</p:link>
 				</p:column>
 			</p:dataTable>

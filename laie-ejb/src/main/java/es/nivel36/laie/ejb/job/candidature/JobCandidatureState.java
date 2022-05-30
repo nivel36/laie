@@ -1,9 +1,14 @@
 package es.nivel36.laie.ejb.job.candidature;
 
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import org.hibernate.search.annotations.Analyze;
@@ -31,9 +36,38 @@ public class JobCandidatureState extends AbstractEntity implements EventState {
 	@Column(unique = true)
 	private String name;
 
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "JOB_CANDIDATURE_STATE_REL", joinColumns = {
+			@JoinColumn(name = "PARENT_ID") }, inverseJoinColumns = { @JoinColumn(name = "JOB_CANDIDATURE_ID") })
+	private Set<JobCandidatureState> nextStates;
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!super.equals(obj)) {
+			return false;
+		}
+		if (this.getClass() != obj.getClass()) {
+			return false;
+		}
+		final JobCandidatureState other = (JobCandidatureState) obj;
+		return Objects.equals(this.name, other.name);
+	}
+
 	@Override
 	public String getName() {
 		return this.name;
+	}
+
+	public Set<JobCandidatureState> getNextStates() {
+		return nextStates;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(this.name);
 	}
 
 	public boolean isApproved() {
@@ -68,24 +102,8 @@ public class JobCandidatureState extends AbstractEntity implements EventState {
 		this.name = name;
 	}
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (!super.equals(obj)) {
-			return false;
-		}
-		if (this.getClass() != obj.getClass()) {
-			return false;
-		}
-		final JobCandidatureState other = (JobCandidatureState) obj;
-		return Objects.equals(this.name, other.name);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hashCode(this.name);
+	public void setNextStates(Set<JobCandidatureState> nextStates) {
+		this.nextStates = nextStates;
 	}
 
 	@Override

@@ -6,7 +6,7 @@ import es.nivel36.laie.ejb.client.Client;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.web.core.view.SessionUser;
 
-public class EditClientPermission extends AbstractClientPermission {
+public class EditClientPermission implements ClientPermission {
 
 	private @Inject SessionUser sessionUser;
 

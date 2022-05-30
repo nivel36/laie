@@ -19,9 +19,8 @@
 							<h1>#{i18n['event.event']}</h1>
 							<div class="p-grid">
 								<div class="p-col-12">
-									<g:input type="selectOneMenu" label="#{i18n['event.job_candidature']}" value="#{addEventView.event.jobCandidature}">
-										<f:selectItems value="#{addEventView.jobCandidatures}" var="jobCandidature" itemValue="#{jobCandidature}" itemLabel="#{jobCandidature}" />
-										<p:ajax event="change" process="@this" update="eventForm:state" listener="#{addEventView.updateState}" />
+									<g:input type="selectOneMenu" label="#{i18n['event.state']}" value="#{addEventView.event.state}">
+										<f:selectItems value="#{addEventView.states}" />
 									</g:input>
 								</div>
 

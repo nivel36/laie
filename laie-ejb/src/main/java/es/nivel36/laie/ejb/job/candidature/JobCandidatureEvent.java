@@ -1,10 +1,11 @@
-package es.nivel36.laie.ejb.event;
+package es.nivel36.laie.ejb.job.candidature;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
@@ -16,8 +17,6 @@ import org.hibernate.search.annotations.Store;
 
 import es.nivel36.laie.ejb.core.Event;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
-import es.nivel36.laie.ejb.job.candidature.JobCandidature;
-import es.nivel36.laie.ejb.job.candidature.JobCandidatureState;
 import es.nivel36.laie.ejb.user.User;
 
 @Entity
@@ -39,6 +38,7 @@ public class JobCandidatureEvent extends AbstractEntity implements Event {
 	@IndexedEmbedded
 	private JobCandidatureState state;
 
+	@NotNull
 	private JobCandidatureEventType type;
 
 	@ManyToOne

@@ -25,7 +25,7 @@ public class ApplicationView extends AbstractView {
 	private String hostname;
 
 	private List<Language> languages;
-
+	
 	@Inject
 	@WebConfigurationProperty(value = "ged.version")
 	private String version;

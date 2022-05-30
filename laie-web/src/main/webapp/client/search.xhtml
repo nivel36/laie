@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:g="http://nivel.36/laie/ui"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/WEB-INF/templates/template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://nivel.36/laie/ui"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
 		#{i18n['client.clients']}
@@ -20,29 +14,21 @@
 		<h:form id="clientSearchForm">
 			<div class="card">
 				<div class="searchBar-buttons">
-					<cc:inputSearch searchText="#{searchClientView.searchText}"
-						searchAction="#{searchClientView.search}"
-						update="clientSearchForm:clients" styleClass="ui-fluid" />
+					<cc:inputSearch searchText="#{searchClientView.searchText}" searchAction="#{searchClientView.search}" update="clientSearchForm:clients"
+						styleClass="ui-fluid" />
 					<div class="buttons">
-						<p:button value="#{i18n['client.new_client']}"
-							outcome="/client/add.xhtml"
-							styleClass="ui-button-success ui-button-outlined" />
-						<p:commandButton value="#{i18n['action.export']}"
-							outcome="#{searchClientView.export}" icon="pi pi-file-excel"
+						<p:button value="#{i18n['client.new_client']}" outcome="/client/add.xhtml" styleClass="ui-button-success ui-button-outlined"
+							rendered="#{searchClientView.insertable}" />
+						<p:commandButton value="#{i18n['action.export']}" outcome="#{searchClientView.export}" icon="pi pi-file-excel"
 							styleClass="ui-button-info ui-button-outlined" />
 					</div>
 				</div>
 
-				<p:dataTable var="client" id="clients"
-					value="#{searchClientView.clients}"
-					emptyMessage="#{i18n['client.no_clients_found']}" reflow="true"
-					paginator="true" paginatorPosition="bottom" rows="10"
-					sortBy="#{client.name}" sortOrder="descending" lazy="true">
+				<p:dataTable var="client" id="clients" value="#{searchClientView.clients}" emptyMessage="#{i18n['client.no_clients_found']}" reflow="true"
+					paginator="true" paginatorPosition="bottom" rows="10" sortBy="#{client.name}" sortOrder="descending" lazy="true">
 
-					<p:column headerText="#{i18n['client.name']}"
-						sortBy="#{client.name}">
-						<h:link value="#{client.name}" outcome="/client/view.xhtml"
-							styleClass="link">
+					<p:column headerText="#{i18n['client.name']}" sortBy="#{client.name}">
+						<h:link value="#{client.name}" outcome="/client/view.xhtml" styleClass="link">
 							<f:param name="client" value="#{client.id}" />
 						</h:link>
 					</p:column>
@@ -55,17 +41,13 @@
 						<h:outputText value="#{client.cif}" />
 					</p:column>
 
-					<p:column headerText="#{i18n['client.city']}"
-						sortBy="#{client.address.city}">
+					<p:column headerText="#{i18n['client.city']}" sortBy="#{client.address.city}">
 						<h:outputText value="#{client.address.city} " />
-						<h:panelGroup rendered="#{not empty client.address.region}">(<h:outputText
-								value="#{client.address.region}" />)</h:panelGroup>
+						<h:panelGroup rendered="#{not empty client.address.region}">(<h:outputText value="#{client.address.region}" />)</h:panelGroup>
 					</p:column>
 
-					<p:column headerText="#{i18n['client.owner']}"
-						sortBy="#{client.owner.name}">
-						<h:link value="#{client.owner.fullName}"
-							outcome="/user/view.xhtml">
+					<p:column headerText="#{i18n['client.owner']}" sortBy="#{client.owner.name}">
+						<h:link value="#{client.owner.fullName}" outcome="/user/view.xhtml">
 							<f:param name="user" value="#{client.owner.id}" />
 						</h:link>
 					</p:column>

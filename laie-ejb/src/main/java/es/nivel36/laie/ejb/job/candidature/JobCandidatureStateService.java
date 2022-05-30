@@ -8,13 +8,10 @@ import javax.inject.Inject;
 
 import es.nivel36.laie.ejb.core.model.Page;
 
-
 @Stateless
 public class JobCandidatureStateService {
 
-	
-	@Inject
-	private JobCandidatureStateDao jobCandidatureStateDao;
+	private @Inject JobCandidatureStateDao jobCandidatureStateDao;
 
 	public JobCandidatureState findInitialState() {
 		return this.jobCandidatureStateDao.findInitialState();
@@ -25,16 +22,6 @@ public class JobCandidatureStateService {
 		this.jobCandidatureStateDao = jobCandidatureStateDao;
 	}
 
-	public JobCandidatureState addJobCandidatureState(final String name, final boolean isApproved,
-			final boolean isDeclined, final boolean isFirst) {
-		final JobCandidatureState jcs = new JobCandidatureState();
-		jcs.setApproved(isApproved);
-		jcs.setFirst(isFirst);
-		jcs.setDeclined(isDeclined);
-		this.jobCandidatureStateDao.insert(jcs);
-		return jcs;
-	}
-	
 	public List<JobCandidatureState> findAll() {
 		return jobCandidatureStateDao.findAll(JobCandidatureState.class, Page.ALL_RESULTS);
 	}

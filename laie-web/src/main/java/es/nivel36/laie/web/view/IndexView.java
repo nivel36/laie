@@ -19,7 +19,6 @@ import es.nivel36.laie.web.core.view.AbstractView;
 import es.nivel36.laie.web.view.action.ActionsLazyDataModel;
 import es.nivel36.laie.web.view.candidate.AddCandidatePermission;
 import es.nivel36.laie.web.view.candidate.CandidateLazyDataModel;
-import es.nivel36.laie.web.view.event.EventLazyDataModel;
 import es.nivel36.laie.web.view.job.JobOfferLazyDataModel;
 
 @Named
@@ -36,8 +35,6 @@ public class IndexView extends AbstractView {
 
 	private @Inject CandidateLazyDataModel candidates;
 
-	private @Inject EventLazyDataModel events;
-
 	private @Inject JobOfferLazyDataModel jobOffers;
 
 	private List<Meeting> meetings;
@@ -53,7 +50,6 @@ public class IndexView extends AbstractView {
 		logger.trace("Index init");
 		final User user = this.sessionUser.get();
 		this.meetings = this.meetingService.findPlannedMeetings(user, Page.FIRST_TEN_RESULTS);
-		this.events = null;
 		this.candidateInsertable = addCandidatePermission.validate(null);
 	}
 	
@@ -67,10 +63,6 @@ public class IndexView extends AbstractView {
 
 	public CandidateLazyDataModel getCandidates() {
 		return this.candidates;
-	}
-
-	public EventLazyDataModel getEvents() {
-		return this.events;
 	}
 
 	public JobOfferLazyDataModel getJobOffers() {

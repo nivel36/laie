@@ -6,7 +6,7 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
 
-import es.nivel36.laie.ejb.event.JobCandidatureEventType;
+import es.nivel36.laie.ejb.job.candidature.JobCandidatureEventType;
 
 @FacesConverter(forClass = JobCandidatureEventType.class)
 public class EventTypeConverter implements Converter<JobCandidatureEventType> {

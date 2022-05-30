@@ -33,7 +33,9 @@ public class JobCandidatureService {
 	private @Inject JobCandidatureDao jobCandidatureDao;
 
 	private @Inject JobCandidatureStateService jobCandidatureStateService;
-	
+
+	private @Inject JobCandidatureEventDao jobCandidatureEventDao;
+
 	public void addJobCandidature(final JobOffer jobOffer, final Candidate candidate) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(candidate);
@@ -84,6 +86,18 @@ public class JobCandidatureService {
 		return this.jobCandidatureDao.findJobOffersJobCanditures(jobOffer, page);
 	}
 
+	public List<JobCandidatureEvent> findJobCandidatureEvents(JobCandidature jobCandidature, Page page) {
+		Objects.requireNonNull(jobCandidature);
+		Objects.requireNonNull(page);
+		logger.debug("Find all job candidature events of the job candidature {}", jobCandidature);
+		return this.jobCandidatureEventDao.findAll(jobCandidature, page);
+	}
+	
+	public JobCandidatureEvent findJobCandidatureEvent(long id) {
+		logger.debug("Find job candidature event {}", id);
+		return this.jobCandidatureEventDao.findJobCandidatureEventById(id);
+	}
+
 	public void removeJobCandidature(final JobOffer jobOffer, final Candidate candidate) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(candidate);
@@ -131,5 +145,10 @@ public class JobCandidatureService {
 	public void setJobCandidatureStateService(final JobCandidatureStateService jobCandidatureStateService) {
 		Objects.requireNonNull(jobCandidatureStateService);
 		this.jobCandidatureStateService = jobCandidatureStateService;
+	}
+
+	public void setJobCandidatureEventDao(final JobCandidatureEventDao jobCandidatureEventDao) {
+		Objects.requireNonNull(jobCandidatureEventDao);
+		this.jobCandidatureEventDao = jobCandidatureEventDao;
 	}
 }

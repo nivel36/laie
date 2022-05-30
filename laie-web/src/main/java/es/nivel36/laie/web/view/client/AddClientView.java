@@ -27,12 +27,12 @@ public class AddClientView extends AbstractClientView {
 	public void init() {
 		logger.trace("New client init");
 		final User user = this.sessionUser.get();
-		this.checkPermissions(user);
+		this.checkPermissions();
 		this.client = new Client();
 		this.client.setOwner(user);
 	}
 
-	private void checkPermissions(final User user) {
+	private void checkPermissions() {
 		if (!this.addClientPermission.validate(client)) {
 			throw new SecurityException();
 		}

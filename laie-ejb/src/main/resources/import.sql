@@ -1,10 +1,27 @@
-insert into JOB_CANDIDATURE_STATE( id, version, name, first, approved, declined ) values ( 10, 0, 'job_candidature_state.not_contacted', true, false, false);
-insert into JOB_CANDIDATURE_STATE( id, version, name, first, approved, declined ) values ( 11, 0, 'job_candidature_state.contacted', false, false, false);
-insert into JOB_CANDIDATURE_STATE( id, version, name, first, approved, declined ) values ( 12, 0, 'job_candidature_state.submitted', false, false, false);
-insert into JOB_CANDIDATURE_STATE( id, version, name, first, approved, declined ) values ( 13, 0, 'job_candidature_state.declined', false, false, true);
-insert into JOB_CANDIDATURE_STATE( id, version, name, first, approved, declined ) values ( 14, 0, 'job_candidature_state.interviewed', false, false, false);
-insert into JOB_CANDIDATURE_STATE( id, version, name, first, approved, declined ) values ( 15, 0, 'job_candidature_state.offered', false, false, false);
-insert into JOB_CANDIDATURE_STATE( id, version, name, first, approved, declined ) values ( 16, 0, 'job_candidature_state.approved', false, true, false);
+insert into JOB_CANDIDATURE_STATE( id, version, name, first, approved, declined ) values ( 10, 0, 'not_contacted', true, false, false);
+insert into JOB_CANDIDATURE_STATE( id, version, name, first, approved, declined ) values ( 11, 0, 'contacted', false, false, false);
+insert into JOB_CANDIDATURE_STATE( id, version, name, first, approved, declined ) values ( 12, 0, 'submitted', false, false, false);
+insert into JOB_CANDIDATURE_STATE( id, version, name, first, approved, declined ) values ( 13, 0, 'declined', false, false, true);
+insert into JOB_CANDIDATURE_STATE( id, version, name, first, approved, declined ) values ( 14, 0, 'interviewed', false, false, false);
+insert into JOB_CANDIDATURE_STATE( id, version, name, first, approved, declined ) values ( 15, 0, 'offered', false, false, false);
+insert into JOB_CANDIDATURE_STATE( id, version, name, first, approved, declined ) values ( 16, 0, 'approved', false, true, false);
+
+insert into JOB_CANDIDATURE_STATE_REL( PARENT_ID, JOB_CANDIDATURE_ID ) values ( 10, 13);
+insert into JOB_CANDIDATURE_STATE_REL( PARENT_ID, JOB_CANDIDATURE_ID ) values ( 10, 11);
+insert into JOB_CANDIDATURE_STATE_REL( PARENT_ID, JOB_CANDIDATURE_ID ) values ( 11, 12);
+insert into JOB_CANDIDATURE_STATE_REL( PARENT_ID, JOB_CANDIDATURE_ID ) values ( 11, 13);
+insert into JOB_CANDIDATURE_STATE_REL( PARENT_ID, JOB_CANDIDATURE_ID ) values ( 11, 14);
+insert into JOB_CANDIDATURE_STATE_REL( PARENT_ID, JOB_CANDIDATURE_ID ) values ( 11, 15);
+insert into JOB_CANDIDATURE_STATE_REL( PARENT_ID, JOB_CANDIDATURE_ID ) values ( 11, 16);
+insert into JOB_CANDIDATURE_STATE_REL( PARENT_ID, JOB_CANDIDATURE_ID ) values ( 12, 13);
+insert into JOB_CANDIDATURE_STATE_REL( PARENT_ID, JOB_CANDIDATURE_ID ) values ( 12, 14);
+insert into JOB_CANDIDATURE_STATE_REL( PARENT_ID, JOB_CANDIDATURE_ID ) values ( 12, 15);
+insert into JOB_CANDIDATURE_STATE_REL( PARENT_ID, JOB_CANDIDATURE_ID ) values ( 12, 16);
+insert into JOB_CANDIDATURE_STATE_REL( PARENT_ID, JOB_CANDIDATURE_ID ) values ( 14, 13);
+insert into JOB_CANDIDATURE_STATE_REL( PARENT_ID, JOB_CANDIDATURE_ID ) values ( 14, 15);
+insert into JOB_CANDIDATURE_STATE_REL( PARENT_ID, JOB_CANDIDATURE_ID ) values ( 14, 16);
+insert into JOB_CANDIDATURE_STATE_REL( PARENT_ID, JOB_CANDIDATURE_ID ) values ( 15, 13);
+insert into JOB_CANDIDATURE_STATE_REL( PARENT_ID, JOB_CANDIDATURE_ID ) values ( 15, 16);
 
 insert into ORIGIN( id, version, code ) values ( 20, 0, 'origin.infojobs');
 insert into ORIGIN( id, version, code ) values ( 21, 0, 'origin.linkedin');

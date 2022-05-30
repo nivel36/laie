@@ -131,14 +131,12 @@
 					</div>
 				</div>
 
-
 				<div class="card card-w-title">
 					<h5>#{i18n['candidate.other_data']}</h5>
 					<cc:outputLink label="#{i18n['job.owner']}" value="#{viewCandidateView.candidate.owner.fullName}" outcome="/user/view.xhtml">
 						<f:param name="user" value="#{viewCandidateView.candidate.owner.id}" />
 					</cc:outputLink>
 				</div>
-
 			</div>
 		</div>
 	</ui:define>

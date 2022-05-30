@@ -48,6 +48,10 @@ public class EditJobStateView extends AbstractView {
 		if (!this.jobOffer.getOwner().equals(user)) {
 			throw new SecurityException();
 		}
+		initComboStates();
+	}
+
+	private void initComboStates() {
 		states = new ArrayList<>();
 		if (jobOffer.getState().equals(JobOfferState.OPENED)) {
 			states.add(new SelectItem(JobOfferState.CLOSED, this.translator.message("job_offer_state.close")));
