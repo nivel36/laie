@@ -20,41 +20,27 @@
 							<div class="p-grid">
 								<div class="p-col-12">
 									<g:input type="selectOneMenu" label="#{i18n['event.state']}" value="#{addEventView.event.state}">
-										<f:selectItems value="#{addEventView.states}" />
+										<f:selectItems value="#{addEventView.states}" var="state" itemValue="#{state}"
+											itemLabel="#{i18n['job_candidature_state.'.concat(state.name)]}" />
 									</g:input>
 								</div>
 
 								<div class="p-col-12 p-xl-6">
 									<g:input type="selectOneMenu" label="#{i18n['event.type']}" value="#{addEventView.event.type}">
-										<f:selectItems value="#{eventTypes.list}" var="event" itemValue="#{event}" itemLabel="#{i18n[event.name]}" />
+										<f:selectItems value="#{addEventView.types}" var="var" itemValue="#{var}" itemLabel="#{i18n['event_type.'.concat(var.name)]}" />
 									</g:input>
 								</div>
 
 								<div class="p-col-12">
 									<g:input id="notes" label="#{i18n['event.notes']}" value="#{addEventView.event.notes}" type="textarea" />
 								</div>
-
-								<div class="p-col-12 p-xl-6">
-									<div class="input-group input-group-select">
-										<div class="label-container">
-											<p:outputLabel id="label" value="#{i18n['event.state']}" for="state" styleClass="label" />
-										</div>
-										<p:selectOneMenu id="state" value="#{addEventView.event.state}" styleClass="input input-select" panelStyleClass="jobCandidatureStates"
-											var="state">
-											<f:selectItems value="#{jobCandidatureStates.list}" var="state" itemValue="#{state}" itemLabel="#{i18n[state.name]}" />
-											<p:column>
-												<div class="tag #{state.color}">#{i18n[state.name]}</div>
-											</p:column>
-										</p:selectOneMenu>
-									</div>
-								</div>
-
 							</div>
 						</div>
 						<div class="p-col-12">
 							<div class="form-buttons">
 								<p:button value="#{i18n['action.cancel']}" outcome="/event/search.xhtml" styleClass="ui-button-secondary ui-button-outlined" />
-								<p:commandButton value="#{i18n['action.save']}" action="#{addEventView.save}" styleClass="ui-button-success ui-button-outlined" />
+								<p:commandButton value="#{i18n['action.save']}" action="#{addEventView.save}" process="@form" update="@form"
+									styleClass="ui-button-success ui-button-outlined" />
 							</div>
 						</div>
 					</div>

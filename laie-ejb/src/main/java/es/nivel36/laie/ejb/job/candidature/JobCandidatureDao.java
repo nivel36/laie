@@ -13,7 +13,6 @@ import es.nivel36.laie.ejb.core.util.Parameters;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.user.User;
 
-
 public class JobCandidatureDao extends AbstractDao {
 
 	public void delete(final JobOffer jobOffer, final Candidate candidate) {
@@ -21,6 +20,13 @@ public class JobCandidatureDao extends AbstractDao {
 		Objects.requireNonNull(candidate);
 		final JobCandidature jobCandidature = this.findByJobOfferAndCandidate(jobOffer, candidate);
 		this.em.remove(jobCandidature);
+	}
+
+	public JobCandidature findJobCandidature(final long jobCandidatureId) {
+		if (jobCandidatureId <= 0) {
+			throw new IllegalStateException();
+		}
+		return em.find(JobCandidature.class, jobCandidatureId);
 	}
 
 	public List<JobCandidature> findApprovedJobCanditures(final JobOffer jobOffer, final Page page) {

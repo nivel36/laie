@@ -1,6 +1,5 @@
 package es.nivel36.laie.ejb.job.candidature;
 
-import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,7 +21,7 @@ import es.nivel36.laie.ejb.user.User;
 @Stateless
 public class JobCandidatureService {
 
-	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
+	private static final Logger logger = LoggerFactory.getLogger(JobCandidatureService.class);
 
 	private @Inject @JobCandidatureCompletedEvent Event<JobCandidature> completedEvent;
 
@@ -50,12 +49,22 @@ public class JobCandidatureService {
 		this.jobCandidatureDao.insert(jobCandidature);
 	}
 
+	public void addJobCandidatureEvent(final JobCandidatureEvent event) {
+		Objects.requireNonNull(event);
+		this.jobCandidatureEventDao.addJobCandidatureEvent(event);
+	}
+
 	public void addJobCandidatures(final JobOffer jobOffer, final List<Candidate> candidates) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(candidates);
 		for (final Candidate candidate : candidates) {
 			this.addJobCandidature(jobOffer, candidate);
 		}
+	}
+
+	public JobCandidature findJobCandidature(final long jobCandidatureId) {
+		logger.debug("Find job candidature with id {}", jobCandidatureId);
+		return this.jobCandidatureDao.findJobCandidature(jobCandidatureId);
 	}
 
 	public JobCandidature findJobCandidature(final JobOffer jobOffer, final Candidate candidate) {
@@ -92,7 +101,7 @@ public class JobCandidatureService {
 		logger.debug("Find all job candidature events of the job candidature {}", jobCandidature);
 		return this.jobCandidatureEventDao.findAll(jobCandidature, page);
 	}
-	
+
 	public JobCandidatureEvent findJobCandidatureEvent(long id) {
 		logger.debug("Find job candidature event {}", id);
 		return this.jobCandidatureEventDao.findJobCandidatureEventById(id);
