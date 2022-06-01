@@ -23,6 +23,7 @@ import es.nivel36.laie.ejb.job.candidature.JobCandidatureState;
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureStateService;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
+import es.nivel36.laie.web.view.job.ViewJobView;
 
 @Named
 @ViewScoped
@@ -51,20 +52,21 @@ public class AddEventView extends AbstractView {
 			throw new IllegalPageStateException();
 		}
 		event = new JobCandidatureEvent();
+		event.setJobCandidature(jobCandidature);
 		types = Arrays.asList(JobCandidatureEventType.values());
 		initComboStates();
 	}
 
 	private void initComboStates() {
-		final JobCandidatureState init = this.jobCandidatureStateService.findInitialState();
 		states = new ArrayList<>();
-		states.add(init);
-		states.addAll(init.getNextStates());
+		JobCandidatureState currentState = jobCandidatureStateService.findByName(jobCandidature.getState().getName());
+		states.add(currentState);
+		states.addAll(currentState.getNextStates());
 	}
 
 	public void save() {
 		this.jobCandidatureService.addJobCandidatureEvent(event);
-		Faces.redirect("/index.xhtml");
+		Faces.redirect(ViewJobView.getUrl(jobCandidature.getJobOffer().getId()));
 	}
 
 	public JobCandidatureEvent getEvent() {

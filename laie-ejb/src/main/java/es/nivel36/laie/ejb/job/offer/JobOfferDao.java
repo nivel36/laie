@@ -58,17 +58,17 @@ public class JobOfferDao extends AbstractDao {
 		return this.findByQuery(JobOffer.class, namedQuery, parameters, page);
 	}
 
-	public long countJobOfferStateEventsByJobOffer(final JobOffer jobOffer) {
+	public long countJobOfferEventsByJobOffer(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer);
-		final String namedQuery = "JobOffer.countJobOfferStateEventsByJobOffer";
+		final String namedQuery = "JobOffer.countJobOfferEventsByJobOffer";
 		final Parameters parameters = map("jobOffer", jobOffer);
 		return this.findByQuery(Long.class, namedQuery, parameters).longValue();
 	}
 	
-	public List<JobOfferStateEvent> findJobOfferStateEventsByJobOffer(final JobOffer jobOffer, final Page page) {
+	public List<JobOfferStateEvent> findJobOfferEventsByJobOffer(final JobOffer jobOffer, final Page page) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(page);
-		final String namedQuery = "JobOffer.findJobOfferStateEventsByJobOffer";
+		final String namedQuery = "JobOffer.findJobOfferEventsByJobOffer";
 		final Parameters parameters = map("jobOffer", jobOffer);
 		return this.findByQuery(JobOfferStateEvent.class, namedQuery, parameters, page);
 	}

@@ -79,7 +79,7 @@ public class EditJobStateView extends AbstractView {
 
 	public void save() {
 		logger.debug("Save job offer action performed");
-		this.jobOfferService.changeState(jobOffer, state, notes);
+		this.jobOfferService.changeState(jobOffer, state, notes, sessionUser.get());
 		Faces.redirect(ViewJobView.getUrl(this.jobOffer.getId()));
 	}
 

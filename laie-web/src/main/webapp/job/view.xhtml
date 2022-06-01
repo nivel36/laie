@@ -19,7 +19,7 @@
 							<div class="title-card-content-info">
 								<div class="title">#{viewJobView.jobOffer.title}</div>
 								<div class="subtitle">
-									<p:link outcome="/client/view.xhtml" >#{viewJobView.jobOffer.client.name}<f:param name="client"
+									<p:link outcome="/client/view.xhtml">#{viewJobView.jobOffer.client.name}<f:param name="client"
 											value="#{viewJobView.jobOffer.client.id}" />
 									</p:link>
 								</div>
@@ -49,7 +49,7 @@
 						</p:button>
 					</cc:jobCandidatures>
 				</h:form>
-				<cc:jobOfferStates value="#{viewJobView.jobOfferStateEvents}" rows="5" />
+				<cc:jobOfferStates value="#{viewJobView.jobOfferEvents}" rows="5" />
 			</div>
 
 			<div class="p-col-12 p-xl-4">

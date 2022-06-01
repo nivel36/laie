@@ -23,9 +23,20 @@
 
 				<p:column headerText="#{i18n['event.date']}" priority="4">
 					<h:outputText value="#{event.date}">
-						<f:convertDateTime type="localDate" pattern="dd/MM/yyyy hh:mm:ss" />
+						<f:convertDateTime type="localDate" pattern="dd/MM/yyyy HH:mm:ss" />
 					</h:outputText>
 				</p:column>
+				
+				<p:column headerText="#{i18n['event.user']}" priority="4">
+					<h:link value="#{event.user.fullName}" outcome="/user/view.xhtml">
+						<f:param name="user" value="#{event.user.id}" />
+					</h:link>
+				</p:column>
+				
+				<p:column headerText="#{i18n['event.type']}">
+					<h:outputText value="#{i18n['event.'.concat(event.type)]}" />
+				</p:column>
+				
 				<p:column headerText="#{i18n['event.notes']}" priority="4">
 					<h:outputText value="#{event.notes}" />
 				</p:column>

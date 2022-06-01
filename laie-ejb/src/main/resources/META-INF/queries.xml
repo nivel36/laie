@@ -201,6 +201,15 @@
 			WHERE j.first = true
 		]]></query>
 	</named-query>
+	
+	<named-query name="JobCandidatureState.findByName">
+		<query><![CDATA[
+			SELECT j 
+			FROM JobCandidatureState j
+			LEFT JOIN FETCH j.nextStates 
+			WHERE j.name = :name
+		]]></query>
+	</named-query>
 
 	<named-query name="JobOffer.findJobOffersByOwnerOrRecruiter">
 		<query><![CDATA[
@@ -228,7 +237,7 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="JobOffer.findJobOfferStateEventsByJobOffer">
+	<named-query name="JobOffer.findJobOfferEventsByJobOffer">
 		<query><![CDATA[
 			SELECT j 
 			FROM JobOfferStateEvent j 
@@ -236,7 +245,7 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="JobOffer.countJobOfferStateEventsByJobOffer">
+	<named-query name="JobOffer.countJobOfferEventsByJobOffer">
 		<query><![CDATA[
 			SELECT COUNT(j) 
 			FROM JobOfferStateEvent j 

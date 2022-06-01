@@ -36,7 +36,7 @@ public class JobCandidatureState extends AbstractEntity implements EventState {
 	@Column(unique = true)
 	private String name;
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "JOB_CANDIDATURE_STATE_REL", joinColumns = {
 			@JoinColumn(name = "PARENT_ID") }, inverseJoinColumns = { @JoinColumn(name = "JOB_CANDIDATURE_ID") })
 	private Set<JobCandidatureState> nextStates;

@@ -25,4 +25,8 @@ public class JobCandidatureStateService {
 	public List<JobCandidatureState> findAll() {
 		return jobCandidatureStateDao.findAll(JobCandidatureState.class, Page.ALL_RESULTS);
 	}
+	
+	public JobCandidatureState findByName(String name) {
+		return jobCandidatureStateDao.findByName(name);
+	}
 }

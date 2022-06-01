@@ -15,7 +15,7 @@ import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.ejb.job.offer.JobOfferStateEvent;
 
-public class JobOfferStateEventsLazyDataModel extends LazyDataModel<JobOfferStateEvent> {
+public class JobOfferEventsLazyDataModel extends LazyDataModel<JobOfferStateEvent> {
 
 	private static final long serialVersionUID = -833385360783160691L;
 
@@ -29,7 +29,7 @@ public class JobOfferStateEventsLazyDataModel extends LazyDataModel<JobOfferStat
 		if (jobOffer == null) {
 			throw new IllegalStateException();
 		}
-		return (int) jobOfferService.countJobOfferStateEventsByJobOffer(jobOffer);
+		return (int) jobOfferService.countJobOfferEventsByJobOffer(jobOffer);
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class JobOfferStateEventsLazyDataModel extends LazyDataModel<JobOfferStat
 		if (jobOffer == null) {
 			throw new IllegalStateException();
 		}
-		return jobOfferService.findJobOfferStateEventsByJobOffer(jobOffer, Page.of(first, pageSize));
+		return jobOfferService.findJobOfferEventsByJobOffer(jobOffer, Page.of(first, pageSize));
 	}
 
 	public void setJobOffer(JobOffer jobOffer) {

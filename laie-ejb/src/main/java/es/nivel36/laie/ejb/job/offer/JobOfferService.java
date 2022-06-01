@@ -53,11 +53,12 @@ public class JobOfferService {
 		Objects.requireNonNull(jobOffer);
 		jobOffer.setState(JobOfferState.CREATED);
 		this.jobOfferDao.insert(jobOffer);
-		final JobOfferStateEvent newStateEvent = builJobOfferStateEvent(jobOffer, JobOfferState.CREATED, null);
+		final User owner = jobOffer.getOwner();
+		final JobOfferStateEvent newStateEvent = builJobOfferStateEvent(jobOffer, JobOfferState.CREATED, null, owner);
 		jobOfferDao.addJobOfferStateEvent(newStateEvent);
 		this.createdEvent.fireAsync(jobOffer);
 		if (this.openDateHasCome(jobOffer)) {
-			this.changeState(jobOffer, JobOfferState.OPENED, null);
+			this.changeState(jobOffer, JobOfferState.OPENED, null, owner);
 		}
 	}
 
@@ -117,14 +118,15 @@ public class JobOfferService {
 		Objects.requireNonNull(jobCandidature, "Job candidature can't be null");
 		final JobOffer jobOffer = jobCandidature.getJobOffer();
 		if (this.isCompleted(jobOffer)) {
-			this.changeState(jobOffer, JobOfferState.CLOSED, null);
+			this.changeState(jobOffer, JobOfferState.CLOSED, null, null);
 		}
 	}
 
-	public JobOffer changeState(final JobOffer jobOffer, final JobOfferState newState, final String notes) {
+	public JobOffer changeState(final JobOffer jobOffer, final JobOfferState newState, final String notes,
+			final User user) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(newState);
-		final JobOfferStateEvent newStateEvent = builJobOfferStateEvent(jobOffer, newState, notes);
+		final JobOfferStateEvent newStateEvent = builJobOfferStateEvent(jobOffer, newState, notes, user);
 		jobOfferDao.addJobOfferStateEvent(newStateEvent);
 		jobOffer.setState(newState);
 		if (newState.isCloseState()) {
@@ -143,24 +145,27 @@ public class JobOfferService {
 	}
 
 	private JobOfferStateEvent builJobOfferStateEvent(final JobOffer jobOffer, final JobOfferState newState,
-			final String notes) {
+			final String notes, final User user) {
 		final JobOfferStateEvent newStateEvent = new JobOfferStateEvent();
 		newStateEvent.setDate(LocalDateTime.now());
 		newStateEvent.setJobOffer(jobOffer);
 		newStateEvent.setState(newState);
 		newStateEvent.setNotes(notes);
+		newStateEvent.setUser(user);
+		newStateEvent
+				.setType(user == null ? JobOfferStateEventType.AUTOMATIC_EVENT : JobOfferStateEventType.MANUAL_EVENT);
 		return newStateEvent;
 	}
 
-	public long countJobOfferStateEventsByJobOffer(final JobOffer jobOffer) {
+	public long countJobOfferEventsByJobOffer(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer);
-		return jobOfferDao.countJobOfferStateEventsByJobOffer(jobOffer);
+		return jobOfferDao.countJobOfferEventsByJobOffer(jobOffer);
 	}
 
-	public List<JobOfferStateEvent> findJobOfferStateEventsByJobOffer(final JobOffer jobOffer, final Page page) {
+	public List<JobOfferStateEvent> findJobOfferEventsByJobOffer(final JobOffer jobOffer, final Page page) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(page);
-		return jobOfferDao.findJobOfferStateEventsByJobOffer(jobOffer, page);
+		return jobOfferDao.findJobOfferEventsByJobOffer(jobOffer, page);
 	}
 
 	public SearchResult<JobOffer> search(final String searchText, final Page page) {

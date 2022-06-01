@@ -29,7 +29,7 @@ public class JobCandidatureEvent extends AbstractEntity implements Event {
 	@SortableField(forField = "date")
 	private LocalDateTime date;
 
-	@ManyToOne
+	@ManyToOne(optional = false)
 	private JobCandidature jobCandidature;
 
 	private String notes;

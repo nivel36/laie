@@ -42,15 +42,27 @@ public class JobCandidatureService {
 			throw new IllegalStateException("Job offer isn't open");
 		}
 		logger.debug("Add Job Candidature of candidate {} to jobOffer {}", candidate.getFullName(), jobOffer);
-
 		final JobCandidatureState firstState = this.jobCandidatureStateService.findInitialState();
 		final JobCandidature jobCandidature = new JobCandidature(candidate, jobOffer);
 		jobCandidature.setState(firstState);
+		createdEvent.fireAsync(jobCandidature);
 		this.jobCandidatureDao.insert(jobCandidature);
 	}
 
 	public void addJobCandidatureEvent(final JobCandidatureEvent event) {
 		Objects.requireNonNull(event);
+		final JobCandidature jobCandidature = event.getJobCandidature();
+		if (!event.getState().equals(jobCandidature.getState())) {
+			logger.trace("State of {} has changed from {} to {}", jobCandidature, jobCandidature.getState(),
+					event.getState());
+			jobCandidature.setState(event.getState());
+			stateChangedEvent.fireAsync(jobCandidature);
+			if (event.getState().isApproved()) {
+				logger.trace("Job candidature is approved");
+				completedEvent.fireAsync(jobCandidature);
+			}
+		}
+		this.jobCandidatureDao.update(jobCandidature);
 		this.jobCandidatureEventDao.addJobCandidatureEvent(event);
 	}
 
@@ -112,23 +124,6 @@ public class JobCandidatureService {
 		Objects.requireNonNull(candidate);
 		logger.debug("Remove job candidature of candidate {} to job offer {}", candidate, jobOffer);
 		this.jobCandidatureDao.delete(jobOffer, candidate);
-	}
-
-	public JobCandidature changeState(final JobOffer jobOffer, final Candidate candidate,
-			final JobCandidatureState newState) {
-		Objects.requireNonNull(jobOffer);
-		Objects.requireNonNull(candidate);
-		final JobCandidature jobCandidature = jobCandidatureDao.findByJobOfferAndCandidate(jobOffer, candidate);
-		if (jobCandidature.getState().equals(newState)) {
-			return jobCandidature;
-		}
-		logger.trace("State has changed to {}", jobCandidature.getState());
-		this.stateChangedEvent.fire(jobCandidature);
-		if (newState.isApproved()) {
-			logger.trace("Job candidature is approved");
-			this.completedEvent.fire(jobCandidature);
-		}
-		return this.jobCandidatureDao.update(jobCandidature);
 	}
 
 	public void setJobCandidatureCompletedEvent(final Event<JobCandidature> jobCandidatureCompletedEvent) {
