@@ -39,8 +39,6 @@ public class JobOfferService {
 
 	private @Inject JobOfferDao jobOfferDao;
 
-	private @Inject JobOfferStateChangeEventDao jobOfferStateChangeEventDao;
-
 	private @Inject @Update @JobOfferCompletedEvent Event<JobOffer> completedEvent;
 
 	private @Inject @Update Event<JobOffer> updateEvent;
@@ -189,7 +187,7 @@ public class JobOfferService {
 	}
 
 	public void setStateChangedEvent(final Event<JobOffer> stateChangedEvent) {
-		Objects.requireNonNull(jobOfferStateChangeEventDao);
+		Objects.requireNonNull(stateChangedEvent);
 		this.stateChangedEvent = stateChangedEvent;
 	}
 
@@ -201,10 +199,5 @@ public class JobOfferService {
 	public void setJobOfferDao(final JobOfferDao jobOfferDao) {
 		Objects.requireNonNull(jobOfferDao);
 		this.jobOfferDao = jobOfferDao;
-	}
-
-	public void setJobOfferStateChangeEventDao(final JobOfferStateChangeEventDao jobOfferStateChangeEventDao) {
-		Objects.requireNonNull(jobOfferStateChangeEventDao);
-		this.jobOfferStateChangeEventDao = jobOfferStateChangeEventDao;
 	}
 }
