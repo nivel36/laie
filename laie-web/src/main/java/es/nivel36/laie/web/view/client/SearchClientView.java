@@ -1,5 +1,6 @@
 package es.nivel36.laie.web.view.client;
 
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -24,10 +25,14 @@ public class SearchClientView extends AbstractView {
 	private boolean insertable;
 	
 	private String searchText;
+	
+	@PostConstruct
+	public void init() {
+		this.insertable = addClientPermission.validate(null);
+	}
 
 	public void search() {
 		logger.debug("Search clients action performed");
-		this.insertable = addClientPermission.validate(null);
 		this.clients.setSearchText(this.searchText);
 	}
 

@@ -98,7 +98,7 @@ public class ViewJobView extends AbstractView {
 		this.bookmarkable = true;
 	}
 
-	public JobOfferEventsLazyDataModel getJobOfferStateEvents() {
+	public JobOfferEventsLazyDataModel getJobOfferEvents() {
 		return jobOfferEvents;
 	}
 
