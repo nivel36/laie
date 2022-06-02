@@ -54,8 +54,8 @@ public class JobOfferService {
 		jobOffer.setState(JobOfferState.CREATED);
 		this.jobOfferDao.insert(jobOffer);
 		final User owner = jobOffer.getOwner();
-		final JobOfferStateEvent newStateEvent = builJobOfferStateEvent(jobOffer, JobOfferState.CREATED, null, owner);
-		jobOfferDao.addJobOfferStateEvent(newStateEvent);
+		final JobOfferEvent newEvent = builJobOfferEvent(jobOffer, JobOfferState.CREATED, null, owner);
+		jobOfferDao.addJobOfferEvent(newEvent);
 		this.createdEvent.fireAsync(jobOffer);
 		if (this.openDateHasCome(jobOffer)) {
 			this.changeState(jobOffer, JobOfferState.OPENED, null, owner);
@@ -126,8 +126,8 @@ public class JobOfferService {
 			final User user) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(newState);
-		final JobOfferStateEvent newStateEvent = builJobOfferStateEvent(jobOffer, newState, notes, user);
-		jobOfferDao.addJobOfferStateEvent(newStateEvent);
+		final JobOfferEvent newStateEvent = builJobOfferEvent(jobOffer, newState, notes, user);
+		jobOfferDao.addJobOfferEvent(newStateEvent);
 		jobOffer.setState(newState);
 		if (newState.isCloseState()) {
 			jobOffer.setCloseDate(LocalDate.now());
@@ -144,9 +144,9 @@ public class JobOfferService {
 		return updatedJobOffer;
 	}
 
-	private JobOfferStateEvent builJobOfferStateEvent(final JobOffer jobOffer, final JobOfferState newState,
+	private JobOfferEvent builJobOfferEvent(final JobOffer jobOffer, final JobOfferState newState,
 			final String notes, final User user) {
-		final JobOfferStateEvent newStateEvent = new JobOfferStateEvent();
+		final JobOfferEvent newStateEvent = new JobOfferEvent();
 		newStateEvent.setDate(LocalDateTime.now());
 		newStateEvent.setJobOffer(jobOffer);
 		newStateEvent.setState(newState);
@@ -162,7 +162,7 @@ public class JobOfferService {
 		return jobOfferDao.countJobOfferEventsByJobOffer(jobOffer);
 	}
 
-	public List<JobOfferStateEvent> findJobOfferEventsByJobOffer(final JobOffer jobOffer, final Page page) {
+	public List<JobOfferEvent> findJobOfferEventsByJobOffer(final JobOffer jobOffer, final Page page) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(page);
 		return jobOfferDao.findJobOfferEventsByJobOffer(jobOffer, page);

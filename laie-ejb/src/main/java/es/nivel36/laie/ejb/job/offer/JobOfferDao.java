@@ -24,9 +24,9 @@ public class JobOfferDao extends AbstractDao {
 	@Inject
 	private SearchFacade searchFacade;
 	
-	public void addJobOfferStateEvent(JobOfferStateEvent jobOfferStateEvent) {
-		Objects.requireNonNull(jobOfferStateEvent);
-		em.persist(jobOfferStateEvent);
+	public void addJobOfferEvent(JobOfferEvent jobOfferEvent) {
+		Objects.requireNonNull(jobOfferEvent);
+		em.persist(jobOfferEvent);
 	}
 
 	public JobOfferState findFirstJobOfferState() {
@@ -65,12 +65,12 @@ public class JobOfferDao extends AbstractDao {
 		return this.findByQuery(Long.class, namedQuery, parameters).longValue();
 	}
 	
-	public List<JobOfferStateEvent> findJobOfferEventsByJobOffer(final JobOffer jobOffer, final Page page) {
+	public List<JobOfferEvent> findJobOfferEventsByJobOffer(final JobOffer jobOffer, final Page page) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(page);
 		final String namedQuery = "JobOffer.findJobOfferEventsByJobOffer";
 		final Parameters parameters = map("jobOffer", jobOffer);
-		return this.findByQuery(JobOfferStateEvent.class, namedQuery, parameters, page);
+		return this.findByQuery(JobOfferEvent.class, namedQuery, parameters, page);
 	}
 
 	public SearchResult<JobOffer> search(final String searchText, final Page page, SortField sortOrder,

@@ -13,9 +13,9 @@ import org.primefaces.model.SortMeta;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.job.offer.JobOfferService;
-import es.nivel36.laie.ejb.job.offer.JobOfferStateEvent;
+import es.nivel36.laie.ejb.job.offer.JobOfferEvent;
 
-public class JobOfferEventsLazyDataModel extends LazyDataModel<JobOfferStateEvent> {
+public class JobOfferEventsLazyDataModel extends LazyDataModel<JobOfferEvent> {
 
 	private static final long serialVersionUID = -833385360783160691L;
 
@@ -33,7 +33,7 @@ public class JobOfferEventsLazyDataModel extends LazyDataModel<JobOfferStateEven
 	}
 
 	@Override
-	public List<JobOfferStateEvent> load(int first, int pageSize, Map<String, SortMeta> sortBy,
+	public List<JobOfferEvent> load(int first, int pageSize, Map<String, SortMeta> sortBy,
 			Map<String, FilterMeta> filterBy) {
 		if (jobOffer == null) {
 			throw new IllegalStateException();

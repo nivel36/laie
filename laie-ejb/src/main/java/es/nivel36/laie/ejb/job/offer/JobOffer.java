@@ -68,7 +68,7 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	private Set<JobCandidature> jobCandidatures = new HashSet<>();
 
 	@OneToMany(mappedBy = "jobOffer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<JobOfferStateEvent> jobOfferStateEvents = new HashSet<>();
+	private Set<JobOfferEvent> jobOfferEvents = new HashSet<>();
 
 	private Integer maxSalary;
 
@@ -154,8 +154,8 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 		return this.jobCandidatures;
 	}
 
-	public Set<JobOfferStateEvent> getJobOfferStateEvents() {
-		return jobOfferStateEvents;
+	public Set<JobOfferEvent> getJobOfferEvents() {
+		return jobOfferEvents;
 	}
 
 	public Integer getMaxSalary() {
@@ -245,8 +245,8 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 		this.jobCandidatures = jobCandidatures;
 	}
 
-	public void setJobOfferStateEvents(Set<JobOfferStateEvent> jobOfferStateEvents) {
-		this.jobOfferStateEvents = jobOfferStateEvents;
+	public void setJobOfferEvents(Set<JobOfferEvent> jobOfferEvents) {
+		this.jobOfferEvents = jobOfferEvents;
 	}
 
 	public void setMaxSalary(final Integer maxSalary) {
