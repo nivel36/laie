@@ -6,18 +6,14 @@ import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
-import org.hibernate.search.annotations.IndexedEmbedded;
-
-import es.nivel36.laie.ejb.core.Event;
-import es.nivel36.laie.ejb.core.model.AbstractEntity;
+import es.nivel36.laie.ejb.core.AbstractEvent;
+import es.nivel36.laie.ejb.core.action.Auditable;
 import es.nivel36.laie.ejb.user.User;
 
 @Entity
-public class JobOfferEvent extends AbstractEntity implements Event {
+public class JobOfferEvent extends AbstractEvent {
 
 	private static final long serialVersionUID = 3586854275179907036L;
-
-	private LocalDateTime date;
 
 	@ManyToOne
 	private JobOffer jobOffer;
@@ -28,15 +24,6 @@ public class JobOfferEvent extends AbstractEntity implements Event {
 
 	private JobOfferStateEventType type;
 
-	@ManyToOne
-	@IndexedEmbedded
-	private User user;
-
-	@Override
-	public LocalDateTime getDate() {
-		return date;
-	}
-
 	public JobOffer getJobOffer() {
 		return jobOffer;
 	}
@@ -45,7 +32,6 @@ public class JobOfferEvent extends AbstractEntity implements Event {
 		return notes;
 	}
 
-	@Override
 	public JobOfferState getState() {
 		return state;
 	}
@@ -83,7 +69,7 @@ public class JobOfferEvent extends AbstractEntity implements Event {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -93,9 +79,14 @@ public class JobOfferEvent extends AbstractEntity implements Event {
 		JobOfferEvent other = (JobOfferEvent) obj;
 		return Objects.equals(date, other.date) && Objects.equals(jobOffer, other.jobOffer) && state == other.state;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(date, jobOffer, state);
+	}
+
+	@Override
+	public Auditable getEntity() {
+		return jobOffer;
 	}
 }

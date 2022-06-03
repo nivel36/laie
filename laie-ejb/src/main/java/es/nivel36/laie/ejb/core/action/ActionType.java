@@ -1,6 +1,9 @@
 package es.nivel36.laie.ejb.core.action;
 
-public enum ActionType {
+import es.nivel36.laie.ejb.core.EventType;
+
+public enum ActionType implements EventType{
 
 	CREATE, UPDATE, DELETE;
+
 }

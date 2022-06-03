@@ -7,27 +7,18 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
-import org.hibernate.search.annotations.SortableField;
-import org.hibernate.search.annotations.Store;
 
-import es.nivel36.laie.ejb.core.Event;
-import es.nivel36.laie.ejb.core.model.AbstractEntity;
+import es.nivel36.laie.ejb.core.AbstractEvent;
+import es.nivel36.laie.ejb.core.action.Auditable;
 import es.nivel36.laie.ejb.user.User;
 
 @Entity
 @Indexed
-public class JobCandidatureEvent extends AbstractEntity implements Event {
+public class JobCandidatureEvent extends AbstractEvent {
 
 	private static final long serialVersionUID = -5724212902774335888L;
-
-	@Field(name = "date", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
-	@SortableField(forField = "date")
-	private LocalDateTime date;
 
 	@ManyToOne(optional = false)
 	private JobCandidature jobCandidature;
@@ -40,10 +31,6 @@ public class JobCandidatureEvent extends AbstractEntity implements Event {
 
 	@NotNull
 	private JobCandidatureEventType type;
-
-	@ManyToOne
-	@IndexedEmbedded
-	private User user;
 
 	public JobCandidatureEvent() {
 	}
@@ -125,5 +112,10 @@ public class JobCandidatureEvent extends AbstractEntity implements Event {
 
 	public void setUser(final User user) {
 		this.user = user;
+	}
+
+	@Override
+	public Auditable getEntity() {
+		return this.jobCandidature;
 	}
 }
