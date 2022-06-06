@@ -33,10 +33,6 @@
 						</h:link>
 					</p:column>
 
-					<p:column headerText="#{i18n['user.role']}" sortBy="#{user.role}">
-						<p:tag styleClass="user-role role-#{user.role}" value="#{i18n[user.role]}" />
-					</p:column>
-
 					<p:column headerText="#{i18n['user.manager']}" sortBy="#{user.manager.name}">
 						<h:link value="#{user.manager.fullName}" styleClass="link" outcome="/user/view.xhtml" rendered="#{not empty user.manager}">
 							<f:param name="id" value="#{user.manager.id}" />
