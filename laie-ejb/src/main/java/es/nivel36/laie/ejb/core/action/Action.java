@@ -1,21 +1,33 @@
 package es.nivel36.laie.ejb.core.action;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
-import es.nivel36.laie.ejb.core.AbstractEvent;
-import es.nivel36.laie.ejb.core.EventType;
+import es.nivel36.laie.ejb.core.model.AbstractEntity;
+import es.nivel36.laie.ejb.user.User;
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "entityName", "type", "userId", "date" }))
-public class Action extends AbstractEvent {
+public class Action extends AbstractEntity {
 
 	private static final long serialVersionUID = 9068445509149161220L;
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	@NotNull
+	@Column(nullable = false)
+	private LocalDateTime date;
 
 	@NotNull
 	@Column(nullable = false)
@@ -34,6 +46,15 @@ public class Action extends AbstractEvent {
 	@Column(nullable = false)
 	private ActionType type;
 
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "userId", nullable = false)
+	private User user;
+
+	public LocalDateTime getDate() {
+		return date;
+	}
+
 	public Long getEntityId() {
 		return entityId;
 	}
@@ -44,6 +65,18 @@ public class Action extends AbstractEvent {
 
 	public String getEntityTitle() {
 		return entityTitle;
+	}
+
+	public ActionType getType() {
+		return type;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setDate(LocalDateTime date) {
+		this.date = date;
 	}
 
 	public void setEntityId(Long entityId) {
@@ -62,14 +95,8 @@ public class Action extends AbstractEvent {
 		this.type = type;
 	}
 
-	@Override
-	public EventType getType() {
-		return this.type;
-	}
-
-	@Override
-	public Auditable getEntity() {
-		return null;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

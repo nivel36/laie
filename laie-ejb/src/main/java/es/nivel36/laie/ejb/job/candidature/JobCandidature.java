@@ -14,14 +14,13 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
-import es.nivel36.laie.ejb.core.action.Auditable;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
 import es.nivel36.laie.ejb.job.meeting.Meeting;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "jobOfferId", "candidateId" }) })
-public class JobCandidature extends AbstractEntity implements Auditable {
+public class JobCandidature extends AbstractEntity {
 
 	private static final long serialVersionUID = 7312289648009726566L;
 
@@ -129,15 +128,5 @@ public class JobCandidature extends AbstractEntity implements Auditable {
 	@Override
 	public String toString() {
 		return this.jobOffer + " - " + this.candidate.getFullName();
-	}
-
-	@Override
-	public String getEntityName() {
-		return "JobCandidature";
-	}
-
-	@Override
-	public String getEntityTitle() {
-		return jobOffer.getTitle() + " - " + candidate.getFullName();
 	}
 }
