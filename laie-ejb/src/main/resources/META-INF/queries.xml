@@ -240,7 +240,7 @@
 	<named-query name="JobOffer.findJobOfferEventsByJobOffer">
 		<query><![CDATA[
 			SELECT j 
-			FROM JobOfferStateEvent j 
+			FROM JobOfferEvent j 
 			WHERE j.jobOffer = :jobOffer
 		]]></query>
 	</named-query>
@@ -248,7 +248,7 @@
 	<named-query name="JobOffer.countJobOfferEventsByJobOffer">
 		<query><![CDATA[
 			SELECT COUNT(j) 
-			FROM JobOfferStateEvent j 
+			FROM JobOfferEvent j 
 			WHERE j.jobOffer = :jobOffer
 		]]></query>
 	</named-query>

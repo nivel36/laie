@@ -26,7 +26,7 @@ public class JobOfferEvent extends AbstractEntity implements Event {
 
 	private JobOfferState state;
 
-	private JobOfferStateEventType type;
+	private JobOfferEventType type;
 
 	@ManyToOne
 	@IndexedEmbedded
@@ -51,7 +51,7 @@ public class JobOfferEvent extends AbstractEntity implements Event {
 	}
 
 	@Override
-	public JobOfferStateEventType getType() {
+	public JobOfferEventType getType() {
 		return type;
 	}
 
@@ -76,7 +76,7 @@ public class JobOfferEvent extends AbstractEntity implements Event {
 		this.state = state;
 	}
 
-	public void setType(JobOfferStateEventType type) {
+	public void setType(JobOfferEventType type) {
 		this.type = type;
 	}
 

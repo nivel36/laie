@@ -151,7 +151,7 @@ public class JobOfferService {
 		newStateEvent.setNotes(notes);
 		newStateEvent.setUser(user);
 		newStateEvent
-				.setType(user == null ? JobOfferStateEventType.AUTOMATIC_EVENT : JobOfferStateEventType.MANUAL_EVENT);
+				.setType(user == null ? JobOfferEventType.AUTOMATIC_EVENT : JobOfferEventType.MANUAL_EVENT);
 		return newStateEvent;
 	}
 
