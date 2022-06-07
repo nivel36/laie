@@ -113,6 +113,19 @@ public class JobCandidatureService {
 		logger.debug("Find all job candidature events of the job candidature {}", jobCandidature);
 		return this.jobCandidatureEventDao.findAll(jobCandidature, page);
 	}
+	
+	public List<JobCandidatureEvent> findJobCandidatureEvents(JobOffer jobOffer, Page page) {
+		Objects.requireNonNull(jobOffer);
+		Objects.requireNonNull(page);
+		logger.debug("Find all job candidature events of the job candidature {}", jobOffer);
+		return this.jobCandidatureEventDao.findAll(jobOffer, page);
+	}
+	
+	public long countJobCandidatureEvents(JobOffer jobOffer) {
+		Objects.requireNonNull(jobOffer);
+		logger.debug("Count all job candidature events of the job candidature {}", jobOffer);
+		return this.jobCandidatureEventDao.countAll(jobOffer);
+	}
 
 	public JobCandidatureEvent findJobCandidatureEvent(long id) {
 		logger.debug("Find job candidature event {}", id);

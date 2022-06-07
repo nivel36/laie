@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:composite="http://xmlns.jcp.org/jsf/composite" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:g="http://nivel.36/laie/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<composite:interface>
+		<composite:attribute name="value" required="true" />
+		<composite:attribute name="styleClass" required="false" default="" />
+		<composite:attribute name="title" required="false" default="#{i18n['event.events']}" />
+		<composite:attribute name="rows" required="false" default="10" />
+	</composite:interface>
+
+	<composite:implementation>
+		<div id="#{cc.clientId}" class="card card-w-title events #{cc.attrs.styleClass}">
+			<h5>#{cc.attrs.title}</h5>
+			<p:dataTable var="event" id="events" value="#{cc.attrs.value}" emptyMessage="#{i18n['event.no_events_found']}" reflow="true" paginator="true"
+				paginatorPosition="bottom" rows="#{cc.attrs.rows}" sortBy="#{event.date}" sortOrder="ascending" lazy="true" styleClass="ui-datatable-borderless">
+
+				<p:column headerText="#{i18n['event.type']}">
+					<h:outputText value="#{i18n['job_candidature_state.'.concat(event.state)]}" />
+				</p:column>
+
+				<p:column headerText="#{i18n['event.date']}" priority="4">
+					<h:outputText value="#{event.date}">
+						<f:convertDateTime type="localDate" pattern="dd/MM/yyyy HH:mm:ss" />
+					</h:outputText>
+				</p:column>
+				
+				<p:column headerText="#{i18n['event.user']}" priority="4">
+					<h:link value="#{event.user.fullName}" outcome="/user/view.xhtml">
+						<f:param name="user" value="#{event.user.id}" />
+					</h:link>
+				</p:column>
+				
+				<p:column headerText="#{i18n['event.type']}">
+					<h:outputText value="#{i18n['job_candidature_event.'.concat(event.type)]}" />
+				</p:column>
+				
+				<p:column headerText="#{i18n['event.notes']}" priority="4">
+					<h:outputText value="#{event.notes}" />
+				</p:column>
+
+			</p:dataTable>
+			<h:panelGroup id="children" styleClass="buttons">
+				<composite:insertChildren />
+			</h:panelGroup>
+		</div>
+	</composite:implementation>
+</ui:component>

@@ -11,33 +11,33 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortMeta;
 
 import es.nivel36.laie.ejb.core.model.Page;
+import es.nivel36.laie.ejb.job.candidature.JobCandidatureEvent;
+import es.nivel36.laie.ejb.job.candidature.JobCandidatureService;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
-import es.nivel36.laie.ejb.job.offer.JobOfferService;
-import es.nivel36.laie.ejb.job.offer.JobOfferEvent;
 
-public class JobOfferEventsLazyDataModel extends LazyDataModel<JobOfferEvent> {
+public class JobCandidatureEventsLazyDataModel extends LazyDataModel<JobCandidatureEvent> {
 
 	private static final long serialVersionUID = -833385360783160691L;
 
 	private JobOffer jobOffer;
 
-	private @Inject JobOfferService jobOfferService;
+	private @Inject JobCandidatureService jobCandidatureService;
 
 	@Override
 	public int count(Map<String, FilterMeta> filterBy) {
 		if (jobOffer == null) {
 			throw new IllegalStateException();
 		}
-		return (int) jobOfferService.countJobOfferEventsByJobOffer(jobOffer);
+		return (int) jobCandidatureService.countJobCandidatureEvents(jobOffer);
 	}
 
 	@Override
-	public List<JobOfferEvent> load(int first, int pageSize, Map<String, SortMeta> sortBy,
+	public List<JobCandidatureEvent> load(int first, int pageSize, Map<String, SortMeta> sortBy,
 			Map<String, FilterMeta> filterBy) {
 		if (jobOffer == null) {
 			throw new IllegalStateException();
 		}
-		return jobOfferService.findJobOfferEventsByJobOffer(jobOffer, Page.of(first, pageSize));
+		return jobCandidatureService.findJobCandidatureEvents(jobOffer, Page.of(first, pageSize));
 	}
 
 	public void setJobOffer(JobOffer jobOffer) {
@@ -45,9 +45,9 @@ public class JobOfferEventsLazyDataModel extends LazyDataModel<JobOfferEvent> {
 		this.jobOffer = jobOffer;
 	}
 
-	public void setJobOfferService(JobOfferService jobOfferService) {
-		Objects.requireNonNull(jobOfferService);
-		this.jobOfferService = jobOfferService;
+	public void setJobCandidatureService(JobCandidatureService jobCandidatureService) {
+		Objects.requireNonNull(jobCandidatureService);
+		this.jobCandidatureService = jobCandidatureService;
 	}
 
 }

@@ -45,6 +45,8 @@ public class ViewJobView extends AbstractView {
 	private List<JobCandidature> jobCandidatures;
 
 	private @Inject JobOfferEventsLazyDataModel jobOfferEvents;
+	
+	private @Inject JobCandidatureEventsLazyDataModel jobCandidatureEvents;
 
 	@PostConstruct
 	public void init() {
@@ -55,6 +57,7 @@ public class ViewJobView extends AbstractView {
 
 		// Hemos de inicializar los eventos con la oferta
 		this.jobOfferEvents.setJobOffer(jobOffer);
+		this.jobCandidatureEvents.setJobOffer(jobOffer);
 
 		final User user = this.sessionUser.get();
 		final User owner = jobOffer.getOwner();
@@ -100,6 +103,10 @@ public class ViewJobView extends AbstractView {
 
 	public JobOfferEventsLazyDataModel getJobOfferEvents() {
 		return jobOfferEvents;
+	}
+	
+	public JobCandidatureEventsLazyDataModel getJobCandidatureEvents() {
+		return jobCandidatureEvents;
 	}
 
 	public boolean isOwner() {

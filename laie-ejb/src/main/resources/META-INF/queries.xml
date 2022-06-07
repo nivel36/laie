@@ -143,6 +143,22 @@
 			WHERE f.physicalFile = :physicalFile
 		]]></query>
 	</named-query>
+	
+	<named-query name="JobCandidature.findJobCandidatureEventsByJobOffer">
+		<query><![CDATA[
+			SELECT j 
+			FROM JobCandidatureEvent j 
+			WHERE j.jobCandidature.jobOffer = :jobOffer
+		]]></query>
+	</named-query>
+
+	<named-query name="JobCandidature.countJobCandidatureEventsByJobOffer">
+		<query><![CDATA[
+			SELECT COUNT(j) 
+			FROM JobCandidatureEvent j 
+			WHERE j.jobCandidature.jobOffer = :jobOffer
+		]]></query>
+	</named-query>
 
 	<named-query name="JobCandidature.findApprovedByJobOffer">
 		<query><![CDATA[
