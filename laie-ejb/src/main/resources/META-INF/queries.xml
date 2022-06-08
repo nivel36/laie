@@ -144,7 +144,7 @@
 		]]></query>
 	</named-query>
 	
-	<named-query name="JobCandidature.findJobCandidatureEventsByJobOffer">
+	<named-query name="JobCandidatureEvent.findAllByJobOffer">
 		<query><![CDATA[
 			SELECT j 
 			FROM JobCandidatureEvent j 
@@ -152,7 +152,7 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="JobCandidature.countJobCandidatureEventsByJobOffer">
+	<named-query name="JobCandidatureEvent.countAllByJobOffer">
 		<query><![CDATA[
 			SELECT COUNT(j) 
 			FROM JobCandidatureEvent j 

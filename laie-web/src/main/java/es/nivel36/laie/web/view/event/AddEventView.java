@@ -1,5 +1,6 @@
 package es.nivel36.laie.web.view.event;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -53,6 +54,8 @@ public class AddEventView extends AbstractView {
 		}
 		event = new JobCandidatureEvent();
 		event.setJobCandidature(jobCandidature);
+		event.setUser(this.sessionUser.get());
+		event.setDate(LocalDateTime.now());
 		types = Arrays.asList(JobCandidatureEventType.values());
 		initComboStates();
 	}

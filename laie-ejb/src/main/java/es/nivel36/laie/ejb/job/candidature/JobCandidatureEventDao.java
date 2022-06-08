@@ -23,14 +23,6 @@ public class JobCandidatureEventDao extends AbstractDao {
 		}
 		return this.em.find(JobCandidatureEvent.class, id);
 	}
-	
-	public List<JobCandidatureEvent> findAll(final JobCandidature jobCandidature, final Page page) {
-		Objects.requireNonNull(jobCandidature);
-		Objects.requireNonNull(page);
-		final String namedQuery = "JobCandidatureEvent.findAll";
-		final Parameters parameters = map("jobCandidature", jobCandidature);
-		return this.findByQuery(JobCandidatureEvent.class, namedQuery, parameters, page);
-	}
 
 	public List<JobCandidatureEvent> findAll(JobOffer jobOffer, Page page) {
 		Objects.requireNonNull(jobOffer);

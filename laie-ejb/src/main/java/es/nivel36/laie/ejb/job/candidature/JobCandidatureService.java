@@ -106,13 +106,6 @@ public class JobCandidatureService {
 		logger.debug("Find all job candidatures of the job offer {}", jobOffer);
 		return this.jobCandidatureDao.findJobOffersJobCanditures(jobOffer, page);
 	}
-
-	public List<JobCandidatureEvent> findJobCandidatureEvents(JobCandidature jobCandidature, Page page) {
-		Objects.requireNonNull(jobCandidature);
-		Objects.requireNonNull(page);
-		logger.debug("Find all job candidature events of the job candidature {}", jobCandidature);
-		return this.jobCandidatureEventDao.findAll(jobCandidature, page);
-	}
 	
 	public List<JobCandidatureEvent> findJobCandidatureEvents(JobOffer jobOffer, Page page) {
 		Objects.requireNonNull(jobOffer);

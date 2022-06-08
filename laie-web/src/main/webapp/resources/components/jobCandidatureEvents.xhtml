@@ -16,8 +16,14 @@
 			<h5>#{cc.attrs.title}</h5>
 			<p:dataTable var="event" id="events" value="#{cc.attrs.value}" emptyMessage="#{i18n['event.no_events_found']}" reflow="true" paginator="true"
 				paginatorPosition="bottom" rows="#{cc.attrs.rows}" sortBy="#{event.date}" sortOrder="ascending" lazy="true" styleClass="ui-datatable-borderless">
+				
+				<p:column headerText="#{i18n['event.candidate']}">
+					<h:link value="#{event.jobCandidature.candidate.fullName}" outcome="/candidate/view.xhtml">
+						<f:param name="candidate" value="#{event.jobCandidature.candidate.id}" />
+					</h:link>
+				</p:column>
 
-				<p:column headerText="#{i18n['event.type']}">
+				<p:column headerText="#{i18n['event.state']}">
 					<h:outputText value="#{i18n['job_candidature_state.'.concat(event.state)]}" />
 				</p:column>
 
