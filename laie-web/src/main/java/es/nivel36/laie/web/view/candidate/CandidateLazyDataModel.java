@@ -14,8 +14,7 @@ public class CandidateLazyDataModel extends AbstractLazyDataModel<Candidate> {
 
 	private static final long serialVersionUID = -4871133088132391207L;
 
-	@Inject
-	private transient CandidateService candidateService;
+	private transient @Inject CandidateService candidateService;
 
 	@Override
 	protected SearchResult<Candidate> search(String searchText, Page page, SortField sortField,
