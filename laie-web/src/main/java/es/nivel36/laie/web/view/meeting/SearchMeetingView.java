@@ -31,8 +31,7 @@ public class SearchMeetingView extends AbstractView {
 
 	private List<Meeting> plannedMeetings;
 
-	@Inject
-	private transient MeetingService meetingService;
+	private transient @Inject MeetingService meetingService;
 
 	@PostConstruct
 	public void init() {

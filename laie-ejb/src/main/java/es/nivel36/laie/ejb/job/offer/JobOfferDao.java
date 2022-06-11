@@ -75,7 +75,7 @@ public class JobOfferDao extends AbstractDao {
 
 	public SearchResult<JobOffer> search(final String searchText, final Page page, SortField sortOrder,
 			final SearchFacets searchFacets) {
-		final String[] searchFields = new String[] { "_title", "_client.name" };
+		final String[] searchFields = new String[] { "_title", "client._name" };
 		return searchFacade.search(JobOffer.class, page, sortOrder, searchFacets, searchText, searchFields);
 	}
 }

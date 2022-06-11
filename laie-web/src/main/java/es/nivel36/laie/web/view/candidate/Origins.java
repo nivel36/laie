@@ -15,10 +15,9 @@ import es.nivel36.laie.ejb.candidate.Origin;
 @ApplicationScoped
 public class Origins implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2315483647373595440L;
 
-	@Inject
-	private transient CandidateService candidateService;
+	private transient @Inject CandidateService candidateService;
 
 	private List<Origin> listOfOrigins;
 

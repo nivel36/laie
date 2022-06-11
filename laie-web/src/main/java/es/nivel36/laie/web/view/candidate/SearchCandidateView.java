@@ -48,7 +48,12 @@ public class SearchCandidateView extends AbstractView {
 
 	public void search() {
 		logger.debug("Search candidates action performed");
-		this.candidates.setSearchText(this.searchText);
+		if (this.searchText != null && this.searchText.length() > 2) {
+			this.candidates.setSearchText(this.searchText);
+		} else {
+			this.searchText = null;
+			this.candidates.setSearchText(null);
+		}
 	}
 
 	public void setSearchText(final String searchText) {

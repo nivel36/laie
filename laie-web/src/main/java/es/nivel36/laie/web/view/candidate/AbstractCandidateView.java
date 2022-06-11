@@ -41,7 +41,7 @@ public abstract class AbstractCandidateView extends AbstractView {
 
 	protected File candidateImage;
 
-	protected transient CandidateService candidateService;
+	protected transient @Inject CandidateService candidateService;
 
 	protected transient @Inject FileService fileService;
 

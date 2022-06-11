@@ -34,15 +34,18 @@ public class SearchUserView extends AbstractView {
 
 	private String searchText;
 
-	@Inject
-	private UserLazyDataModel users;
-	
-	@Inject
-	private transient ExportService exportService;
+	private @Inject UserLazyDataModel users;
+
+	private transient @Inject ExportService exportService;
 
 	public void search() {
 		logger.debug("Search users action performed");
-		this.users.setSearchText(this.searchText);
+		if (this.searchText != null && this.searchText.length() > 2) {
+			this.users.setSearchText(this.searchText);
+		} else {
+			this.searchText = null;
+			this.users.setSearchText(null);
+		}
 	}
 
 	public void export() {
@@ -59,7 +62,7 @@ public class SearchUserView extends AbstractView {
 			this.addMessage(FacesMessage.SEVERITY_ERROR, "test", "abc");
 		}
 	}
-	
+
 	private ExcelData toExcelData(final ExportData exportData) {
 		final List<String> literals = new ArrayList<>();
 		for (final String item : exportData.getIdLabels()) {
@@ -101,7 +104,7 @@ public class SearchUserView extends AbstractView {
 	public void setUsers(final UserLazyDataModel users) {
 		this.users = users;
 	}
-	
+
 	public void setExportService(final ExportService exportService) {
 		Objects.requireNonNull(exportService);
 		this.exportService = exportService;

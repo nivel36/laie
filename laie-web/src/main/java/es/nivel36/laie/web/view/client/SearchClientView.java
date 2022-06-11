@@ -13,19 +13,19 @@ import es.nivel36.laie.web.core.view.AbstractView;
 @Named
 @ViewScoped
 public class SearchClientView extends AbstractView {
-	
+
 	private static final long serialVersionUID = -8547192185427619599L;
 
 	private static final Logger logger = LoggerFactory.getLogger(SearchClientView.class);
 
 	private @Inject ClientLazyDataModel clients;
-	
+
 	private transient @Inject AddClientPermission addClientPermission;
-	
+
 	private boolean insertable;
-	
+
 	private String searchText;
-	
+
 	@PostConstruct
 	public void init() {
 		this.insertable = addClientPermission.validate(null);
@@ -33,7 +33,12 @@ public class SearchClientView extends AbstractView {
 
 	public void search() {
 		logger.debug("Search clients action performed");
-		this.clients.setSearchText(this.searchText);
+		if (this.searchText != null && this.searchText.length() > 2) {
+			this.clients.setSearchText(this.searchText);
+		} else {
+			this.searchText = null;
+			this.clients.setSearchText(null);
+		}
 	}
 
 	public boolean isInsertable() {

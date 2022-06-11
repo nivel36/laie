@@ -32,6 +32,7 @@ public class AddCandidateView extends AbstractCandidateView {
 		logger.trace("New candidate init");
 		this.checkAddPermissions();
 		this.candidate = new Candidate();
+		this.candidate.setOwner(sessionUser.get());
 		this.tags = new ArrayList<>();
 	}
 
@@ -49,7 +50,6 @@ public class AddCandidateView extends AbstractCandidateView {
 				// interpreta colecciones vacias como null
 				this.candidate.setTags(this.tags.stream().map(Tag::new).collect(Collectors.toSet()));
 			}
-			this.candidate.setOwner(sessionUser.get());
 			this.candidateService.addCandidate(candidate);
 			this.saveImage();
 			Faces.redirect(this.candidateUrl());

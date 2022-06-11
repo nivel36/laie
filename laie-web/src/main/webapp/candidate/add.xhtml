@@ -101,6 +101,7 @@
 								</div>
 								<div class="p-col-12 p-sm-6">
 									<g:input type="selectOneMenu" label="#{i18n['candidate.origin']}" value="#{addCandidateView.candidate.origin}" other="true">
+									<f:selectItem itemLabel="" itemValue="#{null}" noSelectionOption="true" />
 										<f:selectItems value="#{origins.list}" var="origin" itemValue="#{origin}" itemLabel="#{i18n[origin.code]}" />
 									</g:input>
 								</div>
