@@ -61,7 +61,6 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	@NotNull
 	@Column(length = 128, nullable = false, unique = true)
 	@Field(name = "_email")
-	@Field(name = "email", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	protected String email;
 
 	@Min(0)
@@ -78,8 +77,6 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	@NotNull
 	@Column(nullable = false)
 	@Field(name = "_jobProfile")
-	@Field(name = "jobProfile", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
-	@SortableField(forField = "jobProfile")
 	private String jobProfile;
 
 	private String linkedinProfileUrl;
@@ -122,8 +119,6 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	@NotNull
 	@Column(nullable = false)
 	@Field(name = "_surname")
-	@Field(name = "surname", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
-	@SortableField(forField = "surname")
 	protected String surname;
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
