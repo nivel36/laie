@@ -41,22 +41,13 @@ public class IndexView extends AbstractView {
 
 	private transient @Inject MeetingService meetingService;
 	
-	private transient @Inject AddCandidatePermission addCandidatePermission;
-	
-	private boolean candidateInsertable;
-
 	@PostConstruct
 	public void init() {
 		logger.trace("Index init");
 		final User user = this.sessionUser.get();
 		this.meetings = this.meetingService.findPlannedMeetings(user, Page.FIRST_TEN_RESULTS);
-		this.candidateInsertable = addCandidatePermission.validate(null);
 	}
 	
-	public boolean isCandidateInsertable() {
-		return candidateInsertable;
-	}
-
 	public ActionsLazyDataModel getActions() {
 		return actions;
 	}
@@ -78,8 +69,4 @@ public class IndexView extends AbstractView {
 		this.meetingService = meetingService;
 	}
 	
-	public void setAddCandidatePermission(AddCandidatePermission addCandidatePermission) {
-		Objects.requireNonNull(addCandidatePermission);
-		this.addCandidatePermission = addCandidatePermission;
-	}
 }
