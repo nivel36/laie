@@ -17,7 +17,6 @@ import es.nivel36.laie.ejb.job.meeting.MeetingService;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.web.core.view.AbstractView;
 import es.nivel36.laie.web.view.action.ActionsLazyDataModel;
-import es.nivel36.laie.web.view.candidate.AddCandidatePermission;
 import es.nivel36.laie.web.view.candidate.CandidateLazyDataModel;
 import es.nivel36.laie.web.view.job.JobOfferLazyDataModel;
 

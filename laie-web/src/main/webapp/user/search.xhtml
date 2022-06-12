@@ -41,7 +41,7 @@
 
 					<p:column headerText="#{i18n['user.last_login']}" sortBy="#{user.lastConnection}" sortOrder="desc">
 						<h:outputText value="#{user.lastConnection}">
-							<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+							<f:convertDateTime type="localDate" pattern="dd/MM/yyyy HH:mm" />
 						</h:outputText>
 					</p:column>
 				</p:dataTable>

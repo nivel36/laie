@@ -1,6 +1,7 @@
 package es.nivel36.laie.web.core.view;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -16,6 +17,8 @@ import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.core.bookmark.Bookmark;
 import es.nivel36.laie.ejb.core.bookmark.BookmarkService;
+import es.nivel36.laie.ejb.user.BadManagerException;
+import es.nivel36.laie.ejb.user.DuplicateEmailException;
 import es.nivel36.laie.ejb.user.Role;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserService;
@@ -46,11 +49,16 @@ public class SessionUser implements Serializable {
 	public void load(final String username, final String role) {
 		Objects.requireNonNull(username);
 		logger.info("User {} has init his/her session", username);
-
 		if ("laie.admin".equals(role)) {
 			this.loadUserData(username, Role.ADMIN);
 		} else {
 			this.loadUserData(username, Role.USER);
+		}
+		this.user.setLastConnection(LocalDateTime.now());
+		try {
+			this.user = this.userService.updateUser(user);
+		} catch (DuplicateEmailException | BadManagerException e) {
+			// Can't happen
 		}
 	}
 
