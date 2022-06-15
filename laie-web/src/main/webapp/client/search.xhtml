@@ -19,7 +19,7 @@
 					<div class="buttons">
 						<p:button value="#{i18n['client.new_client']}" outcome="/client/add.xhtml" styleClass="ui-button-success ui-button-outlined"
 							rendered="#{searchClientView.insertable}" />
-						<p:commandButton value="#{i18n['action.export']}" outcome="#{searchClientView.export}" icon="pi pi-file-excel"
+						<p:commandButton value="#{i18n['action.export']}" action="#{searchClientView.export}" icon="pi pi-file-excel"
 							styleClass="ui-button-info ui-button-outlined" />
 					</div>
 				</div>
