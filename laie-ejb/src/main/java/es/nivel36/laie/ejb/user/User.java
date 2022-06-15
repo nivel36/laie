@@ -15,7 +15,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
@@ -80,9 +79,6 @@ public class User extends AbstractEntity implements Subject {
 	@ManyToOne
 	@JoinColumn(name = "picture")
 	private File picture;
-
-	@Transient
-	private Role role;
 
 	@Column(nullable = false)
 	private Integer rowsPerPage = 10;
@@ -154,28 +150,12 @@ public class User extends AbstractEntity implements Subject {
 		return this.picture;
 	}
 
-	public Role getRole() {
-		return this.role;
-	}
-
 	public Integer getRowsPerPage() {
 		return this.rowsPerPage;
 	}
 
 	public String getSurname() {
 		return this.surname;
-	}
-
-	public boolean hasRole(final Role role) {
-		Objects.requireNonNull(role);
-		return role.equals(this.role);
-	}
-
-	public boolean isAdmin() {
-		if (this.role == null) {
-			return false;
-		}
-		return this.hasRole(Role.ADMIN);
 	}
 
 	public boolean isManaged() {
@@ -224,10 +204,6 @@ public class User extends AbstractEntity implements Subject {
 
 	public void setPicture(final File picture) {
 		this.picture = picture;
-	}
-
-	public void setRole(final Role role) {
-		this.role = role;
 	}
 
 	public void setRowsPerPage(final Integer rowsPerPage) {

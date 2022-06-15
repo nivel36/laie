@@ -12,7 +12,7 @@ public class EditClientPermission implements ClientPermission {
 
 	public boolean validate(final Client client) {
 		final User user = sessionUser.get();
-		if (user.isAdmin()) {
+		if (sessionUser.isAdmin()) {
 			return true;
 		}
 		final User owner = client.getOwner();

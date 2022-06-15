@@ -34,7 +34,7 @@ public class EditJobView extends AbstractJobView {
 
 	private void checkEditPermissions() {
 		final User user = sessionUser.get();
-		if (user.isAdmin()) {
+		if (sessionUser.isAdmin()) {
 			return;
 		}
 		final User owner = this.jobOffer.getOwner();
@@ -65,7 +65,7 @@ public class EditJobView extends AbstractJobView {
 		final User user = sessionUser.get();
 		final User owner = jobOffer.getClient().getOwner();
 		final boolean isOwnersTeam = userService.isSubordinateUser(user, owner);
-		return user.isAdmin() || user.equals(owner) || isOwnersTeam;
+		return sessionUser.isAdmin() || user.equals(owner) || isOwnersTeam;
 	}
 
 	public void next() {

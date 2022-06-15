@@ -63,7 +63,7 @@ public class ViewJobView extends AbstractView {
 		final User owner = jobOffer.getOwner();
 		this.owner = user.equals(owner);
 		this.recruiter = jobOffer.getRecruiters().contains(user);
-		final boolean userCanEdit = this.owner || user.isAdmin() || this.sessionUser.isManagerOf(owner);
+		final boolean userCanEdit = this.owner || sessionUser.isAdmin() || this.sessionUser.isManagerOf(owner);
 		this.editable = jobOffer.isOpen() && userCanEdit;
 		this.addCandidature = jobOffer.isOpen() && (this.recruiter || userCanEdit);
 	}

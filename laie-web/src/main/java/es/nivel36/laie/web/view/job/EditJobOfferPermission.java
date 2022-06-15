@@ -16,7 +16,7 @@ public class EditJobOfferPermission extends AbstractJobOfferPermission {
 			return false;
 		}
 		final User user = sessionUser.get();
-		if (user.isAdmin()) {
+		if (sessionUser.isAdmin()) {
 			return true;
 		}
 		final User owner = jobOffer.getOwner();

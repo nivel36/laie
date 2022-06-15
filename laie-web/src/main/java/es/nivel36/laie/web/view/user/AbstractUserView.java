@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.core.file.FileService;
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.user.Role;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserService;
 import es.nivel36.laie.web.core.view.AbstractView;
@@ -33,10 +32,6 @@ public abstract class AbstractUserView extends AbstractView {
 	
 	public void changeRoleListener() {
 		logger.trace("Change role listener triggered");
-		if (getUser().getRole().equals(Role.ADMIN)) {
-			// Los Administradores no tienen managers
-			getUser().setManager(null);
-		}
 	}
 
 	public List<User> queryManager(final String query) {

@@ -13,7 +13,7 @@ public class EditCandidatePermission implements CandidatePermission {
 	@Override
 	public boolean validate(final Candidate candidate) {
 		final User user = sessionUser.get();
-		if (user.isAdmin()) {
+		if (sessionUser.isAdmin()) {
 			return true;
 		}
 		final User owner = candidate.getOwner();

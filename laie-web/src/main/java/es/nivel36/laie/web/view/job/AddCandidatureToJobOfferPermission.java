@@ -15,10 +15,10 @@ public class AddCandidatureToJobOfferPermission extends AbstractJobOfferPermissi
 		if (!jobOffer.isOpen()) {
 			return false;
 		}
-		final User user = sessionUser.get();
-		if (user.isAdmin()) {
+		if (sessionUser.isAdmin()) {
 			return true;
 		}
+		final User user = sessionUser.get();
 		final User owner = jobOffer.getOwner();
 		if (owner.equals(user)) {
 			return true;

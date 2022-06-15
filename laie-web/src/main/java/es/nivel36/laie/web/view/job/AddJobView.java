@@ -51,7 +51,7 @@ public class AddJobView extends AbstractJobView {
 		final User user = sessionUser.get();
 		final User owner = client.getOwner();
 		final boolean isOwnersTeam = userService.isSubordinateUser(user, owner);
-		return user.isAdmin() || user.equals(owner) || isOwnersTeam;
+		return sessionUser.isAdmin() || user.equals(owner) || isOwnersTeam;
 	}
 
 	public void save() {

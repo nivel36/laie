@@ -50,7 +50,7 @@ public class SelectCandidatesView extends AbstractView {
 			throw new IllegalPageStateException();
 		}
 		final User user = sessionUser.get();
-		if (!(this.sessionUser.get().isAdmin() || this.jobOffer.getOwner().equals(user)
+		if (!(this.sessionUser.isAdmin() || this.jobOffer.getOwner().equals(user)
 				|| this.jobOffer.getRecruiters().contains(user))) {
 			throw new SecurityException();
 		}

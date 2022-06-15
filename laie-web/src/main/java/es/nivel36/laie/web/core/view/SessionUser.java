@@ -37,6 +37,8 @@ public class SessionUser implements Serializable {
 	private List<User> team;
 
 	private User user;
+	
+	private Role role;
 
 	private List<Bookmark> bookmarks;
 
@@ -49,12 +51,13 @@ public class SessionUser implements Serializable {
 	public void load(final String username, final String role) {
 		Objects.requireNonNull(username);
 		logger.info("User {} has init his/her session", username);
-		if ("laie.admin".equals(role)) {
-			this.loadUserData(username, Role.ADMIN);
-		} else {
-			this.loadUserData(username, Role.USER);
-		}
 		this.user.setLastConnection(LocalDateTime.now());
+		if ("laie.admin".equals(role)) {
+			this.role = Role.ADMIN;
+		} else {
+			this.role = Role.USER;
+		}
+		this.loadUserData(username);
 		try {
 			this.user = this.userService.updateUser(user);
 		} catch (DuplicateEmailException | BadManagerException e) {
@@ -71,9 +74,8 @@ public class SessionUser implements Serializable {
 		return this.team.contains(subordinate);
 	}
 
-	private void loadUserData(final String email, final Role role) {
+	private void loadUserData(final String email) {
 		this.user = this.userService.findUserByEmail(email);
-		this.user.setRole(role);
 		this.locale = new Locale(this.user.getLanguage());
 		this.team = this.userService.findSubordinateUsers(user);
 		this.bookmarks = new ArrayList<>(this.user.getBookmarks());
@@ -81,7 +83,7 @@ public class SessionUser implements Serializable {
 
 	public void refresh() {
 		logger.trace("Refreshing session for user {}", this.user);
-		this.loadUserData(this.user.getEmail(), this.user.getRole());
+		this.loadUserData(this.user.getEmail());
 	}
 
 	public void logout() {
@@ -113,7 +115,7 @@ public class SessionUser implements Serializable {
 		if (!this.isActive()) {
 			return false;
 		}
-		return this.user.getRole().equals(Role.ADMIN);
+		return this.role.equals(Role.ADMIN);
 	}
 
 	public void addBookmark(final Bookmark bookmark) {
@@ -139,6 +141,10 @@ public class SessionUser implements Serializable {
 			return "";
 		}
 		return this.user.toString();
+	}
+
+	public Role getRole() {
+		return role;
 	}
 
 	public void setUserService(final UserService userService) {
