@@ -24,15 +24,14 @@
 		<laie.version>${project.version}</laie.version>
 
 		<primefaces.version>11.0.0</primefaces.version>
-		<font-awesome.version>5.15.2</font-awesome.version>
-		<poi.version>3.17</poi.version>
-		<omnifaces.version>3.12</omnifaces.version>
+		<poi.version>5.2.2</poi.version>
+		<omnifaces.version>3.13.3</omnifaces.version>
 		<commons-fileupload.version>1.4</commons-fileupload.version>
 		<owasp-java-html-sanitizer.version>20200713.1</owasp-java-html-sanitizer.version>
 		<html2pdf.version>3.0.5</html2pdf.version>
 
 		<version.mockito>3.11.0</version.mockito>
-		<version.server.bom>26.0.1.Final</version.server.bom>
+		<version.server.bom>26.1.1.Final</version.server.bom>
 		<version.junit.bom>5.7.2</version.junit.bom>
 
 		<maven.ear.plugin.version>3.0.1</maven.ear.plugin.version>
@@ -79,12 +78,6 @@
 			</dependency>
 
 			<dependency>
-				<groupId>org.webjars</groupId>
-				<artifactId>font-awesome</artifactId>
-				<version>${font-awesome.version}</version>
-			</dependency>
-
-			<dependency>
 				<groupId>org.omnifaces</groupId>
 				<artifactId>omnifaces</artifactId>
 				<version>${omnifaces.version}</version>
@@ -105,7 +98,7 @@
 
 			<dependency>
 				<groupId>org.apache.poi</groupId>
-				<artifactId>poi-ooxml-schemas</artifactId>
+				<artifactId>poi-ooxml-full</artifactId>
 				<version>${poi.version}</version>
 			</dependency>
 
