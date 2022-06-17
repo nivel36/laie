@@ -20,16 +20,13 @@ public abstract class AbstractUserView extends AbstractView {
 	private static final long serialVersionUID = -5806017913115206570L;
 
 	private static final Logger logger = LoggerFactory.getLogger(AbstractUserView.class);
-	
-	@Param
-	protected User user;
 
-	@Inject
-	protected transient FileService fileUploadService;
+	protected @Param User user;
 
-	@Inject
-	protected transient UserService userService;
-	
+	protected transient @Inject FileService fileUploadService;
+
+	protected transient @Inject UserService userService;
+
 	public void changeRoleListener() {
 		logger.trace("Change role listener triggered");
 	}
@@ -42,7 +39,7 @@ public abstract class AbstractUserView extends AbstractView {
 	protected String viewUserUrl() {
 		return ViewUserView.getUrl(this.user.getId());
 	}
-	
+
 	public User getUser() {
 		return this.user;
 	}
