@@ -51,13 +51,13 @@ public class SessionUser implements Serializable {
 	public void load(final String username, final String role) {
 		Objects.requireNonNull(username);
 		logger.info("User {} has init his/her session", username);
-		this.user.setLastConnection(LocalDateTime.now());
 		if ("laie.admin".equals(role)) {
 			this.role = Role.ADMIN;
 		} else {
 			this.role = Role.USER;
 		}
 		this.loadUserData(username);
+		this.user.setLastConnection(LocalDateTime.now());
 		try {
 			this.user = this.userService.updateUser(user);
 		} catch (DuplicateEmailException | BadManagerException e) {
