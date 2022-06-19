@@ -23,7 +23,7 @@
 								</div>
 								<div class="p-col-12">
 									<cc:autocomplete id="client" label="#{i18n['job.client']}" value="#{addJobView.jobOffer.client}"
-										completeMethod="#{addJobView.completeClient}" required="true">
+										completeMethod="#{addJobView.completeClient}" itemSelectEvent="#{addJobView.addClient}" required="true" update="jobOfferForm:city jobOfferForm:state">
 										<p:column>
 											#{var.name}
 										</p:column>
