@@ -28,14 +28,14 @@ insert into ORIGIN( id, version, code ) values ( 21, 0, 'origin.linkedin');
 insert into ORIGIN( id, version, code ) values ( 22, 0, 'origin.reference');
 insert into ORIGIN( id, version, code ) values ( 23, 0, 'origin.other');
 
-insert into USER( id, version, name, surname, phoneNumber, email, language, rowsPerPage, managerId ) values( 500, 0, 'Abel', 'Ferrer Jiménez','685555276', 'abel.ferrer.jimenez@gmail.com', 'es', 10, null);
-insert into USER( id, version, name, surname, phoneNumber, email, language, rowsPerPage, managerId ) values( 501, 0, 'Isabel', 'Vallejo Medina','685555276', 'isabel.vallejo.medina@gmail.com', 'es', 10, null);
-insert into USER( id, version, name, surname, phoneNumber, email, language, rowsPerPage, managerId ) values( 502, 0, 'Juan', 'Fernández','685555276', 'jfernandez@gmail.com', 'es', 10, 500);
-insert into USER( id, version, name, surname, phoneNumber, email, language, rowsPerPage, managerId ) values( 503, 0, 'Pedro', 'Smith','685555276', 'psmith@gmail.com', 'es', 10, 500);
-insert into USER( id, version, name, surname, phoneNumber, email, language, rowsPerPage, managerId ) values( 504, 0, 'Luis', 'Carrasco','685555276', 'lcarrasco@gmail.com', 'es', 10, 500);
-insert into USER( id, version, name, surname, phoneNumber, email, language, rowsPerPage, managerId ) values( 505, 0, 'Ana', 'Casoras','685555276', 'acasoras@gmail.com', 'es', 10, 500);
-insert into USER( id, version, name, surname, phoneNumber, email, language, rowsPerPage, managerId ) values( 506, 0, 'Luis Ángel', 'Nuestra Señora del manto','685555276', 'lantrasenora@gmail.com', 'es', 10, 500);
-insert into USER( id, version, name, surname, phoneNumber, email, language, rowsPerPage, managerId ) values( 507, 0, 'Anabel', 'Villafafila','685555276', 'anabel@gmail.com', 'es', 10, 500);
+insert into USER( id, version, name, surname, role, phoneNumber, email, language, rowsPerPage, managerId ) values( 500, 0, 'Abel', 'Ferrer Jiménez', 'ADMIN', '685555276', 'abel.ferrer.jimenez@gmail.com', 'es', 10, null);
+insert into USER( id, version, name, surname, role, phoneNumber, email, language, rowsPerPage, managerId ) values( 501, 0, 'Isabel', 'Vallejo Medina', 'ADMIN','685555276', 'isabel.vallejo.medina@gmail.com', 'es', 10, null);
+insert into USER( id, version, name, surname, role, phoneNumber, email, language, rowsPerPage, managerId ) values( 502, 0, 'Juan', 'Fernández', 'USER','685555276', 'jfernandez@gmail.com', 'es', 10, 500);
+insert into USER( id, version, name, surname, role, phoneNumber, email, language, rowsPerPage, managerId ) values( 503, 0, 'Pedro', 'Smith', 'USER','685555276', 'psmith@gmail.com', 'es', 10, 500);
+insert into USER( id, version, name, surname, role, phoneNumber, email, language, rowsPerPage, managerId ) values( 504, 0, 'Luis', 'Carrasco', 'USER','685555276', 'lcarrasco@gmail.com', 'es', 10, 500);
+insert into USER( id, version, name, surname, role, phoneNumber, email, language, rowsPerPage, managerId ) values( 505, 0, 'Ana', 'Casoras', 'USER','685555276', 'acasoras@gmail.com', 'es', 10, 500);
+insert into USER( id, version, name, surname, role, phoneNumber, email, language, rowsPerPage, managerId ) values( 506, 0, 'Luis Ángel', 'Nuestra Señora del manto', 'USER','685555276', 'lantrasenora@gmail.com', 'es', 10, 500);
+insert into USER( id, version, name, surname, role, phoneNumber, email, language, rowsPerPage, managerId ) values( 507, 0, 'Anabel', 'Villafafila', 'USER','685555276', 'anabel@gmail.com', 'es', 10, 500);
 
 insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 700, 0, 500, 500, 0 );
 insert into USERCLOSURE( id, version, antecessor_id, descendant_id, pathLength ) values( 701, 0, 501, 501, 0 );

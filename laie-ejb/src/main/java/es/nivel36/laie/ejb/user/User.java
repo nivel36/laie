@@ -9,6 +9,8 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
@@ -79,6 +81,12 @@ public class User extends AbstractEntity implements Subject {
 	@ManyToOne
 	@JoinColumn(name = "picture")
 	private File picture;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
+	@Field(name = "role", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
+	@SortableField(forField = "role")
+	private Role role;
 
 	@Column(nullable = false)
 	private Integer rowsPerPage = 10;
@@ -92,11 +100,6 @@ public class User extends AbstractEntity implements Subject {
 	public void addMeeting(final Meeting meeting) {
 		Objects.requireNonNull(meeting);
 		this.meetings.add(meeting);
-	}
-
-	public void removeMeeting(final Meeting meeting) {
-		Objects.requireNonNull(meeting);
-		this.meetings.remove(meeting);
 	}
 
 	public Set<Bookmark> getBookmarks() {
@@ -150,6 +153,10 @@ public class User extends AbstractEntity implements Subject {
 		return this.picture;
 	}
 
+	public Role getRole() {
+		return role;
+	}
+
 	public Integer getRowsPerPage() {
 		return this.rowsPerPage;
 	}
@@ -160,6 +167,11 @@ public class User extends AbstractEntity implements Subject {
 
 	public boolean isManaged() {
 		return this.manager != null;
+	}
+
+	public void removeMeeting(final Meeting meeting) {
+		Objects.requireNonNull(meeting);
+		this.meetings.remove(meeting);
 	}
 
 	public void setBookmarks(Set<Bookmark> bookmarks) {
@@ -206,6 +218,10 @@ public class User extends AbstractEntity implements Subject {
 		this.picture = picture;
 	}
 
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
 	public void setRowsPerPage(final Integer rowsPerPage) {
 		this.rowsPerPage = rowsPerPage;
 	}
@@ -228,7 +244,7 @@ public class User extends AbstractEntity implements Subject {
 		final User other = (User) obj;
 		return Objects.equals(other.email, this.email);
 	}
-
+	
 	@Override
 	public int hashCode() {
 		return 31 * Objects.hash(this.email);
