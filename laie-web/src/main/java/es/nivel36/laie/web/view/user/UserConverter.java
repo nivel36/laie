@@ -12,8 +12,7 @@ import es.nivel36.laie.web.core.AbstractConverter;
 @FacesConverter(managed = true, forClass = User.class)
 public class UserConverter extends AbstractConverter<User> {
 
-	@Inject
-	private UserService userService;
+	private @Inject UserService userService;
 
 	@Override
 	protected User getAsObject(Long id) {

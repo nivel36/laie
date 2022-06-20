@@ -14,8 +14,9 @@ import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.candidate.CandidateDao;
 import es.nivel36.laie.ejb.client.Contact;
 import es.nivel36.laie.ejb.client.ContactDao;
-import es.nivel36.laie.ejb.core.Subject;
 import es.nivel36.laie.ejb.core.model.Page;
+import es.nivel36.laie.ejb.core.subject.Subject;
+import es.nivel36.laie.ejb.core.subject.SubjectDao;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserDao;
@@ -25,21 +26,15 @@ public class MeetingService {
 
 	private static final Logger logger = LoggerFactory.getLogger(MeetingService.class);
 
-	@Inject
+	private @Inject MeetingDao meetingDao;
 	
-	private MeetingDao meetingDao;
-
-	@Inject
+	private @Inject UserDao userDao;
 	
-	private UserDao userDao;
+	private @Inject CandidateDao candidateDao;
 
-	@Inject
+	private @Inject ContactDao contactDao;
 	
-	private CandidateDao candidateDao;
-
-	@Inject
-	private ContactDao contactDao;
-
+	private @Inject SubjectDao subjectDao;
 
 	public void addMeeting(final Meeting meeting) {
 		Objects.requireNonNull(meeting);
@@ -94,11 +89,16 @@ public class MeetingService {
 		if (query.length() < 3) {
 			return new ArrayList<>();
 		}
-		return meetingDao.searchAteendees(query);
+		return subjectDao.searchSubject(query);
 	}
 
 	public void setJobMeetingDao(final MeetingDao meetingDao) {
 		Objects.requireNonNull(meetingDao);
 		this.meetingDao = meetingDao;
+	}
+
+	public Meeting findMeetingById(final long id) {
+		logger.debug("Find meeting by id {}", id);
+		return this.meetingDao.findMeetingById(id);
 	}
 }

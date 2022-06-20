@@ -1,4 +1,4 @@
-package es.nivel36.laie.ejb.core;
+package es.nivel36.laie.ejb.core.subject;
 
 public interface Subject {
 
