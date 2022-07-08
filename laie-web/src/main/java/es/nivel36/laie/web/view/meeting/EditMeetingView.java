@@ -86,5 +86,9 @@ public class EditMeetingView extends AbstractMeetingView {
 		this.meetingService.addMeeting(this.meeting);
 		Faces.redirect(IndexView.URL);
 	}
-
+	
+	public void delete() {
+		this.meetingService.deleteMeeting(this.meeting);
+		Faces.redirect(IndexView.URL);
+	}
 }

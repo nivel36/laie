@@ -27,13 +27,13 @@ public class MeetingService {
 	private static final Logger logger = LoggerFactory.getLogger(MeetingService.class);
 
 	private @Inject MeetingDao meetingDao;
-	
+
 	private @Inject UserDao userDao;
-	
+
 	private @Inject CandidateDao candidateDao;
 
 	private @Inject ContactDao contactDao;
-	
+
 	private @Inject SubjectDao subjectDao;
 
 	public void addMeeting(final Meeting meeting) {
@@ -58,6 +58,30 @@ public class MeetingService {
 				continue;
 			}
 		}
+	}
+
+	public void deleteMeeting(final Meeting meeting) {
+		Objects.requireNonNull(meeting);
+		for (final String email : meeting.getAttendeesEmails()) {
+			final User user = userDao.findUserByEmail(email);
+			if (user != null) {
+				user.removeMeeting(meeting);
+				continue;
+			}
+
+			final Candidate candidate = candidateDao.findCandidateByEmail(email);
+			if (candidate != null) {
+				candidate.removeMeeting(meeting);
+				continue;
+			}
+
+			final Contact contact = contactDao.findContactByEmail(email);
+			if (contact != null) {
+				contact.removeMeeting(meeting);
+				continue;
+			}
+		}
+		this.meetingDao.delete(Meeting.class, meeting);
 	}
 
 	public List<Meeting> findConductedMeetings(final User owner, final Page page) {
@@ -101,4 +125,5 @@ public class MeetingService {
 		logger.debug("Find meeting by id {}", id);
 		return this.meetingDao.findMeetingById(id);
 	}
+
 }
