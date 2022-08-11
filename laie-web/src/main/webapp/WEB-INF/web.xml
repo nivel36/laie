@@ -9,6 +9,7 @@
 		<web-resource-collection>
 			<web-resource-name>Unprotected</web-resource-name>
 			<url-pattern>/login.xhtml</url-pattern>
+			<url-pattern>/forgetPassword.xhtml</url-pattern>
 			<url-pattern>/javax.faces.resource/*</url-pattern>
 			<url-pattern>/resources/img/*</url-pattern>
 			<url-pattern>/public/*</url-pattern>
