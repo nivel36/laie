@@ -10,7 +10,6 @@ import javax.inject.Inject;
 
 import org.omnifaces.cdi.Param;
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.event.RateEvent;
 import org.primefaces.model.file.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,32 +27,41 @@ import es.nivel36.laie.web.core.view.AbstractView;
 
 public abstract class AbstractCandidateView extends AbstractView {
 
-	private static final long serialVersionUID = 6785796173827142302L;
-
 	private static final Logger logger = LoggerFactory.getLogger(AbstractCandidateView.class);
 
-	@Param
-	protected Candidate candidate;
+	private static final long serialVersionUID = 6785796173827142302L;
 
-	protected transient List<String> tags;
-
-	protected boolean imageChanged;
+	protected @Param Candidate candidate;
 
 	protected File candidateImage;
 
+	protected boolean imageChanged;
+	
+	protected Integer rating;
+	
+	protected transient List<String> tags;
+	
 	protected transient @Inject CandidateService candidateService;
 
 	protected transient @Inject FileService fileService;
-
+	
 	protected transient @Inject TagService tagService;
 
 	protected transient @Inject UserService userService;
+
+	protected String candidateUrl() {
+		return ViewCandidateView.getUrl(this.candidate.getId());
+	}
 
 	public void deleteImage() {
 		logger.trace("Delete user image");
 		this.candidateImage = null;
 		this.candidate.setPicture(candidateImage);
 		this.imageChanged = true;
+	}
+
+	public List<User> queryOwner(final String query) {
+		return this.userService.search(query, Page.FIRST_TEN_RESULTS).getResultData();
 	}
 
 	protected void saveImage() {
@@ -72,7 +80,7 @@ public abstract class AbstractCandidateView extends AbstractView {
 			throw new FileUploadException(e);
 		}
 	}
-
+	
 	public void uploadImage(final FileUploadEvent event) {
 		Objects.requireNonNull(event);
 		this.imageChanged = true;
@@ -87,22 +95,17 @@ public abstract class AbstractCandidateView extends AbstractView {
 			throw new FileUploadException(e);
 		}
 	}
-
-	public List<User> queryOwner(final String query) {
-		return this.userService.search(query, Page.FIRST_TEN_RESULTS).getResultData();
-	}
-
-	public void onrate(final RateEvent<Integer> rateEvent) {
-		final Integer rate = rateEvent.getRating();
-		this.candidate.setRating(rate);
-	}
-
-	protected String candidateUrl() {
-		return ViewCandidateView.getUrl(this.candidate.getId());
-	}
-
+	
 	public Candidate getCandidate() {
 		return this.candidate;
+	}
+
+	public File getCandidateImage() {
+		return candidateImage;
+	}
+
+	public Integer getRating() {
+		return rating;
 	}
 
 	public List<String> getTags() {
@@ -112,13 +115,13 @@ public abstract class AbstractCandidateView extends AbstractView {
 	public void setCandidate(final Candidate candidate) {
 		this.candidate = candidate;
 	}
+	
+	public void setRating(Integer rating) {
+		this.rating = rating;
+	}
 
 	public void setTags(final List<String> tags) {
 		this.tags = tags;
-	}
-
-	public File getCandidateImage() {
-		return candidateImage;
 	}
 
 	public void setCandidateService(final CandidateService candidateService) {

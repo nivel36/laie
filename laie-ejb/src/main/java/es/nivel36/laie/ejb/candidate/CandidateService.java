@@ -138,6 +138,13 @@ public class CandidateService {
 		candidate.addFile(file);
 		return this.updateAndFireEvent(candidate);
 	}
+	
+	public void addRating(final Candidate candidate, final Rating rating) {
+		Objects.requireNonNull(candidate);
+		Objects.requireNonNull(rating);
+		
+		
+	}
 
 	public Candidate removeFileFromCandidate(final Candidate candidate, final File file) {
 		Objects.requireNonNull(candidate);

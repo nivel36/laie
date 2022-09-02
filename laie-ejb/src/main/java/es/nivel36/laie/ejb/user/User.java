@@ -26,6 +26,7 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
+import es.nivel36.laie.ejb.candidate.Rating;
 import es.nivel36.laie.ejb.core.bookmark.Bookmark;
 import es.nivel36.laie.ejb.core.file.File;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
@@ -42,7 +43,7 @@ public class User extends AbstractEntity implements Subject {
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<Bookmark> bookmarks = new HashSet<>();
-	
+
 	@Field(name = "dateOfJoin", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "dateOfJoin")
 	private LocalDate dateOfJoin;
@@ -81,7 +82,7 @@ public class User extends AbstractEntity implements Subject {
 	@ManyToOne
 	@JoinColumn(name = "picture")
 	private File picture;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
 	@Field(name = "role", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
@@ -96,6 +97,18 @@ public class User extends AbstractEntity implements Subject {
 	@Field(name = "surname", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "surname")
 	private String surname;
+
+	@OneToMany(cascade = { CascadeType.REMOVE, CascadeType.DETACH,
+			CascadeType.REFRESH }, orphanRemoval = true, fetch = FetchType.LAZY)
+	private Set<Rating> ratings;
+
+	public Set<Rating> getRatings() {
+		return ratings;
+	}
+
+	public void setRatings(Set<Rating> ratings) {
+		this.ratings = ratings;
+	}
 
 	public void addMeeting(final Meeting meeting) {
 		Objects.requireNonNull(meeting);
@@ -244,7 +257,7 @@ public class User extends AbstractEntity implements Subject {
 		final User other = (User) obj;
 		return Objects.equals(other.email, this.email);
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return 31 * Objects.hash(this.email);

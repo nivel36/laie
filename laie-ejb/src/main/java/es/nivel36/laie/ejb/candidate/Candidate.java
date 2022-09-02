@@ -80,7 +80,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	private String jobProfile;
 
 	private String linkedinProfileUrl;
-	
+
 	@ManyToMany(fetch = FetchType.LAZY)
 	private Set<Meeting> meetings = new HashSet<>();
 
@@ -110,7 +110,10 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 
 	@Field(analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField
-	private Integer rating;
+	private Float rating;
+
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	private Set<Rating> ratings;
 
 	private Integer salary;
 
@@ -130,17 +133,17 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 		Objects.requireNonNull(file);
 		this.files.add(file);
 	}
-	
+
 	public void removeFile(final File file) {
 		Objects.requireNonNull(file);
 		this.files.remove(file);
 	}
-	
+
 	public void addMeeting(final Meeting meeting) {
 		Objects.requireNonNull(meeting);
 		this.meetings.add(meeting);
 	}
-	
+
 	public void removeMeeting(final Meeting meeting) {
 		Objects.requireNonNull(meeting);
 		this.meetings.remove(meeting);
@@ -236,7 +239,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 		return this.picture;
 	}
 
-	public Integer getRating() {
+	public Float getRating() {
 		return this.rating;
 	}
 
@@ -260,7 +263,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	public int hashCode() {
 		return 31 * Objects.hash(this.email);
 	}
-	
+
 	public void setAddress(final Address address) {
 		this.address = address;
 	}
@@ -330,7 +333,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 		this.picture = picture;
 	}
 
-	public void setRating(final Integer rating) {
+	public void setRating(final Float rating) {
 		this.rating = rating;
 	}
 
