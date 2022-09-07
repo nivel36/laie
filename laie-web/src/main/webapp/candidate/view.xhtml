@@ -90,6 +90,17 @@
 								</div>
 								<div class="text-container rating_comment">#{viewCandidateView.rating.comment}</div>
 							</div>
+							<ui:repeat var="rating" value="#{viewCandidateView.ratings}">
+								<h:panelGroup styleClass="data rating" rendered="#{sessionUser.get().email ne rating.user.email}" layout="block">
+									<div class="label-container">
+										<div class="label">#{rating.user.fullName}</div>
+									</div>
+									<div class="text-container rating">
+										<p:rating value="#{rating}" cancel="false" readonly="true" />
+									</div>
+									<div class="text-container rating_comment">#{rating.comment}</div>
+								</h:panelGroup>
+							</ui:repeat>
 							<div class="form-buttons">
 								<p:button value="#{i18n['action.add']}" outcome="/candidate/rating/add.xhtml" rendered="#{viewCandidateView.addRatingVisible}"
 									styleClass="ui-button-secondary ui-button-outlined">

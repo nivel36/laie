@@ -134,19 +134,9 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 		this.files.add(file);
 	}
 
-	public void removeFile(final File file) {
-		Objects.requireNonNull(file);
-		this.files.remove(file);
-	}
-
 	public void addMeeting(final Meeting meeting) {
 		Objects.requireNonNull(meeting);
 		this.meetings.add(meeting);
-	}
-
-	public void removeMeeting(final Meeting meeting) {
-		Objects.requireNonNull(meeting);
-		this.meetings.remove(meeting);
 	}
 
 	@Override
@@ -181,6 +171,16 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 
 	public String getEmail() {
 		return this.email;
+	}
+
+	@Override
+	public String getEntityName() {
+		return "CANDIDATE";
+	}
+
+	@Override
+	public String getEntityTitle() {
+		return this.getFullName();
 	}
 
 	public Integer getExpectedSalary() {
@@ -243,6 +243,10 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 		return this.rating;
 	}
 
+	public Set<Rating> getRatings() {
+		return ratings;
+	}
+
 	public Integer getSalary() {
 		return this.salary;
 	}
@@ -262,6 +266,16 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	@Override
 	public int hashCode() {
 		return 31 * Objects.hash(this.email);
+	}
+
+	public void removeFile(final File file) {
+		Objects.requireNonNull(file);
+		this.files.remove(file);
+	}
+
+	public void removeMeeting(final Meeting meeting) {
+		Objects.requireNonNull(meeting);
+		this.meetings.remove(meeting);
 	}
 
 	public void setAddress(final Address address) {
@@ -337,6 +351,10 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 		this.rating = rating;
 	}
 
+	public void setRatings(Set<Rating> ratings) {
+		this.ratings = ratings;
+	}
+
 	public void setSalary(final Integer salary) {
 		this.salary = salary;
 	}
@@ -363,16 +381,6 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 
 	@Override
 	public String toString() {
-		return this.getFullName();
-	}
-
-	@Override
-	public String getEntityName() {
-		return "CANDIDATE";
-	}
-
-	@Override
-	public String getEntityTitle() {
 		return this.getFullName();
 	}
 }

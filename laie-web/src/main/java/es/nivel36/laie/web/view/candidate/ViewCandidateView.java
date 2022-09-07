@@ -63,6 +63,8 @@ public class ViewCandidateView extends AbstractView {
 	private boolean editRatingVisible;
 	
 	private Rating rating;
+	
+	private List<Rating> ratings;
 
 	private transient @Inject CandidateService candidateService;
 
@@ -90,8 +92,17 @@ public class ViewCandidateView extends AbstractView {
 		this.bookmark = this.buildBookmark();
 		this.bookmarkable = !this.sessionUser.getBookmarks().contains(this.bookmark);
 		this.rating = this.ratingService.findRatingOfCandidateByUser(candidate, this.sessionUser.get());
+		this.ratings = this.ratingService.findRatingsByCandidate(candidate, Page.ALL_RESULTS);
 		this.addRatingVisible = rating == null;
 		this.editRatingVisible = !this.addRatingVisible;
+	}
+
+	public List<Rating> getRatings() {
+		return ratings;
+	}
+
+	public void setRatings(List<Rating> ratings) {
+		this.ratings = ratings;
 	}
 
 	public static String getUrl(long candidateId) {

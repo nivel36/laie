@@ -29,6 +29,18 @@ public class RatingService {
 		return this.ratingDao.findRatingOfCandidateByUser(candidate, user);
 	}
 
+	public List<Rating> findRatingsByCandidate(final Candidate candidate, final Page page) {
+		Objects.requireNonNull(candidate);
+		logger.debug("Find rating of candidate {}", candidate);
+		return this.ratingDao.findRatingsByCandidate(candidate, page);
+	}
+
+	public List<Rating> findRatingsByUser(final User user, final Page page) {
+		Objects.requireNonNull(user);
+		logger.debug("Find rating of user {}", user);
+		return this.ratingDao.findRatingsByUser(user, page);
+	}
+
 	public Rating findRatingById(final Long id) {
 		Objects.requireNonNull(id);
 		logger.debug("Find rating by id {}", id);
