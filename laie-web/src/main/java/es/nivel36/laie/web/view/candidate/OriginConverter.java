@@ -14,8 +14,7 @@ import es.nivel36.laie.ejb.candidate.Origin;
 @FacesConverter(managed = true, forClass = Origin.class)
 public class OriginConverter implements Converter<Origin> {
 
-	@Inject
-	private CandidateService candidateService;
+	private @Inject CandidateService candidateService;
 
 	@Override
 	public Origin getAsObject(final FacesContext context, final UIComponent component, final String value) {
@@ -38,5 +37,4 @@ public class OriginConverter implements Converter<Origin> {
 		}
 		return value.getCode();
 	}
-
 }

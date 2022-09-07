@@ -143,7 +143,7 @@
 			WHERE f.physicalFile = :physicalFile
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="JobCandidatureEvent.findAllByJobOffer">
 		<query><![CDATA[
 			SELECT j 
@@ -217,7 +217,7 @@
 			WHERE j.first = true
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="JobCandidatureState.findByName">
 		<query><![CDATA[
 			SELECT j 
@@ -300,6 +300,31 @@
 			SELECT m 
 			FROM Meeting m
 			WHERE :email MEMBER OF m.attendeesEmails
+		]]></query>
+	</named-query>
+	
+	<named-query name="Rating.findByUser">
+		<query><![CDATA[
+			SELECT r 
+			FROM Rating r
+			WHERE r.user = :user
+		]]></query>
+	</named-query>
+
+	<named-query name="Rating.findByCandidate">
+		<query><![CDATA[
+			SELECT r 
+			FROM Rating r
+			WHERE r.candidate = :candidate
+		]]></query>
+	</named-query>
+
+	<named-query name="Rating.findRatingOfCandidateByUser">
+		<query><![CDATA[
+			SELECT r 
+			FROM Rating r
+			WHERE r.candidate = :candidate
+			AND r.user = :user
 		]]></query>
 	</named-query>
 

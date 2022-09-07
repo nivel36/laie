@@ -8,6 +8,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.sun.istack.NotNull;
+
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
 import es.nivel36.laie.ejb.user.User;
 
@@ -18,14 +20,19 @@ public class Rating extends AbstractEntity {
 
 	private static final long serialVersionUID = -923213871691949551L;
 
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "candidate", nullable = false)
 	private Candidate candidate;
 
 	private String comment;
 
+	@NotNull
 	private Integer rating;
 
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "user", nullable = false)
 	private User user;
 
 	public Candidate getCandidate() {

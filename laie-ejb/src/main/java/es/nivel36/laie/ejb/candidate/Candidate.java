@@ -110,7 +110,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 
 	@Field(analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField
-	private Float rating;
+	private Integer rating;
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	private Set<Rating> ratings;
@@ -239,7 +239,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 		return this.picture;
 	}
 
-	public Float getRating() {
+	public Integer getRating() {
 		return this.rating;
 	}
 
@@ -333,7 +333,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 		this.picture = picture;
 	}
 
-	public void setRating(final Float rating) {
+	public void setRating(final Integer rating) {
 		this.rating = rating;
 	}
 

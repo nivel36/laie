@@ -3,6 +3,7 @@ package es.nivel36.laie.ejb.candidate;
 import java.util.List;
 import java.util.Objects;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -12,6 +13,7 @@ import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.user.DuplicateEmailException;
 import es.nivel36.laie.ejb.user.User;
 
+@Stateless
 public class RatingService {
 
 	private static final Logger logger = LoggerFactory.getLogger(RatingService.class);
@@ -25,6 +27,12 @@ public class RatingService {
 		Objects.requireNonNull(user);
 		logger.debug("Find rating of candidate {} and user {}", candidate, user);
 		return this.ratingDao.findRatingOfCandidateByUser(candidate, user);
+	}
+
+	public Rating findRatingById(final Long id) {
+		Objects.requireNonNull(id);
+		logger.debug("Find rating by id {}", id);
+		return this.ratingDao.find(Rating.class, id);
 	}
 
 	public void addRating(final Rating rating) {
@@ -57,15 +65,24 @@ public class RatingService {
 		final List<Rating> ratings = this.ratingDao.findRatingsByCandidate(candidate, Page.ALL_RESULTS);
 		final int size = ratings.size();
 		int add = 0;
-		for (Rating rating : ratings) {
+		for (final Rating rating : ratings) {
 			add += rating.getRating();
 		}
 		float median = add / size;
-		candidate.setRating(median);
+		candidate.setRating(Integer.valueOf((int) Math.floor(median)));
 		try {
 			this.candidateService.updateCandidate(candidate);
 		} catch (DuplicateEmailException e) {
 			// can't happen
 		}
 	}
+
+	public void setRatingDao(RatingDao ratingDao) {
+		this.ratingDao = ratingDao;
+	}
+
+	public void setCandidateService(CandidateService candidateService) {
+		this.candidateService = candidateService;
+	}
+
 }

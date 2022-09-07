@@ -5,6 +5,8 @@ import static es.nivel36.laie.ejb.core.util.Parameters.map;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.NoResultException;
+
 import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.util.Parameters;
@@ -31,8 +33,12 @@ public class RatingDao extends AbstractDao {
 	public Rating findRatingOfCandidateByUser(final Candidate candidate, final User user) {
 		Objects.requireNonNull(user);
 		Objects.requireNonNull(candidate);
-		final String namedQuery = "Rating.findRatingOfCandidateByUser";
-		final Parameters parameters = map("user", user).and("candidate", candidate);
-		return this.findByQuery(Rating.class, namedQuery, parameters);
+		try {
+			final String namedQuery = "Rating.findRatingOfCandidateByUser";
+			final Parameters parameters = map("user", user).and("candidate", candidate);
+			return this.findByQuery(Rating.class, namedQuery, parameters);
+		} catch (NoResultException e) {
+			return null;
+		}
 	}
 }

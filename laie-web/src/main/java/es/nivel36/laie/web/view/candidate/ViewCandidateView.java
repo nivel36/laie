@@ -20,6 +20,8 @@ import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.candidate.CandidateService;
+import es.nivel36.laie.ejb.candidate.Rating;
+import es.nivel36.laie.ejb.candidate.RatingService;
 import es.nivel36.laie.ejb.core.bookmark.Bookmark;
 import es.nivel36.laie.ejb.core.file.File;
 import es.nivel36.laie.ejb.core.file.FileService;
@@ -55,6 +57,12 @@ public class ViewCandidateView extends AbstractView {
 	private boolean bookmarkable;
 
 	private Bookmark bookmark;
+	
+	private boolean addRatingVisible;
+	
+	private boolean editRatingVisible;
+	
+	private Rating rating;
 
 	private transient @Inject CandidateService candidateService;
 
@@ -65,6 +73,8 @@ public class ViewCandidateView extends AbstractView {
 	private transient @Inject JobCandidatureService jobCandidatureService;
 	
 	private transient @Inject EditCandidatePermission editCandidatePermission;
+	
+	private transient @Inject RatingService ratingService;
 
 	@PostConstruct
 	public void init() {
@@ -79,6 +89,9 @@ public class ViewCandidateView extends AbstractView {
 		this.files = new ArrayList<>(this.candidate.getFiles());
 		this.bookmark = this.buildBookmark();
 		this.bookmarkable = !this.sessionUser.getBookmarks().contains(this.bookmark);
+		this.rating = this.ratingService.findRatingOfCandidateByUser(candidate, this.sessionUser.get());
+		this.addRatingVisible = rating == null;
+		this.editRatingVisible = !this.addRatingVisible;
 	}
 
 	public static String getUrl(long candidateId) {
@@ -143,6 +156,14 @@ public class ViewCandidateView extends AbstractView {
 	public void setCandidate(final Candidate candidate) {
 		this.candidate = candidate;
 	}
+	
+	public boolean isAddRatingVisible() {
+		return addRatingVisible;
+	}
+
+	public boolean isEditRatingVisible() {
+		return editRatingVisible;
+	}
 
 	public boolean isEditable() {
 		return this.editable;
@@ -154,7 +175,10 @@ public class ViewCandidateView extends AbstractView {
 
 	public Candidate getCandidate() {
 		return this.candidate;
-
+	}
+	
+	public Rating getRating() {
+		return this.rating;
 	}
 
 	public List<File> getFiles() {
@@ -192,5 +216,10 @@ public class ViewCandidateView extends AbstractView {
 	public void setEditCandidatePermission(final EditCandidatePermission editCandidatePermission) {
 		Objects.requireNonNull(editCandidatePermission);
 		this.editCandidatePermission = editCandidatePermission;
+	}
+	
+	public void setRatingService(final RatingService ratingService) {
+		Objects.requireNonNull(ratingService);
+		this.ratingService = ratingService;
 	}
 }
