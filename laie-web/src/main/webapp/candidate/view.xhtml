@@ -81,24 +81,21 @@
 							</p:dataTable>
 						</p:tab>
 						<p:tab title="#{i18n['candidate.ratings']}">
-							<div class="data rating">
-								<div class="label-container">
-									<div class="label">#{i18n['candidate.rating.your_rating']}</div>
-								</div>
-								<div class="text-container rating">
+							<div class="p-grid">
+								<div class="p-col-3">#{i18n['candidate.rating.your_rating']}</div>
+								<div class="p-col-3">
 									<p:rating value="#{viewCandidateView.rating.rating}" cancel="false" readonly="true" />
 								</div>
-								<div class="text-container rating_comment">#{viewCandidateView.rating.comment}</div>
+								<div class="p-col-6">#{viewCandidateView.rating.comment}</div>
 							</div>
+
 							<ui:repeat var="rating" value="#{viewCandidateView.ratings}">
-								<h:panelGroup styleClass="data rating" rendered="#{sessionUser.get().email ne rating.user.email}" layout="block">
-									<div class="label-container">
-										<div class="label">#{rating.user.fullName}</div>
+								<h:panelGroup layout="block" styleClass="p-grid" rendered="#{sessionUser.get().email ne rating.user.email}">
+									<div class="p-col-3">#{rating.user.fullName}</div>
+									<div class="p-col-3">
+										<p:rating value="#{rating.rating}" cancel="false" readonly="true" />
 									</div>
-									<div class="text-container rating">
-										<p:rating value="#{rating}" cancel="false" readonly="true" />
-									</div>
-									<div class="text-container rating_comment">#{rating.comment}</div>
+									<div class="p-col-6">#{rating.comment}</div>
 								</h:panelGroup>
 							</ui:repeat>
 							<div class="form-buttons">
