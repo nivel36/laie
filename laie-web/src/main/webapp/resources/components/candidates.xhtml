@@ -15,9 +15,9 @@
 			<h5>#{cc.attrs.title}</h5>
 
 			<p:dataTable var="candidate" id="candidates" value="#{cc.attrs.value}" emptyMessage="#{i18n['candidate.no_candidates_found']}" reflow="true" paginator="true"
-				paginatorPosition="bottom" rows="#{cc.attrs.rows}" sortBy="#{candidate.name}" sortOrder="ascending" lazy="true" styleClass="ui-datatable-borderless">
+				paginatorPosition="bottom" rows="#{cc.attrs.rows}" lazy="true" styleClass="ui-datatable-borderless">
 
-				<p:column headerText="#{i18n['candidate.name']}" sortBy="#{candidate.name}">
+				<p:column headerText="#{i18n['candidate.name']}" sortBy="#{candidate.name}" sortOrder="asc">
 					<h:link outcome="/candidate/view">
 						<cc:avatar name="#{candidate.fullName}" path="#{candidate.picture.file.path}" styleClass="p-mr-2" />
 						<h:outputText styleClass="link" value="#{candidate.fullName}" />

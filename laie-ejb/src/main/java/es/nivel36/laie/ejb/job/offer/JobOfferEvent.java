@@ -4,7 +4,12 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.IndexedEmbedded;
 
@@ -12,23 +17,32 @@ import es.nivel36.laie.ejb.core.Event;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
 import es.nivel36.laie.ejb.user.User;
 
+@Table(name = "JOB_OFFER_EVENT")
 @Entity
 public class JobOfferEvent extends AbstractEntity implements Event {
 
 	private static final long serialVersionUID = 3586854275179907036L;
 
+	@NotNull
 	private LocalDateTime date;
 
+	@NotNull
 	@ManyToOne
+	@JoinColumn(name = "jobOfferId", nullable = false)
 	private JobOffer jobOffer;
 
 	private String notes;
 
+	@NotNull
+	@Enumerated(EnumType.STRING)
 	private JobOfferState state;
 
+	@NotNull
+	@Enumerated(EnumType.STRING)
 	private JobOfferEventType type;
 
 	@ManyToOne
+	@JoinColumn(name = "userId")
 	@IndexedEmbedded
 	private User user;
 

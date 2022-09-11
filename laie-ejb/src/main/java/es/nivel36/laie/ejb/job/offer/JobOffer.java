@@ -10,6 +10,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -96,6 +98,7 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	private Set<User> recruiters = new HashSet<>();;
 
 	@NotNull
+	@Enumerated(EnumType.STRING)
 	private JobOfferState state;
 
 	@NotNull

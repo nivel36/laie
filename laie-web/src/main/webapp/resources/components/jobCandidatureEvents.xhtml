@@ -16,7 +16,7 @@
 			<h5>#{cc.attrs.title}</h5>
 			<p:dataTable var="event" id="events" value="#{cc.attrs.value}" emptyMessage="#{i18n['event.no_events_found']}" reflow="true" paginator="true"
 				paginatorPosition="bottom" rows="#{cc.attrs.rows}" sortBy="#{event.date}" sortOrder="ascending" lazy="true" styleClass="ui-datatable-borderless">
-				
+
 				<p:column headerText="#{i18n['event.candidate']}">
 					<h:link value="#{event.jobCandidature.candidate.fullName}" outcome="/candidate/view.xhtml">
 						<f:param name="candidate" value="#{event.jobCandidature.candidate.id}" />
@@ -27,24 +27,19 @@
 					<h:outputText value="#{i18n['job_candidature_state.'.concat(event.state)]}" />
 				</p:column>
 
-				<p:column headerText="#{i18n['event.date']}" priority="4">
-					<h:outputText value="#{event.date}">
-						<f:convertDateTime type="localDate" pattern="dd/MM/yyyy HH:mm:ss" />
-					</h:outputText>
-				</p:column>
-				
-				<p:column headerText="#{i18n['event.user']}" priority="4">
-					<h:link value="#{event.user.fullName}" outcome="/user/view.xhtml">
-						<f:param name="user" value="#{event.user.id}" />
-					</h:link>
-				</p:column>
-				
 				<p:column headerText="#{i18n['event.type']}">
 					<h:outputText value="#{i18n['job_candidature_event.'.concat(event.type)]}" />
 				</p:column>
-				
-				<p:column headerText="#{i18n['event.notes']}" priority="4">
-					<h:outputText value="#{event.notes}" />
+
+				<p:column headerText="#{i18n['event.date']}">
+					<h:outputText value="#{event.date}">
+						<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+
+				<p:column>
+					<p:commandButton icon="pi pi-eye" styleClass="danger-button" onclick="$(Primefaces.escapeClientId('#{cc.clientId}')).hide()" process="@this"
+						update="#{cc.clientId}" />
 				</p:column>
 
 			</p:dataTable>

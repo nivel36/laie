@@ -18,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -44,7 +45,9 @@ import es.nivel36.laie.ejb.user.User;
 
 @Entity
 @Indexed
-@Table(indexes = { @javax.persistence.Index(name = "UX_CANDIDATE_EMAIL", columnList = "email", unique = true) })
+@Table(name = "CANDIDATE", indexes = {
+		@javax.persistence.Index(name = "UX_CANDIDATE_EMAIL", columnList = "EMAIL", unique = true) }, //
+		uniqueConstraints = { @UniqueConstraint(name = "UQ_CANDIDATE_EMAIL", columnNames = { "EMAIL" }) })
 public class Candidate extends AbstractEntity implements Ownerable, Subject, Auditable {
 
 	private static final long serialVersionUID = -7470903145789563432L;
@@ -52,6 +55,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	@Embedded
 	private Address address;
 
+	@Column(name = "BORN_DATE")
 	private LocalDate bornDate;
 
 	@OneToOne(fetch = FetchType.EAGER, mappedBy = "candidate")
@@ -59,73 +63,79 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 
 	@Email
 	@NotNull
-	@Column(length = 128, nullable = false, unique = true)
+	@Column(name = "EMAIL", length = 128, nullable = true)
 	@Field(name = "_email")
 	protected String email;
 
 	@Min(0)
+	@Column(name = "EXPECTED_SALARY", scale = 0, precision = 6)
 	private Integer expectedSalary;
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<File> files = new HashSet<>();
 
+	@Column(name = "INFOJOBS_PROFILE_URL", length = 128)
 	private String infojobsProfileUrl;
 
 	@OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private Set<JobCandidature> jobCandidatures = new HashSet<>();
 
 	@NotNull
-	@Column(nullable = false)
 	@Field(name = "_jobProfile")
+	@Column(name = "JOB_PROFILE", nullable = false, length = 128)
 	private String jobProfile;
 
+	@Column(name = "LINKEDIN_PROFILE_URL", length = 128)
 	private String linkedinProfileUrl;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	private Set<Meeting> meetings = new HashSet<>();
 
 	@NotNull
-	@Column(nullable = false)
+	@Column(name = "NAME", nullable = false, length = 128)
 	@Field(name = "_name")
 	@Field(name = "name", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "name")
 	protected String name;
 
 	@ManyToOne
-	@JoinColumn(name = "candidateId")
+	@JoinColumn(name = "CANDIDATE_ID")
 	private Origin origin;
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "ownerId", nullable = false)
+	@JoinColumn(name = "OWNER_ID", nullable = false)
 	@IndexedEmbedded
 	private User owner;
 
-	@Column(length = 12)
+	@Column(name = "PHONE_NUMBER", length = 12)
 	protected String phoneNumber;
 
 	@ManyToOne
-	@JoinColumn(name = "picture")
+	@JoinColumn(name = "PICTURE_ID")
 	protected File picture;
 
 	@Field(analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField
+	@Column(name = "RATING", scale = 0, precision = 1 )
 	private Integer rating;
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	private Set<Rating> ratings;
 
+	@Column(name = "SALARY")
 	private Integer salary;
 
+	@Column(name = "SKYPE", length = 128)
 	private String skype;
 
 	@NotNull
-	@Column(nullable = false)
+	@Column(name = "SURNAME", nullable = false, length = 128)
 	@Field(name = "_surname")
 	protected String surname;
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinTable(name = "candidate_tag", joinColumns = @JoinColumn(name = "candidate_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
+	@JoinTable(name = "CANDIDATE_TAG", joinColumns = @JoinColumn(name = "CANDIDATE_ID"), inverseJoinColumns = @JoinColumn(name = "TAG_ID"))
 	@IndexedEmbedded
 	private Set<Tag> tags = new HashSet<>();
 

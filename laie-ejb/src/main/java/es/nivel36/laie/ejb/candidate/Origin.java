@@ -2,17 +2,22 @@ package es.nivel36.laie.ejb.candidate;
 
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
 
+@Table(name = "ORIGIN")
 @Entity
 public class Origin extends AbstractEntity {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 4930787003402151549L;
 
+	@Column(name = "CODE", length = 32)
 	private String code;
 
+	@Column(name = "OTHER", length = 64)
 	private String other;
 
 	@Override

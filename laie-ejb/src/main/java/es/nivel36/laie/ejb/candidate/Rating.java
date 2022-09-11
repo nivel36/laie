@@ -2,6 +2,7 @@ package es.nivel36.laie.ejb.candidate;
 
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -14,25 +15,27 @@ import es.nivel36.laie.ejb.core.model.AbstractEntity;
 import es.nivel36.laie.ejb.user.User;
 
 @Entity
-@Table(uniqueConstraints = {
-		@UniqueConstraint(name = "UQ_Rating_Candidate_Rating_User", columnNames = { "candidate", "rating", "user" }) })
+@Table(name = "RATING", uniqueConstraints = {
+		@UniqueConstraint(name = "UQ_RATING_CANDIDATE_RATING_USER", columnNames = { "CANDIDATE_ID", "RATING", "USER_ID" }) })
 public class Rating extends AbstractEntity {
 
 	private static final long serialVersionUID = -923213871691949551L;
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "candidate", nullable = false)
+	@JoinColumn(name = "CANDIDATE_ID", nullable = false)
 	private Candidate candidate;
 
+	@Column(name = "COMMENT", columnDefinition = "TEXT")
 	private String comment;
 
 	@NotNull
+	@Column(name = "RATING", scale = 0, precision = 1)
 	private Integer rating;
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "user", nullable = false)
+	@JoinColumn(name = "USER_ID", nullable = false)
 	private User user;
 
 	public Candidate getCandidate() {
