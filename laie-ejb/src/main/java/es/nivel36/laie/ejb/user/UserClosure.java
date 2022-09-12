@@ -12,21 +12,24 @@ import javax.persistence.UniqueConstraint;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
 
 @Entity
-@Table( uniqueConstraints = { @UniqueConstraint(columnNames = { "antecessor_id", "descendant_id", "pathLength" })}, 
-		indexes = { @javax.persistence.Index(name = "UX_USERCLOSURE_", columnList = "antecessor_id, descendant_id, pathLength", unique = true) })
+@Table(name = "PERSON_CLOSURE", uniqueConstraints = {
+		@UniqueConstraint(name = "UQ_PERSON_CLOSURE_ANTECESSOR_ID_DESCENDANT_ID_PATH_LENGTH", columnNames = {
+				"ANTECESSOR_ID", "DESCENDANT_ID", "PATH_LENGTH" }) }, //
+		indexes = {
+				@javax.persistence.Index(name = "UX_PERSON_CLOSURE_ANTECESSOR_ID_DESCENDANT_ID_PATH_LENGTH", columnList = "ANTECESSOR_ID, DESCENDANT_ID, PATH_LENGTH", unique = true) })
 public class UserClosure extends AbstractEntity {
 
 	private static final long serialVersionUID = 6018390713882649369L;
 
 	@ManyToOne
-	@JoinColumn(name = "antecessor_id", nullable = false)
+	@JoinColumn(name = "ANTECESSOR_ID", nullable = false)
 	private User antecessor;
 
 	@ManyToOne
-	@JoinColumn(name = "descendant_id", nullable = false)
+	@JoinColumn(name = "DESCENDANT_ID", nullable = false)
 	private User descendant;
 
-	@Column(nullable = false)
+	@Column(name = "PATH_LENGTH", nullable = false)
 	private Integer pathLength;
 
 	public UserClosure() {

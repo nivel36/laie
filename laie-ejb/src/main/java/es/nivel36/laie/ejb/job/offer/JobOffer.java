@@ -15,7 +15,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -44,8 +43,6 @@ import es.nivel36.laie.ejb.user.User;
 @Table(name = "JOB_OFFER")
 public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 
-	private static final String JOB_OFFER = "JOB_OFFER";
-
 	private static final long serialVersionUID = 1529439068651089035L;
 
 	@Embedded
@@ -53,17 +50,18 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	private Address address;
 
 	@ManyToOne
-	@JoinColumn(name = "clientId", nullable = false)
+	@JoinColumn(name = "CLIENT_ID", nullable = false)
 	@NotNull
 	@IndexedEmbedded
 	private Client client;
 
 	@Field(analyze = Analyze.NO)
 	@SortableField
+	@Column(name = "CLOSE_DATE")
 	private LocalDate closeDate;
 
-	@Lob
 	@Field
+	@Column(name = "DESCRIPTION", columnDefinition = "TEXT")
 	private String description;
 
 	@OneToMany(mappedBy = "jobOffer", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -72,37 +70,42 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	@OneToMany(mappedBy = "jobOffer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<JobOfferEvent> jobOfferEvents = new HashSet<>();
 
+	@Column(name = "MAX_SALARY", scale = 0, precision = 6)
 	private Integer maxSalary;
 
+	@Column(name = "MIN_SALARY", scale = 0, precision = 6)
 	private Integer minSalary;
 
 	@NotNull
 	@Field(analyze = Analyze.NO)
 	@SortableField
-	@Column(nullable = false)
+	@Column(name = "OPEN_DATE", nullable = false)
 	private LocalDate openDate;
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "ownerId", nullable = false)
+	@JoinColumn(name = "OWNER_ID", nullable = false)
 	@IndexedEmbedded
 	private User owner;
 
 	@NotNull
+	@Column(name = "PLACES", scale = 0, precision = 1)
 	private Integer places = 1;
 
+	@Column(name = "PUBLISHED")
 	private boolean published;
 
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "job_user", joinColumns = @JoinColumn(name = "job_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+	@JoinTable(name = "JOB_PERSON", joinColumns = @JoinColumn(name = "JOB_ID"), inverseJoinColumns = @JoinColumn(name = "PERSON_ID"))
 	private Set<User> recruiters = new HashSet<>();;
 
 	@NotNull
 	@Enumerated(EnumType.STRING)
+	@Column(name = "STATE")
 	private JobOfferState state;
 
 	@NotNull
-	@Column(nullable = false)
+	@Column(name="TITLE", nullable = false)
 	@Field(name = "_title")
 	@Field(name = "title", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "title")
@@ -145,7 +148,7 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 
 	@Override
 	public String getEntityName() {
-		return JOB_OFFER;
+		return "JOB_OFFER";
 	}
 
 	@Override

@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.Analyze;
@@ -33,25 +34,26 @@ import es.nivel36.laie.ejb.user.User;
 
 @Indexed
 @Entity
-@Table(indexes = { @javax.persistence.Index(name = "UX_CLIENT_CIF", columnList = "cif", unique = true) })
+@Table(name = "CLIENT", indexes = {
+		@javax.persistence.Index(name = "UX_CLIENT_CIF", columnList = "CIF", unique = true) }, uniqueConstraints = {
+				@UniqueConstraint(name = "UQ_CLIENT_CIF", columnNames = { "CIF" }),
+				@UniqueConstraint(name = "UQ_CLIENT_NAME", columnNames = { "NAME" }) })
 public class Client extends AbstractEntity implements Ownerable, Erasable, Auditable {
 
 	private static final long serialVersionUID = 3562472646025185677L;
-	
-	private static final String ENTITY_NAME = "CLIENT";
 
 	@Embedded
 	@IndexedEmbedded
 	private Address address;
 
-	@Column(unique = true)
+	@Column(name = "CIF", length = 16)
 	@Field(name = "_cif")
 	private String cif;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
 	private Set<Contact> contacts;
 
-	@Column(nullable = false)
+	@Column(name = "DELETED", nullable = false)
 	@Field
 	private boolean deleted;
 
@@ -60,7 +62,7 @@ public class Client extends AbstractEntity implements Ownerable, Erasable, Audit
 	private Set<JobOffer> jobOffers;
 
 	@NotNull
-	@Column(unique = true, nullable = false)
+	@Column(name = "NAME", unique = true, nullable = false)
 	@Field(name = "_name")
 	@Field(name = "name", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "name")
@@ -68,10 +70,11 @@ public class Client extends AbstractEntity implements Ownerable, Erasable, Audit
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "ownerId", nullable = false)
+	@JoinColumn(name = "OWNER_ID", nullable = false)
 	@IndexedEmbedded
 	private User owner;
 
+	@Column(name = "PHONE_NUMBER", length = 16)
 	private String phoneNumber;
 
 	public Address getAddress() {
@@ -174,9 +177,9 @@ public class Client extends AbstractEntity implements Ownerable, Erasable, Audit
 	public String getEntityTitle() {
 		return this.name;
 	}
-	
+
 	@Override
 	public String getEntityName() {
-		return ENTITY_NAME;
+		return "CLIENT";
 	}
 }

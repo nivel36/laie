@@ -3,7 +3,9 @@ package es.nivel36.laie.ejb.core.model;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Table;
 
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
@@ -11,6 +13,7 @@ import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 
+@Table(name="ADDRESS")
 @Embeddable
 public class Address implements Serializable {
 
@@ -19,23 +22,31 @@ public class Address implements Serializable {
 	@Field(name = "_city")
 	@Field(name = "city", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "city")
+	@Column(name="CITY", length = 128)
 	private String city;
 
+	@Column(name="COUNTRY", length = 128)
 	private String country;
 
+	@Column(name="DOOR", length = 16)
 	private String door;
 
+	@Column(name="NUMBER", length = 16)
 	private String number;
 
 	@Field(name = "_region")
 	@Field(name = "region", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "region")
+	@Column(name="REGION", length = 128)
 	private String region;
 
+	@Column(name="STOREY", length = 16)
 	private String storey;
 
+	@Column(name="STREEET", length = 128)
 	private String street;
 
+	@Column(name="ZIP_CODE", length = 8)
 	private String zipCode;
 
 	@Override

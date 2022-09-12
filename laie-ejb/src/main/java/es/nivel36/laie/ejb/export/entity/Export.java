@@ -9,15 +9,17 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.persistence.Table;
 
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
 
 @Entity
+@Table(name="EXPORT")
 public class Export extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;
 
-	@Column(length = 50, unique = true, nullable = false)
+	@Column(name="EXPORT_NAME", length = 64, unique = true, nullable = false)
 	private String exportName;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "export", orphanRemoval = true)

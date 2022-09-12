@@ -19,14 +19,15 @@ import es.nivel36.laie.ejb.job.meeting.Meeting;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 
 @Entity
-@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "jobOfferId", "candidateId" }) })
+@Table(name = "JOB_CANDIDATURE", uniqueConstraints = {
+		@UniqueConstraint(columnNames = { "JOB_OFFER_ID", "CANDIDATE_ID" }) })
 public class JobCandidature extends AbstractEntity {
 
 	private static final long serialVersionUID = 7312289648009726566L;
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "candidateId", nullable = false)
+	@JoinColumn(name = "CANDIDATE_ID", nullable = false)
 	private Candidate candidate;
 
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "jobCandidature", orphanRemoval = true)
@@ -34,15 +35,14 @@ public class JobCandidature extends AbstractEntity {
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "jobOfferId", nullable = false)
+	@JoinColumn(name = "JOB_OFFER_ID", nullable = false)
 	private JobOffer jobOffer;
 
 	@OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
-	@JoinColumn(name = "jobCandidatureId")
 	private Set<Meeting> meetings;
 
 	@ManyToOne
-	@JoinColumn(name = "jobCandidatureStateId")
+	@JoinColumn(name = "JOB_CANDIDATURE_STATE_ID")
 	private JobCandidatureState state;
 
 	public JobCandidature() {

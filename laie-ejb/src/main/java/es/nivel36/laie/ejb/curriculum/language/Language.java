@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.Field;
@@ -15,18 +16,19 @@ import es.nivel36.laie.ejb.core.model.AbstractEntity;
 
 @Indexed
 @Entity
+@Table(name = "LANGUAGE")
 public class Language extends AbstractEntity implements Comparable<Language> {
 
 	private static final long serialVersionUID = -3425255875950769281L;
 
 	@NotNull
 	@Enumerated(EnumType.STRING)
-	@Column(nullable = false)
+	@Column(name = "LEVEL", nullable = false)
 	private LanguageLevel level;
 
 	@NotNull
-	@Column(nullable = false)
 	@Field
+	@Column(name = "NAME", nullable = false)
 	private String name;
 
 	@Override

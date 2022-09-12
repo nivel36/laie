@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
@@ -21,29 +22,30 @@ import es.nivel36.laie.ejb.curriculum.language.Language;
 import es.nivel36.laie.ejb.curriculum.skill.Skill;
 
 @Entity
+@Table(name = "CURRICULUM")
 public class Curriculum extends AbstractEntity {
 
 	private static final long serialVersionUID = 2258938088135732207L;
 
 	@NotNull
 	@OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
-	@JoinColumn(name = "candidate_id", nullable = false)
+	@JoinColumn(name = "CANDIDATE_ID", nullable = false)
 	private Candidate candidate;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "curriculum_id")
+	@JoinColumn(name = "CURRICULUM_ID")
 	private Set<Education> education;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "curriculum_id")
+	@JoinColumn(name = "CURRICULUM_ID")
 	private Set<JobExperience> jobExperiences;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "curriculum_id")
+	@JoinColumn(name = "CURRICULUM_ID")
 	private Set<Language> languages;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "curriculum_id")
+	@JoinColumn(name = "CURRICULUM_ID")
 	private Set<Skill> skills;
 
 	public void addEducation(final Education education) {

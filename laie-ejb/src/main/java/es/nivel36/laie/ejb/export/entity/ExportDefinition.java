@@ -9,10 +9,12 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
 
 @Entity
+@Table(name="EXPORT_DEFINITION")
 public class ExportDefinition extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;
@@ -21,14 +23,14 @@ public class ExportDefinition extends AbstractEntity {
 	// TODO ivmedina unique export-sortOrder
 
 	@ManyToOne
-	@JoinColumn(name = "exportId", nullable = false)
+	@JoinColumn(name = "EXPORT_ID", nullable = false)
 	private Export export;
 
 	@OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
-	@JoinColumn(name = "exportFieldId", nullable = false, unique = true)
+	@JoinColumn(name = "EXPORT_FIELD_ID", nullable = false, unique = true)
 	private ExportField exportField;
 
-	@Column(scale = 6, precision = 0, nullable = false)
+	@Column(name = "SORT_ORDER", scale = 3, precision = 0, nullable = false)
 	private int sortOrder;
 
 	public Export getExport() {

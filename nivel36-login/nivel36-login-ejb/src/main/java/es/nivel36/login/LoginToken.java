@@ -11,10 +11,17 @@ import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-public class LoginToken  implements Serializable {
+@Table(name = "LOGIN_TOKEN", indexes = {
+		@Index(name = "UX_LOGIN_TOKEN_TOKEN_HASH", unique = true, columnList = "TOKEN_HASH") }, uniqueConstraints = {
+				@UniqueConstraint(name = "UQ_LOGIN_TOKEN_TOKEN_HASH", columnNames = { "TOKEN_HASH" }) })
+public class LoginToken implements Serializable {
 
 	public enum TokenType {
 		GUEST, REMEMBER_ME, RESET_PASSWORD
@@ -22,28 +29,32 @@ public class LoginToken  implements Serializable {
 
 	private static final long serialVersionUID = 6700658371126462629L;
 
-	@Column(nullable = false)
+	@Column(name = "CREATED", nullable = false)
 	private Instant created;
 
+	@Column(name = "DESCRIPTION")
 	private String description;
 
-	@Column(nullable = false)
+	@Column(name = "EXPIRATION")
 	private Instant expiration;
 
 	@Id
 	@GeneratedValue
+	@Column(name = "ID")
 	private long id;
 
-	@Column(nullable = false)
+	@Column(name = "IP_ADDRESS")
 	private String ipAddress;
 
-	@Column(nullable = false, unique = true)
+	@Column(name = "TOKEN_HASH", nullable = false, unique = true)
 	private byte[] tokenHash;
 
 	@Enumerated(STRING)
+	@Column(name = "TOKEN_TYPE")
 	private TokenType type;
 
 	@ManyToOne
+	@JoinColumn(name = "ACCOUNT_ID")
 	private Account account;
 
 	@Override
@@ -118,7 +129,7 @@ public class LoginToken  implements Serializable {
 	public void setTokenHash(final byte[] tokenHash) {
 		this.tokenHash = tokenHash;
 	}
-	
+
 	public void setType(final TokenType type) {
 		this.type = type;
 	}

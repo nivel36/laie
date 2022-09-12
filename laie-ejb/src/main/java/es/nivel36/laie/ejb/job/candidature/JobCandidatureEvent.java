@@ -3,8 +3,13 @@ package es.nivel36.laie.ejb.job.candidature;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.Analyze;
@@ -21,28 +26,35 @@ import es.nivel36.laie.ejb.user.User;
 
 @Entity
 @Indexed
+@Table(name = "JOB_CANDIDATURE_EVENT")
 public class JobCandidatureEvent extends AbstractEntity implements Event {
 
 	private static final long serialVersionUID = -5724212902774335888L;
 
 	@Field(name = "date", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "date")
+	@Column(name = "date")
 	private LocalDateTime date;
 
 	@ManyToOne(optional = false)
+	@JoinColumn(name = "JOB_CANDIDATURE_ID")
 	private JobCandidature jobCandidature;
 
 	private String notes;
 
 	@ManyToOne
 	@IndexedEmbedded
+	@JoinColumn(name = "JOB_CANDIDATURE_STATE_ID")
 	private JobCandidatureState state;
 
 	@NotNull
+	@Enumerated(EnumType.STRING)
+	@Column(name = "ROLE", nullable = false, length = 16)
 	private JobCandidatureEventType type;
 
 	@ManyToOne
 	@IndexedEmbedded
+	@JoinColumn(name = "USER_ID")
 	private User user;
 
 	public JobCandidatureEvent() {

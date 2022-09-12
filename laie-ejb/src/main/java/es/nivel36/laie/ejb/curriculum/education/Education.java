@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.Field;
@@ -13,27 +14,31 @@ import es.nivel36.laie.ejb.core.model.AbstractEntity;
 
 @Entity
 @Indexed
-public class Education extends AbstractEntity implements Comparable<Education>{
+@Table(name = "EDUCATION")
+public class Education extends AbstractEntity implements Comparable<Education> {
 
 	private static final long serialVersionUID = 7831977505416700653L;
 
 	@NotNull
-	@Column(nullable = false)
+	@Column(name = "DEGREE", nullable = false)
 	private String degree;
 
 	@Field
+	@Column(name = "DESCRIPTION", columnDefinition = "TEXT")
 	private String description;
 
 	@NotNull
-	@Column(nullable = false)
+	@Column(name = "SCHOOL", nullable = false)
 	private String school;
-	
+
+	@Column(name = "END_YEAR", nullable = false)
 	private Integer endYear;
 
+	@Column(name = "START_YEAR", nullable = false)
 	private Integer startYear;
 
 	@NotNull
-	@Column(nullable = false)
+	@Column(name = "STILL_STUDYING", nullable = false)
 	private boolean stillStudying;
 
 	@Override
@@ -106,23 +111,23 @@ public class Education extends AbstractEntity implements Comparable<Education>{
 	public void setStillStudying(final boolean stillStudying) {
 		this.stillStudying = stillStudying;
 	}
-	
+
 	@Override
 	public int compareTo(final Education education) {
-		if(this.startYear == null) {
+		if (this.startYear == null) {
 			return 1;
 		}
-		if(education.startYear == null) {
+		if (education.startYear == null) {
 			return -1;
 		}
 		final int startYearCompareTo = this.startYear.compareTo(education.startYear);
 		if (startYearCompareTo != 0) {
 			return -startYearCompareTo;
 		}
-		if(this.endYear == null) {
+		if (this.endYear == null) {
 			return 1;
 		}
-		if(education.endYear == null) {
+		if (education.endYear == null) {
 			return -1;
 		}
 		final int endYearCompareTo = this.endYear.compareTo(education.endYear);

@@ -8,10 +8,12 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
 
 @Entity
+@Table(name = "EXPORT_FIELD")
 public class ExportField extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;
@@ -20,25 +22,26 @@ public class ExportField extends AbstractEntity {
 	// TODO ivmedina unique export-sortOrder
 
 	@ManyToOne
-	@JoinColumn(name = "exportId", nullable = false)
+	@JoinColumn(name = "EXPORT_ID", nullable = false)
 	private Export export;
 
-	@Column(length = 50, nullable = false)
+	@Column(name = "FIELD_NAME", length = 64, nullable = false)
 	private String fieldName;
 
-	@Column(scale = 6, precision = 0, nullable = false)
+	@Column(name = "SORT_ORDER", scale = 3, precision = 0, nullable = false)
 	private int sortOrder;
 
-	@Column(length = 50, nullable = false)
+	@Column(name = "LITERAL_ID", length = 64, nullable = false)
 	private String literalId;
-	
-	@Column(length = 200, nullable = false)
+
+	@Column(name = "ACQUIRER_CLASS", length = 256, nullable = false)
 	private String acquirerClass;
 
-	@Column(nullable = false)
+	@Column(name = "DISABLED", nullable = false)
 	private boolean disabled;
 
 	@OneToOne(fetch = FetchType.EAGER, mappedBy = "exportField")
+	@JoinColumn(name = "EXPORT_DEFINITION_ID")
 	private ExportDefinition exportDefinition;
 
 	public Export getExport() {
@@ -96,7 +99,7 @@ public class ExportField extends AbstractEntity {
 	public void setAcquirerClass(String acquirerClass) {
 		this.acquirerClass = acquirerClass;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.export, this.fieldName);

@@ -8,8 +8,8 @@ public enum JobCandidatureEventType implements EventType {
 	MEETING("meeting"), //
 	MESSAGE("message"), //
 	OTHER("other"), //
-	PHONE_CALLL("phone_call"), //
-	VIDEO_CALLL("video_call");
+	PHONE_CALL("phone_call"), //
+	VIDEO_CALL("video_call");
 
 	private String name;
 

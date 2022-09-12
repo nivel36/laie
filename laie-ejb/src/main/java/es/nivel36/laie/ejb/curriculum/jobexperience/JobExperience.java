@@ -8,6 +8,7 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.Field;
@@ -17,32 +18,39 @@ import es.nivel36.laie.ejb.core.model.AbstractEntity;
 
 @Entity
 @Indexed
+@Table(name = "JOB_EXPERIENCE")
 public class JobExperience extends AbstractEntity implements Comparable<JobExperience> {
 
 	private static final long serialVersionUID = 5196582360914455397L;
 
 	@Field
 	@NotNull
-	@Column(nullable = false)
+	@Column(name="COMPANY_NAME", nullable = false, length = 128)
 	private String companyName;
 
 	@Field
 	@Lob
+	@Column(name="DESCRIPTION", columnDefinition = "TEXT")
 	private String description;
 
+	@Column(name="END_MONTH", scale = 0, precision = 2)
 	private Integer endMonth;
 
+	@Column(name="END_YEAR", scale = 0, precision = 4)
 	private Integer endYear;
 
 	@NotNull
 	@Field
-	@Column(nullable = false)
+	@Column(name="JOB_POSITION", nullable = false)
 	private String jobPosition;
-
+	
+	@Column(name="START_MONTH", scale = 0, precision = 2)
 	private Integer startMonth;
 
+	@Column(name="START_YEAR", scale = 0, precision = 4)
 	private Integer startYear;
 
+	@Column(name="STILL_WORKING")
 	private boolean stillWorking;
 
 	@Override

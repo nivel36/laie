@@ -10,6 +10,8 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
@@ -27,55 +29,56 @@ import es.nivel36.laie.ejb.job.meeting.Meeting;
 
 @Entity
 @Indexed
+@Table(name = "CONTACT", indexes = {
+		@javax.persistence.Index(name = "UX_CONTACT_EMAIL", columnList = "EMAIL", unique = true) }, //
+		uniqueConstraints = { @UniqueConstraint(name = "UQ_CONTACT_EMAIL", columnNames = { "EMAIL" }) })
 public class Contact extends AbstractEntity implements Subject, Auditable {
-
-	private static final String CONTACT = "CONTACT";
 
 	private static final long serialVersionUID = -2403549918176092142L;
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "clientId", nullable = false)
+	@JoinColumn(name = "CLIENT_ID", nullable = false)
 	private Client client;
-	
+
 	@Email
 	@NotNull
-	@Column(length = 128, nullable = false, unique = true)
+	@Column(name = "EMAIL", length = 128, nullable = false, unique = true)
 	@Field(name = "_email")
 	@Field(name = "email", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	protected String email;
 
-	@Column(length = 2)
+	@Column(name = "LANGUAGE", length = 2)
 	private String language;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	private Set<Meeting> meetings = new HashSet<>();
 
 	@NotNull
-	@Column(nullable = false)
+	@Column(name = "NAME", nullable = false, length = 128)
 	@Field(name = "_name")
 	@Field(name = "name", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "name")
 	protected String name;
 
-	@Column(length = 12)
+	@Column(name = "PHONE_NUMBER", length = 12)
 	protected String phoneNumber;
 
-	@Column(length = 128)
+	@Column(name = "POSITION", length = 128)
 	private String position;
 
 	@NotNull
-	@Column(nullable = false)
+	@Column(name = "SURNAME", nullable = false, length = 128)
 	@Field(name = "_surname")
 	@Field(name = "surname", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "surname")
 	protected String surname;
-	
+
 	public void addMeeting(final Meeting meeting) {
 		Objects.requireNonNull(meeting);
 		this.meetings.add(meeting);
 	}
-	
+
 	public void removeMeeting(final Meeting meeting) {
 		Objects.requireNonNull(meeting);
 		this.meetings.remove(meeting);
@@ -178,7 +181,7 @@ public class Contact extends AbstractEntity implements Subject, Auditable {
 
 	@Override
 	public String getEntityName() {
-		return CONTACT;
+		return "CONTACT";
 	}
 
 	@Override

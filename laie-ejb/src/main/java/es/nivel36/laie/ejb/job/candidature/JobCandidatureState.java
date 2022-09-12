@@ -25,15 +25,18 @@ public class JobCandidatureState extends AbstractEntity implements EventState {
 
 	private static final long serialVersionUID = -1530029544557152044L;
 
+	@Column(name = "APPROVED")
 	private boolean approved;
 
+	@Column(name = "DECLINED")
 	private boolean declined;
 
+	@Column(name = "FIRST")
 	private boolean first;
 
 	@Field(analyze = Analyze.NO)
 	@Facet(encoding = FacetEncodingType.STRING)
-	@Column(unique = true)
+	@Column(name = "NAME", unique = true)
 	private String name;
 
 	@ManyToMany(fetch = FetchType.LAZY)

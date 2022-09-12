@@ -10,10 +10,11 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.search.annotations.IndexedEmbedded;
@@ -24,43 +25,46 @@ import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.user.User;
 
 @Entity
-@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "jobCandidatureId", "datePlanned" }) })
+@Table(name = "MEETING")
 public class Meeting extends AbstractEntity implements Ownerable {
 
 	private static final long serialVersionUID = -8068167269155086050L;
 
 	@ElementCollection
-	@CollectionTable(name = "emails", joinColumns = @JoinColumn(name = "meeting_id"))
-	@Column(name = "email")
+	@CollectionTable(name = "EMAILS", joinColumns = @JoinColumn(name = "MEETING_ID"))
+	@Column(name = "EMAIL")
 	private Set<String> attendeesEmails = new HashSet<>();
 
 	@NotNull
-	@Column(nullable = false)
+	@Column(name = "DATE_PLANNED", nullable = false)
 	private LocalDateTime datePlanned;
-	
+
 	@NotNull
-	@Column(nullable = false)
+	@Column(name = "DURATION", nullable = false)
 	private Duration duration = Duration.ofMinutes(30);
 
 	@ManyToOne
-	@JoinColumn(name = "jobOfferId")
+	@JoinColumn(name = "JOB_OFFER_ID")
 	private JobOffer jobOffer;
 
+	@Column(name = "LOCATION")
 	private String location;
 
+	@Enumerated(EnumType.STRING)
+	@Column(name = "MEETING_TYPE")
 	private MeetingType meetingType;
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "ownerId", nullable = false)
+	@JoinColumn(name = "OWNER_ID", nullable = false)
 	@IndexedEmbedded
 	private User owner;
 
-	@Column(length = 2048)
+	@Column(name = "DESCRIPTION", columnDefinition = "TEXT")
 	private String description;
 
 	@NotNull
-	@Column(nullable = false)
+	@Column(name = "TITLE", nullable = false)
 	private String title;
 
 	public void addAttendee(final String email) {
@@ -84,8 +88,7 @@ public class Meeting extends AbstractEntity implements Ownerable {
 		}
 		final Meeting other = (Meeting) obj;
 		return Objects.equals(this.datePlanned, other.datePlanned) && Objects.equals(this.title, other.title)
-				&& Objects.equals(this.jobOffer, other.jobOffer)
-				&& Objects.equals(this.description, other.description);
+				&& Objects.equals(this.jobOffer, other.jobOffer) && Objects.equals(this.description, other.description);
 	}
 
 	public Set<String> getAttendeesEmails() {
@@ -127,8 +130,7 @@ public class Meeting extends AbstractEntity implements Ownerable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.datePlanned, this.title, this.jobOffer
-				, this.description);
+		return Objects.hash(this.datePlanned, this.title, this.jobOffer, this.description);
 	}
 
 	public void removeAttendee(final String email) {

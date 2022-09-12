@@ -3,6 +3,7 @@ package es.nivel36.laie.ejb.job.offer;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -24,25 +25,29 @@ public class JobOfferEvent extends AbstractEntity implements Event {
 	private static final long serialVersionUID = 3586854275179907036L;
 
 	@NotNull
+	@Column(name="DATE")
 	private LocalDateTime date;
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "jobOfferId", nullable = false)
+	@JoinColumn(name = "JOB_OFFER_ID", nullable = false)
 	private JobOffer jobOffer;
 
+	@Column(name="NOTES")
 	private String notes;
 
 	@NotNull
 	@Enumerated(EnumType.STRING)
+	@Column(name="STATE")
 	private JobOfferState state;
 
 	@NotNull
 	@Enumerated(EnumType.STRING)
+	@Column(name="TYPE")
 	private JobOfferEventType type;
 
 	@ManyToOne
-	@JoinColumn(name = "userId")
+	@JoinColumn(name = "USER_ID")
 	@IndexedEmbedded
 	private User user;
 

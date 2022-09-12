@@ -12,34 +12,46 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
 
 @Entity
+@Table(name = "ACCOUNT", indexes = {
+		@Index(name = "UX_ACCOUNT_USENAME", columnList = "USERNAME", unique = true) }, uniqueConstraints = {
+				@UniqueConstraint(name = "UQ_PERSON_USERNAME", columnNames = { "USERNAME" }) })
 public class Account implements Serializable {
-	
+
 	private static final Random RANDOM = new SecureRandom();
-	
+
 	private static final long serialVersionUID = -7213946632987932359L;
 
+	@Column(name = "CREATED", nullable = false)
 	private LocalDate created;
 
+	@Column(name = "EXPIRED")
 	private LocalDate expired;
 
-	@Column(nullable = false)
+	@Column(name = "HASH_PASSWORD", nullable = false)
 	private byte[] hashPassword;
 
 	@Id
 	@GeneratedValue
+	@Column(name = "ID")
 	private Long id;
-	
+
 	@OneToMany(mappedBy = "account", orphanRemoval = true)
 	private Set<LoginToken> loginTokens;
 
+	@Column(name = "ROLE")
 	private String role;
 
-	@Column(nullable = false)
+	@Column(name = "SALT", nullable = false)
 	private byte[] salt;
-	
+
+	@Column(name = "USERNAME", nullable = false)
 	private String username;
 
 	public Account() {
@@ -59,7 +71,7 @@ public class Account implements Serializable {
 	private byte[] buildHashPassword(final String password) {
 		return CriptoUtil.digestPassword(password, this.salt);
 	}
-	
+
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {

@@ -13,10 +13,12 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
@@ -36,70 +38,75 @@ import es.nivel36.laie.ejb.job.offer.JobOffer;
 
 @Entity
 @Indexed
-@Table(indexes = { @javax.persistence.Index(name = "UX_USER_EMAIL", columnList = "email", unique = true) })
+@Table(name = "PERSON", indexes = {
+		@javax.persistence.Index(name = "UX_PERSON_EMAIL", columnList = "EMAIL", unique = true) }, uniqueConstraints = {
+				@UniqueConstraint(name = "UQ_PERSON_EMAIL", columnNames = { "EMAIL" }) })
 public class User extends AbstractEntity implements Subject {
 
 	private static final long serialVersionUID = -3719561601581901723L;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "PERSON_BOOKMARK", joinColumns = @JoinColumn(name = "PERSON_ID"), inverseJoinColumns = @JoinColumn(name = "BOOKMARK_ID"))
 	private Set<Bookmark> bookmarks = new HashSet<>();
 
 	@Field(name = "dateOfJoin", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "dateOfJoin")
+	@Column(name = "DATE_OF_JOIN")
 	private LocalDate dateOfJoin;
 
 	@Field(name = "_email")
-	@Column(length = 128, nullable = false, unique = true)
+	@Column(name = "EMAIL", length = 128, nullable = false)
 	private String email;
 
 	@OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = false)
 	private Set<JobOffer> jobOffers = new HashSet<>();
 
-	@Column(nullable = false)
+	@Column(name = "LANGUAGE", nullable = false)
 	private String language;
 
 	@Field(name = "lastConnection", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "lastConnection")
+	@Column(name = "LAST_CONNECTION")
 	private LocalDateTime lastConnection;
 
 	@ManyToOne
-	@JoinColumn(name = "managerId")
+	@JoinColumn(name = "MANAGER_ID")
 	@IndexedEmbedded(depth = 1)
 	private User manager;
 
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "PERSON_MEETING", joinColumns = @JoinColumn(name = "PERSON_ID"), inverseJoinColumns = @JoinColumn(name = "MEETING_ID"))
 	private Set<Meeting> meetings = new HashSet<>();
 
-	@Column(nullable = false)
+	@Column(name = "NAME", nullable = false, length = 128)
 	@Field(name = "_name")
 	@Field(name = "name", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "name")
 	private String name;
 
-	@Column(length = 12)
+	@Column(name = "PHONE_NUMBER", length = 12)
 	private String phoneNumber;
 
 	@ManyToOne
-	@JoinColumn(name = "picture")
+	@JoinColumn(name = "PICTURE_ID")
 	private File picture;
 
 	@Enumerated(EnumType.STRING)
-	@Column(nullable = false)
+	@Column(name = "ROLE", nullable = false, length = 16)
 	@Field(name = "role", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "role")
 	private Role role;
 
-	@Column(nullable = false)
+	@Column(name = "ROWS_PER_PAGE", nullable = false, scale = 0, precision = 3)
 	private Integer rowsPerPage = 10;
 
-	@Column(nullable = false)
+	@Column(name = "SURNAME", nullable = false, length = 128)
 	@Field(name = "_surname")
 	@Field(name = "surname", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "surname")
 	private String surname;
 
-	@OneToMany(cascade = { CascadeType.REMOVE, CascadeType.DETACH,
-			CascadeType.REFRESH }, orphanRemoval = true, fetch = FetchType.LAZY)
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	private Set<Rating> ratings;
 
 	public Set<Rating> getRatings() {
