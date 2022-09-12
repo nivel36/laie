@@ -43,7 +43,7 @@ public class Address implements Serializable {
 	@Column(name="STOREY", length = 16)
 	private String storey;
 
-	@Column(name="STREEET", length = 128)
+	@Column(name="STREET", length = 128)
 	private String street;
 
 	@Column(name="ZIP_CODE", length = 8)
