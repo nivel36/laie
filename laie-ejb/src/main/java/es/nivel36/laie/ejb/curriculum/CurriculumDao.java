@@ -16,7 +16,6 @@ import es.nivel36.laie.ejb.core.model.SearchFacade;
 import es.nivel36.laie.ejb.core.model.search.SearchFacets;
 import es.nivel36.laie.ejb.core.model.search.SearchResult;
 import es.nivel36.laie.ejb.core.model.search.SortField;
-import es.nivel36.laie.ejb.curriculum.skill.Skill;
 
 
 public class CurriculumDao extends AbstractDao {

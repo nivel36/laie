@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.curriculum.export.CurriculumExporter;
-import es.nivel36.laie.ejb.curriculum.skill.Skill;
 
 @Stateless
 public class CurriculumService {

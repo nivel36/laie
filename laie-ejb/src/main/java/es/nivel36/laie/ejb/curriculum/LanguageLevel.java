@@ -1,4 +1,4 @@
-package es.nivel36.laie.ejb.curriculum.language;
+package es.nivel36.laie.ejb.curriculum;
 
 public enum LanguageLevel {
 

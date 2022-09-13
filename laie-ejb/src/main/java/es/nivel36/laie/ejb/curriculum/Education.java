@@ -1,4 +1,4 @@
-package es.nivel36.laie.ejb.curriculum.education;
+package es.nivel36.laie.ejb.curriculum;
 
 import java.util.Objects;
 

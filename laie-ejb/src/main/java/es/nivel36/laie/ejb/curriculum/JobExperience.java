@@ -1,4 +1,4 @@
-package es.nivel36.laie.ejb.curriculum.jobexperience;
+package es.nivel36.laie.ejb.curriculum;
 
 import java.time.LocalDate;
 import java.time.YearMonth;

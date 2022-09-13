@@ -2,7 +2,7 @@ package es.nivel36.laie.ejb.curriculum.export;
 
 import java.util.Set;
 
-import es.nivel36.laie.ejb.curriculum.language.Language;
+import es.nivel36.laie.ejb.curriculum.Language;
 
 public class LanguagesToHtml extends AbstractHtmlPrinter {
 

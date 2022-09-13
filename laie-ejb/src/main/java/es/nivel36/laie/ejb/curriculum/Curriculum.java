@@ -16,10 +16,6 @@ import javax.validation.constraints.NotNull;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
-import es.nivel36.laie.ejb.curriculum.education.Education;
-import es.nivel36.laie.ejb.curriculum.jobexperience.JobExperience;
-import es.nivel36.laie.ejb.curriculum.language.Language;
-import es.nivel36.laie.ejb.curriculum.skill.Skill;
 
 @Entity
 @Table(name = "CURRICULUM")
