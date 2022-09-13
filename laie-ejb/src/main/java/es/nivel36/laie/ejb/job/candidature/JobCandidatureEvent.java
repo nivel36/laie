@@ -33,13 +33,14 @@ public class JobCandidatureEvent extends AbstractEntity implements Event {
 
 	@Field(name = "date", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "date")
-	@Column(name = "date")
+	@Column(name = "DATE")
 	private LocalDateTime date;
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "JOB_CANDIDATURE_ID")
 	private JobCandidature jobCandidature;
 
+	@Column(name = "NOTES", columnDefinition = "TEXT")
 	private String notes;
 
 	@ManyToOne
@@ -49,7 +50,7 @@ public class JobCandidatureEvent extends AbstractEntity implements Event {
 
 	@NotNull
 	@Enumerated(EnumType.STRING)
-	@Column(name = "ROLE", nullable = false, length = 16)
+	@Column(name = "TYPE", nullable = false, length = 16)
 	private JobCandidatureEventType type;
 
 	@ManyToOne

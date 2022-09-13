@@ -16,7 +16,7 @@ import es.nivel36.laie.ejb.core.model.AbstractEntity;
 import es.nivel36.laie.ejb.user.User;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "entityName", "type", "userId", "date" }))
+@Table(name = "ACTION", uniqueConstraints = @UniqueConstraint(columnNames = { "ENTITY_NAME", "TYPE", "USER_ID", "DATE" }))
 public class Action extends AbstractEntity {
 
 	private static final long serialVersionUID = 9068445509149161220L;
@@ -26,29 +26,29 @@ public class Action extends AbstractEntity {
 	}
 
 	@NotNull
-	@Column(nullable = false)
+	@Column(name = "DATE", nullable = false)
 	private LocalDateTime date;
 
 	@NotNull
-	@Column(nullable = false)
+	@Column(name = "ENTITY_ID", nullable = false)
 	private Long entityId;
 
 	@NotNull
-	@Column(nullable = false)
+	@Column(name = "ENTITY_NAME", nullable = false)
 	private String entityName;
 
 	@NotNull
-	@Column(nullable = false)
+	@Column(name = "ENTITY_TITLE", nullable = false)
 	private String entityTitle;
 
 	@Enumerated(EnumType.STRING)
 	@NotNull
-	@Column(nullable = false)
+	@Column(name = "TYPE", nullable = false)
 	private ActionType type;
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "userId", nullable = false)
+	@JoinColumn(name = "USER_ID", nullable = false)
 	private User user;
 
 	public LocalDateTime getDate() {
@@ -86,11 +86,11 @@ public class Action extends AbstractEntity {
 	public void setEntityName(String entityName) {
 		this.entityName = entityName;
 	}
-	
+
 	public void setEntityTitle(String entityTitle) {
 		this.entityTitle = entityTitle;
 	}
-	
+
 	public void setType(ActionType type) {
 		this.type = type;
 	}
