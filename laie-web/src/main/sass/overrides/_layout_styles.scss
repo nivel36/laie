@@ -203,6 +203,15 @@
 			min-height: 2rem;
 		}
 	}
+	
+	.layout-topbar {
+		.topbar-menu-form {
+			float: right;
+		}
+		.layout-menu-button {
+			line-height: normal;
+		}
+	}
 }
 
 @media screen and (max-width: 991px) {
@@ -210,6 +219,14 @@
 		.layout-main {
 			height: $topbarHeight;
 			padding-top: $topbarHeight + 1rem;
+		}
+		.layout-topbar {
+			.topbar-menu-form {
+				float: right;
+			}
+			.layout-menu-button {
+				line-height: normal;
+			}
 		}
 	}
 }

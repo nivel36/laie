@@ -4235,11 +4235,24 @@ a {
     padding: 0;
     min-height: 2rem;
   }
+
+  .layout-topbar .topbar-menu-form {
+    float: right;
+  }
+  .layout-topbar .layout-menu-button {
+    line-height: normal;
+  }
 }
 @media screen and (max-width: 991px) {
   .layout-wrapper .layout-main {
     height: 4rem;
     padding-top: 5rem;
+  }
+  .layout-wrapper .layout-topbar .topbar-menu-form {
+    float: right;
+  }
+  .layout-wrapper .layout-topbar .layout-menu-button {
+    line-height: normal;
   }
 }
 .bookmark {

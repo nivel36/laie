@@ -5,16 +5,18 @@
 	<div class="layout-topbar">
 		<a class="layout-menu-button layout-topbar-icon" href="#"> <i class="pi pi-bars" aria-hidden="true" /></a>
 		<ui:include src="./menu.xhtml" />
-		<h:form>
-			<p:menuButton styleClass="topbar-menu" id="menu-button" value="#{sessionUser.get().fullName}">
-				<p:menuitem value="#{i18n['menu.profile']}" outcome="/user/view.xhtml" icon="pi pi-user">
-					<f:param name="user" value="#{sessionUser.get().id}" />
-				</p:menuitem>
-				<p:menuitem value="#{i18n['menu.meetings']}" outcome="/meeting/search.xhtml" icon="pi pi-calendar" />
-				<p:menuitem value="#{i18n['menu.settings']}" outcome="/config.xhtml" icon="pi pi-cog" />
-				<p:menuitem value="#{i18n['user.logout']}" action="#{sessionUser.logout}" icon="pi pi-sign-out" />
-			</p:menuButton>
-		</h:form>
+		<div class="topbar-menu-form">
+			<h:form>
+				<p:menuButton styleClass="topbar-menu" id="menu-button" value="#{sessionUser.get().fullName}">
+					<p:menuitem value="#{i18n['menu.profile']}" outcome="/user/view.xhtml" icon="pi pi-user">
+						<f:param name="user" value="#{sessionUser.get().id}" />
+					</p:menuitem>
+					<p:menuitem value="#{i18n['menu.meetings']}" outcome="/meeting/search.xhtml" icon="pi pi-calendar" />
+					<p:menuitem value="#{i18n['menu.settings']}" outcome="/config.xhtml" icon="pi pi-cog" />
+					<p:menuitem value="#{i18n['user.logout']}" action="#{sessionUser.logout}" icon="pi pi-sign-out" />
+				</p:menuButton>
+			</h:form>
+		</div>
 	</div>
 
 </ui:composition>
