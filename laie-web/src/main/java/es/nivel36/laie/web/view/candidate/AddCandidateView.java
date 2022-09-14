@@ -1,6 +1,7 @@
 package es.nivel36.laie.web.view.candidate;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -14,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
+import es.nivel36.laie.ejb.candidate.Rating;
 import es.nivel36.laie.ejb.core.tag.Tag;
 import es.nivel36.laie.ejb.user.DuplicateEmailException;
 
@@ -27,6 +29,8 @@ public class AddCandidateView extends AbstractCandidateView {
 
 	private transient @Inject AddCandidatePermission addCandidatePermission;
 
+	private Integer rating;
+
 	@PostConstruct
 	public void init() {
 		logger.trace("New candidate init");
@@ -37,7 +41,7 @@ public class AddCandidateView extends AbstractCandidateView {
 	}
 
 	private void checkAddPermissions() {
-		if(!addCandidatePermission.validate(null)) {
+		if (!addCandidatePermission.validate(null)) {
 			throw new SecurityException();
 		}
 	}
@@ -50,12 +54,29 @@ public class AddCandidateView extends AbstractCandidateView {
 				// interpreta colecciones vacias como null
 				this.candidate.setTags(this.tags.stream().map(Tag::new).collect(Collectors.toSet()));
 			}
+			candidate.setRatings(new HashSet<Rating>());
+			if (this.rating != null && this.rating != 0) {
+				final Rating rating = new Rating();
+				rating.setCandidate(candidate);
+				rating.setUser(this.sessionUser.get());
+				rating.setRating(this.rating);
+				this.candidate.getRatings().add(rating);
+				this.candidate.setRating(this.rating);
+			}
 			this.candidateService.addCandidate(candidate);
 			this.saveImage();
 			Faces.redirect(this.candidateUrl());
 		} catch (final DuplicateEmailException e) {
 			this.addErrorToField("candidateForm:email", "candidate.error.email_exists");
 		}
+	}
+
+	public Integer getRating() {
+		return rating;
+	}
+
+	public void setRating(Integer rating) {
+		this.rating = rating;
 	}
 
 	public void setAddCandidatePermission(final AddCandidatePermission addCandidatePermission) {

@@ -94,7 +94,7 @@
 								<div class="p-col-12 p-sm-6">
 									<div class="input-group p-field">
 										<p:outputLabel id="rating_label" for="rating" value="#{i18n['candidate.rating']}" />
-										<p:rating id="rating" value="#{addCandidateView.candidate.rating}" cancel="false">
+										<p:rating id="rating" value="#{addCandidateView.rating}" cancel="false">
 											<p:ajax event="rate" listener="#{addCandidateView.onrate}" update="" />
 										</p:rating>
 									</div>
