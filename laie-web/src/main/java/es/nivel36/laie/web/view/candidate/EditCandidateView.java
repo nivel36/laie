@@ -29,10 +29,6 @@ public class EditCandidateView extends AbstractCandidateView {
 
 	private transient @Inject EditCandidatePermission editCandidatePermission;
 
-	private transient @Inject RatingService ratingService;
-
-	private Rating oldRating;
-
 	@PostConstruct
 	public void init() {
 		if (this.candidate == null) {
@@ -42,10 +38,6 @@ public class EditCandidateView extends AbstractCandidateView {
 		this.checkEditPermissions();
 		this.initTags();
 		this.candidateImage = this.candidate.getPicture();
-		oldRating = this.ratingService.findRatingOfCandidateByUser(candidate, sessionUser.get());
-		if (oldRating != null) {
-			this.rating = oldRating.getRating();
-		}
 	}
 
 	private void checkEditPermissions() {
@@ -72,18 +64,6 @@ public class EditCandidateView extends AbstractCandidateView {
 			}
 			this.saveImage();
 			this.candidate = this.candidateService.updateCandidate(this.candidate);
-			if (oldRating != null) {
-				if (oldRating.getRating().intValue() != this.rating.intValue()) {
-					this.oldRating.setRating(rating);
-					this.ratingService.updateRating(oldRating);
-				}
-			} else {
-				final Rating newRating = new Rating();
-				newRating.setCandidate(candidate);
-				newRating.setRating(this.rating);
-				newRating.setUser(this.sessionUser.get());
-				this.ratingService.addRating(newRating);
-			}
 			Faces.redirect(this.candidateUrl());
 		} catch (final DuplicateEmailException e) {
 			this.addErrorToField("candidateForm:email", "candidate.error.email_exists");

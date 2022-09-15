@@ -16,14 +16,10 @@ import es.nivel36.laie.ejb.core.model.AbstractEntity;
 import es.nivel36.laie.ejb.user.User;
 
 @Entity
-@Table(name = "ACTION", uniqueConstraints = @UniqueConstraint(columnNames = { "ENTITY_NAME", "TYPE", "USER_ID", "DATE" }))
+@Table(name = "ACTION", uniqueConstraints = @UniqueConstraint(columnNames = { "ENTITY_ID", "TYPE", "USER_ID", "DATE" }))
 public class Action extends AbstractEntity {
 
 	private static final long serialVersionUID = 9068445509149161220L;
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
 
 	@NotNull
 	@Column(name = "DATE", nullable = false)
