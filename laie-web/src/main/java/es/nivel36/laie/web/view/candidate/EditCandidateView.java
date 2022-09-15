@@ -13,8 +13,6 @@ import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.candidate.Rating;
-import es.nivel36.laie.ejb.candidate.RatingService;
 import es.nivel36.laie.ejb.core.tag.Tag;
 import es.nivel36.laie.ejb.user.DuplicateEmailException;
 import es.nivel36.laie.web.core.IllegalPageStateException;
