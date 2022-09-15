@@ -78,17 +78,6 @@ insert into JOB_EXPERIENCE( ID, VERSION, CURRICULUM_ID, COMPANY_NAME, DESCRIPTIO
 
 insert into CLIENT( ID, VERSION, NAME, CIF, OWNER_ID, PHONE_NUMBER, CITY, REGION, DELETED) values (1000, 0, 'Nivel 36', 'A0000000', 500, '935551414', 'Barcelona', 'Barcelona', false);
 
-insert into EXPORT( ID, VERSION, EXPORT_NAME) values (1100, 0, 'USERS');
-insert into EXPORT( ID, VERSION, EXPORT_NAME) values (1101, 0, 'CANDIDATES');
-
-insert into EXPORT_FIELD( ID, VERSION, EXPORT_ID, FIELD_NAME, SORT_ORDER, LITERAL_ID, DISABLED, ACQUIRER_CLASS) values (1200, 0, 1100, 'NAME',      1, 'user.NAME',     false, 'es.nivel36.laie.ejb.export.acquirer.impl.UserExcelAcquirer$SurNAMEAcquirer');
-insert into EXPORT_FIELD( ID, VERSION, EXPORT_ID, FIELD_NAME, SORT_ORDER, LITERAL_ID, DISABLED, ACQUIRER_CLASS) values (1201, 0, 1100, 'SURNAME',   2, 'user.surNAME',  false, 'es.nivel36.laie.ejb.export.acquirer.impl.UserExcelAcquirer$SurNAMEAcquirer');
-insert into EXPORT_FIELD( ID, VERSION, EXPORT_ID, FIELD_NAME, SORT_ORDER, LITERAL_ID, DISABLED, ACQUIRER_CLASS) values (1202, 0, 1100, 'MAIL',      3, 'user.email',    false, 'es.nivel36.laie.ejb.export.acquirer.impl.UserExcelAcquirer$EmailAcquirer');
-insert into EXPORT_FIELD( ID, VERSION, EXPORT_ID, FIELD_NAME, SORT_ORDER, LITERAL_ID, DISABLED, ACQUIRER_CLASS) values (1203, 0, 1100, 'DISABLED', -1, 'user.disabled', true , 'es.nivel36.laie.ejb.export.acquirer.impl.UserExcelAcquirer$DummyAcquirer');
-
-insert into EXPORT_DEFINITION (ID, VERSION, EXPORT_ID, EXPORT_FIELD_ID, SORT_ORDER) values (1300, 0, 1100, 1201, 1);
-insert into EXPORT_DEFINITION (ID, VERSION, EXPORT_ID, EXPORT_FIELD_ID, SORT_ORDER) values (1301, 0, 1100, 1202, 2);
-
 insert into DOCUMENT_TEMPLATE (ID, VERSION, LANGUAGE, NAME, TITLE, TEXT) values (1500, 0, 'es', 'gdpr', 'Regulación general de protección de datos', '<p>Barcelona a %date%</p><br/><p>Inserta aquí el documento de GDPR de la empresa en castellano</p><p> </p><p> </p><p> </p><p align="center"><b>Firma</b></p>');
 insert into DOCUMENT_TEMPLATE (ID, VERSION, LANGUAGE, NAME, TITLE, TEXT) values (1501, 0, 'ca', 'gdpr', 'Regulació general de protecció de dades', '<p>Barcelona a %date%</p><br/><p>Insereix aquí el documento de GDPR de la empresa en català</p><p> </p><p> </p><p> </p><p align="center"><b>Signatura</b></p>');
 

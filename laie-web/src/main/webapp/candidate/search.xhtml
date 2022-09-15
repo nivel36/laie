@@ -19,8 +19,6 @@
 					<div class="buttons">
 						<p:button value="#{i18n['candidate.new_candidate']}" outcome="/candidate/add.xhtml" styleClass="ui-button-success ui-button-outlined"
 							rendered="#{searchCandidateView.insertable}" />
-						<p:commandButton value="#{i18n['action.export']}" action="#{searchCandidateView.export}" icon="pi pi-file-excel"
-							styleClass="ui-button-info ui-button-outlined" />
 					</div>
 				</div>
 				<p:dataTable var="candidate" id="candidates" value="#{searchCandidateView.candidates}" emptyMessage="#{i18n['candidate.no_candidates_found']}"

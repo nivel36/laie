@@ -3,12 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>es.nivel36</groupId>
 	<artifactId>laie</artifactId>
-	<version>0.9.9-SNAPSHOT</version>
+	<version>0.9.10-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>laie</name>
 	<modules>
         <module>nivel36-login</module>
-		<module>laie-commons-excel</module>
 		<module>laie-ear</module>
 		<module>laie-ejb</module>
 		<module>laie-web</module>
@@ -83,36 +82,11 @@
 				<version>${omnifaces.version}</version>
 			</dependency>
 
-			<!-- Apache POI -->
-			<dependency>
-				<groupId>org.apache.poi</groupId>
-				<artifactId>poi</artifactId>
-				<version>${poi.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.apache.poi</groupId>
-				<artifactId>poi-ooxml</artifactId>
-				<version>${poi.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.apache.poi</groupId>
-				<artifactId>poi-ooxml-full</artifactId>
-				<version>${poi.version}</version>
-			</dependency>
-
 			<!-- iText -->
 			<dependency>
 				<groupId>com.itextpdf</groupId>
 				<artifactId>html2pdf</artifactId>
 				<version>${html2pdf.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>es.nivel36</groupId>
-				<artifactId>laie-commons-excel</artifactId>
-				<version>${laie.version}</version>
 			</dependency>
 
 			<dependency>
