@@ -19,7 +19,7 @@ import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserService;
 import es.nivel36.laie.web.core.view.AbstractView;
-import es.nivel36.laie.web.view.action.UserActionsLazyDataModel;
+import es.nivel36.laie.web.view.action.ActionsLazyDataModel;
 import es.nivel36.laie.ejb.core.model.Page;
 
 @Named
@@ -44,17 +44,13 @@ public class ViewUserView extends AbstractView {
 
 	private boolean loggedUser;
 
-	@Inject
-	private UserActionsLazyDataModel actions;
+	private @Inject ActionsLazyDataModel actions;
 
-	@Inject
-	private transient MeetingService meetingService;
+	private transient @Inject MeetingService meetingService;
 
-	@Inject
-	private transient UserService userService;
+	private transient @Inject UserService userService;
 
-	@Inject
-	private transient JobOfferService jobOfferService;
+	private transient @Inject JobOfferService jobOfferService;
 
 	@PostConstruct
 	public void init() {
@@ -64,6 +60,7 @@ public class ViewUserView extends AbstractView {
 		this.meetings = this.meetingService.findPlannedMeetings(this.user, Page.ALL_RESULTS);
 		this.loggedUser = this.sessionUser.get().equals(this.user);
 		this.editable = this.sessionUser.isAdmin() || loggedUser;
+		actions.setUser(user);
 	}
 
 	public static String getUrl(long userId) {
@@ -74,7 +71,7 @@ public class ViewUserView extends AbstractView {
 		return loggedUser;
 	}
 
-	public UserActionsLazyDataModel getActions() {
+	public ActionsLazyDataModel getActions() {
 		return actions;
 	}
 
