@@ -58,7 +58,6 @@ public class DocumentTemplateService {
 		Objects.requireNonNull(language);
 		logger.debug("Find document by name {} and langauge {}", name, language);
 		return this.documentTemplateDao.findDocumentTemplateByName(name, language);
-		
 	}
 
 	private File htmlConverter(final String text, final File pdfDest, final ConverterProperties converterProperties) {

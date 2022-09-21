@@ -160,6 +160,10 @@ public class CurriculumView extends AbstractView {
 	public void editJobExperience(final int index) {
 		this.editJobExperienceIndex = Integer.valueOf(index);
 	}
+	
+	public void cancelEditJobExperience(final JobExperience jobExperience) {
+		this.editJobExperienceIndex = null;
+	}
 
 	public List<JobExperience> getJobExperiences() {
 		return this.jobExperiences;
@@ -198,6 +202,10 @@ public class CurriculumView extends AbstractView {
 	public void editEducation(final int index) {
 		this.editEducationIndex = Integer.valueOf(index);
 	}
+	
+	public void cancelEditEducation() {
+		this.editEducationIndex = null;
+	}
 
 	public Integer getEditEducationIndex() {
 		return editEducationIndex;
@@ -234,6 +242,10 @@ public class CurriculumView extends AbstractView {
 
 	public void editLanguage(final int index) {
 		this.editLanguageIndex = Integer.valueOf(index);
+	}
+	
+	public void cancelEditLanguage() {
+		this.editLanguageIndex = null;
 	}
 
 	public Integer getEditLanguageIndex() {
@@ -272,6 +284,10 @@ public class CurriculumView extends AbstractView {
 
 	public void editSkill() {
 		this.editSkills = true;
+	}
+	
+	public void cancelEditSkills() {
+		this.editSkills = false;
 	}
 
 	public boolean isEditSkills() {
