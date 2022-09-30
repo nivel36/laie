@@ -40,27 +40,31 @@
 
 					<p:column>
 						<p:commandButton icon="pi pi-eye"
-							onclick="$(PrimeFaces.escapeClientId('#{cc.clientId}:detail')).css('display', 'block');$(PrimeFaces.escapeClientId('#{cc.clientId}:table')).css('display', 'none')" />
+							onclick="$(PrimeFaces.escapeClientId('#{cc.clientId}:detail:#{event.id}')).css('display', 'block');$(PrimeFaces.escapeClientId('#{cc.clientId}:table')).css('display', 'none')" />
 					</p:column>
 				</p:dataTable>
 				<h:panelGroup id="children" styleClass="buttons">
 					<composite:insertChildren />
 				</h:panelGroup>
 			</div>
-			<div id="#{cc.clientId}:detail" style="display: none">
+			<div id="#{cc.clientId}:detail">
 				<ui:repeat var="event" value="#{cc.attrs.value}">
-					<div id="#{cc.clientId}:detail:#{event.id}">
-						<cc:outputText label="#{i18n['event.candidate']}" value="#{event.jobCandidature.candidate.fullName}" />
-						<cc:outputText label="#{i18n['event.user']}" value="#{event.user.fullName}" />
+					<div id="#{cc.clientId}:detail:#{event.id}" style="display: none">
+						<cc:outputLink label="#{i18n['event.candidate']}" value="#{event.jobCandidature.candidate.fullName}" outcome="/candidate/view">
+							<f:param name="candidate" value="#{event.jobCandidature.candidate.id}" />
+						</cc:outputLink>
+						<cc:outputLink label="#{i18n['event.user']}" value="#{event.user.fullName}" outcome="/user/view">
+							<f:param name="user" value="#{event.user.id}" />
+						</cc:outputLink>
 						<cc:outputText label="#{i18n['event.state']}" value="#{i18n['job_candidature_state.'.concat(event.state)]}" />
 						<cc:outputText label="#{i18n['event.type']}" value="#{i18n['job_candidature_event.'.concat(event.type)]}" />
 						<cc:outputText label="#{i18n['event.date']}" value="#{event.date}">
-							<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" for="text" />
+							<f:convertDateTime type="localDate" pattern="dd/MM/yyyy HH:mm:ss" for="text" />
 						</cc:outputText>
 						<cc:outputText label="#{i18n['event.notes']}" value="#{event.notes}" />
 						<div class="form-buttons">
 							<p:commandButton icon="pi pi-times"
-								onclick="$(PrimeFaces.escapeClientId('#{cc.clientId}:detail')).css('display', 'none');$(PrimeFaces.escapeClientId('#{cc.clientId}:table')).css('display', 'block')" />
+								onclick="$(PrimeFaces.escapeClientId('#{cc.clientId}:detail:#{event.id}')).css('display', 'none');$(PrimeFaces.escapeClientId('#{cc.clientId}:table')).css('display', 'block')" />
 						</div>
 					</div>
 
