@@ -93,7 +93,7 @@ insert into JOB_OFFER_EVENT(ID, VERSION, DATE, JOB_OFFER_ID, STATE, TYPE, USER_I
 insert into JOB_OFFER_EVENT(ID, VERSION, DATE, JOB_OFFER_ID, STATE, TYPE, USER_ID) values (1702, 1, (TO_DATE('17/12/2021 20:22:55', 'DD/MM/YYYY HH:MI:SS')), 1601, 'OPENED', 'MANUAL_EVENT', 500);
 insert into JOB_OFFER_EVENT(ID, VERSION, DATE, JOB_OFFER_ID, STATE, TYPE, USER_ID) values (1701, 1, (TO_DATE('17/12/2021 20:05:12', 'DD/MM/YYYY HH:MI:SS')), 1600, 'CREATED', 'MANUAL_EVENT', 500);
 
-insert into JOB_CANDIDATURE(ID, VERSION, CANDIDATE_ID, JOB_OFFER_ID, JOB_CANDIDATURE_STATE_ID) values (1710, 1, 510, 1600, 10);
+insert into JOB_CANDIDATURE(ID, VERSION, CANDIDATE_ID, JOB_OFFER_ID, JOB_CANDIDATURE_STATE_ID) values (1710, 1, 510, 1600, 11);
 
 insert into JOB_CANDIDATURE_EVENT(ID, VERSION, DATE, JOB_CANDIDATURE_ID, NOTES, JOB_CANDIDATURE_STATE_ID, TYPE, USER_ID) values (1720, 1, (TO_DATE('17/12/2021', 'DD/MM/YYYY')), 1710, 'El candidato parece realmente interesado en el trabajo', 11, 'PHONE_CALL', 500)
 
@@ -103,7 +103,7 @@ insert into ACTION(ID, VERSION, DATE, ENTITY_ID, ENTITY_NAME, ENTITY_TITLE, TYPE
 insert into ACTION(ID, VERSION, DATE, ENTITY_ID, ENTITY_NAME, ENTITY_TITLE, TYPE, USER_ID) values (1733, 1, (TO_DATE('17/12/2021 20:12:24', 'DD/MM/YYYY HH:MI:SS')), 1601, 'JOB_OFFER', 'Arquitecto Java', 'CREATE', 500)
 insert into ACTION(ID, VERSION, DATE, ENTITY_ID, ENTITY_NAME, ENTITY_TITLE, TYPE, USER_ID) values (1734, 1, (TO_DATE('17/12/2021 20:22:55', 'DD/MM/YYYY HH:MI:SS')), 1601, 'JOB_OFFER', 'Arquitecto Java', 'UPDATE', 500)
 
-insert into MEETING(ID, VERSION, DATE_PLANNED, DURATION, JOB_OFFER_ID, MEETING_TYPE, OWNER_ID, DESCRIPTION, TITLE) values (600, 1, (TO_DATE('17/12/2022', 'DD/MM/YYYY')), '30', 1600, 'PHONE', 500, 'Hay que valorar si el candidato es adecuado para el puesto de arquitecto', 'Reunión para candidatura')
+insert into MEETING(ID, VERSION, DATE_PLANNED, DURATION, JOB_OFFER_ID, MEETING_TYPE, OWNER_ID, DESCRIPTION, TITLE) values (600, 1, (TO_DATE('17/12/2022 8:30', 'DD/MM/YYYY HH:MI')), '30', 1600, 'PHONE', 500, 'Hay que valorar si el candidato es adecuado para el puesto de arquitecto', 'Reunión para candidatura')
 
 insert into EMAILS(MEETING_ID, EMAIL) values (600, 'abel.ferrer.jimenez@gmail.com');
 insert into EMAILS(MEETING_ID, EMAIL) values (600, 'aferrer@gmail.com');

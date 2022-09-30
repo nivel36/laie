@@ -274,6 +274,7 @@
 			SELECT m 
 			FROM Meeting m 
 			WHERE m.jobOffer = :jobOffer
+			ORDER BY m.datePlanned ASC
 		]]></query>
 	</named-query>
 
@@ -283,6 +284,7 @@
 			FROM Meeting m
 			WHERE m.owner = :owner
 			AND m.datePlanned >= :now
+			ORDER BY m.datePlanned ASC
 		]]></query>
 	</named-query>
 
@@ -292,6 +294,7 @@
 			FROM Meeting m
 			WHERE m.owner = :owner
 			AND m.datePlanned < :now
+			ORDER BY m.datePlanned ASC
 		]]></query>
 	</named-query>
 
@@ -300,6 +303,7 @@
 			SELECT m 
 			FROM Meeting m
 			WHERE :email MEMBER OF m.attendeesEmails
+			ORDER BY m.datePlanned ASC
 		]]></query>
 	</named-query>
 	

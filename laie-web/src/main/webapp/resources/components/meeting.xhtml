@@ -24,13 +24,13 @@
 					</span> 
 				<div class="meeting-detail">	
 					<span class="meeting-detail-data meeting-detail-time"> 
-						<i class="pi pi-calendar" aria-hidden="true" />
+						<i class="pi pi-clock" aria-hidden="true" />
 						<h:outputText value="#{cc.attrs.value.datePlanned}">
-							<f:convertDateTime type="localDateTime" pattern="HH:mm" />
+							<f:convertDateTime type="localTime" pattern="H:mm" />
 						</h:outputText>
 					</span> 
 					<span class="meeting-detail-data meeting-detail-day_of_week">
-						<i class="pi pi-clock" aria-hidden="true" />
+						<i class="pi pi-calendar" aria-hidden="true" />
 						<h:outputText value="#{cc.attrs.value.datePlanned}">
 							<f:convertDateTime type="localDate" locale="#{cc.attrs.locale}" pattern="EEEE" />
 						</h:outputText>
