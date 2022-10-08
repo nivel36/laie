@@ -9,6 +9,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.security.enterprise.AuthenticationStatus;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpServletRequest;
 
 import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
@@ -35,6 +37,8 @@ public class LoginView extends AbstractView {
 
 	private transient @Inject LoginService loginService;
 
+	private String forwardURL;
+
 	@PostConstruct
 	public void init() {
 		logger.trace("Login init");
@@ -43,6 +47,13 @@ public class LoginView extends AbstractView {
 			logger.warn("User {} alredy logged", remoteUser);
 			this.gotoIndex();
 		}
+		if (forwardURL == null) {
+			HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
+			String requestURI = (String) request.getAttribute(RequestDispatcher.FORWARD_REQUEST_URI);
+			String queryString = (String) request.getAttribute(RequestDispatcher.FORWARD_QUERY_STRING);
+			forwardURL = (queryString == null) ? requestURI : (requestURI + "?" + queryString);
+		}
+
 		this.setDefaultLocale();
 	}
 
@@ -62,7 +73,10 @@ public class LoginView extends AbstractView {
 				role = "laie.user";
 			}
 			this.sessionUser.load(this.username, role);
-			this.gotoIndex();
+			if(forwardURL == null) {
+				Faces.redirect(es.nivel36.laie.web.view.IndexView.URL);
+			}
+			Faces.redirect(forwardURL);
 		}
 	}
 

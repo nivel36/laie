@@ -3,13 +3,13 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" lang="es">
 
 <h:head>
-    <f:facet name="first">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-    </f:facet>
-    <title>Nivel36 - Login</title>
+	<f:facet name="first">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+	</f:facet>
+	<title>Nivel36 - Login</title>
 </h:head>
 
 <h:body styleClass="login-body" onload="document.body.style.opacity='1'">
@@ -44,17 +44,15 @@
 					</div>
 
 					<div class="p-col-12 p-sm-6 p-md-6">
-						<p:commandButton action="#{loginView.login}"
-							value="${i18n['login.enter']}" icon="fa fa-user"
-							update="@form growl" />
+						<p:commandButton action="#{loginView.login}" value="${i18n['login.enter']}" icon="fa fa-user" ajax="false" />
 					</div>
 				</div>
 			</div>
 		</div>
 	</h:form>
 	<h:outputStylesheet name="css/primeicons.css" library="roma-layout" />
-    <h:outputStylesheet name="css/primeflex.min.css" library="roma-layout" />
-    <h:outputStylesheet name="css/layout.css" library="roma-layout" />
+	<h:outputStylesheet name="css/primeflex.min.css" library="roma-layout" />
+	<h:outputStylesheet name="css/layout.css" library="roma-layout" />
 </h:body>
 
 </html>

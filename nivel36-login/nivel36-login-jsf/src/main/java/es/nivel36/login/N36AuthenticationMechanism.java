@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 @AutoApplySession
 @RememberMe(cookieSecureOnly = false, // Remove this when login is served over HTTPS.
 		cookieMaxAgeSeconds = 60 * 60 * 24 * 14, isRememberMeExpression = "#{self.isRememberMe(httpMessageContext)}")
-@LoginToContinue(loginPage = N36AuthenticationMechanism.LOGIN_URL, errorPage = "", useForwardToLogin = false)
+@LoginToContinue(loginPage = N36AuthenticationMechanism.LOGIN_URL, errorPage = "", useForwardToLogin = true)
 @RequestScoped
 public class N36AuthenticationMechanism implements HttpAuthenticationMechanism {
 
