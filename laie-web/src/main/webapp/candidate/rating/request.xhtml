@@ -16,100 +16,18 @@
 				<div class="p-grid">
 					<div class="p-col-12 p-md-6">
 						<div class="form-card ui-fluid">
-							<div class="p-grid p-justify-center">
-								<div class="p-col-3">
-									<div class="p-field">
-										<cc:inputAvatar id="candidate_image" value="#{addCandidateView.candidateImage.path}" fileUploadListener="#{addCandidateView.uploadImage}"
-											deleteImage="#{addCandidateView.deleteImage}" />
-									</div>
-								</div>
-							</div>
-							<h5>#{i18n['candidate.personal_information']}</h5>
+							<h5>#{i18n['rating.request']}</h5>
 							<div class="p-grid p-formgrid">
 								<div class="p-col-12 p-sm-6">
-									<g:input id="name" label="#{i18n['candidate.name']}" value="#{addCandidateView.candidate.name}" required="true" />
-								</div>
-								<div class="p-col-12 p-sm-6">
-									<g:input id="surname" label="#{i18n['candidate.surname']}" value="#{addCandidateView.candidate.surname}" required="true" />
-								</div>
-								<div class="p-col-12 p-sm-6">
-									<g:input id="city" label="#{i18n['candidate.city']}" value="#{addCandidateView.candidate.address.city}" />
-								</div>
-								<div class="p-col-12 p-sm-6">
-									<g:input id="state" label="#{i18n['candidate.state']}" value="#{addCandidateView.candidate.address.region}" />
-								</div>
-								<div class="p-col-12 p-sm-6">
-									<g:input id="born_date" label="#{i18n['candidate.bornDate']}" value="#{addCandidateView.candidate.bornDate}" yearRange="c-100:c-15"
-										type="calendar" />
-								</div>
-							</div>
-						</div>
-
-						<div class="form-card ui-fluid">
-							<h5>#{i18n['candidate.contact_information']}</h5>
-							<div class="p-grid p-formgrid">
-								<div class="p-col-12 p-sm-6">
-									<g:input id="email" label="#{i18n['candidate.email']}" value="#{addCandidateView.candidate.email}" required="true" />
-								</div>
-								<div class="p-col-12 p-sm-6">
-									<g:input id="phone_number" label="#{i18n['candidate.phone_number']}" value="#{addCandidateView.candidate.phoneNumber}" styleClass="small" />
-								</div>
-								<div class="p-col-12 p-sm-6">
-									<g:input id="linkedin" label="#{i18n['candidate.linkedin']}" value="#{addCandidateView.candidate.linkedinProfileUrl}" />
-								</div>
-								<div class="p-col-12 p-sm-6">
-									<g:input id="skype" label="#{i18n['candidate.skype']}" value="#{addCandidateView.candidate.skype}" />
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="p-col-12 p-md-6">
-						<div class="form-card ui-fluid">
-							<h5>#{i18n['candidate.job_information']}</h5>
-							<div class="p-grid p-formgrid">
-								<div class="p-col-12 p-sm-6">
-									<g:input id="jobProfile" label="#{i18n['candidate.jobProfile']}" value="#{addCandidateView.candidate.jobProfile}" required="true" />
-								</div>
-								<div class="p-col-12 p-sm-6"></div>
-								<div class="p-col-12 p-sm-6">
-									<g:input id="salary" label="#{i18n['candidate.salary']}" value="#{addCandidateView.candidate.salary}" type="money" />
-								</div>
-								<div class="p-col-12 p-sm-6">
-									<g:input id="expected_salary" label="#{i18n['candidate.expected_salary']}" value="#{addCandidateView.candidate.expectedSalary}" type="money" />
-								</div>
-							</div>
-						</div>
-
-						<div class="form-card ui-fluid">
-							<h5>#{i18n['candidate.other_data']}</h5>
-							<div class="p-grid p-formgrid">
-								<div class="p-col-12 p-sm-6">
-									<cc:autocomplete id="owner" label="#{i18n['client.owner']}" value="#{addCandidateView.candidate.owner}"
-										completeMethod="#{addCandidateView.queryOwner}" required="true">
+									<cc:autocomplete id="requestTo" label="#{i18n['rating.request_to']}" value="#{addRatingRequest.requestTo}"
+										completeMethod="#{addRatingRequest.query}">
 										<p:column styleClass="user-select image">
-											<cc:person name="#{var.fullName}" path="#{var.picture.path}" />
+											<cc:person name="#{var.fullName}" path="#{var.picture.path}" description="#{var.email}" />
 										</p:column>
 									</cc:autocomplete>
 								</div>
-								<div class="p-col-12 p-sm-6">
-									<div class="input-group p-field">
-										<p:outputLabel id="rating_label" for="rating" value="#{i18n['candidate.rating']}" />
-										<p:rating id="rating" value="#{addCandidateView.candidate.rating}" cancel="false">
-											<p:ajax event="rate" listener="#{addCandidateView.onrate}" update="" />
-										</p:rating>
-									</div>
-								</div>
-								<div class="p-col-12 p-sm-6">
-									<g:input type="selectOneMenu" label="#{i18n['candidate.origin']}" value="#{addCandidateView.candidate.origin}" other="true">
-									<f:selectItem itemLabel="" itemValue="#{null}" noSelectionOption="true" />
-										<f:selectItems value="#{origins.list}" var="origin" itemValue="#{origin}" itemLabel="#{i18n[origin.code]}" />
-									</g:input>
-								</div>
 								<div class="p-col-12">
-									<div class="input-group p-field">
-										<p:outputLabel id="tags_label" for="tags" value="#{i18n['candidate.tags']}" />
-										<p:chips id="tags" value="#{addCandidateView.tags}" required="#{required}" completeMethod="#{addCandidateView.queryTags}" />
-									</div>
+									<g:input id="notes" type="textarea" label="#{i18n['rating.request_notes']}" value="#{addRatingRequest.notes}" />
 								</div>
 							</div>
 						</div>
@@ -118,7 +36,7 @@
 					<div class="p-col-12">
 						<div class="form-buttons">
 							<p:button value="#{i18n['action.cancel']}" outcome="/candidate/search.xhtml" styleClass="ui-button-secondary ui-button-outlined" />
-							<p:commandButton value="#{i18n['action.save']}" action="#{addCandidateView.save}" update="@form growl"
+							<p:commandButton value="#{i18n['action.send']}" action="#{addRatingRequest.send}" update="@form growl"
 								styleClass="ui-button-success ui-button-outlined" process="@form" />
 						</div>
 					</div>
