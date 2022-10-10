@@ -18,7 +18,7 @@
 			<h5>#{cc.attrs.title}</h5>
 			<div class="panel-content-data">
 				<ui:repeat var="meeting" value="#{cc.attrs.value}" rendered="#{not empty cc.attrs.value}">
-					<h:link outcome="meeting/edit.xhtml" style="display:block;">
+					<h:link outcome="/meeting/edit.xhtml" style="display:block;">
 						<f:param name="meeting" value="#{meeting.id}" />
 						<cc:meeting value="#{meeting}" />
 					</h:link>
