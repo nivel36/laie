@@ -35,7 +35,9 @@
 
 					<div class="p-col-12">
 						<div class="form-buttons">
-							<p:button value="#{i18n['action.cancel']}" outcome="/candidate/search.xhtml" styleClass="ui-button-secondary ui-button-outlined" />
+							<p:button value="#{i18n['action.cancel']}" outcome="/candidate/view.xhtml" styleClass="ui-button-secondary ui-button-outlined">
+								<f:param name="candidate" value="#{addRatingRequest.candidate.id}" />
+							</p:button>
 							<p:commandButton value="#{i18n['action.send']}" action="#{addRatingRequest.send}" update="@form growl"
 								styleClass="ui-button-success ui-button-outlined" process="@form" />
 						</div>
