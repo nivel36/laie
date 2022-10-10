@@ -85,7 +85,7 @@
 					<div class="p-col-12">
 						<div class="form-buttons">
 							<p:button value="#{i18n['action.cancel']}" outcome="/index.xhtml" styleClass="ui-button-secondary ui-button-outlined" />
-							<p:button value="#{i18n['action.delete']}" action="#{editMeetingView.delete}" styleClass="ui-button-warning ui-button-outlined" />
+							<p:commandButton value="#{i18n['action.delete']}" action="#{editMeetingView.delete}" styleClass="ui-button-warning ui-button-outlined" />
 							<p:commandButton value="#{i18n['action.save']}" action="#{editMeetingView.save}" update="@form" styleClass="ui-button-success ui-button-outlined" />
 						</div>
 					</div>

@@ -18,7 +18,10 @@
 			<h5>#{cc.attrs.title}</h5>
 			<div class="panel-content-data">
 				<ui:repeat var="meeting" value="#{cc.attrs.value}" rendered="#{not empty cc.attrs.value}">
-					<cc:meeting value="#{meeting}" />
+					<h:link outcome="meeting/edit.xhtml" style="display:block;">
+						<f:param name="meeting" value="#{meeting.id}" />
+						<cc:meeting value="#{meeting}" />
+					</h:link>
 				</ui:repeat>
 				<h:panelGroup class="meetings-empty-message" rendered="#{empty cc.attrs.value}">
 					<h:outputText value="#{cc.attrs.emptyMessage}" />

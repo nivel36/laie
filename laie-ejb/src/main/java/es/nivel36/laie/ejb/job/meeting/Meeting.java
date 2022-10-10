@@ -12,6 +12,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -30,7 +31,7 @@ public class Meeting extends AbstractEntity implements Ownerable {
 
 	private static final long serialVersionUID = -8068167269155086050L;
 
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "EMAILS", joinColumns = @JoinColumn(name = "MEETING_ID"))
 	@Column(name = "EMAIL")
 	private Set<String> attendeesEmails = new HashSet<>();

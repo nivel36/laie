@@ -1,6 +1,7 @@
 .meeting {
 	display: flex;
 	margin-bottom: 1rem;
+	color: $textColor;
 	.meeting-date {
 		display: flex;
 		flex-direction: column;

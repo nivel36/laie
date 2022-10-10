@@ -10,35 +10,32 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<h:link outcome="meeting/edit.xhtml" style="display:block;">
-			<f:param name="meeting" value="#{cc.attrs.value.id}" />
-			<div id="#{cc.clientId}" class="meeting #{cc.attrs.styleClass}">
-				<div class="meeting-date">
-					<span class="meeting-date-day"><h:outputText value="#{cc.attrs.value.datePlanned}">
-							<f:convertDateTime type="localDate" locale="#{cc.attrs.locale}" pattern="dd" />
-						</h:outputText></span> <span class="meeting-date-month"><h:outputText value="#{cc.attrs.value.datePlanned}">
-							<f:convertDateTime type="localDate" locale="#{cc.attrs.locale}" pattern="MMM" />
-						</h:outputText></span>
-				</div>
-				<div class="meeting-content">
-					<span class="meeting-title"> #{cc.attrs.value.title} </span>
-					<div class="meeting-detail">
-						<span class="meeting-detail-data meeting-detail-time"> <i class="pi pi-clock" aria-hidden="true" /> <h:outputText
-								value="#{cc.attrs.value.datePlanned}">
-								<f:convertDateTime type="localTime" pattern="H:mm" />
-							</h:outputText>
-						</span> <span class="meeting-detail-data meeting-detail-day_of_week"> <i class="pi pi-calendar" aria-hidden="true" /> <h:outputText
-								value="#{cc.attrs.value.datePlanned}">
-								<f:convertDateTime type="localDate" locale="#{cc.attrs.locale}" pattern="EEEE" />
-							</h:outputText>
-						</span>
-						<h:panelGroup styleClass="meeting-detail-data meeting-detail-location" rendered="#{not empty cc.attrs.value.location}">
-							<i class="pi pi-map-marker" aria-hidden="true" />#{cc.attrs.value.location}
-					</h:panelGroup>
-					</div>
-					<span class="meeting-description"> #{cc.attrs.value.description} </span>
-				</div>
+		<div id="#{cc.clientId}" class="meeting #{cc.attrs.styleClass}">
+			<div class="meeting-date">
+				<span class="meeting-date-day"><h:outputText value="#{cc.attrs.value.datePlanned}">
+						<f:convertDateTime type="localDate" locale="#{cc.attrs.locale}" pattern="dd" />
+					</h:outputText></span> <span class="meeting-date-month"><h:outputText value="#{cc.attrs.value.datePlanned}">
+						<f:convertDateTime type="localDate" locale="#{cc.attrs.locale}" pattern="MMM" />
+					</h:outputText></span>
 			</div>
-		</h:link>
+			<div class="meeting-content">
+				<span class="meeting-title"> #{cc.attrs.value.title} </span>
+				<div class="meeting-detail">
+					<span class="meeting-detail-data meeting-detail-time"> <i class="pi pi-clock" aria-hidden="true" /> <h:outputText
+							value="#{cc.attrs.value.datePlanned}">
+							<f:convertDateTime type="localTime" pattern="H:mm" />
+						</h:outputText>
+					</span> <span class="meeting-detail-data meeting-detail-day_of_week"> <i class="pi pi-calendar" aria-hidden="true" /> <h:outputText
+							value="#{cc.attrs.value.datePlanned}">
+							<f:convertDateTime type="localDate" locale="#{cc.attrs.locale}" pattern="EEEE" />
+						</h:outputText>
+					</span>
+					<h:panelGroup styleClass="meeting-detail-data meeting-detail-location" rendered="#{not empty cc.attrs.value.location}">
+						<i class="pi pi-map-marker" aria-hidden="true" />#{cc.attrs.value.location}
+					</h:panelGroup>
+				</div>
+				<span class="meeting-description"> #{cc.attrs.value.description} </span>
+			</div>
+		</div>
 	</composite:implementation>
 </ui:component>
