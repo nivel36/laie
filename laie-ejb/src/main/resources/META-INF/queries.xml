@@ -117,8 +117,16 @@
 			WHERE s.name = :name
 		]]></query>
 	</named-query>
-
+	
 	<named-query name="DocumentTemplate.findByName">
+		<query><![CDATA[
+			SELECT d 
+			FROM DocumentTemplate d 
+			WHERE d.name = :name
+		]]></query>
+	</named-query>
+
+	<named-query name="DocumentTemplate.findByNameAndLanguage">
 		<query><![CDATA[
 			SELECT d 
 			FROM DocumentTemplate d 

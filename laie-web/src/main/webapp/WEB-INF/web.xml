@@ -60,6 +60,11 @@
 	</context-param>
 	
 	<context-param>
+		<param-name>javax.faces.FACELETS_LIBRARIES</param-name>
+		<param-value>/WEB-INF/laie.taglib.xml</param-value>
+	</context-param>
+	
+	<context-param>
 		<param-name>primefaces.THEME</param-name>
 		<param-value>roma</param-value>
 	</context-param>

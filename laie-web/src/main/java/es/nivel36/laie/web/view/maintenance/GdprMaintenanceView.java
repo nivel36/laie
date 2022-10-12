@@ -1,9 +1,9 @@
 package es.nivel36.laie.web.view.maintenance;
 
-import java.io.File;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
@@ -41,9 +41,9 @@ public class GdprMaintenanceView extends AbstractView {
 		final Locale locale = this.sessionUser.getLocale();
 		tags.add(new DateTag(locale));
 
-		final File file = this.documentService.export(this.document, tags);
-		try (InputStream is = Files.newInputStream(file.toPath())) {
-			Faces.sendFile(is, "Gdpr_" + this.document.getLanguage() + ".pdf", true);
+		final ByteArrayOutputStream outputStream = this.documentService.export(this.document, tags);
+		try (final InputStream is = new ByteArrayInputStream(outputStream.toByteArray())) {
+			Faces.sendFile(is, this.document.toString() + ".pdf", true);
 		}
 	}
 

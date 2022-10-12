@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Lob;
+import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
@@ -12,26 +12,28 @@ import javax.validation.constraints.NotNull;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
 
 @Entity
-@Table(name = "DOCUMENT_TEMPLATE", uniqueConstraints = { @UniqueConstraint(columnNames = { "name", "language" }) })
+@Table(name = "DOCUMENT_TEMPLATE", //
+		uniqueConstraints = {
+				@UniqueConstraint(name = "UQ_DOCUMENT_TEMPLATE_NAME_LANGUAGE", columnNames = { "NAME", "LANGUAGE" }) }, //
+		indexes = { @Index(name = "UX_DOCUMENT_TEMPLATE_NAME_LANGUAGE", columnList = "NAME, LANGUAGE", unique = true) })
 public class DocumentTemplate extends AbstractEntity {
 
 	private static final long serialVersionUID = 5175582851805624309L;
 
 	@NotNull
-	@Column(nullable = false)
+	@Column(name = "LANGUAGE", nullable = false)
 	private String language;
 
 	@NotNull
-	@Column(nullable = false)
+	@Column(name = "NAME", nullable = false)
 	private String name;
 
-	@Lob
 	@NotNull
-	@Column(nullable = false)
+	@Column(name = "TEXT", columnDefinition = "TEXT", nullable = false)
 	private String text;
 
 	@NotNull
-	@Column(nullable = false)
+	@Column(name = "TITLE", nullable = false)
 	private String title;
 
 	public String getLanguage() {
@@ -49,7 +51,7 @@ public class DocumentTemplate extends AbstractEntity {
 	public String getTitle() {
 		return this.title;
 	}
-	
+
 	public void setLanguage(final String language) {
 		this.language = language;
 	}
@@ -65,7 +67,7 @@ public class DocumentTemplate extends AbstractEntity {
 	public void setTitle(final String title) {
 		this.title = title;
 	}
-	
+
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {

@@ -1,11 +1,12 @@
 package es.nivel36.laie.ejb.core.document;
 
-import java.io.File;
-import java.io.FileOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UncheckedIOException;
-import java.nio.file.Files;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -20,32 +21,53 @@ import com.itextpdf.html2pdf.HtmlConverter;
 
 import es.nivel36.laie.ejb.core.Language;
 
-
 @Stateless
 public class DocumentTemplateService {
 
 	private static final Logger logger = LoggerFactory.getLogger(DocumentTemplateService.class);
 
-	@Inject
-	
-	private DocumentTemplateDao documentTemplateDao;
-	
+	private @Inject DocumentTemplateDao documentTemplateDao;
+
 	public void addDocumentTemplate(final DocumentTemplate template) {
 		Objects.requireNonNull(template);
+		logger.debug("Add document template {}", template);
 		this.documentTemplateDao.insert(template);
 	}
 
-	private File createPdf(final String text) {
-		try {
-			final File pdfDest = Files.createTempFile("pdf_converter_", ".pdf").toFile();
-			final ConverterProperties converterProperties = new ConverterProperties();
-			return this.htmlConverter(text, pdfDest, converterProperties);
-		} catch (final IOException e) {
-			throw new UncheckedIOException(e);
+	public DocumentTemplate updateDocumentTemplate(final DocumentTemplate template) {
+		Objects.requireNonNull(template);
+		logger.debug("Update document template {}", template);
+		return this.documentTemplateDao.update(template);
+	}
+
+	public void deleteDocumentTemplate(final DocumentTemplate template) {
+		this.deleteDocumentTemplate(template, false);
+	}
+
+	public void deleteDocumentTemplate(final DocumentTemplate template, boolean allLanguages) {
+		Objects.requireNonNull(template);
+		if (allLanguages) {
+			logger.debug("All document templates will be deleted");
+			final List<DocumentTemplate> documents = this.documentTemplateDao
+					.findDocumentTemplateByName(template.getName());
+			for (final DocumentTemplate document : documents) {
+				logger.debug("Delete document template {}", document);
+				this.documentTemplateDao.delete(DocumentTemplate.class, document);
+			}
+		} else {
+			logger.debug("Delete document template {}", template);
+			this.documentTemplateDao.delete(DocumentTemplate.class, template);
 		}
 	}
 
-	public File export(final DocumentTemplate document, final Set<TemplateTag> parameters) {
+	public DocumentTemplate findDocumentByNameAndLanguage(final String name, final Language language) {
+		Objects.requireNonNull(name);
+		Objects.requireNonNull(language);
+		logger.debug("Find document by name {} and langauge {}", name, language);
+		return this.documentTemplateDao.findDocumentTemplateByNameAndLanguage(name, language);
+	}
+
+	public ByteArrayOutputStream export(final DocumentTemplate document, final Set<TemplateTag> parameters) {
 		Objects.requireNonNull(document);
 		logger.debug("Export document template {}", document);
 		final String documentText = document.getText();
@@ -53,27 +75,28 @@ public class DocumentTemplateService {
 		return this.createPdf(textWithReplacedCustomTextValues);
 	}
 
-	public DocumentTemplate findDocumentByNameAndLanguage(final String name, final Language language) {
-		Objects.requireNonNull(name);
-		Objects.requireNonNull(language);
-		logger.debug("Find document by name {} and langauge {}", name, language);
-		return this.documentTemplateDao.findDocumentTemplateByName(name, language);
+	private String replaceCustomText(String text, final Set<TemplateTag> parameters) {
+		for (final TemplateTag tag : parameters) {
+			final String value = tag.getValue();
+			final String text2 = tag.getText();
+			logger.trace("Replacing {} by {}", value, text);
+			text = text.replaceAll(value, text2);
+		}
+		return text;
 	}
 
-	private File htmlConverter(final String text, final File pdfDest, final ConverterProperties converterProperties) {
-		try (final OutputStream outputStream = new FileOutputStream(pdfDest)) {
+	private ByteArrayOutputStream createPdf(final String text) {
+		final ConverterProperties converterProperties = new ConverterProperties();
+		return this.htmlConverter(text, converterProperties);
+	}
+
+	private ByteArrayOutputStream htmlConverter(final String text, final ConverterProperties converterProperties) {
+		try (final ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
 			HtmlConverter.convertToPdf(text, outputStream, converterProperties);
-			return pdfDest;
+			return outputStream;
 		} catch (final IOException e) {
 			throw new UncheckedIOException(e);
 		}
-	}
-
-	private String replaceCustomText(String text, final Set<TemplateTag> parameters) {
-		for (final TemplateTag tag : parameters) {
-			text = text.replaceAll(tag.getValue(), tag.getText());
-		}
-		return text;
 	}
 
 	public void setDocumentDao(final DocumentTemplateDao documentTemplateDao) {

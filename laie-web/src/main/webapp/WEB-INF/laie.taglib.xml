@@ -5,31 +5,6 @@
 	<namespace>http://nivel.36/laie/ui</namespace>
 
 	<tag>
-		<tag-name>panel</tag-name>
-		<source>tags/panel.xhtml</source>
-		<attribute>
-			<name>id</name>
-			<required>true</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<name>id</name>
-			<required>true</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<name>rendered</name>
-			<required>false</required>
-			<type>boolean</type>
-		</attribute>
-		<attribute>
-			<name>styleClass</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-	</tag>
-
-	<tag>
 		<tag-name>input</tag-name>
 		<source>tags/input.xhtml</source>
 
