@@ -27,7 +27,7 @@
 		<omnifaces.version>3.13.3</omnifaces.version>
 		<commons-fileupload.version>1.4</commons-fileupload.version>
 		<owasp-java-html-sanitizer.version>20200713.1</owasp-java-html-sanitizer.version>
-		<html2pdf.version>3.0.5</html2pdf.version>
+		<html2pdf.version>4.0.3</html2pdf.version>
 
 		<version.mockito>3.11.0</version.mockito>
 		<version.server.bom>26.1.1.Final</version.server.bom>
