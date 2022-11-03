@@ -85,10 +85,11 @@ public class EditMeetingView extends AbstractMeetingView {
 		final LocalDateTime meetingDateTime = LocalDateTime.of(this.meetingDate, time);
 		this.meeting.setDatePlanned(meetingDateTime);
 		this.meeting.setDuration(duration);
+		this.meeting.getAttendeesEmails().clear();
 		for (final Subject person : this.attendees) {
 			this.meeting.addAttendee(person.getEmail());
 		}
-		this.meetingService.addMeeting(this.meeting);
+		this.meetingService.updateMeeting(this.meeting);
 		Faces.redirect(IndexView.URL);
 	}
 	

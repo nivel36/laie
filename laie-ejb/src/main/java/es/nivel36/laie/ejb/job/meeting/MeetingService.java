@@ -39,6 +39,10 @@ public class MeetingService {
 	public void addMeeting(final Meeting meeting) {
 		Objects.requireNonNull(meeting);
 		meetingDao.insert(meeting);
+		addMeetingsInPersons(meeting);
+	}
+
+	private void addMeetingsInPersons(final Meeting meeting) {
 		for (final String email : meeting.getAttendeesEmails()) {
 			final User user = userDao.findUserByEmail(email);
 			if (user != null) {
@@ -62,6 +66,11 @@ public class MeetingService {
 
 	public void deleteMeeting(final Meeting meeting) {
 		Objects.requireNonNull(meeting);
+		deleteMeetingsInPersons(meeting);
+		this.meetingDao.delete(Meeting.class, meeting);
+	}
+
+	private void deleteMeetingsInPersons(final Meeting meeting) {
 		for (final String email : meeting.getAttendeesEmails()) {
 			final User user = userDao.findUserByEmail(email);
 			if (user != null) {
@@ -81,7 +90,15 @@ public class MeetingService {
 				continue;
 			}
 		}
-		this.meetingDao.delete(Meeting.class, meeting);
+	}
+	
+	public Meeting updateMeeting(final Meeting meeting) {
+		Objects.requireNonNull(meeting);
+		final Meeting savedMeeting = meetingDao.findMeetingById(meeting.getId());
+		final Meeting updatedMeeting = meetingDao.update(meeting);
+		this.deleteMeetingsInPersons(savedMeeting);
+		this.addMeetingsInPersons(updatedMeeting);
+		return updatedMeeting;
 	}
 
 	public List<Meeting> findConductedMeetings(final User owner, final Page page) {
