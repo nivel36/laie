@@ -15,7 +15,7 @@
 			<div class="card">
 				<div class="p-grid">
 					<div class="p-col-12">
-						<div id="client" class="form-card ui-fluid">
+						<div class="form-card ui-fluid">
 							<div class="p-grid p-formgrid">
 								<div class="p-col-12 p-lg-5">
 									<g:input id="title" label="#{i18n['document.title']}" value="#{gdprMaintenanceView.document.title}" />
@@ -36,7 +36,7 @@
 				<div class="p-col-12">
 					<div class="form-buttons">
 						<p:button value="#{i18n['action.cancel']}" outcome="/settings.xhtml" styleClass="ui-button-secondary ui-button-outlined" />
-						<p:commandButton value="#{i18n['action.export']}" action="#{gdprMaintenanceView.export}" icon="fa fa-file-excel-o" ajax="false" />
+						<p:commandButton value="#{i18n['action.export']}" action="#{gdprMaintenanceView.export}" ajax="false" />
 						<p:commandButton value="#{i18n['action.save']}" styleClass="ui-button-success ui-button-outlined" />
 					</div>
 				</div>
