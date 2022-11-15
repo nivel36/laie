@@ -1,4 +1,4 @@
-package es.nivel36.laie.web.view.maintenance;
+package es.nivel36.laie.web.view.settings;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
