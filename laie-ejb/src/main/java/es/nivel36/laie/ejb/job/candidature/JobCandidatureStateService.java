@@ -3,10 +3,9 @@ package es.nivel36.laie.ejb.job.candidature;
 import java.util.List;
 import java.util.Objects;
 
-import javax.ejb.Stateless;
-import javax.inject.Inject;
-
 import es.nivel36.laie.ejb.core.model.Page;
+import jakarta.ejb.Stateless;
+import jakarta.inject.Inject;
 
 @Stateless
 public class JobCandidatureStateService {

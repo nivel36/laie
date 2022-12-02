@@ -6,30 +6,12 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-
+import org.bouncycastle.util.Store;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Index;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
-import org.hibernate.search.annotations.Store;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
 
 import es.nivel36.laie.ejb.core.action.Auditable;
 import es.nivel36.laie.ejb.core.file.File;
@@ -42,6 +24,23 @@ import es.nivel36.laie.ejb.curriculum.Curriculum;
 import es.nivel36.laie.ejb.job.candidature.JobCandidature;
 import es.nivel36.laie.ejb.job.meeting.Meeting;
 import es.nivel36.laie.ejb.user.User;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Index;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Indexed
@@ -64,7 +63,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	@Email
 	@NotNull
 	@Column(name = "EMAIL", length = 128, nullable = true)
-	@Field(name = "_email")
+	@FullTextField(name = "_email")
 	protected String email;
 
 	@Min(0)
@@ -81,7 +80,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	private Set<JobCandidature> jobCandidatures = new HashSet<>();
 
 	@NotNull
-	@Field(name = "_jobProfile")
+	@FullTextField(name = "_jobProfile")
 	@Column(name = "JOB_PROFILE", nullable = false, length = 128)
 	private String jobProfile;
 
@@ -93,8 +92,8 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 
 	@NotNull
 	@Column(name = "NAME", nullable = false, length = 128)
-	@Field(name = "_name")
-	@Field(name = "name", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
+	@FullTextField(name = "_name")
+	@FullTextField(name = "name", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "name")
 	protected String name;
 
@@ -115,7 +114,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	@JoinColumn(name = "PICTURE_ID")
 	protected File picture;
 
-	@Field(analyze = Analyze.NO, store = Store.NO, index = Index.NO)
+	@FullTextField(analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField
 	@Column(name = "RATING", scale = 0, precision = 1 )
 	private Integer rating;
@@ -131,7 +130,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 
 	@NotNull
 	@Column(name = "SURNAME", nullable = false, length = 128)
-	@Field(name = "_surname")
+	@FullTextField(name = "_surname")
 	protected String surname;
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

@@ -1,10 +1,9 @@
 package es.nivel36.laie.web.view.job;
 
-import javax.inject.Inject;
-
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.web.core.view.SessionUser;
+import jakarta.inject.Inject;
 
 public class AddCandidatureToJobOfferPermission extends AbstractJobOfferPermission {
 

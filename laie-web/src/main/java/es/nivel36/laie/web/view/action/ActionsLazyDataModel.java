@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import javax.inject.Inject;
-
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortMeta;
@@ -14,6 +12,7 @@ import es.nivel36.laie.ejb.core.action.Action;
 import es.nivel36.laie.ejb.core.action.ActionService;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.user.User;
+import jakarta.inject.Inject;
 
 public class ActionsLazyDataModel extends LazyDataModel<Action> {
 

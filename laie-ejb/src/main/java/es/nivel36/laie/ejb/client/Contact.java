@@ -4,33 +4,30 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Index;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.SortableField;
-import org.hibernate.search.annotations.Store;
+import org.hibernate.search.engine.backend.types.Sortable;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.KeywordField;
 
 import es.nivel36.laie.ejb.core.action.Auditable;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
 import es.nivel36.laie.ejb.core.subject.Subject;
 import es.nivel36.laie.ejb.job.meeting.Meeting;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Index;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Indexed
-@Table(name = "CONTACT", indexes = {
-		@javax.persistence.Index(name = "UX_CONTACT_EMAIL", columnList = "EMAIL", unique = true) }, //
+@Table(name = "CONTACT", indexes = { @Index(name = "UX_CONTACT_EMAIL", columnList = "EMAIL", unique = true) }, //
 		uniqueConstraints = { @UniqueConstraint(name = "UQ_CONTACT_EMAIL", columnNames = { "EMAIL" }) })
 public class Contact extends AbstractEntity implements Subject, Auditable {
 
@@ -44,8 +41,8 @@ public class Contact extends AbstractEntity implements Subject, Auditable {
 	@Email
 	@NotNull
 	@Column(name = "EMAIL", length = 128, nullable = false, unique = true)
-	@Field(name = "_email")
-	@Field(name = "email", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
+	@FullTextField(name = "_email")
+	@KeywordField(name = "email", sortable = Sortable.YES)
 	protected String email;
 
 	@Column(name = "LANGUAGE", length = 2)
@@ -56,9 +53,8 @@ public class Contact extends AbstractEntity implements Subject, Auditable {
 
 	@NotNull
 	@Column(name = "NAME", nullable = false, length = 128)
-	@Field(name = "_name")
-	@Field(name = "name", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
-	@SortableField(forField = "name")
+	@FullTextField(name = "_name")
+	@KeywordField(name = "name", sortable = Sortable.YES)
 	protected String name;
 
 	@Column(name = "PHONE_NUMBER", length = 12)
@@ -69,9 +65,8 @@ public class Contact extends AbstractEntity implements Subject, Auditable {
 
 	@NotNull
 	@Column(name = "SURNAME", nullable = false, length = 128)
-	@Field(name = "_surname")
-	@Field(name = "surname", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
-	@SortableField(forField = "surname")
+	@FullTextField(name = "_surname")
+	@KeywordField(name = "surname", sortable = Sortable.YES)
 	protected String surname;
 
 	public void addMeeting(final Meeting meeting) {

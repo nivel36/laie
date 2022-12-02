@@ -6,27 +6,12 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-
+import org.bouncycastle.util.Store;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Index;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
-import org.hibernate.search.annotations.Store;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
 
 import es.nivel36.laie.ejb.candidate.Rating;
 import es.nivel36.laie.ejb.core.bookmark.Bookmark;
@@ -35,6 +20,20 @@ import es.nivel36.laie.ejb.core.model.AbstractEntity;
 import es.nivel36.laie.ejb.core.subject.Subject;
 import es.nivel36.laie.ejb.job.meeting.Meeting;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Index;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
 @Indexed
@@ -49,12 +48,12 @@ public class User extends AbstractEntity implements Subject {
 	@JoinTable(name = "PERSON_BOOKMARK", joinColumns = @JoinColumn(name = "PERSON_ID"), inverseJoinColumns = @JoinColumn(name = "BOOKMARK_ID"))
 	private Set<Bookmark> bookmarks = new HashSet<>();
 
-	@Field(name = "dateOfJoin", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
+	@FullTextField(name = "dateOfJoin", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "dateOfJoin")
 	@Column(name = "DATE_OF_JOIN")
 	private LocalDate dateOfJoin;
 
-	@Field(name = "_email")
+	@FullTextField(name = "_email")
 	@Column(name = "EMAIL", length = 128, nullable = false)
 	private String email;
 
@@ -64,7 +63,7 @@ public class User extends AbstractEntity implements Subject {
 	@Column(name = "LANGUAGE", nullable = false)
 	private String language;
 
-	@Field(name = "lastConnection", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
+	@FullTextField(name = "lastConnection", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "lastConnection")
 	@Column(name = "LAST_CONNECTION")
 	private LocalDateTime lastConnection;
@@ -79,8 +78,8 @@ public class User extends AbstractEntity implements Subject {
 	private Set<Meeting> meetings = new HashSet<>();
 
 	@Column(name = "NAME", nullable = false, length = 128)
-	@Field(name = "_name")
-	@Field(name = "name", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
+	@FullTextField(name = "_name")
+	@FullTextField(name = "name", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "name")
 	private String name;
 
@@ -93,7 +92,7 @@ public class User extends AbstractEntity implements Subject {
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "ROLE", nullable = false, length = 16)
-	@Field(name = "role", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
+	@FullTextField(name = "role", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "role")
 	private Role role;
 
@@ -101,8 +100,8 @@ public class User extends AbstractEntity implements Subject {
 	private Integer rowsPerPage = 10;
 
 	@Column(name = "SURNAME", nullable = false, length = 128)
-	@Field(name = "_surname")
-	@Field(name = "surname", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
+	@FullTextField(name = "_surname")
+	@FullTextField(name = "surname", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "surname")
 	private String surname;
 

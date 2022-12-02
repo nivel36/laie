@@ -11,11 +11,9 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
-import javax.ejb.Stateless;
-import javax.inject.Inject;
-
-
 import es.nivel36.laie.ejb.core.util.ConfigurationProperty;
+import jakarta.ejb.Stateless;
+import jakarta.inject.Inject;
 
 @Stateless
 public class FileService {

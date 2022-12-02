@@ -8,11 +8,8 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
 
 import org.omnifaces.util.Faces;
 
@@ -22,6 +19,9 @@ import es.nivel36.laie.ejb.core.document.DocumentTemplate;
 import es.nivel36.laie.ejb.core.document.DocumentTemplateService;
 import es.nivel36.laie.ejb.core.document.TemplateTag;
 import es.nivel36.laie.web.core.view.AbstractView;
+import jakarta.annotation.PostConstruct;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 
 @Named
 @ViewScoped

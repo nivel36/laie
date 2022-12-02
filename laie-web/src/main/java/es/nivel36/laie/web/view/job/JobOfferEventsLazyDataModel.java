@@ -4,16 +4,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import javax.inject.Inject;
-
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortMeta;
 
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
-import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.ejb.job.offer.JobOfferEvent;
+import es.nivel36.laie.ejb.job.offer.JobOfferService;
+import jakarta.inject.Inject;
 
 public class JobOfferEventsLazyDataModel extends LazyDataModel<JobOfferEvent> {
 

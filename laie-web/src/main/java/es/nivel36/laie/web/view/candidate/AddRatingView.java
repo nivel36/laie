@@ -2,10 +2,7 @@ package es.nivel36.laie.web.view.candidate;
 
 import java.util.Objects;
 
-import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
 
 import org.omnifaces.cdi.Param;
 import org.omnifaces.util.Faces;
@@ -17,6 +14,9 @@ import es.nivel36.laie.ejb.candidate.Rating;
 import es.nivel36.laie.ejb.candidate.RatingService;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.web.core.view.AbstractView;
+import jakarta.annotation.PostConstruct;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 
 @Named
 @ViewScoped

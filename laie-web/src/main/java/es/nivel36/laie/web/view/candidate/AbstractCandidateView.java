@@ -6,8 +6,6 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Objects;
 
-import javax.inject.Inject;
-
 import org.omnifaces.cdi.Param;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.file.UploadedFile;
@@ -24,6 +22,7 @@ import es.nivel36.laie.ejb.core.tag.TagService;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserService;
 import es.nivel36.laie.web.core.view.AbstractView;
+import jakarta.inject.Inject;
 
 public abstract class AbstractCandidateView extends AbstractView {
 

@@ -1,10 +1,10 @@
 package es.nivel36.laie.ejb.core.model;
 
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
+
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
 
 public class Indexer {
 

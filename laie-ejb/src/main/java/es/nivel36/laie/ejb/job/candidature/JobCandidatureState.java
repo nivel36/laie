@@ -3,14 +3,6 @@ package es.nivel36.laie.ejb.job.candidature;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.FacetEncodingType;
@@ -18,6 +10,13 @@ import org.hibernate.search.annotations.Field;
 
 import es.nivel36.laie.ejb.core.EventState;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "JOB_CANDIDATURE_STATE")
@@ -34,7 +33,7 @@ public class JobCandidatureState extends AbstractEntity implements EventState {
 	@Column(name = "FIRST")
 	private boolean first;
 
-	@Field(analyze = Analyze.NO)
+	@FullTextField(analyze = Analyze.NO)
 	@Facet(encoding = FacetEncodingType.STRING)
 	@Column(name = "NAME", unique = true)
 	private String name;

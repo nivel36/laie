@@ -1,7 +1,5 @@
 package es.nivel36.laie.web.view.job;
 
-import javax.inject.Inject;
-
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.search.SearchFacets;
 import es.nivel36.laie.ejb.core.model.search.SearchResult;
@@ -9,6 +7,7 @@ import es.nivel36.laie.ejb.core.model.search.SortField;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.web.core.view.AbstractLazyDataModel;
+import jakarta.inject.Inject;
 
 public class JobOfferLazyDataModel extends AbstractLazyDataModel<JobOffer> {
 

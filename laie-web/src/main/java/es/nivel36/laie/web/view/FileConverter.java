@@ -3,11 +3,11 @@ package es.nivel36.laie.web.view;
 import java.util.Objects;
 
 import javax.faces.convert.FacesConverter;
-import javax.inject.Inject;
 
 import es.nivel36.laie.ejb.core.file.File;
 import es.nivel36.laie.ejb.core.file.FileService;
 import es.nivel36.laie.web.core.AbstractConverter;
+import jakarta.inject.Inject;
 
 @FacesConverter(forClass = File.class, managed = true)
 public class FileConverter extends AbstractConverter<File> {

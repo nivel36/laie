@@ -3,13 +3,13 @@ package es.nivel36.login;
 import java.util.List;
 import java.util.Objects;
 
-import javax.ejb.Schedule;
-import javax.ejb.Startup;
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jakarta.ejb.Schedule;
+import jakarta.ejb.Startup;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 
 /**
  * <p>

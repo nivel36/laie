@@ -3,8 +3,6 @@ package es.nivel36.laie.web.view.user;
 import java.util.List;
 import java.util.Objects;
 
-import javax.inject.Inject;
-
 import org.omnifaces.cdi.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +12,7 @@ import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserService;
 import es.nivel36.laie.web.core.view.AbstractView;
+import jakarta.inject.Inject;
 
 public abstract class AbstractUserView extends AbstractView {
 

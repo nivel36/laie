@@ -4,11 +4,9 @@ import static es.nivel36.laie.ejb.core.util.Parameters.map;
 
 import java.util.Objects;
 
-import javax.persistence.NoResultException;
-
 import es.nivel36.laie.ejb.core.model.AbstractDao;
-
 import es.nivel36.laie.ejb.core.util.Parameters;
+import jakarta.persistence.NoResultException;
 
 
 public class FileJpaDao extends AbstractDao {

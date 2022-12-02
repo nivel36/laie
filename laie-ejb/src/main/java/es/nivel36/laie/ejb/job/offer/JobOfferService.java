@@ -6,11 +6,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-import javax.ejb.Stateless;
-import javax.enterprise.event.Event;
-import javax.enterprise.event.Observes;
-import javax.inject.Inject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +24,9 @@ import es.nivel36.laie.ejb.job.offer.event.JobOfferCompletedEvent;
 import es.nivel36.laie.ejb.job.offer.event.JobOfferCreatedEvent;
 import es.nivel36.laie.ejb.job.offer.event.JobOfferStateChangedEvent;
 import es.nivel36.laie.ejb.user.User;
+import jakarta.ejb.Stateless;
+import jakarta.enterprise.event.Observes;
+import jakarta.inject.Inject;
 
 @Stateless
 public class JobOfferService {

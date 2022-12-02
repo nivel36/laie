@@ -5,7 +5,6 @@ import static es.nivel36.laie.ejb.core.util.Parameters.map;
 import java.util.Objects;
 
 import es.nivel36.laie.ejb.core.model.AbstractDao;
-
 import es.nivel36.laie.ejb.core.util.Parameters;
 
 

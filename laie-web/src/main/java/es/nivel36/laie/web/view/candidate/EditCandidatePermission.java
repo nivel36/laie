@@ -1,10 +1,9 @@
 package es.nivel36.laie.web.view.candidate;
 
-import javax.inject.Inject;
-
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.web.core.view.SessionUser;
+import jakarta.inject.Inject;
 
 public class EditCandidatePermission implements CandidatePermission {
 

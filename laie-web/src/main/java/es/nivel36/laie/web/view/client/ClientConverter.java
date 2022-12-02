@@ -3,11 +3,11 @@ package es.nivel36.laie.web.view.client;
 import java.util.Objects;
 
 import javax.faces.convert.FacesConverter;
-import javax.inject.Inject;
 
 import es.nivel36.laie.ejb.client.Client;
 import es.nivel36.laie.ejb.client.ClientService;
 import es.nivel36.laie.web.core.AbstractConverter;
+import jakarta.inject.Inject;
 
 @FacesConverter(managed = true, forClass = Client.class)
 public class ClientConverter extends AbstractConverter<Client> {

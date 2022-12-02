@@ -9,9 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
-import javax.inject.Named;
 
 import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
@@ -21,6 +19,8 @@ import es.nivel36.laie.ejb.core.subject.Subject;
 import es.nivel36.laie.ejb.job.meeting.Meeting;
 import es.nivel36.laie.ejb.job.meeting.MeetingType;
 import es.nivel36.laie.web.view.IndexView;
+import jakarta.annotation.PostConstruct;
+import jakarta.inject.Named;
 
 @Named
 @ViewScoped

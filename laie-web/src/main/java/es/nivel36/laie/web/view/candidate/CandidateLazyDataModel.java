@@ -1,7 +1,5 @@
 package es.nivel36.laie.web.view.candidate;
 
-import javax.inject.Inject;
-
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.candidate.CandidateService;
 import es.nivel36.laie.ejb.core.model.Page;
@@ -9,6 +7,7 @@ import es.nivel36.laie.ejb.core.model.search.SearchFacets;
 import es.nivel36.laie.ejb.core.model.search.SearchResult;
 import es.nivel36.laie.ejb.core.model.search.SortField;
 import es.nivel36.laie.web.core.view.AbstractLazyDataModel;
+import jakarta.inject.Inject;
 
 public class CandidateLazyDataModel extends AbstractLazyDataModel<Candidate> {
 

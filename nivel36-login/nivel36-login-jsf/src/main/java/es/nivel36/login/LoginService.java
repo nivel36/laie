@@ -1,26 +1,25 @@
 package es.nivel36.login;
 
-import static javax.security.enterprise.authentication.mechanism.http.AuthenticationParameters.withParams;
 
 import java.util.Objects;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.inject.Inject;
-import javax.security.enterprise.AuthenticationStatus;
-import javax.security.enterprise.SecurityContext;
-import javax.security.enterprise.authentication.mechanism.http.AuthenticationParameters;
-import javax.security.enterprise.credential.UsernamePasswordCredential;
-import javax.security.enterprise.identitystore.RememberMeIdentityStore;
-import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.faces.context.ExternalContext;
+import jakarta.faces.context.FacesContext;
+import jakarta.inject.Inject;
+import jakarta.security.enterprise.AuthenticationStatus;
+import jakarta.security.enterprise.SecurityContext;
+import jakarta.security.enterprise.authentication.mechanism.http.AuthenticationParameters;
+import jakarta.security.enterprise.credential.UsernamePasswordCredential;
+import jakarta.security.enterprise.identitystore.RememberMeIdentityStore;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @ApplicationScoped
 public class LoginService {
@@ -56,7 +55,7 @@ public class LoginService {
 		Objects.requireNonNull(username);
 		Objects.requireNonNull(password);
 		final UsernamePasswordCredential credential = new UsernamePasswordCredential(username, password);
-		final AuthenticationParameters parameters = withParams().credential(credential).newAuthentication(true);
+		final AuthenticationParameters parameters = AuthenticationParameters.withParams().credential(credential).newAuthentication(true);
 		final AuthenticationStatus authenticationStatus = this.authenticate(parameters);
 		if (authenticationStatus == AuthenticationStatus.SEND_FAILURE) {
 			logger.error("Login error for username {}", username);

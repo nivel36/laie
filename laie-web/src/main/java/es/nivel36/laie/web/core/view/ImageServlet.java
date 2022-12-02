@@ -2,13 +2,12 @@ package es.nivel36.laie.web.core.view;
 
 import java.io.File;
 
-import javax.inject.Inject;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServletRequest;
-
 import org.omnifaces.servlet.FileServlet;
 
 import es.nivel36.laie.ejb.core.util.ConfigurationProperty;
+import jakarta.inject.Inject;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServletRequest;
 
 @WebServlet("/images/*")
 public class ImageServlet extends FileServlet {

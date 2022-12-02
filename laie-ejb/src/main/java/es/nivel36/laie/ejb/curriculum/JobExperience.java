@@ -5,16 +5,15 @@ import java.time.YearMonth;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Lob;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-
 import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Lob;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Indexed
@@ -23,12 +22,12 @@ public class JobExperience extends AbstractEntity implements Comparable<JobExper
 
 	private static final long serialVersionUID = 5196582360914455397L;
 
-	@Field
+	@FullTextField
 	@NotNull
 	@Column(name="COMPANY_NAME", nullable = false, length = 128)
 	private String companyName;
 
-	@Field
+	@FullTextField
 	@Lob
 	@Column(name="DESCRIPTION", columnDefinition = "TEXT")
 	private String description;
@@ -40,7 +39,7 @@ public class JobExperience extends AbstractEntity implements Comparable<JobExper
 	private Integer endYear;
 
 	@NotNull
-	@Field
+	@FullTextField
 	@Column(name="JOB_POSITION", nullable = false)
 	private String jobPosition;
 	
