@@ -3,15 +3,15 @@ package es.nivel36.laie.ejb.core.model;
 import java.io.Serializable;
 import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.Table;
-
+import org.bouncycastle.util.Store;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.SortableField;
-import org.hibernate.search.annotations.Store;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.Index;
+import jakarta.persistence.Table;
 
 @Table(name="ADDRESS")
 @Embeddable
@@ -19,8 +19,8 @@ public class Address implements Serializable {
 
 	private static final long serialVersionUID = -8221733995443213238L;
 
-	@Field(name = "_city")
-	@Field(name = "city", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
+	@FullTextField(name = "_city")
+	@FullTextField(name = "city", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "city")
 	@Column(name="CITY", length = 128)
 	private String city;
@@ -34,8 +34,8 @@ public class Address implements Serializable {
 	@Column(name="NUMBER", length = 16)
 	private String number;
 
-	@Field(name = "_region")
-	@Field(name = "region", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
+	@FullTextField(name = "_region")
+	@FullTextField(name = "region", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "region")
 	@Column(name="REGION", length = 128)
 	private String region;

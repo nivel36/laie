@@ -1,7 +1,6 @@
 package es.nivel36.laie.web.view.meeting;
 
 import java.time.Duration;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -11,10 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
-import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
 
 import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
@@ -24,6 +20,9 @@ import es.nivel36.laie.ejb.core.subject.Subject;
 import es.nivel36.laie.ejb.core.subject.SubjectService;
 import es.nivel36.laie.ejb.job.meeting.MeetingType;
 import es.nivel36.laie.web.view.IndexView;
+import jakarta.annotation.PostConstruct;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 
 @Named
 @ViewScoped

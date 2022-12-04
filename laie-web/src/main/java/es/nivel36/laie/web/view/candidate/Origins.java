@@ -3,13 +3,12 @@ package es.nivel36.laie.web.view.candidate;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import es.nivel36.laie.ejb.candidate.CandidateService;
 import es.nivel36.laie.ejb.candidate.Origin;
+import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 
 @Named
 @ApplicationScoped

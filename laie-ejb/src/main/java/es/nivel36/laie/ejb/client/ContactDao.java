@@ -5,17 +5,15 @@ import static es.nivel36.laie.ejb.core.util.Parameters.map;
 import java.util.List;
 import java.util.Objects;
 
-import javax.inject.Inject;
-import javax.persistence.NoResultException;
-
 import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
-
 import es.nivel36.laie.ejb.core.model.SearchFacade;
 import es.nivel36.laie.ejb.core.model.search.SearchFacets;
 import es.nivel36.laie.ejb.core.model.search.SearchResult;
 import es.nivel36.laie.ejb.core.model.search.SortField;
 import es.nivel36.laie.ejb.core.util.Parameters;
+import jakarta.inject.Inject;
+import jakarta.persistence.NoResultException;
 
 
 public class ContactDao extends AbstractDao {

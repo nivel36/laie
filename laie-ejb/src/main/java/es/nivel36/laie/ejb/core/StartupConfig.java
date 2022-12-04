@@ -7,16 +7,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
 
-import javax.annotation.PostConstruct;
-import javax.ejb.Singleton;
-import javax.ejb.Startup;
-import javax.inject.Inject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.core.model.Indexer;
 import es.nivel36.laie.ejb.core.util.ConfigurationProperty;
+import jakarta.annotation.PostConstruct;
+import jakarta.ejb.Startup;
+import jakarta.inject.Inject;
 
 @Singleton
 @Startup

@@ -6,14 +6,13 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.ejb.Stateless;
-import javax.inject.Inject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.curriculum.export.CurriculumExporter;
+import jakarta.ejb.Stateless;
+import jakarta.inject.Inject;
 
 @Stateless
 public class CurriculumService {

@@ -2,15 +2,14 @@ package es.nivel36.laie.ejb.curriculum;
 
 import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-
 import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Indexed
@@ -19,7 +18,7 @@ public class Skill extends AbstractEntity implements Comparable<Skill> {
 
 	private static final long serialVersionUID = 4288106580541111562L;
 
-	@Field
+	@FullTextField
 	@NotNull
 	@Column(name = "NAME", nullable = false)
 	private String name;

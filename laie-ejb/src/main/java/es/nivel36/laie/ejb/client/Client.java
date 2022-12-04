@@ -3,26 +3,13 @@ package es.nivel36.laie.ejb.client;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.NotNull;
-
+import org.bouncycastle.util.Store;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Index;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
-import org.hibernate.search.annotations.Store;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
 
 import es.nivel36.laie.ejb.core.action.Auditable;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
@@ -31,6 +18,18 @@ import es.nivel36.laie.ejb.core.model.Erasable;
 import es.nivel36.laie.ejb.core.model.Ownerable;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.user.User;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Index;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.NotNull;
 
 @Indexed
 @Entity
@@ -47,14 +46,14 @@ public class Client extends AbstractEntity implements Ownerable, Erasable, Audit
 	private Address address;
 
 	@Column(name = "CIF", length = 16)
-	@Field(name = "_cif")
+	@FullTextField(name = "_cif")
 	private String cif;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
 	private Set<Contact> contacts;
 
 	@Column(name = "DELETED", nullable = false)
-	@Field
+	@FullTextField
 	private boolean deleted;
 
 	@ContainedIn
@@ -63,8 +62,8 @@ public class Client extends AbstractEntity implements Ownerable, Erasable, Audit
 
 	@NotNull
 	@Column(name = "NAME", unique = true, nullable = false)
-	@Field(name = "_name")
-	@Field(name = "name", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
+	@FullTextField(name = "_name")
+	@FullTextField(name = "name", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "name")
 	private String name;
 

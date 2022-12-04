@@ -6,10 +6,10 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.inject.Inject;
 
 import es.nivel36.laie.ejb.core.subject.Subject;
 import es.nivel36.laie.ejb.core.subject.SubjectService;
+import jakarta.inject.Inject;
 
 @FacesConverter(managed = true, forClass = Subject.class)
 public class SubjectConverter implements Converter<Subject> {

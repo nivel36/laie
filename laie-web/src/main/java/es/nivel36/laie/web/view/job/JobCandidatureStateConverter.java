@@ -4,10 +4,10 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.inject.Inject;
 
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureState;
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureStateService;
+import jakarta.inject.Inject;
 
 @FacesConverter(managed = true, forClass = JobCandidatureState.class)
 public class JobCandidatureStateConverter implements Converter<JobCandidatureState> {

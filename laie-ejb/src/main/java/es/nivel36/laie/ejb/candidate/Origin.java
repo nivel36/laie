@@ -2,11 +2,10 @@ package es.nivel36.laie.ejb.candidate;
 
 import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
 @Table(name = "ORIGIN")
 @Entity

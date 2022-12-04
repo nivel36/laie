@@ -1,21 +1,20 @@
 package es.nivel36.login;
 
-import static javax.persistence.EnumType.STRING;
-
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Arrays;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Index;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Index;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "LOGIN_TOKEN", indexes = {
@@ -49,7 +48,7 @@ public class LoginToken implements Serializable {
 	@Column(name = "TOKEN_HASH", nullable = false, unique = true)
 	private byte[] tokenHash;
 
-	@Enumerated(STRING)
+	@Enumerated(EnumType.STRING)
 	@Column(name = "TOKEN_TYPE")
 	private TokenType type;
 

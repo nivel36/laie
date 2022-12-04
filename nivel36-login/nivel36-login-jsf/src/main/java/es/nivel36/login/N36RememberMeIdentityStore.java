@@ -3,15 +3,14 @@ package es.nivel36.login;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.security.enterprise.CallerPrincipal;
-import javax.security.enterprise.credential.RememberMeCredential;
-import javax.security.enterprise.identitystore.CredentialValidationResult;
-import javax.security.enterprise.identitystore.RememberMeIdentityStore;
-import javax.servlet.http.HttpServletRequest;
-
 import es.nivel36.login.LoginToken.TokenType;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.security.enterprise.CallerPrincipal;
+import jakarta.security.enterprise.credential.RememberMeCredential;
+import jakarta.security.enterprise.identitystore.CredentialValidationResult;
+import jakarta.security.enterprise.identitystore.RememberMeIdentityStore;
+import jakarta.servlet.http.HttpServletRequest;
 
 @ApplicationScoped
 public class N36RememberMeIdentityStore extends AbstractIdentityStore implements RememberMeIdentityStore {

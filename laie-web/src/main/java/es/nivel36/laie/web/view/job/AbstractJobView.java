@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.inject.Inject;
-
 import org.omnifaces.cdi.Param;
 
 import es.nivel36.laie.ejb.client.Client;
@@ -18,6 +16,7 @@ import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserService;
 import es.nivel36.laie.web.core.view.AbstractView;
+import jakarta.inject.Inject;
 
 public abstract class AbstractJobView extends AbstractView {
 

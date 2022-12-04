@@ -3,10 +3,6 @@ package es.nivel36.laie.ejb.client;
 import java.util.List;
 import java.util.Objects;
 
-import javax.ejb.Stateless;
-import javax.enterprise.event.Event;
-import javax.inject.Inject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +10,8 @@ import es.nivel36.laie.ejb.core.action.Auditable;
 import es.nivel36.laie.ejb.core.action.Create;
 import es.nivel36.laie.ejb.core.action.Update;
 import es.nivel36.laie.ejb.core.model.Page;
+import jakarta.ejb.Stateless;
+import jakarta.inject.Inject;
 
 @Stateless
 public class ContactService {

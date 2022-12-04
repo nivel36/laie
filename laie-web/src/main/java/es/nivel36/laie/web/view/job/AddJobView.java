@@ -3,9 +3,7 @@ package es.nivel36.laie.web.view.job;
 import java.time.LocalDate;
 import java.util.stream.Collectors;
 
-import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
-import javax.inject.Named;
 
 import org.omnifaces.cdi.Param;
 import org.omnifaces.util.Faces;
@@ -15,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import es.nivel36.laie.ejb.client.Client;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.user.User;
+import jakarta.annotation.PostConstruct;
+import jakarta.inject.Named;
 
 @Named
 @ViewScoped

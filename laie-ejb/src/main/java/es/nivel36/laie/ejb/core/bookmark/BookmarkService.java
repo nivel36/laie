@@ -2,12 +2,10 @@ package es.nivel36.laie.ejb.core.bookmark;
 
 import java.util.Objects;
 
-import javax.ejb.Stateless;
-import javax.inject.Inject;
-
-
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserDao;
+import jakarta.ejb.Stateless;
+import jakarta.inject.Inject;
 
 @Stateless
 public class BookmarkService {

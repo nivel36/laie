@@ -7,10 +7,7 @@ import java.io.InputStream;
 import java.util.Locale;
 import java.util.Objects;
 
-import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
 
 import org.omnifaces.util.Faces;
 import org.primefaces.event.CaptureEvent;
@@ -27,6 +24,9 @@ import es.nivel36.laie.ejb.user.DuplicateEmailException;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserService;
 import es.nivel36.laie.web.core.view.AbstractView;
+import jakarta.annotation.PostConstruct;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 
 @Named
 @ViewScoped

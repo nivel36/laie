@@ -11,10 +11,10 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
-import javax.inject.Inject;
 
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.util.Translator;
+import jakarta.inject.Inject;
 
 public abstract class AbstractView implements Serializable {
 

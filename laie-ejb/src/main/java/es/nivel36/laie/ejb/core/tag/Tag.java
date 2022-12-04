@@ -2,19 +2,18 @@ package es.nivel36.laie.ejb.core.tag;
 
 import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-
+import org.bouncycastle.util.Store;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Index;
-import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.SortableField;
-import org.hibernate.search.annotations.Store;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Index;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Indexed
@@ -25,8 +24,8 @@ public class Tag extends AbstractEntity {
 
 	@NotNull
 	@Column(length = 128, nullable = false, unique = true)
-	@Field(name = "_label")
-	@Field(name = "label", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
+	@FullTextField(name = "_label")
+	@FullTextField(name = "label", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "label")
 	private String label;
 

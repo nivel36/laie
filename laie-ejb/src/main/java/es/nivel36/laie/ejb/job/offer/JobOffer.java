@@ -6,28 +6,12 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-
+import org.bouncycastle.util.Store;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Index;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.SortableField;
-import org.hibernate.search.annotations.Store;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.client.Client;
@@ -37,6 +21,21 @@ import es.nivel36.laie.ejb.core.model.Address;
 import es.nivel36.laie.ejb.core.model.Ownerable;
 import es.nivel36.laie.ejb.job.candidature.JobCandidature;
 import es.nivel36.laie.ejb.user.User;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Index;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Indexed
@@ -55,12 +54,12 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	@IndexedEmbedded
 	private Client client;
 
-	@Field(analyze = Analyze.NO)
+	@FullTextField(analyze = Analyze.NO)
 	@SortableField
 	@Column(name = "CLOSE_DATE")
 	private LocalDate closeDate;
 
-	@Field
+	@FullTextField
 	@Column(name = "DESCRIPTION", columnDefinition = "TEXT")
 	private String description;
 
@@ -77,7 +76,7 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	private Integer minSalary;
 
 	@NotNull
-	@Field(analyze = Analyze.NO)
+	@FullTextField(analyze = Analyze.NO)
 	@SortableField
 	@Column(name = "OPEN_DATE", nullable = false)
 	private LocalDate openDate;
@@ -106,8 +105,8 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 
 	@NotNull
 	@Column(name="TITLE", nullable = false)
-	@Field(name = "_title")
-	@Field(name = "title", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
+	@FullTextField(name = "_title")
+	@FullTextField(name = "title", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
 	@SortableField(forField = "title")
 	private String title;
 

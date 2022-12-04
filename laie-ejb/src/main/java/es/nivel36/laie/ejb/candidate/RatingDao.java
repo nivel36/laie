@@ -5,12 +5,11 @@ import static es.nivel36.laie.ejb.core.util.Parameters.map;
 import java.util.List;
 import java.util.Objects;
 
-import javax.persistence.NoResultException;
-
 import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.util.Parameters;
 import es.nivel36.laie.ejb.user.User;
+import jakarta.persistence.NoResultException;
 
 public class RatingDao extends AbstractDao {
 

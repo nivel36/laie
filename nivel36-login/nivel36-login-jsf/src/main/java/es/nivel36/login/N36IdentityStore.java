@@ -1,16 +1,15 @@
 package es.nivel36.login;
 
-import static javax.security.enterprise.identitystore.CredentialValidationResult.NOT_VALIDATED_RESULT;
-
 import java.util.Objects;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.security.auth.login.LoginException;
-import javax.security.enterprise.credential.CallerOnlyCredential;
-import javax.security.enterprise.credential.Credential;
-import javax.security.enterprise.credential.UsernamePasswordCredential;
-import javax.security.enterprise.identitystore.CredentialValidationResult;
-import javax.security.enterprise.identitystore.IdentityStore;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.security.enterprise.credential.CallerOnlyCredential;
+import jakarta.security.enterprise.credential.Credential;
+import jakarta.security.enterprise.credential.UsernamePasswordCredential;
+import jakarta.security.enterprise.identitystore.CredentialValidationResult;
+import jakarta.security.enterprise.identitystore.IdentityStore;
 
 @ApplicationScoped
 public class N36IdentityStore extends AbstractIdentityStore implements IdentityStore {
@@ -25,11 +24,11 @@ public class N36IdentityStore extends AbstractIdentityStore implements IdentityS
 			} else if (credential instanceof CallerOnlyCredential) {
 				account = this.findUserFromCallerOnlyCredential(credential);
 			} else {
-				return NOT_VALIDATED_RESULT;
+				return CredentialValidationResult.NOT_VALIDATED_RESULT;
 			}
 			return this.validate(account);
 		} catch (final LoginException e) {
-			return NOT_VALIDATED_RESULT;
+			return CredentialValidationResult.NOT_VALIDATED_RESULT;
 		}
 	}
 
