@@ -2,7 +2,7 @@ package es.nivel36.laie.ejb.curriculum;
 
 import java.util.Objects;
 
-import org.hibernate.search.annotations.Field;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 
 import es.nivel36.laie.ejb.core.model.AbstractEntity;

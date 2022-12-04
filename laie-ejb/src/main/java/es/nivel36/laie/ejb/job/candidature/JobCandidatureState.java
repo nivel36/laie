@@ -3,10 +3,9 @@ package es.nivel36.laie.ejb.job.candidature;
 import java.util.Objects;
 import java.util.Set;
 
-import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.Facet;
-import org.hibernate.search.annotations.FacetEncodingType;
-import org.hibernate.search.annotations.Field;
+import org.hibernate.search.engine.backend.types.Aggregable;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.KeywordField;
 
 import es.nivel36.laie.ejb.core.EventState;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
@@ -33,8 +32,8 @@ public class JobCandidatureState extends AbstractEntity implements EventState {
 	@Column(name = "FIRST")
 	private boolean first;
 
-	@FullTextField(analyze = Analyze.NO)
-	@Facet(encoding = FacetEncodingType.STRING)
+	@FullTextField(name = "_name")
+	@KeywordField(name = "name", aggregable = Aggregable.YES)
 	@Column(name = "NAME", unique = true)
 	private String name;
 

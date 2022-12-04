@@ -7,25 +7,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.apache.lucene.search.Sort;
-import org.hibernate.search.jpa.FullTextEntityManager;
-import org.hibernate.search.jpa.FullTextQuery;
-import org.hibernate.search.jpa.Search;
-import org.hibernate.search.query.dsl.BooleanJunction;
-import org.hibernate.search.query.dsl.QueryBuilder;
-import org.hibernate.search.query.dsl.sort.SortFieldContext;
-import org.hibernate.search.query.engine.spi.FacetManager;
-import org.hibernate.search.query.facet.Facet;
-import org.hibernate.search.query.facet.FacetCombine;
-import org.hibernate.search.query.facet.FacetSelection;
-import org.hibernate.search.query.facet.FacetingRequest;
-
 import es.nivel36.laie.ejb.core.model.search.SearchFacet;
 import es.nivel36.laie.ejb.core.model.search.SearchFacets;
 import es.nivel36.laie.ejb.core.model.search.SearchResult;
 import es.nivel36.laie.ejb.core.model.search.SortField;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 
 public class SearchFacade {
 

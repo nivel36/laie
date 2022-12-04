@@ -2,11 +2,10 @@ package es.nivel36.laie.ejb.core.tag;
 
 import java.util.Objects;
 
-import org.bouncycastle.util.Store;
-import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.SortableField;
+import org.hibernate.search.engine.backend.types.Sortable;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.KeywordField;
 
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
 import jakarta.persistence.Column;
@@ -17,7 +16,7 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Indexed
-@Table(indexes = { @javax.persistence.Index(name = "UX_TAG_LABEL", columnList = "label", unique = true) })
+@Table(indexes = { @Index(name = "UX_TAG_LABEL", columnList = "label", unique = true) })
 public class Tag extends AbstractEntity {
 
 	private static final long serialVersionUID = -2070061878397221965L;
@@ -25,8 +24,7 @@ public class Tag extends AbstractEntity {
 	@NotNull
 	@Column(length = 128, nullable = false, unique = true)
 	@FullTextField(name = "_label")
-	@FullTextField(name = "label", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
-	@SortableField(forField = "label")
+	@KeywordField(name = "label", sortable = Sortable.YES)
 	private String label;
 
 	public Tag() {

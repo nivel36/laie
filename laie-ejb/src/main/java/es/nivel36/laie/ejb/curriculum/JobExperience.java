@@ -5,7 +5,7 @@ import java.time.YearMonth;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
-import org.hibernate.search.annotations.Field;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 
 import es.nivel36.laie.ejb.core.model.AbstractEntity;

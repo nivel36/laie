@@ -3,13 +3,11 @@ package es.nivel36.laie.ejb.client;
 import java.util.Objects;
 import java.util.Set;
 
-import org.bouncycastle.util.Store;
-import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.ContainedIn;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.SortableField;
+import org.hibernate.search.engine.backend.types.Sortable;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.KeywordField;
 
 import es.nivel36.laie.ejb.core.action.Auditable;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
@@ -34,7 +32,7 @@ import jakarta.validation.constraints.NotNull;
 @Indexed
 @Entity
 @Table(name = "CLIENT", indexes = {
-		@javax.persistence.Index(name = "UX_CLIENT_CIF", columnList = "CIF", unique = true) }, uniqueConstraints = {
+		@Index(name = "UX_CLIENT_CIF", columnList = "CIF", unique = true) }, uniqueConstraints = {
 				@UniqueConstraint(name = "UQ_CLIENT_CIF", columnNames = { "CIF" }),
 				@UniqueConstraint(name = "UQ_CLIENT_NAME", columnNames = { "NAME" }) })
 public class Client extends AbstractEntity implements Ownerable, Erasable, Auditable {
@@ -56,15 +54,13 @@ public class Client extends AbstractEntity implements Ownerable, Erasable, Audit
 	@FullTextField
 	private boolean deleted;
 
-	@ContainedIn
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
 	private Set<JobOffer> jobOffers;
 
 	@NotNull
 	@Column(name = "NAME", unique = true, nullable = false)
 	@FullTextField(name = "_name")
-	@FullTextField(name = "name", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
-	@SortableField(forField = "name")
+	@KeywordField(name = "name",  sortable = Sortable.YES)
 	private String name;
 
 	@NotNull
