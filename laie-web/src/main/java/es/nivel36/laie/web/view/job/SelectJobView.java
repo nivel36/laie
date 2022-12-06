@@ -2,12 +2,11 @@ package es.nivel36.laie.web.view.job;
 
 import java.util.List;
 
-import javax.faces.view.ViewScoped;
-
 import org.primefaces.PrimeFaces;
 
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.web.core.view.AbstractView;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 

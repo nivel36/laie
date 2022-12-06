@@ -1,11 +1,10 @@
 package es.nivel36.laie.web.core;
 
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
-import javax.faces.convert.FacesConverter;
-
 import es.nivel36.laie.ejb.core.tag.Tag;
+import jakarta.faces.component.UIComponent;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.convert.Converter;
+import jakarta.faces.convert.FacesConverter;
 
 @FacesConverter(managed = true, forClass = Tag.class)
 public class TagConverter implements Converter<Tag> {

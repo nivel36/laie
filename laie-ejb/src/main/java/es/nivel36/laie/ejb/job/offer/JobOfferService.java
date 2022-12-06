@@ -6,6 +6,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+import org.apache.lucene.search.SortField;
+import org.hibernate.search.engine.search.query.SearchResult;
+import org.hibernate.search.engine.search.sort.SearchSort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,9 +17,6 @@ import es.nivel36.laie.ejb.client.Client;
 import es.nivel36.laie.ejb.core.action.Create;
 import es.nivel36.laie.ejb.core.action.Update;
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.core.model.search.SearchFacets;
-import es.nivel36.laie.ejb.core.model.search.SearchResult;
-import es.nivel36.laie.ejb.core.model.search.SortField;
 import es.nivel36.laie.ejb.job.candidature.JobCandidature;
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureDao;
 import es.nivel36.laie.ejb.job.candidature.event.JobCandidatureCompletedEvent;
@@ -141,16 +141,15 @@ public class JobOfferService {
 		return updatedJobOffer;
 	}
 
-	private JobOfferEvent builJobOfferEvent(final JobOffer jobOffer, final JobOfferState newState,
-			final String notes, final User user) {
+	private JobOfferEvent builJobOfferEvent(final JobOffer jobOffer, final JobOfferState newState, final String notes,
+			final User user) {
 		final JobOfferEvent newStateEvent = new JobOfferEvent();
 		newStateEvent.setDate(LocalDateTime.now());
 		newStateEvent.setJobOffer(jobOffer);
 		newStateEvent.setState(newState);
 		newStateEvent.setNotes(notes);
 		newStateEvent.setUser(user);
-		newStateEvent
-				.setType(user == null ? JobOfferEventType.AUTOMATIC_EVENT : JobOfferEventType.MANUAL_EVENT);
+		newStateEvent.setType(user == null ? JobOfferEventType.AUTOMATIC_EVENT : JobOfferEventType.MANUAL_EVENT);
 		return newStateEvent;
 	}
 
@@ -169,8 +168,8 @@ public class JobOfferService {
 		return this.search(searchText, page, null, null);
 	}
 
-	public SearchResult<JobOffer> search(final String searchText, final Page page, final SortField sortField,
-			final SearchFacets searchFacets) {
+	public SearchResult<JobOffer> search(final String searchText, final Page page, final SearchSort sortField,
+			final String[] searchFacets) {
 		Objects.requireNonNull(page);
 		return this.jobOfferDao.search(searchText, page, sortField, searchFacets);
 	}

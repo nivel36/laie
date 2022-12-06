@@ -1,8 +1,9 @@
 package es.nivel36.laie.web.view.job;
 
+import javax.naming.directory.SearchResult;
+
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.search.SearchFacets;
-import es.nivel36.laie.ejb.core.model.search.SearchResult;
 import es.nivel36.laie.ejb.core.model.search.SortField;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.job.offer.JobOfferService;

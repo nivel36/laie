@@ -1,8 +1,7 @@
 package es.nivel36.laie.web.view.settings;
 
-import javax.faces.view.ViewScoped;
-
 import es.nivel36.laie.web.core.view.AbstractView;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 
 @Named

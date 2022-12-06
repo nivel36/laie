@@ -6,8 +6,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.faces.view.ViewScoped;
-
 import org.omnifaces.cdi.Param;
 import org.omnifaces.util.Faces;
 
@@ -20,6 +18,7 @@ import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
 import es.nivel36.laie.web.view.candidate.CandidateLazyDataModel;
 import jakarta.annotation.PostConstruct;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 

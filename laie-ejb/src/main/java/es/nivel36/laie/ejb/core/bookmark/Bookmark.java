@@ -8,11 +8,12 @@ import es.nivel36.laie.ejb.core.model.AbstractEntity;
 import es.nivel36.laie.ejb.user.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Index;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(indexes = { @javax.persistence.Index(name = "UX_BOOKMARK_URL", columnList = "url", unique = true) })
+@Table(indexes = { @Index(name = "UX_BOOKMARK_URL", columnList = "url", unique = true) })
 public class Bookmark extends AbstractEntity {
 
 	private static final long serialVersionUID = -2180672310644250195L;

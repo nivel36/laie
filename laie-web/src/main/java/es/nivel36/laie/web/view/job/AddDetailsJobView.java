@@ -1,13 +1,12 @@
 package es.nivel36.laie.web.view.job;
 
-import javax.faces.view.ViewScoped;
-
 import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import jakarta.annotation.PostConstruct;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 
 @Named

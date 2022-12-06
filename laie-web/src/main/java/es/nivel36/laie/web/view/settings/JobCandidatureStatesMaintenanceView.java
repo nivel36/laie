@@ -2,8 +2,6 @@ package es.nivel36.laie.web.view.settings;
 
 import java.util.List;
 
-import javax.faces.view.ViewScoped;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +9,7 @@ import es.nivel36.laie.ejb.job.candidature.JobCandidatureState;
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureStateService;
 import es.nivel36.laie.web.core.view.AbstractView;
 import jakarta.annotation.PostConstruct;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 

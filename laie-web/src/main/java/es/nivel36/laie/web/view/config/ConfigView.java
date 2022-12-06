@@ -7,8 +7,6 @@ import java.io.InputStream;
 import java.util.Locale;
 import java.util.Objects;
 
-import javax.faces.view.ViewScoped;
-
 import org.omnifaces.util.Faces;
 import org.primefaces.event.CaptureEvent;
 import org.primefaces.event.FileUploadEvent;
@@ -25,6 +23,7 @@ import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserService;
 import es.nivel36.laie.web.core.view.AbstractView;
 import jakarta.annotation.PostConstruct;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 

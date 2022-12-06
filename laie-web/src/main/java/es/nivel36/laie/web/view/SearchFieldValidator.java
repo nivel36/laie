@@ -4,15 +4,15 @@ import java.lang.invoke.MethodHandles;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.validator.FacesValidator;
-import javax.faces.validator.Validator;
-import javax.faces.validator.ValidatorException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.component.UIComponent;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.validator.FacesValidator;
+import jakarta.faces.validator.Validator;
+import jakarta.faces.validator.ValidatorException;
 
 @FacesValidator(managed = true, value = "es.nivel36.laie.web.view.SearchFieldValidator")
 public class SearchFieldValidator implements Validator<String> {

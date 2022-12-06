@@ -22,11 +22,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.faces.FacesException;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.context.ResponseWriter;
-
 import org.primefaces.component.api.AjaxSource;
 import org.primefaces.component.api.UIOutcomeTarget;
 import org.primefaces.component.menu.AbstractMenu;
@@ -41,6 +36,11 @@ import org.primefaces.model.menu.Submenu;
 import org.primefaces.util.AjaxRequestBuilder;
 import org.primefaces.util.ComponentTraversalUtils;
 import org.primefaces.util.WidgetBuilder;
+
+import jakarta.faces.FacesException;
+import jakarta.faces.component.UIComponent;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.context.ResponseWriter;
 
 public class RomaMenuRenderer extends BaseMenuRenderer {
 

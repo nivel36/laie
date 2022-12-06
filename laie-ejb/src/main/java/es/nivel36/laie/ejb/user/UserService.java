@@ -4,15 +4,14 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Objects;
 
+import org.hibernate.search.engine.search.query.SearchResult;
+import org.hibernate.search.engine.search.sort.SearchSort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.core.file.File;
 import es.nivel36.laie.ejb.core.file.FileService;
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.core.model.search.SearchFacets;
-import es.nivel36.laie.ejb.core.model.search.SearchResult;
-import es.nivel36.laie.ejb.core.model.search.SortField;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 
@@ -164,8 +163,8 @@ public class UserService {
 		return this.search(searchText, page, null, null);
 	}
 
-	public SearchResult<User> search(final String searchText, final Page page, final SortField sortField,
-			final SearchFacets searchFacets) {
+	public SearchResult<User> search(final String searchText, final Page page, final SearchSort sortField,
+			final String[] searchFacets) {
 		Objects.requireNonNull(page);
 		return this.userDao.search(searchText, page, sortField, searchFacets);
 	}

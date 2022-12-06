@@ -15,19 +15,19 @@
  */
 package org.primefaces.roma.component;
 
-import javax.faces.component.UIComponent;
-import javax.faces.component.UINamingContainer;
-import javax.faces.component.UIOutput;
-import javax.faces.component.UIViewRoot;
-import javax.faces.context.FacesContext;
-import javax.faces.event.AbortProcessingException;
-import javax.faces.event.ComponentSystemEvent;
-import javax.faces.event.ComponentSystemEventListener;
-import javax.faces.event.ListenerFor;
-import javax.faces.event.PostAddToViewEvent;
-
 import org.primefaces.component.api.Widget;
 import org.primefaces.component.menu.AbstractMenu;
+
+import jakarta.faces.component.UIComponent;
+import jakarta.faces.component.UINamingContainer;
+import jakarta.faces.component.UIOutput;
+import jakarta.faces.component.UIViewRoot;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.event.AbortProcessingException;
+import jakarta.faces.event.ComponentSystemEvent;
+import jakarta.faces.event.ComponentSystemEventListener;
+import jakarta.faces.event.ListenerFor;
+import jakarta.faces.event.PostAddToViewEvent;
 
 @ListenerFor(sourceClass = RomaMenu.class, systemEventClass = PostAddToViewEvent.class)
 public class RomaMenu extends AbstractMenu implements Widget,ComponentSystemEventListener {

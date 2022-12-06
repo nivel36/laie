@@ -1,11 +1,10 @@
 package es.nivel36.laie.web.core;
 
-import javax.faces.annotation.FacesConfig;
-
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.faces.annotation.FacesConfig;
 
 @ApplicationScoped
-@FacesConfig(version = FacesConfig.Version.JSF_2_3)
+@FacesConfig
 public class StartupConfig {
 
 }

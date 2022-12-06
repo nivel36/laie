@@ -2,13 +2,12 @@ package es.nivel36.laie.web.core.security;
 
 import java.util.Map;
 
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.faces.event.PhaseEvent;
-import javax.faces.event.PhaseId;
-import javax.faces.event.PhaseListener;
-
 import es.nivel36.laie.ejb.core.SessionUsers;
+import jakarta.faces.context.ExternalContext;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.event.PhaseEvent;
+import jakarta.faces.event.PhaseId;
+import jakarta.faces.event.PhaseListener;
 import jakarta.inject.Inject;
 
 public class UpdateSessionPhaseListener implements PhaseListener {

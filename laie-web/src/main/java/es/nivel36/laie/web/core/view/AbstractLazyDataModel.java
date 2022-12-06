@@ -4,22 +4,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import org.hibernate.search.engine.search.query.SearchResult;
+import org.hibernate.search.engine.search.sort.SearchSort;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortMeta;
 
 import es.nivel36.laie.ejb.core.model.Identifiable;
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.core.model.search.SearchFacet;
-import es.nivel36.laie.ejb.core.model.search.SearchFacets;
-import es.nivel36.laie.ejb.core.model.search.SearchResult;
-import es.nivel36.laie.ejb.core.model.search.SortField;
 
 public abstract class AbstractLazyDataModel<T extends Identifiable> extends LazyDataModel<T> {
 
 	private static final long serialVersionUID = -7266573501998556478L;
-
-	protected transient SearchFacets searchFilter = new SearchFacets();
 
 	protected String searchText;
 
@@ -45,8 +41,7 @@ public abstract class AbstractLazyDataModel<T extends Identifiable> extends Lazy
 		return getKey(entity);
 	}
 
-	protected abstract SearchResult<T> search(String searchText, Page page, SortField sortField,
-			SearchFacets searchFilter);
+	protected abstract SearchResult<T> search(String searchText, Page page, SearchSort sortField, String[] searchFacets);
 
 	protected abstract T find(Long rowkey);
 
@@ -58,7 +53,8 @@ public abstract class AbstractLazyDataModel<T extends Identifiable> extends Lazy
 	public List<T> load(final int first, final int pageSize, final Map<String, SortMeta> sorts,
 			final Map<String, FilterMeta> filters) {
 		final Page page = new Page(first, pageSize);
-		SortField sortField = null;
+		SearchSort searchSort = new 
+		SortField sortField =  SearchSortFactory.
 		if (sorts != null && !sorts.isEmpty()) {
 			for (final SortMeta sort : sorts.values()) {
 				sortField = new SortField(sort.getField(), sort.getOrder().isAscending());
@@ -66,17 +62,19 @@ public abstract class AbstractLazyDataModel<T extends Identifiable> extends Lazy
 			}
 		}
 		final SearchResult<T> searchResult = search(this.searchText, page, sortField, this.searchFilter);
-		this.recalculateFirst(first, pageSize, searchResult.getCount());
-		this.setRowCount(searchResult.getCount());
-		return searchResult.getResultData();
+		int numberOfResults = (int) searchResult.total().hitCount();
+		this.recalculateFirst(first, pageSize, numberOfResults);
+		this.setRowCount(numberOfResults);
+		return searchResult.hits();
 	}
 
 	public void setSearchText(final String searchText) {
 		this.searchText = searchText;
 	}
-	
+
 	@Override
 	public int count(Map<String, FilterMeta> filterBy) {
 		return 0;
 	}
+
 }

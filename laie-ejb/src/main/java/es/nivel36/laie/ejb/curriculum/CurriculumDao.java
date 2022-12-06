@@ -5,13 +5,14 @@ import static es.nivel36.laie.ejb.core.util.Parameters.map;
 import java.util.List;
 import java.util.Objects;
 
+import org.apache.lucene.search.SortField;
+import org.hibernate.search.engine.search.query.SearchResult;
+import org.hibernate.search.engine.search.sort.SearchSort;
+
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.SearchFacade;
-import es.nivel36.laie.ejb.core.model.search.SearchFacets;
-import es.nivel36.laie.ejb.core.model.search.SearchResult;
-import es.nivel36.laie.ejb.core.model.search.SortField;
 import jakarta.inject.Inject;
 import jakarta.persistence.NoResultException;
 
@@ -47,8 +48,8 @@ public class CurriculumDao extends AbstractDao {
 		return this.search(searchText, page, null, null);
 	}
 
-	public SearchResult<Curriculum> search(final String searchText, final Page page, SortField sortOrder,
-			final SearchFacets searchFacets) {
+	public SearchResult<Curriculum> search(final String searchText, final Page page,  final SearchSort sortOrder,
+			final String[] searchFacets) {
 		final String[] searchFields = new String[] { "skills.name", "jobExperiences.jobPosition",
 				"jobExperiences.description", "jobExperiences.companyName", "educations.description" };
 		return searchFacade.search(Curriculum.class, page, sortOrder, searchFacets, searchText, searchFields);

@@ -1,8 +1,9 @@
 package es.nivel36.laie.web.view.user;
 
+import javax.naming.directory.SearchResult;
+
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.search.SearchFacets;
-import es.nivel36.laie.ejb.core.model.search.SearchResult;
 import es.nivel36.laie.ejb.core.model.search.SortField;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserService;

@@ -2,11 +2,10 @@ package es.nivel36.laie.web.view.client;
 
 import java.util.Objects;
 
-import javax.faces.convert.FacesConverter;
-
 import es.nivel36.laie.ejb.client.Client;
 import es.nivel36.laie.ejb.client.ClientService;
 import es.nivel36.laie.web.core.AbstractConverter;
+import jakarta.faces.convert.FacesConverter;
 import jakarta.inject.Inject;
 
 @FacesConverter(managed = true, forClass = Client.class)

@@ -1,7 +1,5 @@
 package es.nivel36.laie.web.view.user;
 
-import javax.faces.view.ViewScoped;
-
 import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +8,7 @@ import es.nivel36.laie.ejb.user.BadManagerException;
 import es.nivel36.laie.ejb.user.DuplicateEmailException;
 import es.nivel36.laie.ejb.user.User;
 import jakarta.annotation.PostConstruct;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 
 @Named

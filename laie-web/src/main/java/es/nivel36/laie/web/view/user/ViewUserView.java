@@ -3,8 +3,6 @@ package es.nivel36.laie.web.view.user;
 import java.util.List;
 import java.util.Objects;
 
-import javax.faces.view.ViewScoped;
-
 import org.omnifaces.cdi.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +17,7 @@ import es.nivel36.laie.ejb.user.UserService;
 import es.nivel36.laie.web.core.view.AbstractView;
 import es.nivel36.laie.web.view.action.ActionsLazyDataModel;
 import jakarta.annotation.PostConstruct;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 

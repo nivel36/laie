@@ -6,8 +6,6 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.List;
 
-import javax.faces.view.ViewScoped;
-
 import org.omnifaces.cdi.Param;
 import org.omnifaces.util.Faces;
 
@@ -17,6 +15,7 @@ import es.nivel36.laie.ejb.curriculum.CurriculumService;
 import es.nivel36.laie.ejb.curriculum.CurriculumTemplate;
 import es.nivel36.laie.web.core.view.AbstractView;
 import jakarta.annotation.PostConstruct;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 

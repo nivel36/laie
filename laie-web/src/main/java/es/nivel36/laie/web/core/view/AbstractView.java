@@ -5,15 +5,14 @@ import static org.omnifaces.util.Faces.validationFailed;
 import java.io.Serializable;
 import java.util.Collection;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.application.FacesMessage.Severity;
-import javax.faces.component.UIComponent;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.faces.context.Flash;
-
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.util.Translator;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.application.FacesMessage.Severity;
+import jakarta.faces.component.UIComponent;
+import jakarta.faces.context.ExternalContext;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.context.Flash;
 import jakarta.inject.Inject;
 
 public abstract class AbstractView implements Serializable {

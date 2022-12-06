@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.faces.view.ViewScoped;
-
 import org.omnifaces.cdi.Param;
 import org.omnifaces.util.Faces;
 import org.primefaces.event.FileUploadEvent;
@@ -31,6 +29,7 @@ import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
 import es.nivel36.laie.web.view.meeting.AddMeetingView;
 import jakarta.annotation.PostConstruct;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 

@@ -3,9 +3,6 @@ package es.nivel36.laie.web.view;
 import java.util.Locale;
 import java.util.Objects;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.view.ViewScoped;
-
 import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import es.nivel36.laie.web.core.view.AbstractView;
 import es.nivel36.login.LoginService;
 import jakarta.annotation.PostConstruct;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.security.enterprise.AuthenticationStatus;

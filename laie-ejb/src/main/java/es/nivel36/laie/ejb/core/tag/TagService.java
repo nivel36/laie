@@ -3,12 +3,11 @@ package es.nivel36.laie.ejb.core.tag;
 import java.util.Objects;
 
 import org.hibernate.search.engine.search.query.SearchResult;
+import org.hibernate.search.engine.search.sort.SearchSort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.core.model.search.SearchFacets;
-import es.nivel36.laie.ejb.core.model.search.SortField;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 
@@ -28,8 +27,8 @@ public class TagService {
 		return search(searchText, page, null, null);
 	}
 
-	public SearchResult<Tag> search(final String searchText, final Page page, SortField sortOrder,
-			final SearchFacets searchFacets) {
+	public SearchResult<Tag> search(final String searchText, final Page page,  final SearchSort sortOrder,
+			final String[] searchFacets) {
 		Objects.requireNonNull(page);
 		logger.debug("Search {}, offset {} with limit of {}", searchText, page.getOffset(), page.getLimit());
 		return this.tagDao.search(searchText, page, sortOrder, searchFacets);

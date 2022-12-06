@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.faces.view.ViewScoped;
-
 import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +18,7 @@ import es.nivel36.laie.ejb.job.meeting.Meeting;
 import es.nivel36.laie.ejb.job.meeting.MeetingType;
 import es.nivel36.laie.web.view.IndexView;
 import jakarta.annotation.PostConstruct;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 
 @Named

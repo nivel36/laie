@@ -11,9 +11,6 @@ import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.faces.component.UIViewRoot;
-import javax.faces.view.ViewScoped;
-
 import org.omnifaces.cdi.Param;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
@@ -28,6 +25,8 @@ import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
 import es.nivel36.laie.web.view.candidate.EditCandidatePermission;
 import jakarta.annotation.PostConstruct;
+import jakarta.faces.component.UIViewRoot;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 

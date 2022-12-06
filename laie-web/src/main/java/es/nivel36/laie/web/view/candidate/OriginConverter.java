@@ -2,13 +2,12 @@ package es.nivel36.laie.web.view.candidate;
 
 import java.util.List;
 
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
-import javax.faces.convert.FacesConverter;
-
 import es.nivel36.laie.ejb.candidate.CandidateService;
 import es.nivel36.laie.ejb.candidate.Origin;
+import jakarta.faces.component.UIComponent;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.convert.Converter;
+import jakarta.faces.convert.FacesConverter;
 import jakarta.inject.Inject;
 
 @FacesConverter(managed = true, forClass = Origin.class)

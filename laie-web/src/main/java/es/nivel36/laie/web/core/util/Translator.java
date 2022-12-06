@@ -6,12 +6,14 @@ import java.util.MissingResourceException;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-import javax.faces.component.UIViewRoot;
-import javax.faces.context.FacesContext;
+import jakarta.faces.component.UIViewRoot;
+import jakarta.faces.context.FacesContext;
 
 public class Translator {
 
 	private static final String FILE_NAME = "es.nivel36.laie.i18n";
+	
+	private static final Locale SPANISH = new Locale("ES");
 
 	private Locale getLocale() {
 		final UIViewRoot uIViewRoot = FacesContext.getCurrentInstance().getViewRoot();
@@ -19,7 +21,7 @@ public class Translator {
 		if (uIViewRoot != null) {
 			locale = uIViewRoot.getLocale();
 		} else {
-			locale = Locale.ENGLISH;
+			locale = SPANISH;
 		}
 		return locale;
 	}

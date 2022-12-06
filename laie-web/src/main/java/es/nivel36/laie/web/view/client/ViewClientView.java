@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.view.ViewScoped;
-
 import org.omnifaces.cdi.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +17,8 @@ import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
 import jakarta.annotation.PostConstruct;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 

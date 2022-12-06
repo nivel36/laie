@@ -1,10 +1,9 @@
 package es.nivel36.laie.web.core;
 
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
-
 import es.nivel36.laie.ejb.core.model.Identifiable;
+import jakarta.faces.component.UIComponent;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.convert.Converter;
 
 public abstract class AbstractConverter<T extends Identifiable> implements Converter<T> {
 

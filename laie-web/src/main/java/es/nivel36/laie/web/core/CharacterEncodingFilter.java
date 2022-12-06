@@ -2,6 +2,7 @@ package es.nivel36.laie.web.core;
 
 import java.io.IOException;
 
+import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletException;
