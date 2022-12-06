@@ -11,6 +11,7 @@ import es.nivel36.laie.ejb.core.action.Create;
 import es.nivel36.laie.ejb.core.action.Update;
 import es.nivel36.laie.ejb.core.model.Page;
 import jakarta.ejb.Stateless;
+import jakarta.enterprise.event.Event;
 import jakarta.inject.Inject;
 
 @Stateless

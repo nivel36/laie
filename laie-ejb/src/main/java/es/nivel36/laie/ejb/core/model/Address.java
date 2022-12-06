@@ -3,14 +3,12 @@ package es.nivel36.laie.ejb.core.model;
 import java.io.Serializable;
 import java.util.Objects;
 
-import org.bouncycastle.util.Store;
-import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.SortableField;
+import org.hibernate.search.engine.backend.types.Sortable;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.KeywordField;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.Index;
 import jakarta.persistence.Table;
 
 @Table(name="ADDRESS")
@@ -20,8 +18,7 @@ public class Address implements Serializable {
 	private static final long serialVersionUID = -8221733995443213238L;
 
 	@FullTextField(name = "_city")
-	@FullTextField(name = "city", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
-	@SortableField(forField = "city")
+	@KeywordField(sortable=Sortable.YES)
 	@Column(name="CITY", length = 128)
 	private String city;
 
@@ -35,8 +32,7 @@ public class Address implements Serializable {
 	private String number;
 
 	@FullTextField(name = "_region")
-	@FullTextField(name = "region", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
-	@SortableField(forField = "region")
+	@KeywordField(sortable=Sortable.YES)
 	@Column(name="REGION", length = 128)
 	private String region;
 

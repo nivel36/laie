@@ -19,6 +19,7 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.Session;
 import jakarta.mail.Transport;
 import jakarta.mail.internet.MimeMessage;
+import jakarta.ws.rs.core.MediaType;
 
 @Stateless
 public class MailService {

@@ -1,166 +1,39 @@
 package es.nivel36.laie.ejb.core.model;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
-import es.nivel36.laie.ejb.core.model.search.SearchFacet;
-import es.nivel36.laie.ejb.core.model.search.SearchFacets;
-import es.nivel36.laie.ejb.core.model.search.SearchResult;
-import es.nivel36.laie.ejb.core.model.search.SortField;
+import org.apache.lucene.search.SortField;
+import org.hibernate.search.engine.search.query.SearchResult;
+import org.hibernate.search.engine.search.query.dsl.SearchQuerySelectStep;
+import org.hibernate.search.mapper.orm.Search;
+import org.hibernate.search.mapper.orm.common.EntityReference;
+import org.hibernate.search.mapper.orm.search.loading.dsl.SearchLoadingOptionsStep;
+import org.hibernate.search.mapper.orm.session.SearchSession;
+
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.Query;
 
 public class SearchFacade {
 
-	@Inject
-	protected EntityManager em;
+	protected @Inject EntityManager em;
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public <T extends Identifiable> List<T> search(final Class<T> type, final Page page,
-			final SortField sortField, final String searchText, final String... fields) {
-		final FullTextEntityManager fullTextEM = Search.getFullTextEntityManager(this.em);
-		final QueryBuilder qb = fullTextEM.getSearchFactory().buildQueryBuilder().forEntity(type).get();
-		final BooleanJunction<BooleanJunction> bj = this.createPredicate(qb, searchText, fields);
-		final FullTextQuery fullTextQuery = fullTextEM.createFullTextQuery(this.createLuceneQuery(qb, bj), type);
-		this.paginate(page, fullTextQuery);
-		this.sortQuery(sortField, qb, fullTextQuery);
-		return fullTextQuery.getResultList();
+	public <T extends Identifiable> List<T> search(final Class<T> type, final Page page, final SortField sortField,
+			final String searchText, final String[] fields) {
+		final SearchSession searchSession = Search.session(this.em);
+		final SearchQuerySelectStep<?, EntityReference, T, SearchLoadingOptionsStep, ?, ?> search = searchSession
+				.search(type);
+		SearchResult<T> searchResult = search.where(f -> f.match().field(fields[0]).matching(searchText))
+				.fetch(page.getOffset(), page.getLimit());
+		return searchResult.hits();
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public <T extends Identifiable> SearchResult<T> search(final Class<T> type, final Page page,
-			final SortField sortField, final SearchFacets searchFacets, final String searchText,
-			final String... fields) {
-		final FullTextEntityManager fullTextEM = Search.getFullTextEntityManager(this.em);
-		final QueryBuilder qb = fullTextEM.getSearchFactory().buildQueryBuilder().forEntity(type).get();
-		final BooleanJunction<BooleanJunction> bj = this.createPredicate(qb, searchText, fields);
-		final FullTextQuery fullTextQuery = fullTextEM.createFullTextQuery(this.createLuceneQuery(qb, bj), type);
-		this.paginate(page, fullTextQuery);
-		this.sortQuery(sortField, qb, fullTextQuery);
-		if (searchFacets != null && !searchFacets.isEmpty()) {
-			this.enableFaceting(searchFacets, qb, fullTextQuery);
-			final Map<String, List<Facet>> allFacets = this.selectFacets(searchFacets, fullTextQuery);
-			boolean hasFacet = false;
-			for (final Entry<String, List<Facet>> entry : allFacets.entrySet()) {
-				if (hasFacet) {
-					break;
-				}
-				for (final Facet facet : entry.getValue()) {
-					if (searchFacets.containsFacet(facet.getFieldName(), entry.getKey(), facet.getValue())) {
-						hasFacet = true;
-						break;
-					}
-				}
-			}
-			if (!hasFacet) {
-				return this.buildSearchResult(new ArrayList<>(), 0, allFacets);
-			} else {
-				this.buildSearchResult(fullTextQuery.getResultList(), fullTextQuery.getResultSize(), allFacets);
-			}
-		}
-		return this.buildSearchResult(fullTextQuery.getResultList(), fullTextQuery.getResultSize(), new HashMap<>());
-	}
-
-	@SuppressWarnings("rawtypes")
-	private Query createLuceneQuery(final QueryBuilder qb, final BooleanJunction<BooleanJunction> bj) {
-		if (bj.isEmpty()) {
-			return qb.all().createQuery();
-		} else {
-			return bj.createQuery();
-		}
-	}
-
-	private void enableFaceting(final SearchFacets searchFacets, final QueryBuilder qb,
-			final FullTextQuery fullTextQuery) {
-		final FacetManager facetManager = fullTextQuery.getFacetManager();
-		for (final SearchFacet searchFacet : searchFacets) {
-			final String facetName = searchFacet.getName();
-			final String facetField = searchFacet.getField();
-			final FacetingRequest facetingRequest = qb.facet().name(facetName).onField(facetField).discrete()
-					.createFacetingRequest();
-			facetManager.enableFaceting(facetingRequest);
-		}
-	}
-
-	@SuppressWarnings("rawtypes")
-	private BooleanJunction<BooleanJunction> createPredicate(final QueryBuilder qb, final String searchText,
-			final String... fields) {
-		final BooleanJunction<BooleanJunction> bj = qb.bool();
-
-		if (searchText != null) {
-			final List<String> searchValues = Arrays.asList(searchText.split("\\s"));
-			for (final String searchValue : searchValues) {
-				if (searchValue == null) {
-					continue;
-				}
-				final BooleanJunction<BooleanJunction> fieldBj = qb.bool();
-				fieldBj.should(qb.keyword().onFields(fields).matching(searchValue).createQuery());
-				bj.must(fieldBj.createQuery());
-			}
-		}
-		return bj;
-	}
-
-	private <T extends Identifiable> SearchResult<T> buildSearchResult(final List<T> results, final int resultsSize,
-			final Map<String, List<Facet>> allFacets) {
-		if (results instanceof ArrayList) {
-			return new SearchResult<>(results, resultsSize, allFacets);
-		} else {
-			return new SearchResult<>(new ArrayList<>(results), resultsSize, allFacets);
-		}
-	}
-
-	private Map<String, List<Facet>> selectFacets(final SearchFacets searchFacets, final FullTextQuery fullTextQuery) {
-		final Map<String, List<Facet>> allFacets = new HashMap<>();
-		final FacetManager facetManager = fullTextQuery.getFacetManager();
-		for (final SearchFacet searchFacet : searchFacets) {
-			final String facetName = searchFacet.getName();
-			allFacets.put(facetName, fullTextQuery.getFacetManager().getFacets(facetName));
-			if (searchFacet.hasSelectedFacets()) {
-				selectFacet(facetManager, searchFacet, facetName);
-			}
-		}
-		return allFacets;
-	}
-
-	private void selectFacet(final FacetManager facetManager, final SearchFacet searchFacet, final String facetName) {
-		final FacetSelection facetSelection = facetManager.getFacetGroup(facetName);
-		final List<Facet> facets = facetManager.getFacets(facetName);
-		final List<Facet> facetList = new ArrayList<>();
-
-		for (final String selectedFacet : searchFacet.getSelectedFactes()) {
-			for (final Facet facet : facets) {
-				if (facet.getValue().equals(selectedFacet)) {
-					facetList.add(facet);
-				}
-			}
-		}
-
-		final Facet[] selectedMatchedFacets = facetList.toArray(new Facet[0]);
-		facetSelection.selectFacets(FacetCombine.OR, selectedMatchedFacets);
-	}
-
-	private void sortQuery(final SortField sortField, final QueryBuilder qb, final FullTextQuery fullTextQuery) {
-		if (sortField == null) {
-			return;
-		}
-		final SortFieldContext sfc = qb.sort().byField(sortField.getField());
-		if (sortField.isAscending()) {
-			sfc.asc();
-		} else {
-			sfc.desc();
-		}
-		final Sort sort = sfc.createSort();
-		fullTextQuery.setSort(sort);
-	}
-
-	private void paginate(final Page page, final FullTextQuery query) {
-		query.setFirstResult(page.getOffset());
-		query.setMaxResults(page.getLimit());
+	public <T extends Identifiable> SearchResult<T> search(Class<T> type, Page page, SortField sortOrder,
+			String[] searchFacets, String searchText, String[] fields) {
+		final SearchSession searchSession = Search.session(this.em);
+		final SearchQuerySelectStep<?, EntityReference, T, SearchLoadingOptionsStep, ?, ?> search = searchSession
+				.search(type);
+		SearchResult<T> searchResult = search.where(f -> f.match().field(fields[0]).matching(searchText))
+				.fetch(page.getOffset(), page.getLimit());
+		return searchResult;
 	}
 }

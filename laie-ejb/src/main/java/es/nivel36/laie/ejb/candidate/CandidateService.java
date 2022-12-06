@@ -23,6 +23,7 @@ import es.nivel36.laie.ejb.core.tag.TagDao;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.user.DuplicateEmailException;
 import jakarta.ejb.Stateless;
+import jakarta.enterprise.event.Event;
 import jakarta.inject.Inject;
 
 @Stateless

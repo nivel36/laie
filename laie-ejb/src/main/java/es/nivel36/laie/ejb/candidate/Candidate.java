@@ -6,12 +6,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import org.bouncycastle.util.Store;
-import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.SortableField;
+import org.hibernate.search.engine.backend.types.Sortable;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.KeywordField;
 
 import es.nivel36.laie.ejb.core.action.Auditable;
 import es.nivel36.laie.ejb.core.file.File;
@@ -45,7 +44,7 @@ import jakarta.validation.constraints.NotNull;
 @Entity
 @Indexed
 @Table(name = "CANDIDATE", indexes = {
-		@javax.persistence.Index(name = "UX_CANDIDATE_EMAIL", columnList = "EMAIL", unique = true) }, //
+		@Index(name = "UX_CANDIDATE_EMAIL", columnList = "EMAIL", unique = true) }, //
 		uniqueConstraints = { @UniqueConstraint(name = "UQ_CANDIDATE_EMAIL", columnNames = { "EMAIL" }) })
 public class Candidate extends AbstractEntity implements Ownerable, Subject, Auditable {
 
@@ -93,8 +92,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	@NotNull
 	@Column(name = "NAME", nullable = false, length = 128)
 	@FullTextField(name = "_name")
-	@FullTextField(name = "name", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
-	@SortableField(forField = "name")
+	@KeywordField(sortable=Sortable.YES)
 	protected String name;
 
 	@ManyToOne
@@ -114,8 +112,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	@JoinColumn(name = "PICTURE_ID")
 	protected File picture;
 
-	@FullTextField(analyze = Analyze.NO, store = Store.NO, index = Index.NO)
-	@SortableField
+	@KeywordField(sortable=Sortable.YES)
 	@Column(name = "RATING", scale = 0, precision = 1 )
 	private Integer rating;
 

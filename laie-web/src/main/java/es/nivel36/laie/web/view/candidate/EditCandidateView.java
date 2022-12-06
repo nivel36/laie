@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import javax.faces.view.ViewScoped;
-
 import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +12,7 @@ import es.nivel36.laie.ejb.core.tag.Tag;
 import es.nivel36.laie.ejb.user.DuplicateEmailException;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import jakarta.annotation.PostConstruct;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 

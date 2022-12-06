@@ -3,12 +3,10 @@ package es.nivel36.laie.ejb.job.candidature;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-import org.bouncycastle.util.Store;
-import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.SortableField;
+import org.hibernate.search.engine.backend.types.Sortable;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.KeywordField;
 
 import es.nivel36.laie.ejb.core.Event;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
@@ -17,7 +15,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -30,8 +27,7 @@ public class JobCandidatureEvent extends AbstractEntity implements Event {
 
 	private static final long serialVersionUID = -5724212902774335888L;
 
-	@FullTextField(name = "date", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
-	@SortableField(forField = "date")
+	@KeywordField(sortable=Sortable.YES)
 	@Column(name = "DATE")
 	private LocalDateTime date;
 

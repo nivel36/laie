@@ -6,12 +6,11 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import org.bouncycastle.util.Store;
-import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.SortableField;
+import org.hibernate.search.engine.backend.types.Sortable;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.KeywordField;
 
 import es.nivel36.laie.ejb.candidate.Rating;
 import es.nivel36.laie.ejb.core.bookmark.Bookmark;
@@ -38,7 +37,7 @@ import jakarta.persistence.UniqueConstraint;
 @Entity
 @Indexed
 @Table(name = "PERSON", indexes = {
-		@javax.persistence.Index(name = "UX_PERSON_EMAIL", columnList = "EMAIL", unique = true) }, uniqueConstraints = {
+		@Index(name = "UX_PERSON_EMAIL", columnList = "EMAIL", unique = true) }, uniqueConstraints = {
 				@UniqueConstraint(name = "UQ_PERSON_EMAIL", columnNames = { "EMAIL" }) })
 public class User extends AbstractEntity implements Subject {
 
@@ -48,8 +47,7 @@ public class User extends AbstractEntity implements Subject {
 	@JoinTable(name = "PERSON_BOOKMARK", joinColumns = @JoinColumn(name = "PERSON_ID"), inverseJoinColumns = @JoinColumn(name = "BOOKMARK_ID"))
 	private Set<Bookmark> bookmarks = new HashSet<>();
 
-	@FullTextField(name = "dateOfJoin", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
-	@SortableField(forField = "dateOfJoin")
+	@KeywordField(sortable = Sortable.YES)
 	@Column(name = "DATE_OF_JOIN")
 	private LocalDate dateOfJoin;
 
@@ -63,14 +61,13 @@ public class User extends AbstractEntity implements Subject {
 	@Column(name = "LANGUAGE", nullable = false)
 	private String language;
 
-	@FullTextField(name = "lastConnection", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
-	@SortableField(forField = "lastConnection")
+	@KeywordField(sortable = Sortable.YES)
 	@Column(name = "LAST_CONNECTION")
 	private LocalDateTime lastConnection;
 
 	@ManyToOne
 	@JoinColumn(name = "MANAGER_ID")
-	@IndexedEmbedded(depth = 1)
+	@IndexedEmbedded(includeDepth = 1)
 	private User manager;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -79,8 +76,7 @@ public class User extends AbstractEntity implements Subject {
 
 	@Column(name = "NAME", nullable = false, length = 128)
 	@FullTextField(name = "_name")
-	@FullTextField(name = "name", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
-	@SortableField(forField = "name")
+	@KeywordField(sortable=Sortable.YES)
 	private String name;
 
 	@Column(name = "PHONE_NUMBER", length = 12)
@@ -92,8 +88,7 @@ public class User extends AbstractEntity implements Subject {
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "ROLE", nullable = false, length = 16)
-	@FullTextField(name = "role", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
-	@SortableField(forField = "role")
+	@KeywordField(sortable=Sortable.YES)
 	private Role role;
 
 	@Column(name = "ROWS_PER_PAGE", nullable = false, scale = 0, precision = 3)
@@ -101,8 +96,7 @@ public class User extends AbstractEntity implements Subject {
 
 	@Column(name = "SURNAME", nullable = false, length = 128)
 	@FullTextField(name = "_surname")
-	@FullTextField(name = "surname", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
-	@SortableField(forField = "surname")
+	@KeywordField(sortable=Sortable.YES)
 	private String surname;
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)

@@ -6,12 +6,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import org.bouncycastle.util.Store;
-import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.SortableField;
+import org.hibernate.search.engine.backend.types.Sortable;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.KeywordField;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.client.Client;
@@ -28,7 +27,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -54,8 +52,7 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	@IndexedEmbedded
 	private Client client;
 
-	@FullTextField(analyze = Analyze.NO)
-	@SortableField
+	@KeywordField(sortable=Sortable.YES)
 	@Column(name = "CLOSE_DATE")
 	private LocalDate closeDate;
 
@@ -76,8 +73,7 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	private Integer minSalary;
 
 	@NotNull
-	@FullTextField(analyze = Analyze.NO)
-	@SortableField
+	@KeywordField(sortable=Sortable.YES)
 	@Column(name = "OPEN_DATE", nullable = false)
 	private LocalDate openDate;
 
@@ -106,8 +102,7 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	@NotNull
 	@Column(name="TITLE", nullable = false)
 	@FullTextField(name = "_title")
-	@FullTextField(name = "title", analyze = Analyze.NO, store = Store.NO, index = Index.NO)
-	@SortableField(forField = "title")
+	@KeywordField(sortable=Sortable.YES)
 	private String title;
 
 	@Override

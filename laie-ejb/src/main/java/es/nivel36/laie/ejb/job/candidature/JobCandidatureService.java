@@ -14,6 +14,7 @@ import es.nivel36.laie.ejb.job.candidature.event.JobCandidatureStateChangedEvent
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.user.User;
 import jakarta.ejb.Stateless;
+import jakarta.enterprise.event.Event;
 import jakarta.inject.Inject;
 
 @Stateless
