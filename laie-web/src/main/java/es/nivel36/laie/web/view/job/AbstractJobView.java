@@ -33,15 +33,15 @@ public abstract class AbstractJobView extends AbstractView {
 	protected transient @Inject UserService userService;
 
 	public List<Client> completeClient(final String query) {
-		return this.clientService.search(query, Page.FIRST_TEN_RESULTS).getResultData();
+		return this.clientService.search(query, Page.FIRST_TEN_RESULTS).hits();
 	}
 
 	public List<User> queryOwner(final String query) {
-		return this.userService.search(query, Page.FIRST_TEN_RESULTS).getResultData();
+		return this.userService.search(query, Page.FIRST_TEN_RESULTS).hits();
 	}
 
 	public List<User> queryRecruiter(final String query) {
-		return this.userService.search(query, Page.FIRST_TEN_RESULTS).getResultData();
+		return this.userService.search(query, Page.FIRST_TEN_RESULTS).hits();
 	}
 
 	public JobOffer getJobOffer() {

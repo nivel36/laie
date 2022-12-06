@@ -3,14 +3,13 @@ package es.nivel36.laie.web.core.view.component;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.component.FacesComponent;
-import javax.faces.component.NamingContainer;
-import javax.faces.component.UIInput;
-import javax.faces.component.UINamingContainer;
-
 import org.primefaces.event.SelectEvent;
 
 import es.nivel36.laie.ejb.user.User;
+import jakarta.faces.component.FacesComponent;
+import jakarta.faces.component.NamingContainer;
+import jakarta.faces.component.UIInput;
+import jakarta.faces.component.UINamingContainer;
 
 @FacesComponent(value = "inputUsers")
 public class InputUsers extends UIInput implements NamingContainer {

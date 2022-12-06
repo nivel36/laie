@@ -2,11 +2,10 @@ package es.nivel36.laie.web.view.client.contact;
 
 import java.util.Objects;
 
-import javax.faces.convert.FacesConverter;
-
 import es.nivel36.laie.ejb.client.Contact;
 import es.nivel36.laie.ejb.client.ContactService;
 import es.nivel36.laie.web.core.AbstractConverter;
+import jakarta.faces.convert.FacesConverter;
 import jakarta.inject.Inject;
 
 @FacesConverter(managed = true, forClass = Contact.class)

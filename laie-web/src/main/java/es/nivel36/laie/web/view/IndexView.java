@@ -3,8 +3,6 @@ package es.nivel36.laie.web.view;
 import java.util.List;
 import java.util.Objects;
 
-import javax.faces.view.ViewScoped;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +15,7 @@ import es.nivel36.laie.web.view.action.ActionsLazyDataModel;
 import es.nivel36.laie.web.view.candidate.CandidateLazyDataModel;
 import es.nivel36.laie.web.view.job.JobOfferLazyDataModel;
 import jakarta.annotation.PostConstruct;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 

@@ -60,7 +60,7 @@ public abstract class AbstractCandidateView extends AbstractView {
 	}
 
 	public List<User> queryOwner(final String query) {
-		return this.userService.search(query, Page.FIRST_TEN_RESULTS).getResultData();
+		return this.userService.search(query, Page.FIRST_TEN_RESULTS).hits();
 	}
 
 	protected void saveImage() {

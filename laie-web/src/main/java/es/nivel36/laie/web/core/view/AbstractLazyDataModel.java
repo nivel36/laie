@@ -19,16 +19,6 @@ public abstract class AbstractLazyDataModel<T extends Identifiable> extends Lazy
 
 	protected String searchText;
 
-	public void addSearchFilter(final String field, final String value, final String... selectedFacets) {
-		final SearchFacet searchFacet = new SearchFacet(field, value);
-		searchFacet.selectFacets(selectedFacets);
-		this.searchFilter.addFacet(searchFacet);
-	}
-
-	public void clearSearchFilters() {
-		this.searchFilter.clear();
-	}
-
 	@Override
 	public T getRowData(final String rowKey) {
 		Objects.requireNonNull(rowKey, "RowKey can't be null");
@@ -53,15 +43,7 @@ public abstract class AbstractLazyDataModel<T extends Identifiable> extends Lazy
 	public List<T> load(final int first, final int pageSize, final Map<String, SortMeta> sorts,
 			final Map<String, FilterMeta> filters) {
 		final Page page = new Page(first, pageSize);
-		SearchSort searchSort = new 
-		SortField sortField =  SearchSortFactory.
-		if (sorts != null && !sorts.isEmpty()) {
-			for (final SortMeta sort : sorts.values()) {
-				sortField = new SortField(sort.getField(), sort.getOrder().isAscending());
-				break; // Only one sortField is allowed
-			}
-		}
-		final SearchResult<T> searchResult = search(this.searchText, page, sortField, this.searchFilter);
+		final SearchResult<T> searchResult = search(this.searchText, page, null, null);
 		int numberOfResults = (int) searchResult.total().hitCount();
 		this.recalculateFirst(first, pageSize, numberOfResults);
 		this.setRowCount(numberOfResults);

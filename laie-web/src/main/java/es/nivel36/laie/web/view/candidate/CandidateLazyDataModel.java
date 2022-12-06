@@ -1,12 +1,11 @@
 package es.nivel36.laie.web.view.candidate;
 
-import javax.naming.directory.SearchResult;
+import org.hibernate.search.engine.search.query.SearchResult;
+import org.hibernate.search.engine.search.sort.SearchSort;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.candidate.CandidateService;
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.core.model.search.SearchFacets;
-import es.nivel36.laie.ejb.core.model.search.SortField;
 import es.nivel36.laie.web.core.view.AbstractLazyDataModel;
 import jakarta.inject.Inject;
 
@@ -17,8 +16,8 @@ public class CandidateLazyDataModel extends AbstractLazyDataModel<Candidate> {
 	private transient @Inject CandidateService candidateService;
 
 	@Override
-	protected SearchResult<Candidate> search(String searchText, Page page, SortField sortField,
-			SearchFacets searchFilter) {
+	protected SearchResult<Candidate> search(String searchText, Page page, SearchSort sortField,
+			String[] searchFilter) {
 		return candidateService.search(searchText, page, sortField, searchFilter);
 	}
 
