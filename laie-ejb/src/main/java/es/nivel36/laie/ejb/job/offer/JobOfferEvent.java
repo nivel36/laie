@@ -47,7 +47,7 @@ public class JobOfferEvent extends AbstractEntity implements Event {
 
 	@ManyToOne
 	@JoinColumn(name = "USER_ID")
-	@IndexedEmbedded
+	@IndexedEmbedded(includeDepth = 1)
 	private User user;
 
 	@Override

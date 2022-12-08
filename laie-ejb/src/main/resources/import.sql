@@ -108,4 +108,3 @@ insert into MEETING(ID, VERSION, DATE_PLANNED, DURATION, JOB_OFFER_ID, MEETING_T
 insert into EMAILS(MEETING_ID, EMAIL) values (600, 'abel.ferrer.jimenez@gmail.com');
 insert into EMAILS(MEETING_ID, EMAIL) values (600, 'aferrer@gmail.com');
 
-ALTER SEQUENCE HIBERNATE_SEQUENCE RESTART with 2000;

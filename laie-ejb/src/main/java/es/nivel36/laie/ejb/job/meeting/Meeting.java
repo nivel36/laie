@@ -57,7 +57,7 @@ public class Meeting extends AbstractEntity implements Ownerable {
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "OWNER_ID", nullable = false)
-	@IndexedEmbedded
+	@IndexedEmbedded(includeDepth = 1)
 	private User owner;
 
 	@Column(name = "DESCRIPTION", columnDefinition = "TEXT")

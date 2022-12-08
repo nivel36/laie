@@ -40,7 +40,7 @@ public class Client extends AbstractEntity implements Ownerable, Erasable, Audit
 	private static final long serialVersionUID = 3562472646025185677L;
 
 	@Embedded
-	@IndexedEmbedded
+	@IndexedEmbedded(includeDepth = 1)
 	private Address address;
 
 	@Column(name = "CIF", length = 16)
@@ -51,7 +51,6 @@ public class Client extends AbstractEntity implements Ownerable, Erasable, Audit
 	private Set<Contact> contacts;
 
 	@Column(name = "DELETED", nullable = false)
-	@FullTextField
 	private boolean deleted;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
@@ -66,7 +65,7 @@ public class Client extends AbstractEntity implements Ownerable, Erasable, Audit
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "OWNER_ID", nullable = false)
-	@IndexedEmbedded
+	@IndexedEmbedded(includeDepth = 1)
 	private User owner;
 
 	@Column(name = "PHONE_NUMBER", length = 16)

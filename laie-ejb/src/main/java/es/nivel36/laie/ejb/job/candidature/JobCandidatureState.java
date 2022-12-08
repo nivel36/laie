@@ -1,5 +1,6 @@
 package es.nivel36.laie.ejb.job.candidature;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -15,6 +16,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -32,11 +34,14 @@ public class JobCandidatureState extends AbstractEntity implements EventState {
 	@Column(name = "FIRST")
 	private boolean first;
 
+	@OneToMany(mappedBy = "state", fetch = FetchType.LAZY)
+	private Set<JobCandidature> jobCandidatures = new HashSet<>();
+
 	@FullTextField(name = "_name")
 	@KeywordField(name = "name", aggregable = Aggregable.YES)
 	@Column(name = "NAME", unique = true)
 	private String name;
-
+	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "JOB_CANDIDATURE_STATE_REL", joinColumns = {
 			@JoinColumn(name = "PARENT_ID") }, inverseJoinColumns = { @JoinColumn(name = "JOB_CANDIDATURE_ID") })
@@ -55,6 +60,10 @@ public class JobCandidatureState extends AbstractEntity implements EventState {
 		}
 		final JobCandidatureState other = (JobCandidatureState) obj;
 		return Objects.equals(this.name, other.name);
+	}
+
+	public Set<JobCandidature> getJobCandidatures() {
+		return jobCandidatures;
 	}
 
 	@Override
@@ -97,6 +106,10 @@ public class JobCandidatureState extends AbstractEntity implements EventState {
 
 	public void setFirst(final boolean first) {
 		this.first = first;
+	}
+
+	public void setJobCandidatures(Set<JobCandidature> jobCandidatures) {
+		this.jobCandidatures = jobCandidatures;
 	}
 
 	public void setName(final String name) {

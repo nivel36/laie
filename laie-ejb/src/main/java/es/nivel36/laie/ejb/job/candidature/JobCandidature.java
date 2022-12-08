@@ -40,8 +40,9 @@ public class JobCandidature extends AbstractEntity {
 	@OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private Set<Meeting> meetings;
 
+	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "JOB_CANDIDATURE_STATE_ID")
+	@JoinColumn(name = "JOB_CANDIDATURE_STATE_ID", nullable = false)
 	private JobCandidatureState state;
 
 	public JobCandidature() {

@@ -12,7 +12,6 @@ import jakarta.security.enterprise.authentication.mechanism.http.RememberMe;
 import jakarta.security.enterprise.credential.Credential;
 import jakarta.security.enterprise.identitystore.CredentialValidationResult;
 import jakarta.security.enterprise.identitystore.CredentialValidationResult.Status;
-import jakarta.security.enterprise.identitystore.IdentityStore;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -25,7 +24,7 @@ public class N36AuthenticationMechanism implements HttpAuthenticationMechanism {
 
 	static final String LOGIN_URL = "/login.xhtml";
 
-	private @Inject IdentityStore identityStore;
+	private @Inject N36IdentityStore identityStore;
 
 	@Override
 	public AuthenticationStatus validateRequest(final HttpServletRequest request, final HttpServletResponse response,

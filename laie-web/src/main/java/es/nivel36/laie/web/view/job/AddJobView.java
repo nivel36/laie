@@ -1,6 +1,6 @@
 package es.nivel36.laie.web.view.job;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
 import org.omnifaces.cdi.Param;
@@ -34,7 +34,7 @@ public class AddJobView extends AbstractJobView {
 			this.jobOffer.setClient(client);
 			this.jobOffer.setAddress(client.getAddress());
 		}
-		this.jobOffer.setOpenDate(LocalDate.now());
+		this.jobOffer.setOpenDate(LocalDateTime.now());
 		this.jobOffer.setOwner(this.sessionUser.get());
 		this.recruiters = this.sessionUser.getTeam().stream().map(User::getEmail).collect(Collectors.toList());
 	}

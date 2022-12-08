@@ -8,9 +8,9 @@ import java.util.Set;
 
 import org.hibernate.search.engine.backend.types.Sortable;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
-import org.hibernate.search.mapper.pojo.mapping.definition.annotation.KeywordField;
 
 import es.nivel36.laie.ejb.core.action.Auditable;
 import es.nivel36.laie.ejb.core.file.File;
@@ -92,7 +92,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	@NotNull
 	@Column(name = "NAME", nullable = false, length = 128)
 	@FullTextField(name = "_name")
-	@KeywordField(sortable=Sortable.YES)
+	@GenericField(sortable=Sortable.YES)
 	protected String name;
 
 	@ManyToOne
@@ -102,7 +102,6 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "OWNER_ID", nullable = false)
-	@IndexedEmbedded
 	private User owner;
 
 	@Column(name = "PHONE_NUMBER", length = 12)
@@ -112,7 +111,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	@JoinColumn(name = "PICTURE_ID")
 	protected File picture;
 
-	@KeywordField(sortable=Sortable.YES)
+	@GenericField(sortable=Sortable.YES)
 	@Column(name = "RATING", scale = 0, precision = 1 )
 	private Integer rating;
 
@@ -132,7 +131,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "CANDIDATE_TAG", joinColumns = @JoinColumn(name = "CANDIDATE_ID"), inverseJoinColumns = @JoinColumn(name = "TAG_ID"))
-	@IndexedEmbedded
+	@IndexedEmbedded(includeDepth = 1)
 	private Set<Tag> tags = new HashSet<>();
 
 	public void addFile(final File file) {

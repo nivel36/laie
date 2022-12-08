@@ -4,9 +4,9 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 import org.hibernate.search.engine.backend.types.Sortable;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
-import org.hibernate.search.mapper.pojo.mapping.definition.annotation.KeywordField;
 
 import es.nivel36.laie.ejb.core.Event;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
@@ -27,7 +27,7 @@ public class JobCandidatureEvent extends AbstractEntity implements Event {
 
 	private static final long serialVersionUID = -5724212902774335888L;
 
-	@KeywordField(sortable=Sortable.YES)
+	@GenericField(sortable = Sortable.YES)
 	@Column(name = "DATE")
 	private LocalDateTime date;
 
@@ -39,7 +39,6 @@ public class JobCandidatureEvent extends AbstractEntity implements Event {
 	private String notes;
 
 	@ManyToOne
-	@IndexedEmbedded
 	@JoinColumn(name = "JOB_CANDIDATURE_STATE_ID")
 	private JobCandidatureState state;
 
@@ -49,7 +48,7 @@ public class JobCandidatureEvent extends AbstractEntity implements Event {
 	private JobCandidatureEventType type;
 
 	@ManyToOne
-	@IndexedEmbedded
+	@IndexedEmbedded(includeDepth = 1)
 	@JoinColumn(name = "USER_ID")
 	private User user;
 

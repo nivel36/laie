@@ -67,8 +67,8 @@ public class JobOfferService {
 	}
 
 	private boolean openDateHasCome(final JobOffer jobOffer) {
-		final LocalDate dateOpened = jobOffer.getOpenDate();
-		final LocalDate now = LocalDate.now();
+		final LocalDateTime dateOpened = jobOffer.getOpenDate();
+		final LocalDateTime now = LocalDateTime.now();
 		return !now.isBefore(dateOpened);
 	}
 
@@ -127,7 +127,7 @@ public class JobOfferService {
 		jobOfferDao.addJobOfferEvent(newStateEvent);
 		jobOffer.setState(newState);
 		if (newState.isCloseState()) {
-			jobOffer.setCloseDate(LocalDate.now());
+			jobOffer.setCloseDate(LocalDateTime.now());
 			jobOffer.setState(JobOfferState.CLOSED);
 		}
 		if (newState.isOpenState()) {

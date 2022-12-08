@@ -1,6 +1,6 @@
 package es.nivel36.laie.ejb.job.offer;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.hibernate.search.engine.backend.types.Sortable;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.KeywordField;
@@ -43,18 +44,18 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	private static final long serialVersionUID = 1529439068651089035L;
 
 	@Embedded
-	@IndexedEmbedded
+	@IndexedEmbedded(includeDepth = 1)
 	private Address address;
 
 	@ManyToOne
 	@JoinColumn(name = "CLIENT_ID", nullable = false)
 	@NotNull
-	@IndexedEmbedded
+	@IndexedEmbedded(includeDepth = 1)
 	private Client client;
 
-	@KeywordField(sortable=Sortable.YES)
+	@GenericField(sortable=Sortable.YES)
 	@Column(name = "CLOSE_DATE")
-	private LocalDate closeDate;
+	private LocalDateTime closeDate;
 
 	@FullTextField
 	@Column(name = "DESCRIPTION", columnDefinition = "TEXT")
@@ -73,14 +74,14 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	private Integer minSalary;
 
 	@NotNull
-	@KeywordField(sortable=Sortable.YES)
+	@GenericField(sortable=Sortable.YES)
 	@Column(name = "OPEN_DATE", nullable = false)
-	private LocalDate openDate;
+	private LocalDateTime openDate;
 
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "OWNER_ID", nullable = false)
-	@IndexedEmbedded
+	@IndexedEmbedded(includeDepth = 1)
 	private User owner;
 
 	@NotNull
@@ -132,7 +133,7 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 		return this.client;
 	}
 
-	public LocalDate getCloseDate() {
+	public LocalDateTime getCloseDate() {
 		return this.closeDate;
 	}
 
@@ -166,7 +167,7 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 		return this.minSalary;
 	}
 
-	public LocalDate getOpenDate() {
+	public LocalDateTime getOpenDate() {
 		return this.openDate;
 	}
 
@@ -233,7 +234,7 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 		this.client = client;
 	}
 
-	public void setCloseDate(final LocalDate closeDate) {
+	public void setCloseDate(final LocalDateTime closeDate) {
 		this.closeDate = closeDate;
 	}
 
@@ -257,7 +258,7 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 		this.minSalary = minSalary;
 	}
 
-	public void setOpenDate(final LocalDate openDate) {
+	public void setOpenDate(final LocalDateTime openDate) {
 		this.openDate = openDate;
 	}
 

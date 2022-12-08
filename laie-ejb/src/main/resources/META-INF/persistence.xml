@@ -9,9 +9,8 @@
 			<property name="javax.persistence.schema-generation.database.action" value="create" />
 			<property name="javax.persistence.schema-generation.create-source" value="metadata" />
 			<property name="javax.persistence.schema-generation.drop-source" value="metadata" />
-			<property name="hibernate.search.lucene_version" value="LUCENE_CURRENT"/>
-			<property name="hibernate.search.default.directory_provider" value="filesystem" />
-			<property name="hibernate.search.default.indexBase" value="/tmp/lucene/indexes" />
+			<property name="hibernate.search.backend.directory.root" value="/tmp/lucene/indexes" />
+			<property name="hibernate.search.backend.type" value="lucene" />
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="false" />
 			<property name="hibernate.cache.use_second_level_cache" value="false" />

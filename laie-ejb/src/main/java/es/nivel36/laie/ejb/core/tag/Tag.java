@@ -1,16 +1,25 @@
 package es.nivel36.laie.ejb.core.tag;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import org.hibernate.search.engine.backend.types.Sortable;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.KeywordField;
 
+import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Index;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
@@ -20,6 +29,10 @@ import jakarta.validation.constraints.NotNull;
 public class Tag extends AbstractEntity {
 
 	private static final long serialVersionUID = -2070061878397221965L;
+
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "tags")
+	@IndexedEmbedded(includeDepth = 1)
+	private Set<Candidate> candidates = new HashSet<>();
 
 	@NotNull
 	@Column(length = 128, nullable = false, unique = true)
@@ -35,14 +48,6 @@ public class Tag extends AbstractEntity {
 		this.label = label;
 	}
 
-	public String getLabel() {
-		return this.label;
-	}
-
-	public void setLabel(final String label) {
-		this.label = label;
-	}
-
 	@Override
 	public boolean equals(final Object obj) {
 		if (obj == null) {
@@ -51,19 +56,32 @@ public class Tag extends AbstractEntity {
 		if (this == obj) {
 			return true;
 		}
-		if (!super.equals(obj)) {
-			return false;
-		}
-		if (this.getClass() != obj.getClass()) {
+		if (!super.equals(obj) || (this.getClass() != obj.getClass())) {
 			return false;
 		}
 		final Tag other = (Tag) obj;
 		return Objects.equals(this.label, other.label);
 	}
 
+	public Set<Candidate> getCandidates() {
+		return candidates;
+	}
+
+	public String getLabel() {
+		return this.label;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.label);
+	}
+
+	public void setCandidates(Set<Candidate> candidates) {
+		this.candidates = candidates;
+	}
+
+	public void setLabel(final String label) {
+		this.label = label;
 	}
 
 	@Override
