@@ -10,7 +10,7 @@
 			<web-resource-name>Unprotected</web-resource-name>
 			<url-pattern>/login.xhtml</url-pattern>
 			<url-pattern>/forgetPassword.xhtml</url-pattern>
-			<url-pattern>/javax.faces.resource/*</url-pattern>
+			<url-pattern>/jakarta.faces.resource/*</url-pattern>
 			<url-pattern>/resources/img/*</url-pattern>
 			<url-pattern>/public/*</url-pattern>
 		</web-resource-collection>
@@ -40,27 +40,27 @@
 	</listener>
 	
 	<context-param>
-		<param-name>javax.faces.FACELETS_REFRESH_PERIOD</param-name>
+		<param-name>jakarta.faces.FACELETS_REFRESH_PERIOD</param-name>
 		<param-value>2</param-value>
 	</context-param>
 	
 	<context-param>
-		<param-name>javax.faces.CLIENT_WINDOW_MODE</param-name>
+		<param-name>jakarta.faces.CLIENT_WINDOW_MODE</param-name>
 		<param-value>none</param-value>
 	</context-param>
 	
 	<context-param>
-		<param-name>javax.faces.DEFAULT_SUFFIX</param-name>
+		<param-name>jakarta.faces.DEFAULT_SUFFIX</param-name>
 		<param-value>.xhtml</param-value>
 	</context-param>
 	
 	<context-param>
-		<param-name>javax.faces.FACELETS_LIBRARIES</param-name>
+		<param-name>jakarta.faces.FACELETS_LIBRARIES</param-name>
 		<param-value>/WEB-INF/primefaces-roma.taglib.xml</param-value>
 	</context-param>
 	
 	<context-param>
-		<param-name>javax.faces.FACELETS_LIBRARIES</param-name>
+		<param-name>jakarta.faces.FACELETS_LIBRARIES</param-name>
 		<param-value>/WEB-INF/laie.taglib.xml</param-value>
 	</context-param>
 	
@@ -70,24 +70,24 @@
 	</context-param>
 
 	<context-param>
-		<param-name>javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>
+		<param-name>jakarta.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>
 		<param-value>true</param-value>
 	</context-param>
 	
 	<context-param>
-		<param-name>javax.faces.PROJECT_STAGE</param-name>
+		<param-name>jakarta.faces.PROJECT_STAGE</param-name>
 		<param-value>Development</param-value>
 	</context-param>
 	<context-param>
-		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+		<param-name>jakarta.faces.STATE_SAVING_METHOD</param-name>
 		<param-value>server</param-value>
 	</context-param>
 	<context-param>
-		<param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
+		<param-name>jakarta.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
 		<param-value>true</param-value>
 	</context-param>
 	<context-param>
-		<param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+		<param-name>jakarta.servlet.jsp.jstl.fmt.localizationContext</param-name>
 		<param-value>resources.application</param-value>
 	</context-param>
 	<context-param>
@@ -96,7 +96,7 @@
 	</context-param>
 
 	<context-param>
- 		<param-name>javax.faces.ENABLE_WEBSOCKET_ENDPOINT</param-name>
+ 		<param-name>jakarta.faces.ENABLE_WEBSOCKET_ENDPOINT</param-name>
  		<param-value>true</param-value>
 	</context-param>
 
