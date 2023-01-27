@@ -37,7 +37,7 @@ public class StartupConfig {
 		this.createAppDirectories();
 		this.indexerInit();
 	}
-
+	
 	private void createAppDirectories() {
 		this.create(luceneDirectory);
 		this.create(fileDirectory);

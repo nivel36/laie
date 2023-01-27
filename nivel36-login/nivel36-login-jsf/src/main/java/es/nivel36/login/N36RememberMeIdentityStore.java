@@ -23,7 +23,7 @@ public class N36RememberMeIdentityStore extends AbstractIdentityStore implements
 	public CredentialValidationResult validate(final RememberMeCredential rememberMeCredential) {
 		Objects.requireNonNull(rememberMeCredential);
 		final String token = rememberMeCredential.getToken();
-		final byte[] tokenHash = CriptoUtil.digestPassword(token);
+		final String tokenHash = CriptoUtil.digestPassword(token);
 		final Account credential = accountService.findAccountByTokenHashAndType(tokenHash, TokenType.REMEMBER_ME);
 		return this.validate(credential);
 	}

@@ -2,9 +2,9 @@ package es.nivel36.laie.web.view.job;
 
 
 import org.hibernate.search.engine.search.query.SearchResult;
-import org.hibernate.search.engine.search.sort.SearchSort;
 
 import es.nivel36.laie.ejb.core.model.Page;
+import es.nivel36.laie.ejb.core.model.SortField;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.web.core.view.AbstractLazyDataModel;
@@ -18,7 +18,7 @@ public class JobOfferLazyDataModel extends AbstractLazyDataModel<JobOffer> {
 	private transient JobOfferService jobOfferService;
 
 	@Override
-	protected SearchResult<JobOffer> search(String searchText, Page page, SearchSort sortField,
+	protected SearchResult<JobOffer> search(String searchText, Page page, SortField sortField,
 			String[] searchFilter) {
 		return jobOfferService.search(searchText, page, sortField, searchFilter);
 	}

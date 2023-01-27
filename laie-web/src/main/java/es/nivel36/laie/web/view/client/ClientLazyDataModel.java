@@ -1,11 +1,11 @@
 package es.nivel36.laie.web.view.client;
 
 import org.hibernate.search.engine.search.query.SearchResult;
-import org.hibernate.search.engine.search.sort.SearchSort;
 
 import es.nivel36.laie.ejb.client.Client;
 import es.nivel36.laie.ejb.client.ClientService;
 import es.nivel36.laie.ejb.core.model.Page;
+import es.nivel36.laie.ejb.core.model.SortField;
 import es.nivel36.laie.web.core.view.AbstractLazyDataModel;
 import jakarta.inject.Inject;
 
@@ -17,7 +17,7 @@ public class ClientLazyDataModel extends AbstractLazyDataModel<Client> {
 	private transient ClientService clientService;
 
 	@Override
-	protected SearchResult<Client> search(String searchText, Page page, SearchSort sortField, String[] searchFilter) {
+	protected SearchResult<Client> search(String searchText, Page page, SortField sortField, String[] searchFilter) {
 		return clientService.search(searchText, page, sortField, searchFilter);
 	}
 

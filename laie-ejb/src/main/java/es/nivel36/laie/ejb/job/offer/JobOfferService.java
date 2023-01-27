@@ -1,14 +1,11 @@
 package es.nivel36.laie.ejb.job.offer;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-import org.apache.lucene.search.SortField;
 import org.hibernate.search.engine.search.query.SearchResult;
-import org.hibernate.search.engine.search.sort.SearchSort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +14,7 @@ import es.nivel36.laie.ejb.client.Client;
 import es.nivel36.laie.ejb.core.action.Create;
 import es.nivel36.laie.ejb.core.action.Update;
 import es.nivel36.laie.ejb.core.model.Page;
+import es.nivel36.laie.ejb.core.model.SortField;
 import es.nivel36.laie.ejb.job.candidature.JobCandidature;
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureDao;
 import es.nivel36.laie.ejb.job.candidature.event.JobCandidatureCompletedEvent;
@@ -168,7 +166,7 @@ public class JobOfferService {
 		return this.search(searchText, page, null, null);
 	}
 
-	public SearchResult<JobOffer> search(final String searchText, final Page page, final SearchSort sortField,
+	public SearchResult<JobOffer> search(final String searchText, final Page page, final SortField sortField,
 			final String[] searchFacets) {
 		Objects.requireNonNull(page);
 		return this.jobOfferDao.search(searchText, page, sortField, searchFacets);

@@ -21,7 +21,7 @@ public abstract class AbstractDao {
 
 	private static final Logger logger = LoggerFactory.getLogger(AbstractDao.class);
 
-	private static final String CACHE_STORE_MODE = "javax.persistence.cache.storeMode";
+	private static final String CACHE_STORE_MODE = "jakarta.persistence.cache.storeMode";
 
 	protected @PersistenceContext(unitName = "laie") EntityManager em;
 

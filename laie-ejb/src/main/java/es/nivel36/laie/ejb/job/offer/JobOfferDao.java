@@ -5,15 +5,14 @@ import static es.nivel36.laie.ejb.core.util.Parameters.map;
 import java.util.List;
 import java.util.Objects;
 
-import org.apache.lucene.search.SortField;
 import org.hibernate.search.engine.search.query.SearchResult;
-import org.hibernate.search.engine.search.sort.SearchSort;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.client.Client;
 import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.SearchFacade;
+import es.nivel36.laie.ejb.core.model.SortField;
 import es.nivel36.laie.ejb.core.util.Parameters;
 import es.nivel36.laie.ejb.user.User;
 import jakarta.inject.Inject;
@@ -22,7 +21,7 @@ public class JobOfferDao extends AbstractDao {
 
 	@Inject
 	private SearchFacade searchFacade;
-	
+
 	public void addJobOfferEvent(JobOfferEvent jobOfferEvent) {
 		Objects.requireNonNull(jobOfferEvent);
 		em.persist(jobOfferEvent);
@@ -63,7 +62,7 @@ public class JobOfferDao extends AbstractDao {
 		final Parameters parameters = map("jobOffer", jobOffer);
 		return this.findByQuery(Long.class, namedQuery, parameters).longValue();
 	}
-	
+
 	public List<JobOfferEvent> findJobOfferEventsByJobOffer(final JobOffer jobOffer, final Page page) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(page);
@@ -72,9 +71,9 @@ public class JobOfferDao extends AbstractDao {
 		return this.findByQuery(JobOfferEvent.class, namedQuery, parameters, page);
 	}
 
-	public SearchResult<JobOffer> search(final String searchText, final Page page,  final SearchSort sortOrder,
+	public SearchResult<JobOffer> search(final String searchText, final Page page, final SortField sortField,
 			final String[] searchFacets) {
 		final String[] searchFields = new String[] { "_title", "client._name" };
-		return searchFacade.search(JobOffer.class, page, sortOrder, searchFacets, searchText, searchFields);
+		return searchFacade.search(JobOffer.class, page, sortField, searchFacets, searchText, searchFields);
 	}
 }

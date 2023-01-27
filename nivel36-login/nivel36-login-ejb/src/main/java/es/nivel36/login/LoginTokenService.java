@@ -22,7 +22,7 @@ public class LoginTokenService {
 
 	private @Inject AccountService accountService;
 
-	public LoginToken findByTokenHash(final byte[] tokenHash) {
+	public LoginToken findByTokenHash(final String tokenHash) {
 		Objects.requireNonNull(tokenHash);
 		Objects.requireNonNull(tokenHash);
 		final String namedQuery = "LoginToken.findByTokenHash";
@@ -61,7 +61,7 @@ public class LoginTokenService {
 
 	public void remove(final String token) {
 		Objects.requireNonNull(token);
-		final byte[] tokenHash = CriptoUtil.digestPassword(token);
+		final String tokenHash = CriptoUtil.digestPassword(token);
 		final LoginToken loginToken = this.findByTokenHash(tokenHash);
 		if (loginToken != null) {
 			this.delete(loginToken);

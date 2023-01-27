@@ -21,7 +21,7 @@ public class AccountService {
 
 	private @PersistenceContext(unitName = "nivel36-login") EntityManager em;
 
-	public Account findAccountByTokenHashAndType(final byte[] tokenHash, final TokenType type) {
+	public Account findAccountByTokenHashAndType(final String tokenHash, final TokenType type) {
 		Objects.requireNonNull(tokenHash);
 		Objects.requireNonNull(type);
 		logger.debug("Find account by tokenHash {} and type {}", tokenHash, type);

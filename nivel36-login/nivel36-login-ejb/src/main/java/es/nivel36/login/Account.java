@@ -3,7 +3,6 @@ package es.nivel36.login;
 import java.io.Serializable;
 import java.security.SecureRandom;
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
@@ -35,7 +34,7 @@ public class Account implements Serializable {
 	private LocalDate expired;
 
 	@Column(name = "HASH_PASSWORD", nullable = false)
-	private byte[] hashPassword;
+	private String hashPassword;
 
 	@Id
 	@GeneratedValue
@@ -60,7 +59,6 @@ public class Account implements Serializable {
 	public Account(final String username, final String password) {
 		Objects.requireNonNull(password);
 		Objects.requireNonNull(username);
-		this.hashPassword = new byte[32];
 		this.salt = new byte[16];
 		this.created = LocalDate.now();
 		this.username = username;
@@ -68,7 +66,7 @@ public class Account implements Serializable {
 		this.hashPassword = this.buildHashPassword(password);
 	}
 
-	private byte[] buildHashPassword(final String password) {
+	private String buildHashPassword(final String password) {
 		return CriptoUtil.digestPassword(password, this.salt);
 	}
 
@@ -128,8 +126,8 @@ public class Account implements Serializable {
 
 	public boolean isValid(final String password) {
 		Objects.requireNonNull(password);
-		final byte[] typedPassword = this.buildHashPassword(password);
-		return Arrays.equals(this.hashPassword, typedPassword);
+		final String typedPassword = this.buildHashPassword(password);
+		return this.hashPassword.equals(typedPassword);
 	}
 
 	public void setCreated(final LocalDate created) {

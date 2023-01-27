@@ -5,13 +5,13 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.hibernate.search.engine.search.query.SearchResult;
-import org.hibernate.search.engine.search.sort.SearchSort;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortMeta;
 
 import es.nivel36.laie.ejb.core.model.Identifiable;
 import es.nivel36.laie.ejb.core.model.Page;
+import es.nivel36.laie.ejb.core.model.SortField;
 
 public abstract class AbstractLazyDataModel<T extends Identifiable> extends LazyDataModel<T> {
 
@@ -31,7 +31,7 @@ public abstract class AbstractLazyDataModel<T extends Identifiable> extends Lazy
 		return getKey(entity);
 	}
 
-	protected abstract SearchResult<T> search(String searchText, Page page, SearchSort sortField, String[] searchFacets);
+	protected abstract SearchResult<T> search(String searchText, Page page, SortField sortField, String[] searchFacets);
 
 	protected abstract T find(Long rowkey);
 

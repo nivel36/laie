@@ -2,7 +2,6 @@ package es.nivel36.login;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.Arrays;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -46,7 +45,7 @@ public class LoginToken implements Serializable {
 	private String ipAddress;
 
 	@Column(name = "TOKEN_HASH", nullable = false, unique = true)
-	private byte[] tokenHash;
+	private String tokenHash;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "TOKEN_TYPE")
@@ -65,7 +64,7 @@ public class LoginToken implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		LoginToken other = (LoginToken) obj;
-		return Arrays.equals(tokenHash, other.tokenHash);
+		return tokenHash.equals(other.tokenHash);
 	}
 
 	public Instant getCreated() {
@@ -88,7 +87,7 @@ public class LoginToken implements Serializable {
 		return this.ipAddress;
 	}
 
-	public byte[] getTokenHash() {
+	public String getTokenHash() {
 		return this.tokenHash;
 	}
 
@@ -102,7 +101,7 @@ public class LoginToken implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Arrays.hashCode(tokenHash);
+		return tokenHash.hashCode();
 	}
 
 	public void setCreated(final Instant created) {
@@ -125,7 +124,7 @@ public class LoginToken implements Serializable {
 		this.ipAddress = ipAddress;
 	}
 
-	public void setTokenHash(final byte[] tokenHash) {
+	public void setTokenHash(final String tokenHash) {
 		this.tokenHash = tokenHash;
 	}
 

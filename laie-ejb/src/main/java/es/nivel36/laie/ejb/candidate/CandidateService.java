@@ -7,7 +7,6 @@ import java.util.Objects;
 import java.util.Set;
 
 import org.hibernate.search.engine.search.query.SearchResult;
-import org.hibernate.search.engine.search.sort.SearchSort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +16,7 @@ import es.nivel36.laie.ejb.core.action.Update;
 import es.nivel36.laie.ejb.core.file.File;
 import es.nivel36.laie.ejb.core.file.FileService;
 import es.nivel36.laie.ejb.core.model.Page;
+import es.nivel36.laie.ejb.core.model.SortField;
 import es.nivel36.laie.ejb.core.tag.Tag;
 import es.nivel36.laie.ejb.core.tag.TagDao;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
@@ -159,11 +159,11 @@ public class CandidateService {
 		return search(searchText, page, null, null);
 	}
 
-	public SearchResult<Candidate> search(final String searchText, final Page page,  final SearchSort sortOrder,
+	public SearchResult<Candidate> search(final String searchText, final Page page,  final SortField sortField,
 			final String[] searchFacets) {
 		Objects.requireNonNull(page);
 		logger.debug("Search {}, offset {} with limit of {}", searchText, page.getOffset(), page.getLimit());
-		return this.candidateDao.search(searchText, page, sortOrder, searchFacets);
+		return this.candidateDao.search(searchText, page, sortField, searchFacets);
 	}
 
 	public void setTagDao(final TagDao tagDao) {
