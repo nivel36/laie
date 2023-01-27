@@ -12,7 +12,7 @@
 						<f:param name="user" value="#{sessionUser.get().id}" />
 					</p:menuitem>
 					<p:menuitem value="#{i18n['menu.meetings']}" outcome="/meeting/search.xhtml" icon="pi pi-calendar" />
-					<p:menuitem value="#{i18n['menu.settings']}" outcome="/config.xhtml" icon="pi pi-cog" />
+					<p:menuitem value="#{i18n['menu.setting']}" outcome="/config.xhtml" icon="pi pi-cog" />
 					<p:menuitem value="#{i18n['user.logout']}" action="#{sessionUser.logout}" icon="pi pi-sign-out" />
 				</p:menuButton>
 			</h:form>
