@@ -23,7 +23,7 @@
 		<maven.build.timestamp.format>dd-MM-yyyy HH:mm</maven.build.timestamp.format>
 		<laie.version>${project.version}</laie.version>
 
-		<primefaces.version>12.0.0</primefaces.version>
+		<primefaces.version>11.0.0</primefaces.version>
 		<poi.version>5.2.2</poi.version>
 		<omnifaces.version>4.0.1</omnifaces.version>
 		<commons-fileupload.version>1.4</commons-fileupload.version>
