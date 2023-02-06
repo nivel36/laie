@@ -2,6 +2,7 @@ package es.nivel36.laie.web.core.view;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 
 import org.hibernate.search.engine.search.query.SearchResult;
@@ -43,7 +44,16 @@ public abstract class AbstractLazyDataModel<T extends Identifiable> extends Lazy
 	public List<T> load(final int first, final int pageSize, final Map<String, SortMeta> sorts,
 			final Map<String, FilterMeta> filters) {
 		final Page page = new Page(first, pageSize);
-		final SearchResult<T> searchResult = search(this.searchText, page, null, null);
+		SortField sortField = null;
+		if (sorts != null) {
+			for (Entry<String, SortMeta> entry : sorts.entrySet()) {
+				String field = entry.getKey();
+				boolean ascending = entry.getValue().getOrder().isAscending();
+				sortField = new SortField(field, ascending);
+				break;
+			}
+		}
+		final SearchResult<T> searchResult = search(this.searchText, page, sortField, null);
 		int numberOfResults = (int) searchResult.total().hitCount();
 		this.recalculateFirst(first, pageSize, numberOfResults);
 		this.setRowCount(numberOfResults);

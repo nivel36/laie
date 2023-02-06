@@ -42,8 +42,16 @@ public class EditMeetingView extends AbstractMeetingView {
 		this.attendees = this.initAttendees();
 		this.hours = this.initHours();
 		this.durations = this.initDurations();
-		this.meetingHour = this.initActualMeetingHour();
-		this.meetingDate = LocalDate.now();
+		if (meeting == null) {
+			this.meetingHour = this.initActualMeetingHour();
+			this.meetingDate = LocalDate.now();
+		} else {
+			final Duration duration = this.meeting.getDuration();
+			this.meetingDuration = duration.toHoursPart() + ":" + duration.toMinutesPart();
+			final LocalDateTime datePlanned = this.meeting.getDatePlanned();
+			this.meetingHour = datePlanned.getHour() + ":" + datePlanned.getMinute();
+			this.meetingDate = datePlanned.toLocalDate();
+		}
 	}
 
 	private List<MeetingType> initMeetingTypes() {
@@ -90,7 +98,7 @@ public class EditMeetingView extends AbstractMeetingView {
 		this.meetingService.updateMeeting(this.meeting);
 		Faces.redirect(IndexView.URL);
 	}
-	
+
 	public void delete() {
 		this.meetingService.deleteMeeting(this.meeting);
 		Faces.redirect(IndexView.URL);

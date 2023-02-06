@@ -10,6 +10,7 @@ import org.hibernate.search.engine.backend.types.Sortable;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.KeywordField;
 
 import es.nivel36.laie.ejb.candidate.Rating;
@@ -51,7 +52,7 @@ public class User extends AbstractEntity implements Subject {
 
 	@OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
 	private Set<Client> candidates = new HashSet<>();
-	
+
 	@OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
 	private Set<Client> clients = new HashSet<>();
 
@@ -78,6 +79,7 @@ public class User extends AbstractEntity implements Subject {
 
 	@ManyToOne
 	@JoinColumn(name = "MANAGER_ID")
+	@IndexedEmbedded(includeDepth = 1)
 	private User manager;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -110,6 +112,9 @@ public class User extends AbstractEntity implements Subject {
 	@FullTextField(name = "_surname")
 	@KeywordField(sortable = Sortable.YES)
 	private String surname;
+
+	@OneToMany(mappedBy = "manager")
+	private Set<User> team;
 
 	public void addMeeting(final Meeting meeting) {
 		Objects.requireNonNull(meeting);
@@ -214,6 +219,10 @@ public class User extends AbstractEntity implements Subject {
 		return this.surname;
 	}
 
+	public Set<User> getTeam() {
+		return team;
+	}
+
 	@Override
 	public int hashCode() {
 		return 31 * Objects.hash(this.email);
@@ -298,6 +307,10 @@ public class User extends AbstractEntity implements Subject {
 
 	public void setSurname(final String surname) {
 		this.surname = surname;
+	}
+
+	public void setTeam(Set<User> team) {
+		this.team = team;
 	}
 
 	@Override
