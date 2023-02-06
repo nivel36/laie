@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Objects;
 
 import org.hibernate.search.engine.search.query.SearchResult;
+import org.hibernate.search.engine.search.query.SearchResultTotal;
+import org.hibernate.search.engine.search.query.spi.SimpleSearchResult;
+import org.hibernate.search.engine.search.query.spi.SimpleSearchResultTotal;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.client.Client;
@@ -74,6 +77,11 @@ public class JobOfferDao extends AbstractDao {
 	public SearchResult<JobOffer> search(final String searchText, final Page page, final SortField sortField,
 			final String[] searchFacets) {
 		final String[] searchFields = new String[] { "_title", "client._name" };
+		if (searchText == null) {
+			final List<JobOffer> results = this.findAll(JobOffer.class, page);
+			final SearchResultTotal srt = SimpleSearchResultTotal.of(results.size(),true);
+			return new SimpleSearchResult<JobOffer>(srt, results, null, null, null);
+		}
 		return searchFacade.search(JobOffer.class, page, sortField, searchFacets, searchText, searchFields);
 	}
 }

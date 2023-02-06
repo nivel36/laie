@@ -45,7 +45,12 @@
 
 				<p:column headerText="#{i18n['event.date']}" priority="4">
 					<h:outputText value="#{event.date}">
-						<f:convertDateTime type="localDateTime" pattern="dd/MM/yyyy HH:mm:ss" />
+						<f:convertDateTime type="localDateTime" pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="#{i18n['event.hour']}" priority="4">
+					<h:outputText value="#{event.date}">
+						<f:convertDateTime type="localDateTime" pattern="HH:mm:ss" />
 					</h:outputText>
 				</p:column>
 
