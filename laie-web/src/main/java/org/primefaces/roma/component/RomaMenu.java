@@ -125,9 +125,9 @@ public class RomaMenu extends AbstractMenu implements Widget,ComponentSystemEven
             for(String res : resources) {
                 UIComponent component = context.getApplication().createComponent(UIOutput.COMPONENT_TYPE);
                 if(res.endsWith("css"))
-                    component.setRendererType("javax.faces.resource.Stylesheet");
+                    component.setRendererType("jakarta.faces.resource.Stylesheet");
                 else if(res.endsWith("js"))
-                    component.setRendererType("javax.faces.resource.Script");
+                    component.setRendererType("jakarta.faces.resource.Script");
 
                 component.getAttributes().put("library", "primefaces");
                 component.getAttributes().put("name", res);

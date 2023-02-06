@@ -517,7 +517,7 @@ PrimeFaces.RomaConfigurator = {
     },
     
     replaceLink: function(linkElement, href) {
-        PrimeFaces.ajax.RESOURCE = 'javax.faces.Resource';
+        PrimeFaces.ajax.RESOURCE = 'jakarta.faces.Resource';
 
         var isIE = this.isIE();
 

@@ -13,9 +13,9 @@ import org.slf4j.LoggerFactory;
 import es.nivel36.laie.ejb.core.model.Indexer;
 import es.nivel36.laie.ejb.core.util.ConfigurationProperty;
 import jakarta.annotation.PostConstruct;
+import jakarta.ejb.Singleton;
 import jakarta.ejb.Startup;
 import jakarta.inject.Inject;
-import jakarta.inject.Singleton;
 
 @Singleton
 @Startup
