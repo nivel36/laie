@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.search.engine.backend.types.Sortable;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
@@ -56,7 +58,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	@Column(name = "BORN_DATE")
 	private LocalDate bornDate;
 
-	@OneToOne(fetch = FetchType.EAGER, mappedBy = "candidate")
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "candidate")
 	private Curriculum curriculum;
 
 	@Email
@@ -69,7 +71,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	@Column(name = "EXPECTED_SALARY", scale = 0, precision = 6)
 	private Integer expectedSalary;
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<File> files = new HashSet<>();
 
 	@Column(name = "INFOJOBS_PROFILE_URL", length = 128)
@@ -100,7 +102,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	private Origin origin;
 
 	@NotNull
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "OWNER_ID", nullable = false)
 	private User owner;
 
@@ -129,10 +131,10 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	@FullTextField(name = "_surname")
 	protected String surname;
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name = "CANDIDATE_TAG", joinColumns = @JoinColumn(name = "CANDIDATE_ID"), inverseJoinColumns = @JoinColumn(name = "TAG_ID"))
 	@IndexedEmbedded(includeDepth = 1)
-	private Set<Tag> tags = new HashSet<>();
+	private Set<Tag> tags;
 
 	public void addFile(final File file) {
 		Objects.requireNonNull(file);

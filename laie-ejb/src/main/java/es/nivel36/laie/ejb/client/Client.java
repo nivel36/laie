@@ -47,7 +47,7 @@ public class Client extends AbstractEntity implements Ownerable, Erasable, Audit
 	@FullTextField(name = "_cif")
 	private String cif;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
 	private Set<Contact> contacts;
 
 	@Column(name = "DELETED", nullable = false)
@@ -63,7 +63,7 @@ public class Client extends AbstractEntity implements Ownerable, Erasable, Audit
 	private String name;
 
 	@NotNull
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "OWNER_ID", nullable = false)
 	@IndexedEmbedded(includeDepth = 1)
 	private User owner;

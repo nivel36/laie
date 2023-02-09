@@ -53,7 +53,7 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	@IndexedEmbedded(includeDepth = 1)
 	private Client client;
 
-	@GenericField(sortable=Sortable.YES)
+	@GenericField(sortable = Sortable.YES)
 	@Column(name = "CLOSE_DATE")
 	private LocalDateTime closeDate;
 
@@ -61,7 +61,7 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	@Column(name = "DESCRIPTION", columnDefinition = "TEXT")
 	private String description;
 
-	@OneToMany(mappedBy = "jobOffer", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "jobOffer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<JobCandidature> jobCandidatures = new HashSet<>();
 
 	@OneToMany(mappedBy = "jobOffer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -74,12 +74,12 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	private Integer minSalary;
 
 	@NotNull
-	@GenericField(sortable=Sortable.YES)
+	@GenericField(sortable = Sortable.YES)
 	@Column(name = "OPEN_DATE", nullable = false)
 	private LocalDateTime openDate;
 
 	@NotNull
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "OWNER_ID", nullable = false)
 	@IndexedEmbedded(includeDepth = 1)
 	private User owner;
@@ -91,9 +91,9 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	@Column(name = "PUBLISHED")
 	private boolean published;
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "JOB_PERSON", joinColumns = @JoinColumn(name = "JOB_ID"), inverseJoinColumns = @JoinColumn(name = "PERSON_ID"))
-	private Set<User> recruiters = new HashSet<>();;
+	private Set<User> recruiters = new HashSet<>();
 
 	@NotNull
 	@Enumerated(EnumType.STRING)
@@ -101,9 +101,9 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	private JobOfferState state;
 
 	@NotNull
-	@Column(name="TITLE", nullable = false)
+	@Column(name = "TITLE", nullable = false)
 	@FullTextField(name = "_title")
-	@KeywordField(sortable=Sortable.YES)
+	@KeywordField(sortable = Sortable.YES)
 	private String title;
 
 	@Override

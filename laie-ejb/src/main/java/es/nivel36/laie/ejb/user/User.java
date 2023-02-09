@@ -99,7 +99,7 @@ public class User extends AbstractEntity implements Subject {
 	private File picture;
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-	private Set<Rating> ratings;
+	private Set<Rating> ratings = new HashSet<>();
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "ROLE", nullable = false, length = 16)
@@ -113,8 +113,8 @@ public class User extends AbstractEntity implements Subject {
 	@KeywordField(sortable = Sortable.YES)
 	private String surname;
 
-	@OneToMany(mappedBy = "manager")
-	private Set<User> team;
+	@OneToMany(mappedBy = "manager", fetch = FetchType.LAZY)
+	private Set<User> team = new HashSet<>();
 
 	public void addMeeting(final Meeting meeting) {
 		Objects.requireNonNull(meeting);
