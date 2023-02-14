@@ -198,7 +198,6 @@
 		]]></query>
 	</named-query>
 
-
 	<named-query name="JobCandidature.findByJobOffer">
 		<query><![CDATA[
 			SELECT j 
@@ -232,6 +231,17 @@
 			FROM JobCandidatureState j
 			LEFT JOIN FETCH j.nextStates 
 			WHERE j.name = :name
+		]]></query>
+	</named-query>
+	
+	<named-query name="JobOffer.findJobOfferData">
+		<query><![CDATA[
+			SELECT j 
+			FROM JobOffer j 
+			LEFT JOIN FETCH j.jobCandidatures
+			LEFT JOIN FETCH j.recruiters
+			LEFT JOIN FETCH j.owner
+			WHERE j.id = :id			
 		]]></query>
 	</named-query>
 

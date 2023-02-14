@@ -76,6 +76,12 @@ public class JobOfferService {
 		return this.jobOfferDao.find(JobOffer.class, id);
 	}
 
+	public JobOffer findJobOfferData(final Long id) {
+		Objects.requireNonNull(id);
+		logger.debug("Find job offer by id {}", id);
+		return this.jobOfferDao.findJobOfferData(id);
+	}
+
 	public List<JobOffer> findJobOffersByCandidate(final Candidate candidate, final Page page) {
 		Objects.requireNonNull(candidate);
 		Objects.requireNonNull(page);

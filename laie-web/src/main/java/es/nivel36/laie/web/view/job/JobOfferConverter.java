@@ -11,9 +11,8 @@ import jakarta.inject.Inject;
 @FacesConverter(managed = true, forClass = JobOffer.class)
 public class JobOfferConverter extends AbstractConverter<JobOffer> {
 
-	@Inject
-	private JobOfferService jobOfferService;
-	
+	private @Inject JobOfferService jobOfferService;
+
 	public void setJobOfferService(final JobOfferService jobOfferService) {
 		Objects.requireNonNull(jobOfferService);
 		this.jobOfferService = jobOfferService;
@@ -21,6 +20,6 @@ public class JobOfferConverter extends AbstractConverter<JobOffer> {
 
 	@Override
 	protected JobOffer getAsObject(Long id) {
-		return jobOfferService.findJobOfferById(id);
+		return jobOfferService.findJobOfferData(id);
 	}
 }

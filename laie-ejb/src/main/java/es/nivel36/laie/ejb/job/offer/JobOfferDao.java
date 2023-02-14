@@ -22,8 +22,8 @@ import jakarta.inject.Inject;
 
 public class JobOfferDao extends AbstractDao {
 
-	@Inject
-	private SearchFacade searchFacade;
+	
+	private @Inject SearchFacade searchFacade;
 
 	public void addJobOfferEvent(JobOfferEvent jobOfferEvent) {
 		Objects.requireNonNull(jobOfferEvent);
@@ -33,6 +33,13 @@ public class JobOfferDao extends AbstractDao {
 	public JobOfferState findFirstJobOfferState() {
 		final String namedQuery = "JobOfferState.findFirst";
 		return this.findByQuery(JobOfferState.class, namedQuery, null);
+	}
+	
+	public JobOffer findJobOfferData(final Long id) {
+		Objects.requireNonNull(id);
+		final String namedQuery = "JobOffer.findJobOfferData";
+		final Parameters parameters = map("id", id);
+		return this.findByQuery(JobOffer.class, namedQuery, parameters);
 	}
 
 	public List<JobOffer> findJobOffersByCandidate(final Candidate candidate, final Page page) {

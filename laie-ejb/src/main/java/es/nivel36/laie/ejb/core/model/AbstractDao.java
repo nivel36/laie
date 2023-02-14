@@ -66,7 +66,7 @@ public abstract class AbstractDao {
 		logger.debug("Find entity of class {} with id", type, id);
 		return em.find(type, id);
 	}
-
+	
 	public <E> List<E> findAll(final Class<E> type, final Page page) {
 		Objects.requireNonNull(type);
 		logger.debug("Find all entities of class {}", type);

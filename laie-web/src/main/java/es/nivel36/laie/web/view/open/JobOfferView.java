@@ -19,9 +19,8 @@ public class JobOfferView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(JobOfferView.class);
 
-	@Param
-	private JobOffer jobOffer;
-	
+	private @Param JobOffer jobOffer;
+
 	@PostConstruct
 	public void init() {
 		if (this.jobOffer == null) {
