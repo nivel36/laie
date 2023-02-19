@@ -7,6 +7,7 @@ import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.candidate.Rating;
 import es.nivel36.laie.ejb.candidate.RatingService;
 import es.nivel36.laie.web.core.view.AbstractView;
@@ -23,12 +24,15 @@ public class EditRatingView extends AbstractView {
 	private static final Logger logger = LoggerFactory.getLogger(EditRatingView.class);
 
 	private @Param(required = true) Rating rating;
+	
+	private @Param(required = true) Candidate candidate;
 
 	private transient @Inject RatingService ratingService;
 
 	public void save() {
 		logger.debug("Update rating ACTION performed");
-		ratingService.updateRating(rating);
+		rating.setCandidate(candidate);
+		this.rating = ratingService.updateRating(rating);
 		final long candidateId = rating.getCandidate().getId();
 		final String candidateUrl = ViewCandidateView.getUrl(candidateId);
 		Faces.redirect(candidateUrl);

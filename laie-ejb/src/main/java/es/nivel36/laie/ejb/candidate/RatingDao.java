@@ -40,4 +40,11 @@ public class RatingDao extends AbstractDao {
 			return null;
 		}
 	}
+
+	public Rating findAllData(long ratingId) {
+		Objects.requireNonNull(ratingId);
+		final String namedQuery = "Rating.findAllData";
+		final Parameters parameters = map("ratingId", ratingId);
+		return this.findByQuery(Rating.class, namedQuery, parameters);
+	}
 }

@@ -14,9 +14,9 @@ public class RatingConveter extends AbstractConverter<Rating> {
 	private @Inject RatingService ratingService;
 
 	@Override
-	protected Rating getAsObject(Long id) {
+	protected Rating getAsObject(final Long id) {
 		Objects.requireNonNull(id);
-		return ratingService.findRatingById(id);
+		return ratingService.findAllRatingData(id);
 	}
 
 	public void setRatingService(final RatingService ratingService) {

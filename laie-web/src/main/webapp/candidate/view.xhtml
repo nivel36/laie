@@ -106,6 +106,7 @@
 								<p:button value="#{i18n['action.edit']}" outcome="/candidate/rating/edit.xhtml" rendered="#{viewCandidateView.editRatingVisible}"
 									styleClass="ui-button-secondary ui-button-outlined">
 									<f:param name="rating" value="#{viewCandidateView.rating.id}" />
+									<f:param name="candidate" value="#{viewCandidateView.candidate.id}" />
 								</p:button>
 								<p:button value="#{i18n['candidate.rating.request_new_rating']}" outcome="/candidate/rating/request.xhtml"
 									styleClass="ui-button-secondary ui-button-outlined">

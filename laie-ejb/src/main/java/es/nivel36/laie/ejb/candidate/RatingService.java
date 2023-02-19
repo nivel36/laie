@@ -20,6 +20,12 @@ public class RatingService {
 	private @Inject RatingDao ratingDao;
 
 	private @Inject CandidateService candidateService;
+	
+	public Rating findAllRatingData(final long ratingId) {
+		Objects.requireNonNull(ratingId);
+		logger.debug("Find all rating data of ratingId {}", ratingId);
+		return this.ratingDao.findAllData(ratingId);
+	}
 
 	public Rating findRatingOfCandidateByUser(final Candidate candidate, final User user) {
 		Objects.requireNonNull(candidate);
@@ -57,7 +63,8 @@ public class RatingService {
 		Objects.requireNonNull(rating);
 		logger.debug("Updating rating {}", rating);
 		final Rating updatedRating = ratingDao.update(rating);
-		this.updateMeanRating(rating.getCandidate());
+		final Candidate candidate = rating.getCandidate();
+		this.updateMeanRating(candidate);
 		return updatedRating;
 	}
 

@@ -12,7 +12,6 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.KeywordFie
 
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -28,7 +27,7 @@ public class Tag extends AbstractEntity {
 
 	private static final long serialVersionUID = -2070061878397221965L;
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "tags")
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "tags")
 	@IndexedEmbedded(includeDepth = 1)
 	private Set<Candidate> candidates = new HashSet<>();
 

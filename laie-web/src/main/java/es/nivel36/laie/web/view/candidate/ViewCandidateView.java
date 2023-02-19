@@ -56,13 +56,13 @@ public class ViewCandidateView extends AbstractView {
 	private boolean bookmarkable;
 
 	private Bookmark bookmark;
-	
+
 	private boolean addRatingVisible;
-	
+
 	private boolean editRatingVisible;
-	
+
 	private Rating rating;
-	
+
 	private List<Rating> ratings;
 
 	private transient @Inject CandidateService candidateService;
@@ -72,9 +72,9 @@ public class ViewCandidateView extends AbstractView {
 	private transient @Inject MeetingService meetingService;
 
 	private transient @Inject JobCandidatureService jobCandidatureService;
-	
+
 	private transient @Inject EditCandidatePermission editCandidatePermission;
-	
+
 	private transient @Inject RatingService ratingService;
 
 	@PostConstruct
@@ -90,9 +90,17 @@ public class ViewCandidateView extends AbstractView {
 		this.files = new ArrayList<>(this.candidate.getFiles());
 		this.bookmark = this.buildBookmark();
 		this.bookmarkable = !this.sessionUser.getBookmarks().contains(this.bookmark);
-		this.rating = this.ratingService.findRatingOfCandidateByUser(candidate, this.sessionUser.get());
 		this.ratings = this.ratingService.findRatingsByCandidate(candidate, Page.ALL_RESULTS);
-		this.addRatingVisible = rating == null;
+		for (final Rating rating : this.ratings) {
+			if (rating.getUser().equals(sessionUser.get())) {
+				this.rating = rating;
+				break;
+			}
+		}
+		if (this.rating != null) {
+			this.ratings.remove(this.rating);
+		}
+		this.addRatingVisible = (this.rating == null);
 		this.editRatingVisible = !this.addRatingVisible;
 	}
 
@@ -166,7 +174,7 @@ public class ViewCandidateView extends AbstractView {
 	public void setCandidate(final Candidate candidate) {
 		this.candidate = candidate;
 	}
-	
+
 	public boolean isAddRatingVisible() {
 		return addRatingVisible;
 	}
@@ -186,7 +194,7 @@ public class ViewCandidateView extends AbstractView {
 	public Candidate getCandidate() {
 		return this.candidate;
 	}
-	
+
 	public Rating getRating() {
 		return this.rating;
 	}
@@ -227,7 +235,7 @@ public class ViewCandidateView extends AbstractView {
 		Objects.requireNonNull(editCandidatePermission);
 		this.editCandidatePermission = editCandidatePermission;
 	}
-	
+
 	public void setRatingService(final RatingService ratingService) {
 		Objects.requireNonNull(ratingService);
 		this.ratingService = ratingService;

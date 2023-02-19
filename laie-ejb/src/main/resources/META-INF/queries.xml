@@ -66,7 +66,9 @@
 			FROM Candidate c
 			LEFT JOIN FETCH c.files
 			LEFT JOIN FETCH c.tags
-			LEFT JOIN FETCH c.jobCandidatures 
+			LEFT JOIN FETCH c.jobCandidatures
+			LEFT JOIN FETCH c.owner
+			LEFT JOIN FETCH c.curriculum
 			WHERE c.id = :candidateId
 		]]></query>
 	</named-query>
@@ -325,10 +327,21 @@
 		]]></query>
 	</named-query>
 	
+	<named-query name="Rating.findAllData">
+		<query><![CDATA[
+			SELECT r 
+			FROM Rating r
+			LEFT JOIN FETCH r.candidate
+			LEFT JOIN FETCH r.user
+			WHERE r.id = :ratingId
+		]]></query>
+	</named-query>
+	
 	<named-query name="Rating.findByUser">
 		<query><![CDATA[
 			SELECT r 
 			FROM Rating r
+			LEFT JOIN FETCH r.candidate
 			WHERE r.user = :user
 		]]></query>
 	</named-query>
@@ -337,6 +350,7 @@
 		<query><![CDATA[
 			SELECT r 
 			FROM Rating r
+			LEFT JOIN FETCH r.user
 			WHERE r.candidate = :candidate
 		]]></query>
 	</named-query>
@@ -345,8 +359,9 @@
 		<query><![CDATA[
 			SELECT r 
 			FROM Rating r
+			LEFT JOIN r.user u
 			WHERE r.candidate = :candidate
-			AND r.user = :user
+			AND u = :user
 		]]></query>
 	</named-query>
 

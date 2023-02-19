@@ -60,4 +60,10 @@ public class CandidateDao extends AbstractDao {
 		final String[] searchFields = new String[] { "_name", "_surname", "_email" };
 		return searchFacade.search(Candidate.class, page, sortField, searchFacets, searchText, searchFields);
 	}
+
+	public Candidate findAllData(Long candidateId) {
+		final String namedQuery = "Candidate.findAllData";
+		final Parameters parameters = map("candidateId", candidateId);
+		return this.findByQuery(Candidate.class, namedQuery, parameters);
+	}
 }

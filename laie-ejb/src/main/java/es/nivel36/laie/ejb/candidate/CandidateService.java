@@ -126,6 +126,12 @@ public class CandidateService {
 		logger.debug("Find candidate by id {}", id);
 		return this.candidateDao.find(Candidate.class, id);
 	}
+	
+	public Candidate findAllCandidateData(final Long candidateId) {
+		Objects.requireNonNull(candidateId);
+		logger.debug("Find candidate data by id {}", candidateId);
+		return this.candidateDao.findAllData(candidateId);
+	}
 
 	public Candidate addFileToCandidate(final Candidate candidate, final InputStream inputStream, String filename) {
 		Objects.requireNonNull(inputStream);
@@ -137,13 +143,6 @@ public class CandidateService {
 		return this.updateAndFireEvent(candidate);
 	}
 	
-	public void addRating(final Candidate candidate, final Rating rating) {
-		Objects.requireNonNull(candidate);
-		Objects.requireNonNull(rating);
-		
-		
-	}
-
 	public Candidate removeFileFromCandidate(final Candidate candidate, final File file) {
 		Objects.requireNonNull(candidate);
 		Objects.requireNonNull(file);

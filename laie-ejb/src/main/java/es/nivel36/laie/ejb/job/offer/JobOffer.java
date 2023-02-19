@@ -79,7 +79,7 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	private LocalDateTime openDate;
 
 	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "OWNER_ID", nullable = false)
 	@IndexedEmbedded(includeDepth = 1)
 	private User owner;
