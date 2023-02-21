@@ -20,6 +20,6 @@ public class JobOfferConverter extends AbstractConverter<JobOffer> {
 
 	@Override
 	protected JobOffer getAsObject(Long id) {
-		return jobOfferService.findJobOfferData(id);
+		return jobOfferService.findJobOfferById(id);
 	}
 }

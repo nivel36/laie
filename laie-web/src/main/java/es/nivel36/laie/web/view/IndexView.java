@@ -11,7 +11,7 @@ import es.nivel36.laie.ejb.job.meeting.Meeting;
 import es.nivel36.laie.ejb.job.meeting.MeetingService;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.web.core.view.AbstractView;
-import es.nivel36.laie.web.view.action.ActionsLazyDataModel;
+import es.nivel36.laie.web.view.action.ActionsByUserLazyDataModel;
 import es.nivel36.laie.web.view.candidate.CandidateLazyDataModel;
 import es.nivel36.laie.web.view.job.JobOfferLazyDataModel;
 import jakarta.annotation.PostConstruct;
@@ -29,7 +29,7 @@ public class IndexView extends AbstractView {
 
 	public static final String URL = "/index.xhtml";
 
-	private @Inject ActionsLazyDataModel actions;
+	private @Inject ActionsByUserLazyDataModel actions;
 
 	private @Inject CandidateLazyDataModel candidates;
 
@@ -46,7 +46,7 @@ public class IndexView extends AbstractView {
 		this.meetings = this.meetingService.findPlannedMeetings(user, Page.FIRST_TEN_RESULTS);
 	}
 	
-	public ActionsLazyDataModel getActions() {
+	public ActionsByUserLazyDataModel getActions() {
 		return actions;
 	}
 

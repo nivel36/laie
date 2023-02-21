@@ -15,7 +15,7 @@ public class CandidateConverter extends AbstractConverter<Candidate> {
 
 	@Override
 	protected Candidate getAsObject(Long id) {
-		return candidateService.findAllCandidateData(id);
+		return candidateService.findCandidateById(id);
 	}
 
 	public void setCandidateService(final CandidateService candidateService) {

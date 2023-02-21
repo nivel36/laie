@@ -14,7 +14,7 @@ import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.user.User;
 import jakarta.inject.Inject;
 
-public class ActionsLazyDataModel extends LazyDataModel<Action> {
+public class ActionsByUserLazyDataModel extends LazyDataModel<Action> {
 
 	private static final long serialVersionUID = 6835795236994934142L;
 

@@ -145,6 +145,13 @@ public class UserService {
 		logger.debug("Find user by email {}", email);
 		return this.userDao.findUserByEmail(email);
 	}
+	
+
+	public User findAllUserData(Long id) {
+		Objects.requireNonNull(id);
+		logger.debug("Find all user data by user id {}", id);
+		return this.userDao.findAllUserData(id);
+	}
 
 	public List<User> findSubordinateUsers(final User user) {
 		Objects.requireNonNull(user);

@@ -65,6 +65,13 @@ public class JobOfferDao extends AbstractDao {
 		final Parameters parameters = map("user", user);
 		return this.findByQuery(JobOffer.class, namedQuery, parameters, page);
 	}
+	
+	public long countJobOffersByOwnerOrRecruiter(final User user) {
+		Objects.requireNonNull(user);
+		final String namedQuery = "JobOffer.countJobOffersByOwnerOrRecruiter";
+		final Parameters parameters = map("user", user);
+		return this.findByQuery(Long.class, namedQuery, parameters).longValue();
+	}
 
 	public long countJobOfferEventsByJobOffer(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer);

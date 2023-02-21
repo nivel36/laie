@@ -61,6 +61,18 @@ public class UserDao extends AbstractDao {
 			return null;
 		}
 	}
+	
+	public User findAllUserData(final long userId) {
+		Objects.requireNonNull(userId);
+		try {
+			final String namedQuery = "User.findAllData";
+			final Parameters parameters = map("userId", userId);
+			return this.findByQuery(User.class, namedQuery, parameters);
+		} catch (final NoResultException e) {
+			return null;
+		}
+	}
+
 
 	public boolean isSubordinateUser(final User user, final User subordinate) {
 		Objects.requireNonNull(user);

@@ -1,5 +1,8 @@
 package es.nivel36.laie.web.view.user;
 
+import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,12 +13,13 @@ import org.slf4j.LoggerFactory;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.job.meeting.Meeting;
 import es.nivel36.laie.ejb.job.meeting.MeetingService;
-import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserService;
 import es.nivel36.laie.web.core.view.AbstractView;
-import es.nivel36.laie.web.view.action.ActionsLazyDataModel;
+import es.nivel36.laie.web.view.IndexView;
+import es.nivel36.laie.web.view.action.ActionsByUserLazyDataModel;
+import es.nivel36.laie.web.view.job.JobOffersByOwnerOrRecruiterLazyDataModel;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
@@ -31,11 +35,11 @@ public class ViewUserView extends AbstractView {
 
 	private static final String URL = "/user/view.xhtml";
 
-	private @Param(required = true) User user;
+	private @Param(required = true, name = "user") String userId;
+
+	private User user;
 
 	private boolean editable;
-
-	private List<JobOffer> jobOffers;
 
 	private List<Meeting> meetings;
 
@@ -43,7 +47,9 @@ public class ViewUserView extends AbstractView {
 
 	private boolean loggedUser;
 
-	private @Inject ActionsLazyDataModel actions;
+	private @Inject ActionsByUserLazyDataModel actions;
+	
+	private @Inject JobOffersByOwnerOrRecruiterLazyDataModel jobOffers;
 
 	private transient @Inject MeetingService meetingService;
 
@@ -53,13 +59,27 @@ public class ViewUserView extends AbstractView {
 
 	@PostConstruct
 	public void init() {
-		logger.trace("User {} init", this.user);
-		this.team = this.userService.findSubordinateUsers(this.user);
-		this.jobOffers = jobOfferService.findJobOffersByOwnerOrRecruiter(user, Page.ALL_RESULTS);
+		logger.trace("User {} init", this.userId);
+		findUser();
+
+		this.team = new ArrayList<>(this.user.getTeam());
 		this.meetings = this.meetingService.findPlannedMeetings(this.user, Page.ALL_RESULTS);
 		this.loggedUser = this.sessionUser.get().equals(this.user);
 		this.editable = this.sessionUser.isAdmin() || loggedUser;
 		actions.setUser(user);
+		jobOffers.setUser(user);
+	}
+
+	private void findUser() {
+		try {
+			final Long id = Long.parseLong(userId);
+			this.user = this.userService.findAllUserData(id);
+			if (this.user == null) {
+				error();
+			}
+		} catch (final NumberFormatException ex) {
+			error();
+		}
 	}
 
 	public static String getUrl(long userId) {
@@ -70,11 +90,11 @@ public class ViewUserView extends AbstractView {
 		return loggedUser;
 	}
 
-	public ActionsLazyDataModel getActions() {
+	public ActionsByUserLazyDataModel getActions() {
 		return actions;
 	}
 
-	public List<JobOffer> getJobOffers() {
+	public JobOffersByOwnerOrRecruiterLazyDataModel getJobOffers() {
 		return this.jobOffers;
 	}
 
@@ -111,5 +131,13 @@ public class ViewUserView extends AbstractView {
 	public void setJobOfferService(final JobOfferService jobOfferService) {
 		Objects.requireNonNull(jobOfferService);
 		this.jobOfferService = jobOfferService;
+	}
+
+	private void error() {
+		try {
+			externalContext.redirect(IndexView.URL);
+		} catch (IOException e) {
+			throw new UncheckedIOException(e);
+		}
 	}
 }

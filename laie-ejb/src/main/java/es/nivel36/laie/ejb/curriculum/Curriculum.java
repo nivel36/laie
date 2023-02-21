@@ -23,7 +23,7 @@ public class Curriculum extends AbstractEntity {
 	private static final long serialVersionUID = 2258938088135732207L;
 
 	@NotNull
-	@OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
+	@OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER, orphanRemoval = true)
 	@JoinColumn(name = "CANDIDATE_ID", nullable = false)
 	private Candidate candidate;
 

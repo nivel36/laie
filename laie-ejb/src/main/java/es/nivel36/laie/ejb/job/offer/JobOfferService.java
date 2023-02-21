@@ -103,6 +103,12 @@ public class JobOfferService {
 		logger.debug("Find all job offers of the owner or recruiter {}", user);
 		return this.jobOfferDao.findJobOffersByOwnerOrRecruiter(user, page);
 	}
+	
+	public long countJobOffersByOwnerOrRecruiter(User user) {
+		Objects.requireNonNull(user);
+		logger.debug("Find all job offers of the owner or recruiter {}", user);
+		return this.jobOfferDao.countJobOffersByOwnerOrRecruiter(user);
+	}
 
 	public List<JobOfferState> findJobOfferStates() {
 		logger.debug("Find all job offer states");

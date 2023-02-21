@@ -7,6 +7,7 @@
 		<query><![CDATA[
 			SELECT a 
 			FROM Action a
+			LEFT JOIN FETCH user.picture
 			WHERE a.user = :user
 			ORDER BY a.date DESC
 		]]></query>
@@ -251,6 +252,18 @@
 		<query><![CDATA[
 			SELECT j 
 			FROM JobOffer j 
+			LEFT JOIN FETCH j.client
+			LEFT JOIN FETCH j.owner
+			LEFT JOIN FETCH j.owner.picture
+			WHERE :user MEMBER OF j.recruiters
+			OR j.owner = :user
+		]]></query>
+	</named-query>
+	
+	<named-query name="JobOffer.countJobOffersByOwnerOrRecruiter">
+		<query><![CDATA[
+			SELECT COUNT(j) 
+			FROM JobOffer j 
 			WHERE :user MEMBER OF j.recruiters
 			OR j.owner = :user
 		]]></query>
@@ -399,6 +412,15 @@
 			FROM User u
 			LEFT JOIN FETCH u.bookmarks
 			WHERE u.email = :email
+		]]></query>
+	</named-query>
+	
+	<named-query name="User.findAllData">
+		<query><![CDATA[
+			SELECT u 
+			FROM User u
+			LEFT JOIN FETCH u.team
+			WHERE u.id = :userId
 		]]></query>
 	</named-query>
 

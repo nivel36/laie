@@ -1,7 +1,6 @@
 package es.nivel36.laie.web.view.job;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
 import org.omnifaces.cdi.Param;
