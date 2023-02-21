@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://nivel.36/laie/ui"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:g="http://nivel.36/laie/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
 		#{i18n['candidate.rating.add_rating']}
@@ -11,34 +17,45 @@
 	<ui:param name="selectedMenu" value="candidates" />
 
 	<ui:define name="content">
-		<h:form id="candidateForm">
-			<div class="card">
-				<h5>#{i18n['candidate.rating.add_rating']}</h5>
-				<div class="p-grid">
-					<div class="p-col-12">
+		<div class="p-grid">
+			<div class="p-col-12 p-xl-8">
+				<h:form id="candidateForm">
+					<div class="card">
 						<div class="form-card ui-fluid">
-							<div class="p-grid p-formgrid">
-								<div class="p-col-12 p-sm-6">
-									<p:rating id="rating" value="#{addRatingView.rating.rating}" cancel="false" />
+							<h5>#{i18n['candidate.rating.add_rating']}</h5>
+							<div class="p-grid">
+								<div class="p-col-12">
+									<div class="p-grid p-formgrid">
+										<div class="p-col-12">
+											<p:rating id="rating" value="#{addRatingView.rating.rating}"
+												cancel="false" />
+										</div>
+										<div class="p-col-12">
+											<g:input type="textarea" id="comment"
+												label="#{i18n['candidate.rating.comment']}"
+												value="#{addRatingView.rating.comment}" />
+										</div>
+									</div>
 								</div>
-								<div class="p-col-12 p-sm-6">
-									<g:input type="textarea" id="comment" label="#{i18n['candidate.rating.comment']}" value="#{addRatingView.rating.comment}" />
-								</div>
+							</div>
+
+						</div>
+						<div class="p-col-12">
+							<div class="form-buttons">
+								<p:button value="#{i18n['action.cancel']}"
+									outcome="/candidate/view.xhtml"
+									styleClass="ui-button-secondary ui-button-outlined">
+									<f:param name="candidate" value="#{addRatingView.candidate.id}" />
+								</p:button>
+								<p:commandButton value="#{i18n['action.save']}"
+									action="#{addRatingView.save}" update="@form growl"
+									styleClass="ui-button-success ui-button-outlined"
+									process="@form" />
 							</div>
 						</div>
 					</div>
-
-					<div class="p-col-12">
-						<div class="form-buttons">
-							<p:button value="#{i18n['action.cancel']}" outcome="/candidate/view.xhtml" styleClass="ui-button-secondary ui-button-outlined" >
-								<f:param name="candidate" value="#{addRatingView.candidate.id}"/>
-							</p:button>
-							<p:commandButton value="#{i18n['action.save']}" action="#{addRatingView.save}" update="@form growl"
-								styleClass="ui-button-success ui-button-outlined" process="@form" />
-						</div>
-					</div>
-				</div>
+				</h:form>
 			</div>
-		</h:form>
+		</div>
 	</ui:define>
 </ui:composition>

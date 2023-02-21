@@ -1,5 +1,6 @@
 package es.nivel36.laie.ejb.job.offer;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -65,8 +66,8 @@ public class JobOfferService {
 	}
 
 	private boolean openDateHasCome(final JobOffer jobOffer) {
-		final LocalDateTime dateOpened = jobOffer.getOpenDate();
-		final LocalDateTime now = LocalDateTime.now();
+		final LocalDate dateOpened = jobOffer.getOpenDate();
+		final LocalDate now = LocalDate.now();
 		return !now.isBefore(dateOpened);
 	}
 
@@ -131,7 +132,7 @@ public class JobOfferService {
 		jobOfferDao.addJobOfferEvent(newStateEvent);
 		jobOffer.setState(newState);
 		if (newState.isCloseState()) {
-			jobOffer.setCloseDate(LocalDateTime.now());
+			jobOffer.setCloseDate(LocalDate.now());
 			jobOffer.setState(JobOfferState.CLOSED);
 		}
 		if (newState.isOpenState()) {
