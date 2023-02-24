@@ -17,7 +17,6 @@ import es.nivel36.laie.ejb.core.util.Parameters;
 import jakarta.inject.Inject;
 import jakarta.persistence.NoResultException;
 
-
 public class UserDao extends AbstractDao {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserDao.class);
@@ -61,18 +60,13 @@ public class UserDao extends AbstractDao {
 			return null;
 		}
 	}
-	
+
 	public User findAllUserData(final long userId) {
 		Objects.requireNonNull(userId);
-		try {
-			final String namedQuery = "User.findAllData";
-			final Parameters parameters = map("userId", userId);
-			return this.findByQuery(User.class, namedQuery, parameters);
-		} catch (final NoResultException e) {
-			return null;
-		}
+		final String namedQuery = "User.findAllData";
+		final Parameters parameters = map("userId", userId);
+		return this.findByQuery(User.class, namedQuery, parameters);
 	}
-
 
 	public boolean isSubordinateUser(final User user, final User subordinate) {
 		Objects.requireNonNull(user);
@@ -82,7 +76,7 @@ public class UserDao extends AbstractDao {
 		return this.findByQuery(Boolean.class, namedQuery, parameters);
 	}
 
-	public SearchResult<User> search(final String searchText, final Page page,  final SortField sortField,
+	public SearchResult<User> search(final String searchText, final Page page, final SortField sortField,
 			final String[] searchFacets) {
 		final String[] searchFields = new String[] { "_name", "_surname", "_email" };
 		return searchFacade.search(User.class, page, sortField, searchFacets, searchText, searchFields);

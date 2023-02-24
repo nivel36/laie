@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.client.Client;
+import es.nivel36.laie.ejb.client.ClientService;
 import es.nivel36.laie.ejb.client.Contact;
 import es.nivel36.laie.ejb.core.bookmark.Bookmark;
 import es.nivel36.laie.ejb.core.model.Page;
@@ -44,19 +45,20 @@ public class ViewClientView extends AbstractView {
 
 	private List<JobOffer> jobOffers;
 
-	private @Param Client client;
+	private Client client;
+
+	private @Param(required = true, name = "client") String clientId;
 
 	private transient @Inject JobOfferService jobOfferService;
+	
+	private transient @Inject ClientService clientService;
 
 	private transient @Inject EditClientPermission editClientPermission;
 
 	@PostConstruct
 	public void init() {
-		if (this.client == null) {
-			logger.warn("Client not found");
-			throw new IllegalPageStateException();
-		}
-		logger.trace("Client {} init", this.client);
+		logger.trace("Client {} init", this.clientId);
+		this.findClient();
 		this.contacts = new ArrayList<>(this.client.getContacts());
 		this.jobOffers = jobOfferService.findJobOffersByClient(client, Page.ALL_RESULTS);
 		this.checkDeleted();
@@ -64,6 +66,18 @@ public class ViewClientView extends AbstractView {
 		this.addJobOffer = editable;
 		this.bookmark = this.buildBookmark();
 		this.bookmarkable = !this.sessionUser.hasBookamrk(bookmark);
+	}
+	
+	private void findClient() {
+		try {
+			final Long id = Long.parseLong(clientId);
+			this.client = this.clientService.findAllClientData(id);
+			if (this.client == null) {
+				throw new IllegalPageStateException();
+			}
+		} catch (final NumberFormatException ex) {
+			throw new IllegalPageStateException();
+		}
 	}
 
 	private void checkDeleted() {
@@ -129,5 +143,15 @@ public class ViewClientView extends AbstractView {
 	public void setJobOfferService(final JobOfferService jobOfferService) {
 		Objects.requireNonNull(jobOfferService);
 		this.jobOfferService = jobOfferService;
+	}
+	
+	public void setClientService(final ClientService clientService) {
+		Objects.requireNonNull(clientService);
+		this.clientService = clientService;
+	}
+	
+	public void setEditClientPermission (final EditClientPermission editClientPermission) {
+		Objects.requireNonNull(editClientPermission);
+		this.editClientPermission = editClientPermission;
 	}
 }

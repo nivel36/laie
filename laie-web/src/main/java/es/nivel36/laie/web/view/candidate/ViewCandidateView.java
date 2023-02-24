@@ -43,6 +43,8 @@ public class ViewCandidateView extends AbstractView {
 
 	private static final String URL = "/candidate/view.xhtml";
 
+	private @Param(required = true, name = "candidate") String candidateId;
+
 	private @Param Candidate candidate;
 
 	private boolean editable;
@@ -79,11 +81,8 @@ public class ViewCandidateView extends AbstractView {
 
 	@PostConstruct
 	public void init() {
-		if (this.candidate == null) {
-			logger.warn("Candidate not found");
-			throw new IllegalPageStateException();
-		}
-		logger.trace("Candidate {} init", this.candidate);
+		logger.trace("Candidate {} init", this.candidateId);
+		findCandidate();
 		this.jobCandidatures = jobCandidatureService.findCandidatesJobCandidatures(candidate, Page.ALL_RESULTS);
 		this.editable = editCandidatePermission.validate(candidate);
 		this.meetings = this.meetingService.findMeetingsByCandidate(this.candidate, Page.ALL_RESULTS);
@@ -102,6 +101,18 @@ public class ViewCandidateView extends AbstractView {
 		}
 		this.addRatingVisible = (this.rating == null);
 		this.editRatingVisible = !this.addRatingVisible;
+	}
+	
+	private void findCandidate() {
+		try {
+			final Long id = Long.parseLong(candidateId);
+			this.candidate = this.candidateService.findAllCandidateData(id);
+			if (this.candidate == null) {
+				throw new IllegalPageStateException();
+			}
+		} catch (final NumberFormatException ex) {
+			throw new IllegalPageStateException();
+		}
 	}
 
 	public List<Rating> getRatings() {

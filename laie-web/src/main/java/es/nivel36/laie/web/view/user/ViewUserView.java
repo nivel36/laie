@@ -1,7 +1,5 @@
 package es.nivel36.laie.web.view.user;
 
-import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -16,8 +14,8 @@ import es.nivel36.laie.ejb.job.meeting.MeetingService;
 import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserService;
+import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
-import es.nivel36.laie.web.view.IndexView;
 import es.nivel36.laie.web.view.action.ActionsByUserLazyDataModel;
 import es.nivel36.laie.web.view.job.JobOffersByOwnerOrRecruiterLazyDataModel;
 import jakarta.annotation.PostConstruct;
@@ -61,7 +59,6 @@ public class ViewUserView extends AbstractView {
 	public void init() {
 		logger.trace("User {} init", this.userId);
 		findUser();
-
 		this.team = new ArrayList<>(this.user.getTeam());
 		this.meetings = this.meetingService.findPlannedMeetings(this.user, Page.ALL_RESULTS);
 		this.loggedUser = this.sessionUser.get().equals(this.user);
@@ -75,10 +72,10 @@ public class ViewUserView extends AbstractView {
 			final Long id = Long.parseLong(userId);
 			this.user = this.userService.findAllUserData(id);
 			if (this.user == null) {
-				error();
+				throw new IllegalPageStateException();
 			}
 		} catch (final NumberFormatException ex) {
-			error();
+			throw new IllegalPageStateException();
 		}
 	}
 
@@ -131,13 +128,5 @@ public class ViewUserView extends AbstractView {
 	public void setJobOfferService(final JobOfferService jobOfferService) {
 		Objects.requireNonNull(jobOfferService);
 		this.jobOfferService = jobOfferService;
-	}
-
-	private void error() {
-		try {
-			externalContext.redirect(IndexView.URL);
-		} catch (IOException e) {
-			throw new UncheckedIOException(e);
-		}
 	}
 }

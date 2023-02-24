@@ -1,5 +1,7 @@
 package es.nivel36.laie.ejb.client;
 
+import static es.nivel36.laie.ejb.core.util.Parameters.map;
+
 import java.util.Objects;
 
 import org.hibernate.search.engine.search.query.SearchResult;
@@ -8,6 +10,7 @@ import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.SearchFacade;
 import es.nivel36.laie.ejb.core.model.SortField;
+import es.nivel36.laie.ejb.core.util.Parameters;
 import jakarta.inject.Inject;
 
 
@@ -26,5 +29,12 @@ public class ClientDao extends AbstractDao {
 		Objects.requireNonNull(page);
 		final String[] fields = new String[] { "_name", "_cif" };
 		return searchFacade.search(Client.class, page, sortField, searchFacets, searchText, fields);
+	}
+
+	public Client findAllClientData(Long clientId) {
+		Objects.requireNonNull(clientId);
+		final String namedQuery = "Client.findAllData";
+		final Parameters parameters = map("clientId", clientId);
+		return this.findByQuery(Client.class, namedQuery, parameters);
 	}
 }

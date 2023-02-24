@@ -55,6 +55,12 @@ public class ClientService {
 		logger.debug("Find client by id {}", clientId);
 		return this.clientDao.find(Client.class, clientId);
 	}
+	
+	public Client findAllClientData(final Long id) {
+		Objects.requireNonNull(id);
+		logger.debug("Find all client data by client id {}", id);
+		return this.clientDao.findAllClientData(id);
+	}
 
 	public SearchResult<Client> search(final String searchText, final Page page) {
 		return this.search(searchText, page, null, null);
@@ -70,4 +76,6 @@ public class ClientService {
 		Objects.requireNonNull(clientDao);
 		this.clientDao = clientDao;
 	}
+
+
 }
