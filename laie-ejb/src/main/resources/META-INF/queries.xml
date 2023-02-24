@@ -281,11 +281,21 @@
 	<named-query name="JobOffer.findByClient">
 		<query><![CDATA[
 			SELECT j 
-			FROM JobOffer j 
+			FROM JobOffer j
+			LEFT JOIN FETCH j.owner
+			LEFT JOIN FETCH j.client
 			WHERE j.client = :client
 		]]></query>
 	</named-query>
-
+	
+		<named-query name="JobOffer.countByClient">
+		<query><![CDATA[
+			SELECT j 
+			FROM JobOffer count(j)
+			WHERE j.client = :client
+		]]></query>
+	</named-query>
+	
 	<named-query name="JobOffer.findJobOfferEventsByJobOffer">
 		<query><![CDATA[
 			SELECT j 

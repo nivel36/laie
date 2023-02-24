@@ -22,7 +22,6 @@ import jakarta.inject.Inject;
 
 public class JobOfferDao extends AbstractDao {
 
-	
 	private @Inject SearchFacade searchFacade;
 
 	public void addJobOfferEvent(JobOfferEvent jobOfferEvent) {
@@ -34,7 +33,7 @@ public class JobOfferDao extends AbstractDao {
 		final String namedQuery = "JobOfferState.findFirst";
 		return this.findByQuery(JobOfferState.class, namedQuery, null);
 	}
-	
+
 	public JobOffer findJobOfferData(final Long id) {
 		Objects.requireNonNull(id);
 		final String namedQuery = "JobOffer.findJobOfferData";
@@ -65,7 +64,7 @@ public class JobOfferDao extends AbstractDao {
 		final Parameters parameters = map("user", user);
 		return this.findByQuery(JobOffer.class, namedQuery, parameters, page);
 	}
-	
+
 	public long countJobOffersByOwnerOrRecruiter(final User user) {
 		Objects.requireNonNull(user);
 		final String namedQuery = "JobOffer.countJobOffersByOwnerOrRecruiter";
@@ -77,6 +76,13 @@ public class JobOfferDao extends AbstractDao {
 		Objects.requireNonNull(jobOffer);
 		final String namedQuery = "JobOffer.countJobOfferEventsByJobOffer";
 		final Parameters parameters = map("jobOffer", jobOffer);
+		return this.findByQuery(Long.class, namedQuery, parameters).longValue();
+	}
+
+	public long countJobOffersByClient(final Client client) {
+		Objects.requireNonNull(client);
+		final String namedQuery = "JobOffer.countByClient";
+		final Parameters parameters = map("client", client);
 		return this.findByQuery(Long.class, namedQuery, parameters).longValue();
 	}
 
@@ -93,9 +99,10 @@ public class JobOfferDao extends AbstractDao {
 		final String[] searchFields = new String[] { "_title", "client._name" };
 		if (searchText == null) {
 			final List<JobOffer> results = this.findAll(JobOffer.class, page);
-			final SearchResultTotal srt = SimpleSearchResultTotal.of(results.size(),true);
+			final SearchResultTotal srt = SimpleSearchResultTotal.of(results.size(), true);
 			return new SimpleSearchResult<JobOffer>(srt, results, null, null, null);
 		}
 		return searchFacade.search(JobOffer.class, page, sortField, searchFacets, searchText, searchFields);
 	}
+
 }

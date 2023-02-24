@@ -158,5 +158,4 @@ public class ViewJobView extends AbstractView {
 		Objects.requireNonNull(jobOfferService);
 		this.jobOfferService = jobOfferService;
 	}
-
 }

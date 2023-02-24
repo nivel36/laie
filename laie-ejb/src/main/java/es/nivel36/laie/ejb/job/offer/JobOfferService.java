@@ -168,6 +168,11 @@ public class JobOfferService {
 		Objects.requireNonNull(jobOffer);
 		return jobOfferDao.countJobOfferEventsByJobOffer(jobOffer);
 	}
+	
+	public long countJobOffersByClient(final Client client) {
+		Objects.requireNonNull(client);
+		return jobOfferDao.countJobOffersByClient(client);
+	}
 
 	public List<JobOfferEvent> findJobOfferEventsByJobOffer(final JobOffer jobOffer, final Page page) {
 		Objects.requireNonNull(jobOffer);

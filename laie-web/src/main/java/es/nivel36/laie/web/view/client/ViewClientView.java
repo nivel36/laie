@@ -12,11 +12,9 @@ import es.nivel36.laie.ejb.client.Client;
 import es.nivel36.laie.ejb.client.ClientService;
 import es.nivel36.laie.ejb.client.Contact;
 import es.nivel36.laie.ejb.core.bookmark.Bookmark;
-import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.job.offer.JobOffer;
-import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
+import es.nivel36.laie.web.view.job.JobOfferByClientLazyDataModel;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.view.ViewScoped;
@@ -43,15 +41,13 @@ public class ViewClientView extends AbstractView {
 
 	private boolean addJobOffer;
 
-	private List<JobOffer> jobOffers;
-
 	private Client client;
 
 	private @Param(required = true, name = "client") String clientId;
 
-	private transient @Inject JobOfferService jobOfferService;
-	
 	private transient @Inject ClientService clientService;
+	
+	private @Inject JobOfferByClientLazyDataModel jobOffers;
 
 	private transient @Inject EditClientPermission editClientPermission;
 
@@ -60,12 +56,13 @@ public class ViewClientView extends AbstractView {
 		logger.trace("Client {} init", this.clientId);
 		this.findClient();
 		this.contacts = new ArrayList<>(this.client.getContacts());
-		this.jobOffers = jobOfferService.findJobOffersByClient(client, Page.ALL_RESULTS);
 		this.checkDeleted();
 		this.editable = editClientPermission.validate(client);
 		this.addJobOffer = editable;
 		this.bookmark = this.buildBookmark();
 		this.bookmarkable = !this.sessionUser.hasBookamrk(bookmark);
+		
+		this.jobOffers.setClient(client);
 	}
 	
 	private void findClient() {
@@ -136,15 +133,10 @@ public class ViewClientView extends AbstractView {
 		return this.contacts;
 	}
 
-	public List<JobOffer> getJobOffers() {
+	public JobOfferByClientLazyDataModel getJobOffers() {
 		return this.jobOffers;
 	}
 
-	public void setJobOfferService(final JobOfferService jobOfferService) {
-		Objects.requireNonNull(jobOfferService);
-		this.jobOfferService = jobOfferService;
-	}
-	
 	public void setClientService(final ClientService clientService) {
 		Objects.requireNonNull(clientService);
 		this.clientService = clientService;
