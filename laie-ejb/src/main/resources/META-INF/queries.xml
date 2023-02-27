@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<entity-mappings xmlns="https://jakarta.ee/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<entity-mappings
+	xmlns="https://jakarta.ee/xml/ns/persistence/orm"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence/orm
-        https://jakarta.ee/xml/ns/persistence/orm/orm_3_1.xsd" version="3.1">
+        https://jakarta.ee/xml/ns/persistence/orm/orm_3_1.xsd"
+	version="3.1">
 
 	<named-query name="Action.findByUser">
 		<query><![CDATA[
@@ -88,8 +91,8 @@
 			WHERE c.client = :client
 		]]></query>
 	</named-query>
-	
-		<named-query name="Contact.countByClient">
+
+	<named-query name="Contact.countByClient">
 		<query><![CDATA[
 			SELECT COUNT(c) 
 			FROM Contact c 
@@ -127,7 +130,7 @@
 			WHERE s.name = :name
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="DocumentTemplate.findByName">
 		<query><![CDATA[
 			SELECT d 
@@ -189,7 +192,8 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="JobCandidature.findByJobOfferAndCandidate">
+	<named-query
+		name="JobCandidature.findByJobOfferAndCandidate">
 		<query><![CDATA[
 			SELECT j 
 			FROM JobCandidature j 
@@ -207,6 +211,14 @@
 			LEFT JOIN FETCH j.candidate
 			LEFT JOIN j.candidate.curriculum
 			LEFT JOIN FETCH j.state
+			WHERE j.candidate = :candidate 
+		]]></query>
+	</named-query>
+	
+	<named-query name="JobCandidature.countByCandidate">
+		<query><![CDATA[
+			SELECT COUNT(j)
+			FROM JobCandidature j 
 			WHERE j.candidate = :candidate 
 		]]></query>
 	</named-query>
@@ -230,7 +242,8 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="JobCandidatureState.findFirstJobCandidatureState">
+	<named-query
+		name="JobCandidatureState.findFirstJobCandidatureState">
 		<query><![CDATA[
 			SELECT j 
 			FROM JobCandidatureState j 
@@ -246,7 +259,7 @@
 			WHERE j.name = :name
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="JobOffer.findJobOfferData">
 		<query><![CDATA[
 			SELECT j 
@@ -257,7 +270,8 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="JobOffer.findJobOffersByOwnerOrRecruiter">
+	<named-query
+		name="JobOffer.findJobOffersByOwnerOrRecruiter">
 		<query><![CDATA[
 			SELECT j 
 			FROM JobOffer j 
@@ -268,8 +282,9 @@
 			OR j.owner = :user
 		]]></query>
 	</named-query>
-	
-	<named-query name="JobOffer.countJobOffersByOwnerOrRecruiter">
+
+	<named-query
+		name="JobOffer.countJobOffersByOwnerOrRecruiter">
 		<query><![CDATA[
 			SELECT COUNT(j) 
 			FROM JobOffer j 
@@ -296,15 +311,15 @@
 			WHERE j.client = :client
 		]]></query>
 	</named-query>
-	
-		<named-query name="JobOffer.countByClient">
+
+	<named-query name="JobOffer.countByClient">
 		<query><![CDATA[
 			SELECT COUNT(j) 
 			FROM JobOffer j
 			WHERE j.client = :client
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="JobOffer.findJobOfferEventsByJobOffer">
 		<query><![CDATA[
 			SELECT j 
@@ -360,7 +375,7 @@
 			ORDER BY m.datePlanned ASC
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="Rating.findAllData">
 		<query><![CDATA[
 			SELECT r 
@@ -370,7 +385,7 @@
 			WHERE r.id = :ratingId
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="Rating.findByUser">
 		<query><![CDATA[
 			SELECT r 
@@ -435,7 +450,7 @@
 			WHERE u.email = :email
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="User.findAllData">
 		<query><![CDATA[
 			SELECT u 

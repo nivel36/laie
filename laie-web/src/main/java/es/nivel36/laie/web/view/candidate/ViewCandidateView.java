@@ -21,12 +21,12 @@ import es.nivel36.laie.ejb.core.bookmark.Bookmark;
 import es.nivel36.laie.ejb.core.file.File;
 import es.nivel36.laie.ejb.core.file.FileService;
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.job.candidature.JobCandidature;
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureService;
 import es.nivel36.laie.ejb.job.meeting.Meeting;
 import es.nivel36.laie.ejb.job.meeting.MeetingService;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
+import es.nivel36.laie.web.view.job.JobCandidatureByCandidateLazyDataModel;
 import es.nivel36.laie.web.view.meeting.AddMeetingView;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
@@ -51,7 +51,7 @@ public class ViewCandidateView extends AbstractView {
 
 	private List<File> files;
 
-	private List<JobCandidature> jobCandidatures;
+	private @Inject JobCandidatureByCandidateLazyDataModel jobCandidatures;
 
 	private List<Meeting> meetings;
 
@@ -83,7 +83,6 @@ public class ViewCandidateView extends AbstractView {
 	public void init() {
 		logger.trace("Candidate {} init", this.candidateId);
 		findCandidate();
-		this.jobCandidatures = jobCandidatureService.findCandidatesJobCandidatures(candidate, Page.ALL_RESULTS);
 		this.editable = editCandidatePermission.validate(candidate);
 		this.meetings = this.meetingService.findMeetingsByCandidate(this.candidate, Page.ALL_RESULTS);
 		this.files = new ArrayList<>(this.candidate.getFiles());
@@ -101,6 +100,7 @@ public class ViewCandidateView extends AbstractView {
 		}
 		this.addRatingVisible = (this.rating == null);
 		this.editRatingVisible = !this.addRatingVisible;
+		this.jobCandidatures.setCandidate(candidate);
 	}
 	
 	private void findCandidate() {
@@ -214,7 +214,7 @@ public class ViewCandidateView extends AbstractView {
 		return this.files;
 	}
 
-	public List<JobCandidature> getJobCandidatures() {
+	public JobCandidatureByCandidateLazyDataModel getJobCandidatures() {
 		return this.jobCandidatures;
 	}
 
