@@ -67,9 +67,8 @@
 			FROM Candidate c
 			LEFT JOIN FETCH c.files
 			LEFT JOIN FETCH c.tags
-			LEFT JOIN FETCH c.jobCandidatures
 			LEFT JOIN FETCH c.owner
-			LEFT JOIN FETCH c.curriculum
+			LEFT JOIN c.curriculum
 			WHERE c.id = :candidateId
 		]]></query>
 	</named-query>
@@ -85,6 +84,14 @@
 	<named-query name="Contact.findByClient">
 		<query><![CDATA[
 			SELECT c 
+			FROM Contact c 
+			WHERE c.client = :client
+		]]></query>
+	</named-query>
+	
+		<named-query name="Contact.countByClient">
+		<query><![CDATA[
+			SELECT COUNT(c) 
 			FROM Contact c 
 			WHERE c.client = :client
 		]]></query>
@@ -197,6 +204,9 @@
 		<query><![CDATA[
 			SELECT j 
 			FROM JobCandidature j 
+			LEFT JOIN FETCH j.candidate
+			LEFT JOIN j.candidate.curriculum
+			LEFT JOIN FETCH j.state
 			WHERE j.candidate = :candidate 
 		]]></query>
 	</named-query>
@@ -241,7 +251,6 @@
 		<query><![CDATA[
 			SELECT j 
 			FROM JobOffer j 
-			LEFT JOIN FETCH j.jobCandidatures
 			LEFT JOIN FETCH j.recruiters
 			LEFT JOIN FETCH j.owner
 			WHERE j.id = :id			
@@ -290,8 +299,8 @@
 	
 		<named-query name="JobOffer.countByClient">
 		<query><![CDATA[
-			SELECT j 
-			FROM JobOffer count(j)
+			SELECT COUNT(j) 
+			FROM JobOffer j
 			WHERE j.client = :client
 		]]></query>
 	</named-query>
@@ -336,7 +345,7 @@
 			SELECT m 
 			FROM Meeting m
 			WHERE m.owner = :owner
-			AND m.datePlanned < :now
+			AND m.datePlanned < current_date 
 			ORDER BY m.datePlanned ASC
 		]]></query>
 	</named-query>
@@ -345,7 +354,9 @@
 		<query><![CDATA[
 			SELECT m 
 			FROM Meeting m
-			WHERE :email MEMBER OF m.attendeesEmails
+			LEFT JOIN FETCH m.owner
+			WHERE m.datePlanned < current_date 
+			AND :email MEMBER OF m.attendeesEmails
 			ORDER BY m.datePlanned ASC
 		]]></query>
 	</named-query>

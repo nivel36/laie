@@ -27,6 +27,13 @@ public class ContactDao extends AbstractDao {
 		return this.findByQuery(Contact.class, namedQuery, parameters, page);
 	}
 
+	public long countContactsByClient(final Client client) {
+		Objects.requireNonNull(client);
+		final String namedQuery = "Contact.countByClient";
+		final Parameters parameters = map("client", client);
+		return this.findByQuery(Long.class, namedQuery, parameters);
+	}
+
 	public Contact findContactByEmail(final String email) {
 		Objects.requireNonNull(email);
 		try {
@@ -45,4 +52,5 @@ public class ContactDao extends AbstractDao {
 		final String[] fields = new String[] { "_name", "_surname, _email" };
 		return searchFacade.search(Contact.class, page, sortField, searchFacets, searchText, fields);
 	}
+
 }

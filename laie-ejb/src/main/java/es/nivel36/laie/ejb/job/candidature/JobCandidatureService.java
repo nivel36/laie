@@ -106,6 +106,12 @@ public class JobCandidatureService {
 		return this.jobCandidatureDao.findJobOffersJobCanditures(jobOffer, page);
 	}
 	
+	public long countJobOffersJobCanditures(final JobOffer jobOffer) {
+		Objects.requireNonNull(jobOffer);
+		logger.debug("Count all job candidatures of the job offer {}", jobOffer);
+		return this.jobCandidatureDao.countJobOffersJobCanditures(jobOffer);
+	}
+	
 	public List<JobCandidatureEvent> findJobCandidatureEvents(JobOffer jobOffer, Page page) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(page);
@@ -160,4 +166,5 @@ public class JobCandidatureService {
 		Objects.requireNonNull(jobCandidatureEventDao);
 		this.jobCandidatureEventDao = jobCandidatureEventDao;
 	}
+
 }

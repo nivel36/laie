@@ -1,7 +1,5 @@
 package es.nivel36.laie.web.view.job;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import org.omnifaces.cdi.Param;
@@ -9,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.core.bookmark.Bookmark;
-import es.nivel36.laie.ejb.job.candidature.JobCandidature;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.ejb.user.User;
@@ -46,7 +43,7 @@ public class ViewJobView extends AbstractView {
 
 	private Bookmark bookmark;
 
-	private List<JobCandidature> jobCandidatures;
+	private @Inject JobOfferCandidaturesLazyDataModel jobCandidatures;
 
 	private @Inject JobOfferEventsLazyDataModel jobOfferEvents;
 
@@ -58,13 +55,8 @@ public class ViewJobView extends AbstractView {
 	public void init() {
 		logger.trace("JobOffer {} init", this.jobOfferId);
 		this.findJobOffer();
-		this.jobCandidatures = new ArrayList<>(jobOffer.getJobCandidatures());
 		this.bookmark = buildBookmark();
 		this.bookmarkable = !this.sessionUser.hasBookamrk(bookmark);
-
-		// Hemos de inicializar los eventos con la oferta
-		this.jobOfferEvents.setJobOffer(jobOffer);
-		this.jobCandidatureEvents.setJobOffer(jobOffer);
 
 		final User user = this.sessionUser.get();
 		final User owner = jobOffer.getOwner();
@@ -73,6 +65,10 @@ public class ViewJobView extends AbstractView {
 		final boolean userCanEdit = this.owner || sessionUser.isAdmin() || this.sessionUser.isManagerOf(owner);
 		this.editable = jobOffer.isOpen() && userCanEdit;
 		this.addCandidature = jobOffer.isOpen() && (this.recruiter || userCanEdit);
+		
+		this.jobCandidatures.setJobOffer(jobOffer);
+		this.jobOfferEvents.setJobOffer(jobOffer);
+		this.jobCandidatureEvents.setJobOffer(jobOffer);
 	}
 
 	private void findJobOffer() {
@@ -99,7 +95,7 @@ public class ViewJobView extends AbstractView {
 		return bookmarkable;
 	}
 
-	public List<JobCandidature> getJobCandidatures() {
+	public JobOfferCandidaturesLazyDataModel getJobCandidatures() {
 		return this.jobCandidatures;
 	}
 

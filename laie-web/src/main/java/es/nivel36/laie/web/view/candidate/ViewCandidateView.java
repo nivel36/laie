@@ -45,7 +45,7 @@ public class ViewCandidateView extends AbstractView {
 
 	private @Param(required = true, name = "candidate") String candidateId;
 
-	private @Param Candidate candidate;
+	private Candidate candidate;
 
 	private boolean editable;
 

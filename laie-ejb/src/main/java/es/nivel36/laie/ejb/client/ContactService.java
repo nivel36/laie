@@ -68,6 +68,13 @@ public class ContactService {
 		logger.debug("Find contacts by client {}, offset {} limit of {}", client, page.getOffset(), page.getLimit());
 		return this.contactDao.findContactsByClient(client, page);
 	}
+	
+	
+	public long countContactsByClient(final Client client) {
+		Objects.requireNonNull(client);
+		logger.debug("Count contacts by client {}", client);
+		return this.contactDao.countContactsByClient(client);
+	}
 
 	public void setContactDao(final ContactDao contactDao) {
 		Objects.requireNonNull(contactDao);

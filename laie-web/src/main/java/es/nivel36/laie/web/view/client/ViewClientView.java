@@ -1,7 +1,5 @@
 package es.nivel36.laie.web.view.client;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import org.omnifaces.cdi.Param;
@@ -10,10 +8,10 @@ import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.client.Client;
 import es.nivel36.laie.ejb.client.ClientService;
-import es.nivel36.laie.ejb.client.Contact;
 import es.nivel36.laie.ejb.core.bookmark.Bookmark;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
+import es.nivel36.laie.web.view.client.contact.ContactLazyDataModel;
 import es.nivel36.laie.web.view.job.JobOfferByClientLazyDataModel;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.application.FacesMessage;
@@ -31,8 +29,6 @@ public class ViewClientView extends AbstractView {
 
 	private static final String URL = "/client/view.xhtml";
 
-	private List<Contact> contacts;
-
 	private boolean editable;
 
 	private boolean bookmarkable;
@@ -48,6 +44,8 @@ public class ViewClientView extends AbstractView {
 	private transient @Inject ClientService clientService;
 	
 	private @Inject JobOfferByClientLazyDataModel jobOffers;
+	
+	private @Inject ContactLazyDataModel contacts;
 
 	private transient @Inject EditClientPermission editClientPermission;
 
@@ -55,7 +53,6 @@ public class ViewClientView extends AbstractView {
 	public void init() {
 		logger.trace("Client {} init", this.clientId);
 		this.findClient();
-		this.contacts = new ArrayList<>(this.client.getContacts());
 		this.checkDeleted();
 		this.editable = editClientPermission.validate(client);
 		this.addJobOffer = editable;
@@ -63,6 +60,7 @@ public class ViewClientView extends AbstractView {
 		this.bookmarkable = !this.sessionUser.hasBookamrk(bookmark);
 		
 		this.jobOffers.setClient(client);
+		this.contacts.setClient(client);
 	}
 	
 	private void findClient() {
@@ -129,7 +127,7 @@ public class ViewClientView extends AbstractView {
 		return this.client;
 	}
 
-	public List<Contact> getContacts() {
+	public ContactLazyDataModel getContacts() {
 		return this.contacts;
 	}
 

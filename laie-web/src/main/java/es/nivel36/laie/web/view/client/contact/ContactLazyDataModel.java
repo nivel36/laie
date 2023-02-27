@@ -1,31 +1,48 @@
 package es.nivel36.laie.web.view.client.contact;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
-import org.hibernate.search.engine.search.query.SearchResult;
+import org.primefaces.model.FilterMeta;
+import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.SortMeta;
 
+import es.nivel36.laie.ejb.client.Client;
 import es.nivel36.laie.ejb.client.Contact;
 import es.nivel36.laie.ejb.client.ContactService;
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.core.model.SortField;
-import es.nivel36.laie.web.core.view.AbstractLazyDataModel;
 import jakarta.inject.Inject;
 
-public class ContactLazyDataModel extends AbstractLazyDataModel<Contact> {
+public class ContactLazyDataModel extends LazyDataModel<Contact> {
 
 	private static final long serialVersionUID = -4218300046788680778L;
-	
+
+	private Client client;
+
 	@Inject
 	private transient ContactService contactService;
 
 	@Override
-	protected SearchResult<Contact> search(String searchText, Page page, SortField sortField,
-			String[] searchFilter) {
-		return null;
+	public int count(final Map<String, FilterMeta> filterBy) {
+		Objects.requireNonNull(client);
+		return (int) contactService.countContactsByClient(client);
 	}
 
 	@Override
-	protected Contact find(Long id) {
-		return contactService.findContactById(id);
+	public List<Contact> load(final int first, final int pageSize, final Map<String, SortMeta> sortBy,
+			final Map<String, FilterMeta> filterBy) {
+		Objects.requireNonNull(client);
+		return contactService.findContactsByClient(client, Page.of(first, pageSize));
+	}
+
+	public void setClient(final Client client) {
+		this.client = client;
+	}
+
+	public void setContactService(final ContactService contactService) {
+		Objects.requireNonNull(contactService);
+		this.contactService = contactService;
 	}
 
 }
