@@ -71,7 +71,6 @@
 			LEFT JOIN FETCH c.files
 			LEFT JOIN FETCH c.tags
 			LEFT JOIN FETCH c.owner
-			LEFT JOIN c.curriculum
 			WHERE c.id = :candidateId
 		]]></query>
 	</named-query>

@@ -76,7 +76,7 @@ public class ViewCandidateView extends AbstractView {
 	private transient @Inject JobCandidatureService jobCandidatureService;
 
 	private transient @Inject EditCandidatePermission editCandidatePermission;
-
+	
 	private transient @Inject RatingService ratingService;
 
 	@PostConstruct

@@ -56,7 +56,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	@Column(name = "BORN_DATE")
 	private LocalDate bornDate;
 
-	@OneToOne(fetch = FetchType.EAGER, mappedBy = "candidate")
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "candidate")
 	private Curriculum curriculum;
 
 	@Email
