@@ -30,18 +30,15 @@ public class SelectCandidatesView extends AbstractView {
 
 	private final Map<Long, Candidate> alredySelectedCandidates = new HashMap<>();
 
-	@Inject
-	private CandidateLazyDataModel candidates;
+	private @Inject CandidateLazyDataModel candidates;
 
-	@Param
-	private JobOffer jobOffer;
+	private @Param JobOffer jobOffer;
 
 	private String searchText;
 
 	private List<Candidate> selectedCandidates;
 
-	@Inject
-	private transient JobCandidatureService jobCandidatureService;
+	private transient @Inject JobCandidatureService jobCandidatureService;
 
 	@PostConstruct
 	public void init() {

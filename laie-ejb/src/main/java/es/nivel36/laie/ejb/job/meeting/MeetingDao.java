@@ -14,15 +14,7 @@ import es.nivel36.laie.ejb.user.User;
 
 public class MeetingDao extends AbstractDao {
 
-	public List<Meeting> findMeetingsByJobOffer(final JobOffer jobOffer, final Page page) {
-		Objects.requireNonNull(jobOffer);
-		Objects.requireNonNull(page);
-		final String namedQuery = "Meeting.findByJobOffer";
-		final Parameters parameters = map("jobOffer", jobOffer);
-		return this.findByQuery(Meeting.class, namedQuery, parameters, page);
-	}
-
-	public List<Meeting> findMeetingByAttendeesEmail(final String email, final Page page) {
+	public List<Meeting> findByAttendeesEmail(final String email, final Page page) {
 		Objects.requireNonNull(email);
 		Objects.requireNonNull(page);
 		final String namedQuery = "Meeting.findByAttendeesEmail";

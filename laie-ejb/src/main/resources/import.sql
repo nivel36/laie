@@ -104,7 +104,7 @@ insert into ACTION(ID, VERSION, DATE, ENTITY_ID, ENTITY_NAME, ENTITY_TITLE, TYPE
 insert into ACTION(ID, VERSION, DATE, ENTITY_ID, ENTITY_NAME, ENTITY_TITLE, TYPE, USER_ID) values (1733, 1, (TO_TIMESTAMP('17/12/2021 20:12:24', 'DD/MM/YYYY HH24:MI:SS')), 1601, 'JOB_OFFER', 'Arquitecto Java', 'CREATE', 500)
 insert into ACTION(ID, VERSION, DATE, ENTITY_ID, ENTITY_NAME, ENTITY_TITLE, TYPE, USER_ID) values (1734, 1, (TO_TIMESTAMP('17/12/2021 20:22:55', 'DD/MM/YYYY HH24:MI:SS')), 1601, 'JOB_OFFER', 'Arquitecto Java', 'UPDATE', 500)
 
-insert into MEETING(ID, VERSION, DATE_PLANNED, DURATION, JOB_OFFER_ID, MEETING_TYPE, OWNER_ID, DESCRIPTION, TITLE) values (600, 1, (TO_TIMESTAMP('17/12/2022 08:30:00', 'DD/MM/YYYY HH24:MI:SS')), 5400, 1600, 'PHONE', 500, 'Hay que valorar si el candidato es adecuado para el puesto de arquitecto', 'Reunión para candidatura')
+insert into MEETING(ID, VERSION, DATE_PLANNED, DURATION, MEETING_TYPE, OWNER_ID, DESCRIPTION, TITLE) values (600, 1, (TO_TIMESTAMP('17/12/2022 08:30:00', 'DD/MM/YYYY HH24:MI:SS')), 5400, 'PHONE', 500, 'Hay que valorar si el candidato es adecuado para el puesto de arquitecto', 'Reunión para candidatura')
 
 insert into EMAILS(MEETING_ID, EMAIL) values (600, 'abel.ferrer.jimenez@gmail.com');
 insert into EMAILS(MEETING_ID, EMAIL) values (600, 'aferrer@gmail.com');

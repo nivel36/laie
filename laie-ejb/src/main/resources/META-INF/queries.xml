@@ -87,6 +87,7 @@
 		<query><![CDATA[
 			SELECT c 
 			FROM Contact c 
+			LEFT JOIN FETCH c.client
 			WHERE c.client = :client
 		]]></query>
 	</named-query>
@@ -103,8 +104,6 @@
 		<query><![CDATA[
 			SELECT c
 			FROM Client c
-			LEFT JOIN FETCH c.jobOffers
-			LEFT JOIN FETCH c.contacts
 			LEFT JOIN FETCH c.owner
 			WHERE c.id = :clientId
 		]]></query>
@@ -208,7 +207,8 @@
 			SELECT j 
 			FROM JobCandidature j 
 			LEFT JOIN FETCH j.candidate
-			LEFT JOIN j.candidate.curriculum
+			LEFT JOIN FETCH j.jobOffer
+			LEFT JOIN FETCH j.jobOffer.client
 			LEFT JOIN FETCH j.state
 			WHERE j.candidate = :candidate 
 		]]></query>
@@ -335,15 +335,6 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="Meeting.findByJobOffer">
-		<query><![CDATA[
-			SELECT m 
-			FROM Meeting m 
-			WHERE m.jobOffer = :jobOffer
-			ORDER BY m.datePlanned ASC
-		]]></query>
-	</named-query>
-
 	<named-query name="Meeting.findPlannedByOwner">
 		<query><![CDATA[
 			SELECT m 
@@ -454,6 +445,7 @@
 		<query><![CDATA[
 			SELECT u 
 			FROM User u
+			LEFT JOIN FETCH u.manager
 			LEFT JOIN FETCH u.team
 			WHERE u.id = :userId
 		]]></query>

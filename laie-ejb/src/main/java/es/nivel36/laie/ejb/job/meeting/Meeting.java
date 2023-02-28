@@ -10,7 +10,6 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmb
 
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
 import es.nivel36.laie.ejb.core.model.Ownerable;
-import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.user.User;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
@@ -30,7 +29,7 @@ public class Meeting extends AbstractEntity implements Ownerable {
 
 	private static final long serialVersionUID = -8068167269155086050L;
 
-	@ElementCollection(fetch = FetchType.EAGER)
+	@ElementCollection(fetch = FetchType.LAZY)
 	@CollectionTable(name = "EMAILS", joinColumns = @JoinColumn(name = "MEETING_ID"))
 	@Column(name = "EMAIL")
 	private Set<String> attendeesEmails = new HashSet<>();
@@ -43,10 +42,6 @@ public class Meeting extends AbstractEntity implements Ownerable {
 	@Column(name = "DURATION", nullable = false)
 	private Duration duration = Duration.ofMinutes(30);
 
-	@ManyToOne
-	@JoinColumn(name = "JOB_OFFER_ID")
-	private JobOffer jobOffer;
-
 	@Column(name = "LOCATION")
 	private String location;
 
@@ -55,7 +50,7 @@ public class Meeting extends AbstractEntity implements Ownerable {
 	private MeetingType meetingType;
 
 	@NotNull
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "OWNER_ID", nullable = false)
 	@IndexedEmbedded(includeDepth = 1)
 	private User owner;
@@ -88,7 +83,7 @@ public class Meeting extends AbstractEntity implements Ownerable {
 		}
 		final Meeting other = (Meeting) obj;
 		return Objects.equals(this.datePlanned, other.datePlanned) && Objects.equals(this.title, other.title)
-				&& Objects.equals(this.jobOffer, other.jobOffer) && Objects.equals(this.description, other.description);
+				&& Objects.equals(this.description, other.description);
 	}
 
 	public Set<String> getAttendeesEmails() {
@@ -101,10 +96,6 @@ public class Meeting extends AbstractEntity implements Ownerable {
 
 	public Duration getDuration() {
 		return duration;
-	}
-
-	public JobOffer getJobOffer() {
-		return this.jobOffer;
 	}
 
 	public String getLocation() {
@@ -130,7 +121,7 @@ public class Meeting extends AbstractEntity implements Ownerable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.datePlanned, this.title, this.jobOffer, this.description);
+		return Objects.hash(this.datePlanned, this.title, this.description);
 	}
 
 	public void removeAttendee(final String email) {
@@ -148,10 +139,6 @@ public class Meeting extends AbstractEntity implements Ownerable {
 
 	public void setDuration(Duration duration) {
 		this.duration = duration;
-	}
-
-	public void setJobOffer(final JobOffer jobOffer) {
-		this.jobOffer = jobOffer;
 	}
 
 	public void setLocation(final String location) {

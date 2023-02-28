@@ -14,7 +14,6 @@ import es.nivel36.laie.ejb.client.ContactDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.subject.Subject;
 import es.nivel36.laie.ejb.core.subject.SubjectDao;
-import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserDao;
 import jakarta.ejb.Stateless;
@@ -109,13 +108,7 @@ public class MeetingService {
 	public List<Meeting> findMeetingsByCandidate(final Candidate candidate, final Page page) {
 		Objects.requireNonNull(candidate);
 		logger.debug("Find meetings by candidate {}", candidate);
-		return this.meetingDao.findMeetingByAttendeesEmail(candidate.getEmail(), page);
-	}
-
-	public List<Meeting> findMeetingsByJobOffer(final JobOffer jobOffer, final Page page) {
-		Objects.requireNonNull(jobOffer);
-		logger.debug("Find meetings by jobOffer {}", jobOffer);
-		return this.meetingDao.findMeetingsByJobOffer(jobOffer, page);
+		return this.meetingDao.findByAttendeesEmail(candidate.getEmail(), page);
 	}
 
 	public List<Meeting> findPlannedMeetings(final User owner, final Page page) {
