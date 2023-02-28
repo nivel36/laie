@@ -40,7 +40,7 @@
 						<h:outputText value="#{jobOffer.places}" />
 					</p:column>
 
-					<p:column headerText="#{i18n['user.owner']}" sortBy="#{user.owner.name}">
+					<p:column headerText="#{i18n['user.owner']}">
 						<h:link value="#{jobOffer.owner.fullName}" outcome="/user/view.xhtml">
 							<f:param name="user" value="#{jobOffer.owner.id}" />
 						</h:link>

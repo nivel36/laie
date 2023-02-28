@@ -231,6 +231,14 @@
 			WHERE j.jobOffer = :jobOffer
 		]]></query>
 	</named-query>
+	
+	<named-query name="JobCandidature.countByJobOffer">
+		<query><![CDATA[
+			SELECT COUNT(j) 
+			FROM JobCandidature j 
+			WHERE j.jobOffer = :jobOffer
+		]]></query>
+	</named-query>
 
 	<named-query name="JobCandidature.findByUser">
 		<query><![CDATA[
@@ -264,6 +272,7 @@
 			SELECT j 
 			FROM JobOffer j 
 			LEFT JOIN FETCH j.recruiters
+			LEFT JOIN FETCH j.client
 			LEFT JOIN FETCH j.owner
 			WHERE j.id = :id			
 		]]></query>
@@ -323,6 +332,9 @@
 		<query><![CDATA[
 			SELECT j 
 			FROM JobOfferEvent j 
+			LEFT JOIN FETCH j.jobOffer
+			LEFT JOIN FETCH j.jobOffer.client
+			LEFT JOIN FETCH j.user
 			WHERE j.jobOffer = :jobOffer
 		]]></query>
 	</named-query>

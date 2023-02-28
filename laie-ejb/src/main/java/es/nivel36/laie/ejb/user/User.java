@@ -67,7 +67,7 @@ public class User extends AbstractEntity implements Subject {
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = false)
 	private Set<JobCandidatureEvent> jobCandidatureEvents = new HashSet<>();
 
-	@OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, orphanRemoval = false)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "owner", orphanRemoval = true)
 	private Set<JobOffer> jobOffers = new HashSet<>();
 
 	@Column(name = "LANGUAGE", nullable = false)

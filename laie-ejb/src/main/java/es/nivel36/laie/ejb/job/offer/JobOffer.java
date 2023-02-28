@@ -27,7 +27,6 @@ import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -61,10 +60,10 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	@Column(name = "DESCRIPTION", columnDefinition = "TEXT")
 	private String description;
 
-	@OneToMany(mappedBy = "jobOffer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "jobOffer", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<JobCandidature> jobCandidatures = new HashSet<>();
 
-	@OneToMany(mappedBy = "jobOffer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "jobOffer", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<JobOfferEvent> jobOfferEvents = new HashSet<>();
 
 	@Column(name = "MAX_SALARY", scale = 0, precision = 6)
@@ -78,9 +77,9 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	@Column(name = "OPEN_DATE", nullable = false)
 	private LocalDate openDate;
 
-	@NotNull
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name = "OWNER_ID", nullable = false)
+	@NotNull
 	@IndexedEmbedded(includeDepth = 1)
 	private User owner;
 
@@ -91,7 +90,7 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	@Column(name = "PUBLISHED")
 	private boolean published;
 
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany
 	@JoinTable(name = "JOB_PERSON", joinColumns = @JoinColumn(name = "JOB_ID"), inverseJoinColumns = @JoinColumn(name = "PERSON_ID"))
 	private Set<User> recruiters = new HashSet<>();
 

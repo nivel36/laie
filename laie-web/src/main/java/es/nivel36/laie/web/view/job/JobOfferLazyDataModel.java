@@ -14,8 +14,7 @@ public class JobOfferLazyDataModel extends AbstractLazyDataModel<JobOffer> {
 
 	private static final long serialVersionUID = 6084482828895151751L;
 
-	@Inject
-	private transient JobOfferService jobOfferService;
+	private transient @Inject JobOfferService jobOfferService;
 
 	@Override
 	protected SearchResult<JobOffer> search(String searchText, Page page, SortField sortField,
