@@ -213,7 +213,7 @@
 			WHERE j.candidate = :candidate 
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="JobCandidature.countByCandidate">
 		<query><![CDATA[
 			SELECT COUNT(j)
@@ -349,7 +349,7 @@
 			SELECT m 
 			FROM Meeting m
 			WHERE m.owner = :owner
-			AND m.datePlanned >= :now
+			AND m.datePlanned >= current_date
 			ORDER BY m.datePlanned ASC
 		]]></query>
 	</named-query>
