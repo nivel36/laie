@@ -22,6 +22,8 @@ public class Address implements Serializable {
 	@Column(name="CITY", columnDefinition = "TEXT")
 	private String city;
 
+	@FullTextField(name = "_country")
+	@KeywordField(sortable=Sortable.YES)
 	@Column(name="COUNTRY", columnDefinition = "TEXT")
 	private String country;
 
