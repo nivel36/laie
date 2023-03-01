@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
+import es.nivel36.laie.ejb.core.model.Address;
 import es.nivel36.laie.ejb.core.tag.Tag;
 import es.nivel36.laie.ejb.user.DuplicateEmailException;
 import jakarta.annotation.PostConstruct;
@@ -31,6 +32,7 @@ public class AddCandidateView extends AbstractCandidateView {
 		logger.trace("New candidate init");
 		this.checkAddPermissions();
 		this.candidate = new Candidate();
+		this.candidate.setAddress(new Address());
 		this.candidate.setOwner(sessionUser.get());
 		this.tags = new ArrayList<>();
 	}

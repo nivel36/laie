@@ -19,30 +19,30 @@ public class Address implements Serializable {
 
 	@FullTextField(name = "_city")
 	@KeywordField(sortable=Sortable.YES)
-	@Column(name="CITY", length = 128)
+	@Column(name="CITY", columnDefinition = "TEXT")
 	private String city;
 
-	@Column(name="COUNTRY", length = 128)
+	@Column(name="COUNTRY", columnDefinition = "TEXT")
 	private String country;
 
-	@Column(name="DOOR", length = 16)
+	@Column(name="DOOR", columnDefinition = "TEXT")
 	private String door;
 
-	@Column(name="NUMBER", length = 16)
+	@Column(name="NUMBER", columnDefinition = "TEXT")
 	private String number;
 
 	@FullTextField(name = "_region")
 	@KeywordField(sortable=Sortable.YES)
-	@Column(name="REGION", length = 128)
+	@Column(name="REGION", columnDefinition = "TEXT")
 	private String region;
 
-	@Column(name="STOREY", length = 16)
+	@Column(name="STOREY", columnDefinition = "TEXT")
 	private String storey;
 
-	@Column(name="STREET", length = 128)
+	@Column(name="STREET", columnDefinition = "TEXT")
 	private String street;
 
-	@Column(name="ZIP_CODE", length = 8)
+	@Column(name="ZIP_CODE", columnDefinition = "TEXT")
 	private String zipCode;
 
 	@Override

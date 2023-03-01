@@ -9,6 +9,7 @@ import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import es.nivel36.laie.ejb.core.model.Address;
 import es.nivel36.laie.ejb.core.tag.Tag;
 import es.nivel36.laie.ejb.user.DuplicateEmailException;
 import es.nivel36.laie.web.core.IllegalPageStateException;
@@ -36,6 +37,9 @@ public class EditCandidateView extends AbstractCandidateView {
 		findCandidate();
 		this.checkEditPermissions();
 		this.initTags();
+		if (this.candidate.getAddress() == null) {
+			this.candidate.setAddress(new Address());
+		}
 		this.candidateImage = this.candidate.getPicture();
 	}
 
@@ -87,12 +91,12 @@ public class EditCandidateView extends AbstractCandidateView {
 					this.candidate.getTags().add(new Tag(tag));
 				}
 			}
-			
+
 			Iterator<Tag> tagIterator = this.candidate.getTags().iterator();
-			
-			while(tagIterator.hasNext()) {
+
+			while (tagIterator.hasNext()) {
 				final Tag tagFromIterator = tagIterator.next();
-				if(!tags.contains(tagFromIterator.getLabel())) {
+				if (!tags.contains(tagFromIterator.getLabel())) {
 					tagIterator.remove();
 				}
 			}

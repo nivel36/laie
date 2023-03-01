@@ -160,9 +160,6 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	}
 
 	public Address getAddress() {
-		if (this.address == null) {
-			this.address = new Address();
-		}
 		return this.address;
 	}
 
