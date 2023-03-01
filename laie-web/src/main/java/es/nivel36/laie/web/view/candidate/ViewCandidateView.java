@@ -81,6 +81,9 @@ public class ViewCandidateView extends AbstractView {
 
 	@PostConstruct
 	public void init() {
+		if (this.candidateId == null) {
+			throw new IllegalPageStateException();
+		}
 		logger.trace("Candidate {} init", this.candidateId);
 		findCandidate();
 		this.editable = editCandidatePermission.validate(candidate);

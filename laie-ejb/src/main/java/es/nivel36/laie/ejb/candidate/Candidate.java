@@ -61,7 +61,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 
 	@Email
 	@NotNull
-	@Column(name = "EMAIL", length = 128, nullable = true)
+	@Column(name = "EMAIL", columnDefinition = "TEXT")
 	@FullTextField(name = "_email")
 	protected String email;
 
@@ -69,28 +69,28 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	@Column(name = "EXPECTED_SALARY", scale = 0, precision = 6)
 	private Integer expectedSalary;
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToMany(cascade = CascadeType.ALL)
 	private Set<File> files = new HashSet<>();
 
-	@Column(name = "INFOJOBS_PROFILE_URL", length = 128)
+	@Column(name = "INFOJOBS_PROFILE_URL", columnDefinition = "TEXT")
 	private String infojobsProfileUrl;
 
-	@OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
+	@OneToMany(mappedBy = "candidate", cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private Set<JobCandidature> jobCandidatures = new HashSet<>();
 
 	@NotNull
 	@FullTextField(name = "_jobProfile")
-	@Column(name = "JOB_PROFILE", nullable = false, length = 128)
+	@Column(name = "JOB_PROFILE", nullable = false, columnDefinition = "TEXT")
 	private String jobProfile;
 
-	@Column(name = "LINKEDIN_PROFILE_URL", length = 128)
+	@Column(name = "LINKEDIN_PROFILE_URL", columnDefinition = "TEXT")
 	private String linkedinProfileUrl;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	private Set<Meeting> meetings = new HashSet<>();
 
 	@NotNull
-	@Column(name = "NAME", nullable = false, length = 128)
+	@Column(name = "NAME", nullable = false, columnDefinition = "TEXT")
 	@FullTextField(name = "_name")
 	@GenericField(sortable=Sortable.YES)
 	protected String name;
@@ -104,7 +104,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	@JoinColumn(name = "OWNER_ID", nullable = false)
 	private User owner;
 
-	@Column(name = "PHONE_NUMBER", length = 12)
+	@Column(name = "PHONE_NUMBER", columnDefinition = "TEXT")
 	protected String phoneNumber;
 
 	@ManyToOne
@@ -115,24 +115,24 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	@Column(name = "RATING", scale = 0, precision = 1 )
 	private Integer rating;
 
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-	private Set<Rating> ratings;
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Rating> ratings = new HashSet<>();
 
-	@Column(name = "SALARY")
+	@Column(name = "SALARY", scale = 0, precision = 6)
 	private Integer salary;
 
-	@Column(name = "SKYPE", length = 128)
+	@Column(name = "SKYPE", columnDefinition = "TEXT")
 	private String skype;
 
 	@NotNull
-	@Column(name = "SURNAME", nullable = false, length = 128)
+	@Column(name = "SURNAME", columnDefinition = "TEXT")
 	@FullTextField(name = "_surname")
 	protected String surname;
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "CANDIDATE_TAG", joinColumns = @JoinColumn(name = "CANDIDATE_ID"), inverseJoinColumns = @JoinColumn(name = "TAG_ID"))
 	@IndexedEmbedded(includeDepth = 1)
-	private Set<Tag> tags;
+	private Set<Tag> tags = new HashSet<>();
 
 	public void addFile(final File file) {
 		Objects.requireNonNull(file);

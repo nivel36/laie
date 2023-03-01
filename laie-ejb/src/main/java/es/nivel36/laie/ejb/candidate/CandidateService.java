@@ -47,15 +47,18 @@ public class CandidateService {
 			throw new DuplicateEmailException();
 		}
 		logger.debug("Add candidate {}", candidate);
-		this.normalizeTags(candidate);
+		this.updateTags(candidate);
 		this.candidateDao.insert(candidate);
 		this.createCandidateEvent.fireAsync(candidate);
 	}
 
-	private void normalizeTags(final Candidate candidate) {
+	private void updateTags(final Candidate candidate) {
 		final Set<Tag> tags = candidate.getTags();
 		final Set<Tag> normalizedTags = new HashSet<>(tags.size());
 		for (final Tag tag : tags) {
+			if (!tag.isNew()) {
+				continue;
+			}
 			final Tag tagInDatabase = tagDao.findByLabel(tag.getLabel());
 			if (tagInDatabase != null) {
 				normalizedTags.add(tagInDatabase);
@@ -77,7 +80,7 @@ public class CandidateService {
 				throw new DuplicateEmailException();
 			}
 		}
-		this.normalizeTags(candidate);
+		this.updateTags(candidate);
 		return updateAndFireEvent(candidate);
 	}
 
@@ -126,7 +129,7 @@ public class CandidateService {
 		logger.debug("Find candidate by id {}", id);
 		return this.candidateDao.find(Candidate.class, id);
 	}
-	
+
 	public Candidate findAllCandidateData(final Long candidateId) {
 		Objects.requireNonNull(candidateId);
 		logger.debug("Find candidate data by id {}", candidateId);
@@ -142,7 +145,7 @@ public class CandidateService {
 		candidate.addFile(file);
 		return this.updateAndFireEvent(candidate);
 	}
-	
+
 	public Candidate removeFileFromCandidate(final Candidate candidate, final File file) {
 		Objects.requireNonNull(candidate);
 		Objects.requireNonNull(file);
@@ -158,7 +161,7 @@ public class CandidateService {
 		return search(searchText, page, null, null);
 	}
 
-	public SearchResult<Candidate> search(final String searchText, final Page page,  final SortField sortField,
+	public SearchResult<Candidate> search(final String searchText, final Page page, final SortField sortField,
 			final String[] searchFacets) {
 		Objects.requireNonNull(page);
 		logger.debug("Search {}, offset {} with limit of {}", searchText, page.getOffset(), page.getLimit());

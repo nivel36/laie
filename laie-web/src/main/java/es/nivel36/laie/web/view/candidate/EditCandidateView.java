@@ -1,6 +1,7 @@
 package es.nivel36.laie.web.view.candidate;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -28,13 +29,26 @@ public class EditCandidateView extends AbstractCandidateView {
 
 	@PostConstruct
 	public void init() {
-		if (this.candidate == null) {
+		if (this.candidateId == null) {
 			throw new IllegalPageStateException();
 		}
-		logger.trace("Candidate {} edit init", this.candidate);
+		logger.trace("Candidate {} edit init", this.candidateId);
+		findCandidate();
 		this.checkEditPermissions();
 		this.initTags();
 		this.candidateImage = this.candidate.getPicture();
+	}
+
+	private void findCandidate() {
+		try {
+			final Long id = Long.parseLong(candidateId);
+			this.candidate = this.candidateService.findAllCandidateData(id);
+			if (this.candidate == null) {
+				throw new IllegalPageStateException();
+			}
+		} catch (final NumberFormatException ex) {
+			throw new IllegalPageStateException();
+		}
 	}
 
 	private void checkEditPermissions() {
@@ -44,26 +58,48 @@ public class EditCandidateView extends AbstractCandidateView {
 	}
 
 	private void initTags() {
-		if (this.candidate.getTags() == null) {
-			this.tags = new ArrayList<>();
-		} else {
-			this.tags = this.candidate.getTags().stream().map(Tag::getLabel).collect(Collectors.toList());
-		}
+		this.tags = this.candidate.getTags().stream().map(Tag::getLabel).collect(Collectors.toList());
 	}
 
 	public void save() {
 		logger.debug("Save candidate action performed");
 		try {
-			if (this.tags != null) {
-				// Los tags pueden ser nulos a pesar de haberse inicializados ya que JSF
-				// interpreta colecciones vacias como null
-				this.candidate.setTags(this.tags.stream().map(Tag::new).collect(Collectors.toSet()));
-			}
+			this.normalizeTags();
 			this.saveImage();
 			this.candidate = this.candidateService.updateCandidate(this.candidate);
 			Faces.redirect(this.candidateUrl());
 		} catch (final DuplicateEmailException e) {
 			this.addErrorToField("candidateForm:email", "candidate.error.email_exists");
+		}
+	}
+
+	private void normalizeTags() {
+		if (this.tags != null) {
+			for (final String tag : this.tags) {
+				boolean found = false;
+				for (final Tag tagFromCandidate : this.candidate.getTags()) {
+					if (tagFromCandidate.getLabel().equals(tag)) {
+						found = true;
+						break;
+					}
+				}
+				if (!found) {
+					this.candidate.getTags().add(new Tag(tag));
+				}
+			}
+			
+			Iterator<Tag> tagIterator = this.candidate.getTags().iterator();
+			
+			while(tagIterator.hasNext()) {
+				final Tag tagFromIterator = tagIterator.next();
+				if(!tags.contains(tagFromIterator.getLabel())) {
+					tagIterator.remove();
+				}
+			}
+		} else {
+			// Los tags pueden ser nulos a pesar de haberse inicializados ya que JSF
+			// interpreta colecciones vacias como null
+			this.candidate.setTags(new HashSet<>());
 		}
 	}
 

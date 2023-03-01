@@ -43,6 +43,12 @@
 						<h:outputText value="#{client.address.city} " />
 						<h:panelGroup rendered="#{not empty client.address.region}">(<h:outputText value="#{client.address.region}" />)</h:panelGroup>
 					</p:column>
+					
+					<p:column headerText="#{i18n['client.owner']}">
+						<h:link value="#{client.owner.fullName}" outcome="/user/view.xhtml">
+							<f:param name="user" value="#{client.owner.id}" />
+						</h:link>
+					</p:column>
 				</p:dataTable>
 			</div>
 		</h:form>

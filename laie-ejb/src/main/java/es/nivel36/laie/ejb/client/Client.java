@@ -63,7 +63,7 @@ public class Client extends AbstractEntity implements Ownerable, Erasable, Audit
 	private String name;
 
 	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "OWNER_ID", nullable = false)
 	@IndexedEmbedded(includeDepth = 1)
 	private User owner;

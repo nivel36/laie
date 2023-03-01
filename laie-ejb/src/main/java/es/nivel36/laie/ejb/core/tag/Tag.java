@@ -14,7 +14,6 @@ import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.Index;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
@@ -27,12 +26,12 @@ public class Tag extends AbstractEntity {
 
 	private static final long serialVersionUID = -2070061878397221965L;
 
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "tags")
+	@ManyToMany(mappedBy = "tags")
 	@IndexedEmbedded(includeDepth = 1)
 	private Set<Candidate> candidates = new HashSet<>();
 
 	@NotNull
-	@Column(length = 128, nullable = false, unique = true)
+	@Column(nullable = false, unique = true, columnDefinition = "TEXT")
 	@FullTextField(name = "_label")
 	@KeywordField(name = "label", sortable = Sortable.YES)
 	private String label;

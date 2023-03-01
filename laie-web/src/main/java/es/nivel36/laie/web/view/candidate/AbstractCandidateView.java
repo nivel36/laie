@@ -30,7 +30,9 @@ public abstract class AbstractCandidateView extends AbstractView {
 
 	private static final long serialVersionUID = 6785796173827142302L;
 
-	protected @Param Candidate candidate;
+	protected @Param(name = "candidate") String candidateId;
+
+	protected Candidate candidate;
 
 	protected File candidateImage;
 
