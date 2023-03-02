@@ -35,11 +35,11 @@ public class EditCandidateView extends AbstractCandidateView {
 		}
 		logger.trace("Candidate {} edit init", this.candidateId);
 		findCandidate();
-		this.checkEditPermissions();
-		this.initTags();
-		if (this.candidate.getAddress() == null) {
+		if(this.candidate.getAddress() == null ) {
 			this.candidate.setAddress(new Address());
 		}
+		this.checkEditPermissions();
+		this.initTags();
 		this.candidateImage = this.candidate.getPicture();
 	}
 

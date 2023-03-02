@@ -43,8 +43,7 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Indexed
-@Table(name = "CANDIDATE", indexes = {
-		@Index(name = "UX_CANDIDATE_EMAIL", columnList = "EMAIL", unique = true) }, //
+@Table(name = "CANDIDATE", indexes = { @Index(name = "UX_CANDIDATE_EMAIL", columnList = "EMAIL", unique = true) }, //
 		uniqueConstraints = { @UniqueConstraint(name = "UQ_CANDIDATE_EMAIL", columnNames = { "EMAIL" }) })
 public class Candidate extends AbstractEntity implements Ownerable, Subject, Auditable {
 
@@ -92,7 +91,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	@NotNull
 	@Column(name = "NAME", nullable = false, columnDefinition = "TEXT")
 	@FullTextField(name = "_name")
-	@GenericField(sortable=Sortable.YES)
+	@GenericField(sortable = Sortable.YES)
 	protected String name;
 
 	@ManyToOne
@@ -111,8 +110,8 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	@JoinColumn(name = "PICTURE_ID")
 	protected File picture;
 
-	@GenericField(sortable=Sortable.YES)
-	@Column(name = "RATING", scale = 0, precision = 1 )
+	@GenericField(sortable = Sortable.YES)
+	@Column(name = "RATING", scale = 0, precision = 1)
 	private Integer rating;
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)

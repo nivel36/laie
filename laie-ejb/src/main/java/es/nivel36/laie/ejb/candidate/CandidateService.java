@@ -57,6 +57,7 @@ public class CandidateService {
 		final Set<Tag> normalizedTags = new HashSet<>(tags.size());
 		for (final Tag tag : tags) {
 			if (!tag.isNew()) {
+				normalizedTags.add(tag);
 				continue;
 			}
 			final Tag tagInDatabase = tagDao.findByLabel(tag.getLabel());

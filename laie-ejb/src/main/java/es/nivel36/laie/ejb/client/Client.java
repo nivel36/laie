@@ -72,9 +72,6 @@ public class Client extends AbstractEntity implements Ownerable, Erasable, Audit
 	private String phoneNumber;
 
 	public Address getAddress() {
-		if (this.address == null) {
-			this.address = new Address();
-		}
 		return this.address;
 	}
 
