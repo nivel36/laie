@@ -1,45 +1,55 @@
 package es.nivel36.laie.ejb.curriculum;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
-import es.nivel36.laie.ejb.core.model.AbstractEntity;
+import es.nivel36.laie.ejb.core.model.Identifiable;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Version;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "CURRICULUM")
-public class Curriculum extends AbstractEntity {
+public class Curriculum implements Identifiable, Serializable {
 
 	private static final long serialVersionUID = 2258938088135732207L;
+	
+	@Id 
+	@Column(name="candidate_id") 
+	private long id;
+	
+	@Version
+	private long version;
 
 	@NotNull
 	@OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
 	@JoinColumn(name = "CANDIDATE_ID", nullable = false)
+	@MapsId
 	private Candidate candidate;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="curriculum", orphanRemoval = true)
 	private Set<Education> education = new HashSet<>();
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="curriculum", orphanRemoval = true)
-	@JoinColumn(name = "CURRICULUM_ID")
 	private Set<JobExperience> jobExperiences = new HashSet<>();
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="curriculum", orphanRemoval = true)
-	@JoinColumn(name = "CURRICULUM_ID")
 	private Set<Language> languages = new HashSet<>();
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="curriculum",orphanRemoval = true)
-	@JoinColumn(name = "CURRICULUM_ID")
 	private Set<Skill> skills = new HashSet<>();
 
 	public void addEducation(final Education education) {
@@ -85,6 +95,11 @@ public class Curriculum extends AbstractEntity {
 		return this.education.size();
 	}
 
+	@Override
+	public long getId() {
+		return this.candidate.getId();
+	}
+
 	public Set<JobExperience> getJobExperiences() {
 		return this.jobExperiences;
 	}
@@ -103,6 +118,10 @@ public class Curriculum extends AbstractEntity {
 
 	public Set<Skill> getSkills() {
 		return this.skills;
+	}
+
+	public long getVersion() {
+		return version;
 	}
 
 	@Override
@@ -134,6 +153,10 @@ public class Curriculum extends AbstractEntity {
 		this.education = education;
 	}
 
+	public void setId(long id) {
+		this.id = id;
+	}
+
 	public void setJobExperiences(final Set<JobExperience> jobExperiences) {
 		this.jobExperiences = jobExperiences;
 	}
@@ -148,6 +171,10 @@ public class Curriculum extends AbstractEntity {
 
 	public void setSkills(final Set<Skill> skills) {
 		this.skills = skills;
+	}
+
+	public void setVersion(long version) {
+		this.version = version;
 	}
 
 	@Override

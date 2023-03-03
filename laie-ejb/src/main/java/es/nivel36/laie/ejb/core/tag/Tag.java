@@ -31,7 +31,7 @@ public class Tag extends AbstractEntity {
 	private Set<Candidate> candidates = new HashSet<>();
 
 	@NotNull
-	@Column(nullable = false, unique = true, columnDefinition = "TEXT")
+	@Column(nullable = false, columnDefinition = "TEXT")
 	@FullTextField(name = "_label")
 	@KeywordField(name = "label", sortable = Sortable.YES)
 	private String label;

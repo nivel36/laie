@@ -35,6 +35,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.Email;
@@ -48,7 +49,7 @@ import jakarta.validation.constraints.NotNull;
 public class Candidate extends AbstractEntity implements Ownerable, Subject, Auditable {
 
 	private static final long serialVersionUID = -7470903145789563432L;
-
+	
 	@Embedded
 	private Address address;
 
@@ -56,6 +57,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	private LocalDate bornDate;
 
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "candidate")
+	@PrimaryKeyJoinColumn
 	private Curriculum curriculum;
 
 	@Email
@@ -263,7 +265,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	public Set<Tag> getTags() {
 		return this.tags;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		return 31 * Objects.hash(this.email);
@@ -278,7 +280,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 		Objects.requireNonNull(meeting);
 		this.meetings.remove(meeting);
 	}
-
+	
 	public void setAddress(final Address address) {
 		this.address = address;
 	}
@@ -379,6 +381,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	public void setTags(final Set<Tag> tags) {
 		this.tags = tags;
 	}
+
 
 	@Override
 	public String toString() {

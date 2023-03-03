@@ -33,7 +33,6 @@ public abstract class AbstractEntity implements Identifiable, Serializable {
 		return this.version;
 	}
 
-	@Override
 	public void setId(final long id) {
 		this.id = id;
 	}
