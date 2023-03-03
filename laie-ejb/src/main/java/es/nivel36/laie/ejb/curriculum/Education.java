@@ -8,6 +8,8 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
@@ -17,6 +19,10 @@ import jakarta.validation.constraints.NotNull;
 public class Education extends AbstractEntity implements Comparable<Education> {
 
 	private static final long serialVersionUID = 7831977505416700653L;
+
+	@ManyToOne
+	@JoinColumn(name = "CURRICULUM_ID")
+	private Curriculum curriculum;
 
 	@NotNull
 	@Column(name = "DEGREE", nullable = false)
@@ -41,14 +47,36 @@ public class Education extends AbstractEntity implements Comparable<Education> {
 	private boolean stillStudying;
 
 	@Override
+	public int compareTo(final Education education) {
+		if (this.startYear == null) {
+			return 1;
+		}
+		if (education.startYear == null) {
+			return -1;
+		}
+		final int startYearCompareTo = this.startYear.compareTo(education.startYear);
+		if (startYearCompareTo != 0) {
+			return -startYearCompareTo;
+		}
+		if (this.endYear == null) {
+			return 1;
+		}
+		if (education.endYear == null) {
+			return -1;
+		}
+		final int endYearCompareTo = this.endYear.compareTo(education.endYear);
+		if (endYearCompareTo != 0) {
+			return -endYearCompareTo;
+		}
+		return 0;
+	}
+
+	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
 		}
-		if (obj == null) {
-			return false;
-		}
-		if (this.getClass() != obj.getClass()) {
+		if ((obj == null) || (this.getClass() != obj.getClass())) {
 			return false;
 		}
 		final Education other = (Education) obj;
@@ -56,6 +84,10 @@ public class Education extends AbstractEntity implements Comparable<Education> {
 				&& Objects.equals(this.startYear, other.startYear)
 				&& Objects.equals(this.stillStudying, other.stillStudying)
 				&& Objects.equals(this.endYear, other.endYear);
+	}
+
+	public Curriculum getCurriculum() {
+		return curriculum;
 	}
 
 	public String getDegree() {
@@ -87,6 +119,10 @@ public class Education extends AbstractEntity implements Comparable<Education> {
 		return this.stillStudying;
 	}
 
+	public void setCurriculum(Curriculum curriculum) {
+		this.curriculum = curriculum;
+	}
+
 	public void setDegree(final String degree) {
 		this.degree = degree;
 	}
@@ -109,30 +145,5 @@ public class Education extends AbstractEntity implements Comparable<Education> {
 
 	public void setStillStudying(final boolean stillStudying) {
 		this.stillStudying = stillStudying;
-	}
-
-	@Override
-	public int compareTo(final Education education) {
-		if (this.startYear == null) {
-			return 1;
-		}
-		if (education.startYear == null) {
-			return -1;
-		}
-		final int startYearCompareTo = this.startYear.compareTo(education.startYear);
-		if (startYearCompareTo != 0) {
-			return -startYearCompareTo;
-		}
-		if (this.endYear == null) {
-			return 1;
-		}
-		if (education.endYear == null) {
-			return -1;
-		}
-		final int endYearCompareTo = this.endYear.compareTo(education.endYear);
-		if (endYearCompareTo != 0) {
-			return -endYearCompareTo;
-		}
-		return 0;
 	}
 }

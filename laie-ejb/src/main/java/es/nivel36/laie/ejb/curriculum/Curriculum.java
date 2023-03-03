@@ -27,21 +27,20 @@ public class Curriculum extends AbstractEntity {
 	@JoinColumn(name = "CANDIDATE_ID", nullable = false)
 	private Candidate candidate;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "CURRICULUM_ID")
-	private Set<Education> education;
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="curriculum", orphanRemoval = true)
+	private Set<Education> education = new HashSet<>();
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="curriculum", orphanRemoval = true)
 	@JoinColumn(name = "CURRICULUM_ID")
-	private Set<JobExperience> jobExperiences;
+	private Set<JobExperience> jobExperiences = new HashSet<>();
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="curriculum", orphanRemoval = true)
 	@JoinColumn(name = "CURRICULUM_ID")
-	private Set<Language> languages;
+	private Set<Language> languages = new HashSet<>();
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="curriculum",orphanRemoval = true)
 	@JoinColumn(name = "CURRICULUM_ID")
-	private Set<Skill> skills;
+	private Set<Skill> skills = new HashSet<>();
 
 	public void addEducation(final Education education) {
 		this.education.add(education);

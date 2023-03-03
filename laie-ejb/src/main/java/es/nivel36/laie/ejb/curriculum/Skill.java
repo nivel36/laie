@@ -8,6 +8,8 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
@@ -17,6 +19,10 @@ import jakarta.validation.constraints.NotNull;
 public class Skill extends AbstractEntity implements Comparable<Skill> {
 
 	private static final long serialVersionUID = 4288106580541111562L;
+
+	@ManyToOne
+	@JoinColumn(name = "CURRICULUM_ID")
+	private Curriculum curriculum;
 
 	@FullTextField
 	@NotNull
@@ -31,18 +37,24 @@ public class Skill extends AbstractEntity implements Comparable<Skill> {
 	}
 
 	@Override
+	public int compareTo(Skill skill) {
+		return this.name.compareTo(skill.name);
+	}
+
+	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
 		}
-		if (!super.equals(obj)) {
-			return false;
-		}
-		if (this.getClass() != obj.getClass()) {
+		if (!super.equals(obj) || (this.getClass() != obj.getClass())) {
 			return false;
 		}
 		final Skill other = (Skill) obj;
 		return Objects.equals(other.name, this.name);
+	}
+
+	public Curriculum getCurriculum() {
+		return curriculum;
 	}
 
 	public String getName() {
@@ -54,6 +66,10 @@ public class Skill extends AbstractEntity implements Comparable<Skill> {
 		return Objects.hash(this.name);
 	}
 
+	public void setCurriculum(Curriculum curriculum) {
+		this.curriculum = curriculum;
+	}
+
 	public void setName(final String name) {
 		this.name = name;
 	}
@@ -61,10 +77,5 @@ public class Skill extends AbstractEntity implements Comparable<Skill> {
 	@Override
 	public String toString() {
 		return this.name;
-	}
-
-	@Override
-	public int compareTo(Skill skill) {
-		return this.name.compareTo(skill.name);
 	}
 }

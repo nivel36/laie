@@ -11,7 +11,9 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
@@ -21,6 +23,10 @@ import jakarta.validation.constraints.NotNull;
 public class JobExperience extends AbstractEntity implements Comparable<JobExperience> {
 
 	private static final long serialVersionUID = 5196582360914455397L;
+
+	@ManyToOne
+	@JoinColumn(name = "CURRICULUM_ID")
+	private Curriculum curriculum;
 
 	@FullTextField
 	@NotNull
@@ -42,7 +48,7 @@ public class JobExperience extends AbstractEntity implements Comparable<JobExper
 	@FullTextField
 	@Column(name="JOB_POSITION", nullable = false)
 	private String jobPosition;
-	
+
 	@Column(name="START_MONTH", scale = 0, precision = 2)
 	private Integer startMonth;
 
@@ -84,10 +90,7 @@ public class JobExperience extends AbstractEntity implements Comparable<JobExper
 		if (this == obj) {
 			return true;
 		}
-		if (obj == null) {
-			return false;
-		}
-		if (this.getClass() != obj.getClass()) {
+		if ((obj == null) || (this.getClass() != obj.getClass())) {
 			return false;
 		}
 		final JobExperience other = (JobExperience) obj;
@@ -101,6 +104,10 @@ public class JobExperience extends AbstractEntity implements Comparable<JobExper
 
 	public String getCompanyName() {
 		return this.companyName;
+	}
+
+	public Curriculum getCurriculum() {
+		return curriculum;
 	}
 
 	public String getDescription() {
@@ -154,6 +161,10 @@ public class JobExperience extends AbstractEntity implements Comparable<JobExper
 
 	public void setCompanyName(final String companyName) {
 		this.companyName = companyName;
+	}
+
+	public void setCurriculum(Curriculum curriculum) {
+		this.curriculum = curriculum;
 	}
 
 	public void setDescription(final String description) {

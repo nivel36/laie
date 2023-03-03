@@ -46,7 +46,7 @@ public class User extends AbstractEntity implements Subject {
 
 	private static final long serialVersionUID = -3719561601581901723L;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "PERSON_BOOKMARK", joinColumns = @JoinColumn(name = "PERSON_ID"), inverseJoinColumns = @JoinColumn(name = "BOOKMARK_ID"))
 	private Set<Bookmark> bookmarks = new HashSet<>();
 
@@ -82,7 +82,7 @@ public class User extends AbstractEntity implements Subject {
 	@IndexedEmbedded(includeDepth = 1)
 	private User manager;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "PERSON_MEETING", joinColumns = @JoinColumn(name = "PERSON_ID"), inverseJoinColumns = @JoinColumn(name = "MEETING_ID"))
 	private Set<Meeting> meetings = new HashSet<>();
 

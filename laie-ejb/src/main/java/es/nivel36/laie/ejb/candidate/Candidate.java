@@ -99,7 +99,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	private Origin origin;
 
 	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY )
 	@JoinColumn(name = "OWNER_ID", nullable = false)
 	private User owner;
 
@@ -114,7 +114,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	@Column(name = "RATING", scale = 0, precision = 1)
 	private Integer rating;
 
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "candidate", orphanRemoval = true)
 	private Set<Rating> ratings = new HashSet<>();
 
 	@Column(name = "SALARY", scale = 0, precision = 6)

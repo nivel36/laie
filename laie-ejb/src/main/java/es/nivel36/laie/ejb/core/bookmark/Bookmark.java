@@ -6,9 +6,12 @@ import java.util.Set;
 
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
 import es.nivel36.laie.ejb.user.User;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Index;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
@@ -24,7 +27,8 @@ public class Bookmark extends AbstractEntity {
 	@Column(nullable = false, unique = true)
 	private String url;
 
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "PERSON_BOOKMARK", joinColumns = @JoinColumn(name = "PERSON_ID"), inverseJoinColumns = @JoinColumn(name = "BOOKMARK_ID"))
 	private Set<User> users = new HashSet<>();
 
 	public String getTitle() {
