@@ -9,7 +9,7 @@ import es.nivel36.laie.ejb.core.util.Parameters;
 import jakarta.persistence.NoResultException;
 
 
-public class FileJpaDao extends AbstractDao {
+public class PhysicalFileJpaDao extends AbstractDao {
 
 	public boolean isOrphanPhysicalFile(final PhysicalFile physicalFile) {
 		final String namedQuery = "File.isOrphanPhysicalFile";
@@ -30,15 +30,5 @@ public class FileJpaDao extends AbstractDao {
 	public void deletePhysicalFile(final PhysicalFile file) {
 		Objects.requireNonNull(file);
 		this.delete(PhysicalFile.class, file);
-	}
-
-	public void insert(final File file) {
-		Objects.requireNonNull(file);
-		this.em.persist(file);
-	}
-
-	public void delete(final File file) {
-		Objects.requireNonNull(file);
-		this.delete(File.class, file);
 	}
 }

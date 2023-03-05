@@ -1,6 +1,7 @@
 package es.nivel36.laie.ejb.candidate;
 
 import java.io.InputStream;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -13,8 +14,8 @@ import org.slf4j.LoggerFactory;
 import es.nivel36.laie.ejb.core.action.Auditable;
 import es.nivel36.laie.ejb.core.action.Create;
 import es.nivel36.laie.ejb.core.action.Update;
-import es.nivel36.laie.ejb.core.file.File;
-import es.nivel36.laie.ejb.core.file.FileService;
+import es.nivel36.laie.ejb.core.file.PhysicalFile;
+import es.nivel36.laie.ejb.core.file.PhysicalFileService;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.SortField;
 import es.nivel36.laie.ejb.core.tag.Tag;
@@ -32,7 +33,7 @@ public class CandidateService {
 
 	private @Inject CandidateDao candidateDao;
 
-	private @Inject FileService fileService;
+	private @Inject PhysicalFileService fileService;
 
 	private @Inject TagDao tagDao;
 
@@ -95,14 +96,16 @@ public class CandidateService {
 		Objects.requireNonNull(candidate);
 		Objects.requireNonNull(image);
 		logger.debug("Change image to user {}", candidate);
-		final File oldImage = candidate.getPicture();
+		final CandidatePicture oldImage = candidate.getPicture();
 		final Long candidateId = candidate.getId();
 		final String filename = candidateId + "_picture";
-		final File newImage = this.fileService.uploadFile(image, filename, true);
-		candidate.setPicture(newImage);
+		final PhysicalFile newImage = this.fileService.uploadFile(image, filename, true);
+		final CandidatePicture candidatePicture = new CandidatePicture();
+		candidatePicture.setPhysicalFile(newImage);
+		candidate.setPicture(candidatePicture);
 		if (oldImage != null) {
 			logger.trace("Remove user {} old image", candidate);
-			this.fileService.removeFile(oldImage);
+			this.fileService.removeFile(oldImage.getPhysicalFile());
 		}
 		return updateAndFireEvent(candidate);
 	}
@@ -137,23 +140,28 @@ public class CandidateService {
 		return this.candidateDao.findAllData(candidateId);
 	}
 
-	public Candidate addFileToCandidate(final Candidate candidate, final InputStream inputStream, String filename) {
+	public Candidate addFile(final Candidate candidate, final InputStream inputStream, String filename) {
 		Objects.requireNonNull(inputStream);
 		Objects.requireNonNull(candidate);
 		Objects.requireNonNull(filename);
 		logger.debug("Add file {} to candidate {}", filename, candidate);
-		final File file = fileService.uploadFile(inputStream, filename, false);
+		final PhysicalFile physicalFile = fileService.uploadFile(inputStream, filename, false);
+		File file = new File();
+		file.setCreated(LocalDateTime.now());
+		file.setName(filename);
+		file.setPublicAccess(false);
+		file.setPhysicalFile(physicalFile);
 		candidate.addFile(file);
 		return this.updateAndFireEvent(candidate);
 	}
 
-	public Candidate removeFileFromCandidate(final Candidate candidate, final File file) {
-		Objects.requireNonNull(candidate);
+	public Candidate deleteFile(final File file) {
 		Objects.requireNonNull(file);
+		final Candidate candidate = file.getCandidate();
 		logger.debug("Remove file {} from candidate {}", file, candidate);
+		this.fileService.removeFile(file.getPhysicalFile());
 		candidate.removeFile(file);
 		final Candidate updatedCandidate = this.candidateDao.update(candidate);
-		this.fileService.removeFile(file);
 		this.updateCandidateEvent.fireAsync(updatedCandidate);
 		return updatedCandidate;
 	}
@@ -179,7 +187,7 @@ public class CandidateService {
 		this.candidateDao = candidateDao;
 	}
 
-	public void setFileService(final FileService fileService) {
+	public void setFileService(final PhysicalFileService fileService) {
 		Objects.requireNonNull(fileService);
 		this.fileService = fileService;
 	}

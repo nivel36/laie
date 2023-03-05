@@ -13,7 +13,6 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
 
 import es.nivel36.laie.ejb.core.action.Auditable;
-import es.nivel36.laie.ejb.core.file.File;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
 import es.nivel36.laie.ejb.core.model.Address;
 import es.nivel36.laie.ejb.core.model.Ownerable;
@@ -49,7 +48,7 @@ import jakarta.validation.constraints.NotNull;
 public class Candidate extends AbstractEntity implements Ownerable, Subject, Auditable {
 
 	private static final long serialVersionUID = -7470903145789563432L;
-	
+
 	@Embedded
 	private Address address;
 
@@ -64,13 +63,13 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	@NotNull
 	@Column(name = "EMAIL", columnDefinition = "TEXT")
 	@FullTextField(name = "_email")
-	protected String email;
+	private String email;
 
 	@Min(0)
 	@Column(name = "EXPECTED_SALARY", scale = 0, precision = 6)
 	private Integer expectedSalary;
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<File> files = new HashSet<>();
 
 	@Column(name = "INFOJOBS_PROFILE_URL", columnDefinition = "TEXT")
@@ -94,23 +93,22 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	@Column(name = "NAME", nullable = false, columnDefinition = "TEXT")
 	@FullTextField(name = "_name")
 	@GenericField(sortable = Sortable.YES)
-	protected String name;
+	private String name;
 
 	@ManyToOne
 	@JoinColumn(name = "CANDIDATE_ID")
 	private Origin origin;
 
 	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY )
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "OWNER_ID", nullable = false)
 	private User owner;
 
 	@Column(name = "PHONE_NUMBER", columnDefinition = "TEXT")
-	protected String phoneNumber;
+	private String phoneNumber;
 
-	@ManyToOne
-	@JoinColumn(name = "PICTURE_ID")
-	protected File picture;
+	@OneToOne(mappedBy = "candidate")
+	private CandidatePicture picture;
 
 	@GenericField(sortable = Sortable.YES)
 	@Column(name = "RATING", scale = 0, precision = 1)
@@ -128,7 +126,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	@NotNull
 	@Column(name = "SURNAME", columnDefinition = "TEXT")
 	@FullTextField(name = "_surname")
-	protected String surname;
+	private String surname;
 
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "CANDIDATE_TAG", joinColumns = @JoinColumn(name = "CANDIDATE_ID"), inverseJoinColumns = @JoinColumn(name = "TAG_ID"))
@@ -137,6 +135,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 
 	public void addFile(final File file) {
 		Objects.requireNonNull(file);
+		file.setCandidate(this);
 		this.files.add(file);
 	}
 
@@ -238,7 +237,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 		return this.phoneNumber;
 	}
 
-	public File getPicture() {
+	public CandidatePicture getPicture() {
 		return this.picture;
 	}
 
@@ -265,7 +264,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	public Set<Tag> getTags() {
 		return this.tags;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return 31 * Objects.hash(this.email);
@@ -274,13 +273,14 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	public void removeFile(final File file) {
 		Objects.requireNonNull(file);
 		this.files.remove(file);
+		file.setCandidate(null);
 	}
 
 	public void removeMeeting(final Meeting meeting) {
 		Objects.requireNonNull(meeting);
 		this.meetings.remove(meeting);
 	}
-	
+
 	public void setAddress(final Address address) {
 		this.address = address;
 	}
@@ -291,6 +291,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 
 	public void setCurriculum(final Curriculum curriculum) {
 		this.curriculum = curriculum;
+		curriculum.setCandidate(this);
 	}
 
 	public void setEmail(final String email) {
@@ -346,8 +347,9 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 		this.phoneNumber = phoneNumber;
 	}
 
-	public void setPicture(final File picture) {
+	public void setPicture(final CandidatePicture picture) {
 		this.picture = picture;
+		this.picture.setCandidate(this);
 	}
 
 	public void setRating(final Integer rating) {
@@ -381,7 +383,6 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	public void setTags(final Set<Tag> tags) {
 		this.tags = tags;
 	}
-
 
 	@Override
 	public String toString() {

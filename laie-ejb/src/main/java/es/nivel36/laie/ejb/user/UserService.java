@@ -8,8 +8,8 @@ import org.hibernate.search.engine.search.query.SearchResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.core.file.File;
-import es.nivel36.laie.ejb.core.file.FileService;
+import es.nivel36.laie.ejb.core.file.PhysicalFile;
+import es.nivel36.laie.ejb.core.file.PhysicalFileService;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.SortField;
 import jakarta.ejb.Stateless;
@@ -20,7 +20,7 @@ public class UserService {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
-	private @Inject FileService fileService;
+	private @Inject PhysicalFileService fileService;
 
 	private @Inject UserDao userDao;
 
@@ -72,16 +72,16 @@ public class UserService {
 		// the new manager.
 		changeUsersManager(userInDatabase, userInDatabase.getManager(), user.getManager());
 
-		final File picture = user.getPicture();
-		final File pictureInDatabase = userInDatabase.getPicture();
+		final UserPicture picture = user.getPicture();
+		final UserPicture pictureInDatabase = userInDatabase.getPicture();
 		if (pictureHasChanged(picture, pictureInDatabase)) {
-			this.fileService.removeFile(pictureInDatabase);
+			this.fileService.removeFile(pictureInDatabase.getPhysicalFile());
 		}
 
 		return this.userDao.update(user);
 	}
 
-	private boolean pictureHasChanged(final File picture, final File pictureInDatabase) {
+	private boolean pictureHasChanged(final UserPicture picture, final UserPicture pictureInDatabase) {
 		if ((picture == null) != (pictureInDatabase == null)) {
 			return true;
 		}
@@ -123,13 +123,15 @@ public class UserService {
 		Objects.requireNonNull(image);
 		logger.debug("Change image to user {}", user);
 		final Long userId = user.getId();
-		final File newImage = this.fileService.uploadFile(image, userId + "_picture", true);
-		final File oldImage = user.getPicture();
-		user.setPicture(newImage);
+		final PhysicalFile newImage = this.fileService.uploadFile(image, userId + "_picture", true);
+		final UserPicture oldImage = user.getPicture();
+		final UserPicture candidateImage = new UserPicture();
+		candidateImage.setPhysicalFile(newImage);
+		user.setPicture(candidateImage);
 		final User updatedUser = userDao.update(user);
 		if (oldImage != null) {
 			logger.trace("Remove user {} old image", user);
-			this.fileService.removeFile(oldImage);
+			this.fileService.removeFile(oldImage.getPhysicalFile());
 		}
 		return updatedUser;
 	}

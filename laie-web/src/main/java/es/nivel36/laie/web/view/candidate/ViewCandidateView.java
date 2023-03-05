@@ -15,11 +15,11 @@ import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.candidate.CandidateService;
+import es.nivel36.laie.ejb.candidate.File;
 import es.nivel36.laie.ejb.candidate.Rating;
 import es.nivel36.laie.ejb.candidate.RatingService;
 import es.nivel36.laie.ejb.core.bookmark.Bookmark;
-import es.nivel36.laie.ejb.core.file.File;
-import es.nivel36.laie.ejb.core.file.FileService;
+import es.nivel36.laie.ejb.core.file.PhysicalFileService;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureService;
 import es.nivel36.laie.ejb.job.meeting.Meeting;
@@ -69,14 +69,14 @@ public class ViewCandidateView extends AbstractView {
 
 	private transient @Inject CandidateService candidateService;
 
-	private transient @Inject FileService fileUploadService;
+	private transient @Inject PhysicalFileService fileUploadService;
 
 	private transient @Inject MeetingService meetingService;
 
 	private transient @Inject JobCandidatureService jobCandidatureService;
 
 	private transient @Inject EditCandidatePermission editCandidatePermission;
-	
+
 	private transient @Inject RatingService ratingService;
 
 	@PostConstruct
@@ -105,7 +105,7 @@ public class ViewCandidateView extends AbstractView {
 		this.editRatingVisible = !this.addRatingVisible;
 		this.jobCandidatures.setCandidate(candidate);
 	}
-	
+
 	private void findCandidate() {
 		try {
 			final Long id = Long.parseLong(candidateId);
@@ -161,13 +161,13 @@ public class ViewCandidateView extends AbstractView {
 	}
 
 	public void openFile(final File file) throws IOException {
-		try (final InputStream is = this.fileUploadService.downloadFile(file);) {
+		try (final InputStream is = this.fileUploadService.downloadFile(file.getPhysicalFile())) {
 			Faces.sendFile(is, file.getName(), true);
 		}
 	}
 
 	public void removeFile(final File file) {
-		this.candidate = this.candidateService.removeFileFromCandidate(this.candidate, file);
+		this.candidate = this.candidateService.deleteFile(file);
 		this.files = new ArrayList<File>(candidate.getFiles());
 	}
 
@@ -179,8 +179,7 @@ public class ViewCandidateView extends AbstractView {
 		}
 		logger.debug("Upload candidate {} image action performed", this.candidate);
 		try (final InputStream inputStream = uploadedFile.getInputStream()) {
-			this.candidate = this.candidateService.addFileToCandidate(candidate, inputStream,
-					uploadedFile.getFileName());
+			this.candidate = this.candidateService.addFile(candidate, inputStream, uploadedFile.getFileName());
 			this.files = new ArrayList<File>(candidate.getFiles());
 		}
 	}
@@ -230,7 +229,7 @@ public class ViewCandidateView extends AbstractView {
 		this.candidateService = candidateService;
 	}
 
-	public void setFileUploadService(final FileService fileUploadService) {
+	public void setFileUploadService(final PhysicalFileService fileUploadService) {
 		Objects.requireNonNull(fileUploadService);
 		this.fileUploadService = fileUploadService;
 	}

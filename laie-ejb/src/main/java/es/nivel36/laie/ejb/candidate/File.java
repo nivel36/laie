@@ -1,14 +1,14 @@
-package es.nivel36.laie.ejb.core.file;
+package es.nivel36.laie.ejb.candidate;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
+import es.nivel36.laie.ejb.core.file.PhysicalFile;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
@@ -17,6 +17,10 @@ import jakarta.validation.constraints.NotNull;
 public class File extends AbstractEntity {
 
 	private static final long serialVersionUID = -2983690237456593632L;
+	
+	@ManyToOne
+	@JoinColumn(name= "CANDIDATE_ID", nullable = false )
+	private Candidate candidate;
 
 	@NotNull
 	@Column(nullable = false)
@@ -28,11 +32,28 @@ public class File extends AbstractEntity {
 	@Column(nullable = false)
 	private String name;
 
-	@ManyToOne(cascade = { CascadeType.PERSIST }, fetch = FetchType.EAGER, optional = false)
+	@ManyToOne(cascade = { CascadeType.PERSIST }, optional = false)
 	@JoinColumn(name = "physicalFileId", nullable = false, updatable = false)
 	private PhysicalFile physicalFile;
 
 	private boolean publicAccess;
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		File other = (File) obj;
+		return Objects.equals(created, other.created) && Objects.equals(name, other.name)
+				&& publicAccess == other.publicAccess;
+	}
+
+	public Candidate getCandidate() {
+		return candidate;
+	}
 
 	public LocalDateTime getCreated() {
 		return this.created;
@@ -46,12 +67,28 @@ public class File extends AbstractEntity {
 		return this.name;
 	}
 
+	public String getPath() {
+		if (physicalFile == null) {
+			return null;
+		}
+		return physicalFile.getRelativePath();
+	}
+
 	public PhysicalFile getPhysicalFile() {
 		return this.physicalFile;
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(created, name, publicAccess);
+	}
+
 	public boolean isPublicAccess() {
 		return this.publicAccess;
+	}
+
+	public void setCandidate(Candidate candidate) {
+		this.candidate = candidate;
 	}
 
 	public void setCreated(final LocalDateTime created) {
@@ -72,31 +109,6 @@ public class File extends AbstractEntity {
 
 	public void setPublicAccess(final boolean publicAccess) {
 		this.publicAccess = publicAccess;
-	}
-
-	public String getPath() {
-		if (physicalFile == null) {
-			return null;
-		}
-		return physicalFile.getRelativePath();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		File other = (File) obj;
-		return Objects.equals(created, other.created) && Objects.equals(name, other.name)
-				&& publicAccess == other.publicAccess;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(created, name, publicAccess);
 	}
 
 	@Override

@@ -9,8 +9,8 @@ public class ContactDataToHtml extends AbstractHtmlPrinter {
 		sb.append(this.openDiv("name-profile"));
 		sb.append(this.printName(candidate.getFullName()));
 		sb.append(this.printJobProfile(candidate.getJobProfile()));
-		if (candidate.getPicture().getName() != null) {
-			sb.append(printPicture(imagePath + "/" + candidate.getPicture().getName()));
+		if (candidate.getPicture() != null) {
+			sb.append(printPicture(imagePath + "/" + candidate.getId()));
 		}
 		sb.append(closeDiv());
 		sb.append(this.openDiv("contact"));

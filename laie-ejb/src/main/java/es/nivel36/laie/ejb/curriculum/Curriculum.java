@@ -13,7 +13,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -35,8 +34,7 @@ public class Curriculum implements Identifiable, Serializable {
 	private long version;
 
 	@NotNull
-	@OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
-	@JoinColumn(name = "CANDIDATE_ID", nullable = false)
+	@OneToOne(orphanRemoval = true)
 	@MapsId
 	private Candidate candidate;
 

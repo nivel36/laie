@@ -11,12 +11,13 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
+import es.nivel36.laie.ejb.candidate.File;
 import es.nivel36.laie.ejb.core.util.ConfigurationProperty;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 
 @Stateless
-public class FileService {
+public class PhysicalFileService {
 
 	private static final FileBucket TEMP_BUCKET = TemporalFileBucket.getInstance();
 
@@ -24,38 +25,51 @@ public class FileService {
 
 	private static final FileBucket PUBLIC_BUCKET = PublicFileBucket.getInstance();
 
-	@Inject
-	
-	private FileJpaDao fileDao;
+	private @Inject PhysicalFileJpaDao fileDao;
 
-	@Inject
-	@ConfigurationProperty(value = "file.directory")
-	private String fileDirectory;
-	
+	private @Inject @ConfigurationProperty(value = "file.directory") String fileDirectory;
+
 	public File findById(Long id) {
 		Objects.requireNonNull(id);
 		return fileDao.find(File.class, id);
 	}
 
-	public InputStream downloadFile(final File file) {
+	public InputStream downloadFile(final PhysicalFile file) {
 		Objects.requireNonNull(file);
 		try {
-			final Path path = Paths.get(file.getPhysicalFile().getAbsolutePath());
+			final Path path = Paths.get(file.getAbsolutePath());
 			return new BufferedInputStream(Files.newInputStream(path));
 		} catch (final IOException e) {
 			throw new UncheckedIOException(e);
 		}
 	}
-
-	public File uploadTemporalFile(final InputStream inputStream) {
-		Objects.requireNonNull(inputStream);
-		final File file = new File();
-		file.setCreated(LocalDateTime.now());
-		file.setPublicAccess(false);
-		final PhysicalFile newPhysicalFile = uploadFileToBucket(TEMP_BUCKET, inputStream);
-		file.setPhysicalFile(newPhysicalFile);
-		file.setName(newPhysicalFile.getUId());
-		return file;
+	
+	public PhysicalFile uploadTemporalPhisicalFile( final InputStream inputStream) {
+		final String uId = UUID.randomUUID().toString();
+		final Path relativePath = this.getRelativePath(TEMP_BUCKET, uId);
+		final Path absolutePath = this.getAbsolutePath(relativePath);
+		final String hash = this.uploadFileToFilesystem(absolutePath, inputStream);
+		final PhysicalFile newPhysicalFile = new PhysicalFile();
+		newPhysicalFile.setUId(uId);
+		newPhysicalFile.setBucket(TEMP_BUCKET.getName());
+		newPhysicalFile.setContentHash(hash);
+		newPhysicalFile.setAbsolutePath(absolutePath);
+		newPhysicalFile.setCreated(LocalDateTime.now());
+		newPhysicalFile.setRelativePath(relativePath);
+		return newPhysicalFile;
+	}
+	
+	public void moveFromTemporalFile( final PhysicalFile file, boolean publicAccess) {
+		final FileBucket bucket = publicAccess ? PUBLIC_BUCKET : PRIVATE_BUCKET;
+		final Path relativePath = this.getRelativePath(bucket, file.getUId());
+		final Path absolutePath = this.getAbsolutePath(relativePath);
+		try {
+			Files.copy(Path.of(file.getAbsolutePath()), absolutePath);
+		} catch (IOException e) {
+			throw new UncheckedIOException(e);
+		}
+		file.setAbsolutePath(absolutePath);
+		file.setBucket(bucket.getName());
 	}
 
 	private PhysicalFile uploadFileToBucket(final FileBucket bucket, final InputStream inputStream) {
@@ -85,14 +99,12 @@ public class FileService {
 		return new Sha256DigestedFileWriter().write(path, inputStream);
 	}
 
-	public void removeFile(final File file) {
+	public void removeFile(final PhysicalFile file) {
 		Objects.requireNonNull(file);
-		final PhysicalFile physicalFile = file.getPhysicalFile();
-		final boolean isOrphan = this.fileDao.isOrphanPhysicalFile(physicalFile);
-		this.fileDao.delete(file);
+		final boolean isOrphan = this.fileDao.isOrphanPhysicalFile(file);
 		if (isOrphan) {
-			this.deleteFileInFileSystem(physicalFile);
-			this.fileDao.deletePhysicalFile(physicalFile);
+			this.deleteFileInFileSystem(file);
+			this.fileDao.deletePhysicalFile(file);
 		}
 	}
 
@@ -105,24 +117,18 @@ public class FileService {
 		}
 	}
 
-	public File uploadFile(final InputStream inputStream, final String filename, final boolean publicAccess) {
+	public PhysicalFile uploadFile(final InputStream inputStream, final String filename, final boolean publicAccess) {
 		Objects.requireNonNull(inputStream);
-		final File file = new File();
 		final FileBucket fileBucket = publicAccess ? PUBLIC_BUCKET : PRIVATE_BUCKET;
 		final PhysicalFile physicalFile = uploadFileToBucket(fileBucket, inputStream);
 		final String contentHash = physicalFile.getContentHash();
 		final String bucketName = fileBucket.getName();
 		final PhysicalFile physicalFileInDdbb = this.fileDao.findPhysicalFileByHashAndBucket(contentHash, bucketName);
 		if (physicalFileInDdbb != null) {
-			file.setPhysicalFile(physicalFileInDdbb);
 			deleteFileInFileSystem(physicalFile);
+			return physicalFileInDdbb;
 		} else {
-			file.setPhysicalFile(physicalFile);
+			return physicalFile;
 		}
-		file.setName(filename);
-		file.setCreated(LocalDateTime.now());
-		file.setPublicAccess(publicAccess);
-		this.fileDao.insert(file);
-		return file;
 	}
 }

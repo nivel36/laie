@@ -14,12 +14,13 @@ import org.primefaces.model.file.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.core.file.File;
-import es.nivel36.laie.ejb.core.file.FileService;
+import es.nivel36.laie.ejb.core.file.PhysicalFileService;
 import es.nivel36.laie.ejb.core.file.FileUploadException;
+import es.nivel36.laie.ejb.core.file.PhysicalFile;
 import es.nivel36.laie.ejb.user.BadManagerException;
 import es.nivel36.laie.ejb.user.DuplicateEmailException;
 import es.nivel36.laie.ejb.user.User;
+import es.nivel36.laie.ejb.user.UserPicture;
 import es.nivel36.laie.ejb.user.UserService;
 import es.nivel36.laie.web.core.view.AbstractView;
 import jakarta.annotation.PostConstruct;
@@ -41,10 +42,10 @@ public class ConfigView extends AbstractView {
 
 	private User user;
 
-	private File userImage;
+	private UserPicture userImage;
 
 	@Inject
-	private transient FileService fileService;
+	private transient PhysicalFileService fileService;
 
 	@Inject
 	private transient UserService userService;
@@ -65,7 +66,8 @@ public class ConfigView extends AbstractView {
 		}
 		logger.debug("Upload camera image for user {} action performed", this.user);
 		try (final InputStream inputStream = new ByteArrayInputStream(data);) {
-			this.userImage = this.fileService.uploadTemporalFile(inputStream);
+			final PhysicalFile physicalFile = this.fileService.uploadTemporalPhisicalFile(inputStream);
+			this.userImage.setPhysicalFile(physicalFile);
 		} catch (final IOException e) {
 			this.imageChanged = false;
 			throw new FileUploadException(e);
@@ -81,7 +83,8 @@ public class ConfigView extends AbstractView {
 		}
 		logger.debug("Upload user {} image action performed", this.user);
 		try (final InputStream inputStream = uploadedFile.getInputStream()) {
-			this.userImage = this.fileService.uploadTemporalFile(inputStream);
+			final PhysicalFile physicalFile = this.fileService.uploadTemporalPhisicalFile(inputStream);
+			this.userImage.setPhysicalFile(physicalFile);
 		}
 	}
 
@@ -130,7 +133,7 @@ public class ConfigView extends AbstractView {
 			return;
 		}
 		logger.trace("Changing user image");
-		try (final InputStream is = this.fileService.downloadFile(userImage);
+		try (final InputStream is = this.fileService.downloadFile(userImage.getPhysicalFile());
 				final BufferedInputStream bis = new BufferedInputStream(is)) {
 			this.user = this.userService.changeUsersImage(this.user, is);
 		} catch (final IOException e) {
@@ -142,7 +145,7 @@ public class ConfigView extends AbstractView {
 		return this.user;
 	}
 
-	public File getUserImage() {
+	public UserPicture getUserImage() {
 		return this.userImage;
 	}
 
@@ -150,7 +153,7 @@ public class ConfigView extends AbstractView {
 		this.user = user;
 	}
 
-	public void setFileService(final FileService fileService) {
+	public void setFileService(final PhysicalFileService fileService) {
 		Objects.requireNonNull(fileService);
 		this.fileService = fileService;
 	}

@@ -7,7 +7,7 @@ import org.omnifaces.cdi.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.core.file.FileService;
+import es.nivel36.laie.ejb.core.file.PhysicalFileService;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserService;
@@ -22,7 +22,7 @@ public abstract class AbstractUserView extends AbstractView {
 
 	protected @Param User user;
 
-	protected transient @Inject FileService fileUploadService;
+	protected transient @Inject PhysicalFileService fileUploadService;
 
 	protected transient @Inject UserService userService;
 
@@ -47,7 +47,7 @@ public abstract class AbstractUserView extends AbstractView {
 		this.user = user;
 	}
 
-	public void setFileUploadService(final FileService fileUploadService) {
+	public void setFileUploadService(final PhysicalFileService fileUploadService) {
 		Objects.requireNonNull(fileUploadService);
 		this.fileUploadService = fileUploadService;
 	}

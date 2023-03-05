@@ -1,6 +1,5 @@
 package es.nivel36.laie.web.view.candidate;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -12,11 +11,13 @@ import org.primefaces.model.file.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
 import es.nivel36.laie.ejb.candidate.Candidate;
+import es.nivel36.laie.ejb.candidate.CandidatePicture;
 import es.nivel36.laie.ejb.candidate.CandidateService;
-import es.nivel36.laie.ejb.core.file.File;
-import es.nivel36.laie.ejb.core.file.FileService;
+import es.nivel36.laie.ejb.core.file.PhysicalFileService;
 import es.nivel36.laie.ejb.core.file.FileUploadException;
+import es.nivel36.laie.ejb.core.file.PhysicalFile;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.tag.TagService;
 import es.nivel36.laie.ejb.user.User;
@@ -34,7 +35,7 @@ public abstract class AbstractCandidateView extends AbstractView {
 
 	protected Candidate candidate;
 
-	protected File candidateImage;
+	protected CandidatePicture candidateImage;
 
 	protected boolean imageChanged;
 	
@@ -44,7 +45,7 @@ public abstract class AbstractCandidateView extends AbstractView {
 	
 	protected transient @Inject CandidateService candidateService;
 
-	protected transient @Inject FileService fileService;
+	protected transient @Inject PhysicalFileService fileService;
 	
 	protected transient @Inject TagService tagService;
 
@@ -74,12 +75,7 @@ public abstract class AbstractCandidateView extends AbstractView {
 			return;
 		}
 		logger.trace("Changing user image");
-		try (final InputStream is = this.fileService.downloadFile(candidateImage);
-				final BufferedInputStream bis = new BufferedInputStream(is)) {
-			this.candidate = this.candidateService.changeCandidatesImage(this.candidate, bis);
-		} catch (final IOException e) {
-			throw new FileUploadException(e);
-		}
+		this.fileService.moveFromTemporalFile(this.candidateImage.getPhysicalFile(),false);
 	}
 	
 	public void uploadImage(final FileUploadEvent event) {
@@ -91,7 +87,10 @@ public abstract class AbstractCandidateView extends AbstractView {
 		}
 		logger.debug("Upload candidate {} image action performed", this.candidate);
 		try (final InputStream inputStream = uploadedFile.getInputStream()) {
-			this.candidateImage = this.fileService.uploadTemporalFile(inputStream);
+			final PhysicalFile file = this.fileService.uploadTemporalPhisicalFile( inputStream);
+			this.candidateImage = new CandidatePicture();
+			this.candidateImage.setPhysicalFile(file);
+			candidate.setPicture(candidateImage);
 		} catch (final IOException e) {
 			throw new FileUploadException(e);
 		}
@@ -101,7 +100,7 @@ public abstract class AbstractCandidateView extends AbstractView {
 		return this.candidate;
 	}
 
-	public File getCandidateImage() {
+	public CandidatePicture getCandidateImage() {
 		return candidateImage;
 	}
 
@@ -130,7 +129,7 @@ public abstract class AbstractCandidateView extends AbstractView {
 		this.candidateService = candidateService;
 	}
 
-	public void setFileService(final FileService fileService) {
+	public void setFileService(final PhysicalFileService fileService) {
 		Objects.requireNonNull(fileService);
 		this.fileService = fileService;
 	}
