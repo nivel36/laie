@@ -84,6 +84,7 @@ public class ConfigView extends AbstractView {
 		logger.debug("Upload user {} image action performed", this.user);
 		try (final InputStream inputStream = uploadedFile.getInputStream()) {
 			final PhysicalFile physicalFile = this.fileService.uploadTemporalPhisicalFile(inputStream);
+			this.userImage = new UserPicture();
 			this.userImage.setPhysicalFile(physicalFile);
 		}
 	}

@@ -61,7 +61,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 
 	@Email
 	@NotNull
-	@Column(name = "EMAIL", columnDefinition = "TEXT")
+	@Column(name = "EMAIL")
 	@FullTextField(name = "_email")
 	private String email;
 

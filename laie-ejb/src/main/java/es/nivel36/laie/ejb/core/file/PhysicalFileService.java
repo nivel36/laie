@@ -56,6 +56,7 @@ public class PhysicalFileService {
 		newPhysicalFile.setAbsolutePath(absolutePath);
 		newPhysicalFile.setCreated(LocalDateTime.now());
 		newPhysicalFile.setRelativePath(relativePath);
+		this.fileDao.insert(newPhysicalFile);
 		return newPhysicalFile;
 	}
 	
