@@ -1,6 +1,5 @@
 package es.nivel36.laie.web.view.config;
 
-import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -133,13 +132,8 @@ public class ConfigView extends AbstractView {
 			this.user.setPicture(null);
 			return;
 		}
-		logger.trace("Changing user image");
-		try (final InputStream is = this.fileService.downloadFile(userImage.getPhysicalFile());
-				final BufferedInputStream bis = new BufferedInputStream(is)) {
-			this.user = this.userService.changeUsersImage(this.user, is);
-		} catch (final IOException e) {
-			throw new FileUploadException(e);
-		}
+		this.fileService.moveFromTemporalFile(this.userImage.getPhysicalFile(), true);
+		this.user.setPicture(userImage);
 	}
 
 	public User getUser() {

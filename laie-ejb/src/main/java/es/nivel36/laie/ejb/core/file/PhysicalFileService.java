@@ -43,8 +43,8 @@ public class PhysicalFileService {
 			throw new UncheckedIOException(e);
 		}
 	}
-	
-	public PhysicalFile uploadTemporalPhisicalFile( final InputStream inputStream) {
+
+	public PhysicalFile uploadTemporalPhisicalFile(final InputStream inputStream) {
 		final String uId = UUID.randomUUID().toString();
 		final Path relativePath = this.getRelativePath(TEMP_BUCKET, uId);
 		final Path absolutePath = this.getAbsolutePath(relativePath);
@@ -59,12 +59,16 @@ public class PhysicalFileService {
 		this.fileDao.insert(newPhysicalFile);
 		return newPhysicalFile;
 	}
-	
-	public void moveFromTemporalFile( final PhysicalFile file, boolean publicAccess) {
+
+	public void moveFromTemporalFile(final PhysicalFile file, boolean publicAccess) {
 		final FileBucket bucket = publicAccess ? PUBLIC_BUCKET : PRIVATE_BUCKET;
 		final Path relativePath = this.getRelativePath(bucket, file.getUId());
 		final Path absolutePath = this.getAbsolutePath(relativePath);
 		try {
+			final Path parent = absolutePath.getParent();
+			if (!Files.exists(parent)) {
+				Files.createDirectories(parent);
+			}
 			Files.copy(Path.of(file.getAbsolutePath()), absolutePath);
 		} catch (IOException e) {
 			throw new UncheckedIOException(e);

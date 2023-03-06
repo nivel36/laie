@@ -34,7 +34,6 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
-import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.Email;
@@ -55,8 +54,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	@Column(name = "BORN_DATE")
 	private LocalDate bornDate;
 
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "candidate")
-	@PrimaryKeyJoinColumn
+	@OneToOne(mappedBy = "candidate")
 	private Curriculum curriculum;
 
 	@Email
@@ -107,7 +105,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	@Column(name = "PHONE_NUMBER", columnDefinition = "TEXT")
 	private String phoneNumber;
 
-	@OneToOne(mappedBy = "candidate")
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "candidate")
 	private CandidatePicture picture;
 
 	@GenericField(sortable = Sortable.YES)

@@ -5,7 +5,6 @@ import java.util.Objects;
 
 import es.nivel36.laie.ejb.core.file.PhysicalFile;
 import es.nivel36.laie.ejb.core.model.Identifiable;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -19,31 +18,35 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class UserPicture implements Identifiable, Serializable {
-	
+
 	private static final long serialVersionUID = -8087629702378362720L;
 
-	@Id 
-	@Column(name="user_id") 
+	@Id
+	@Column(name = "user_id")
 	private long id;
-	
+
 	@Version
 	private long version;
 
-	@ManyToOne(cascade = { CascadeType.PERSIST }, fetch = FetchType.EAGER, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "PHYSICAL_FILE_ID", nullable = false, updatable = false)
 	private PhysicalFile physicalFile;
-	
+
 	@NotNull
 	@OneToOne
 	@MapsId
 	private User user;
-	
+
 	public User getUser() {
 		return user;
 	}
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public String getPath() {
+		return this.getPhysicalFile().getRelativePath();
 	}
 
 	public long getId() {

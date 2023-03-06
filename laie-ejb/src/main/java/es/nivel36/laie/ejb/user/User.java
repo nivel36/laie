@@ -94,7 +94,7 @@ public class User extends AbstractEntity implements Subject {
 	@Column(name = "PHONE_NUMBER", length = 12)
 	private String phoneNumber;
 
-	@OneToOne(mappedBy = "user")
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
 	private UserPicture picture;
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)

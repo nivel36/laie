@@ -34,7 +34,7 @@ public class Curriculum implements Identifiable, Serializable {
 	private long version;
 
 	@NotNull
-	@OneToOne(orphanRemoval = true)
+	@OneToOne
 	@MapsId
 	private Candidate candidate;
 

@@ -74,7 +74,7 @@ public class UserService {
 
 		final UserPicture picture = user.getPicture();
 		final UserPicture pictureInDatabase = userInDatabase.getPicture();
-		if (pictureHasChanged(picture, pictureInDatabase)) {
+		if (pictureHasChanged(picture, pictureInDatabase) && pictureInDatabase != null) {
 			this.fileService.removeFile(pictureInDatabase.getPhysicalFile());
 		}
 
@@ -147,7 +147,6 @@ public class UserService {
 		logger.debug("Find user by email {}", email);
 		return this.userDao.findUserByEmail(email);
 	}
-	
 
 	public User findAllUserData(Long id) {
 		Objects.requireNonNull(id);
