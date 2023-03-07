@@ -96,16 +96,12 @@ public class CandidateService {
 		Objects.requireNonNull(candidate);
 		Objects.requireNonNull(image);
 		logger.debug("Change image to user {}", candidate);
-		final CandidatePicture oldImage = candidate.getPicture();
-		final Long candidateId = candidate.getId();
-		final String filename = candidateId + "_picture";
-		final PhysicalFile newImage = this.fileService.uploadFile(image, filename, true);
-		final CandidatePicture candidatePicture = new CandidatePicture();
-		candidatePicture.setPhysicalFile(newImage);
-		candidate.setPicture(candidatePicture);
+		final PhysicalFile oldImage = candidate.getPicture();		
+		final PhysicalFile newImage = this.fileService.uploadFile(image, true);
+		candidate.setPicture(newImage);
 		if (oldImage != null) {
 			logger.trace("Remove user {} old image", candidate);
-			this.fileService.removeFile(oldImage.getPhysicalFile());
+			this.fileService.removeFile(oldImage);
 		}
 		return updateAndFireEvent(candidate);
 	}
@@ -145,7 +141,7 @@ public class CandidateService {
 		Objects.requireNonNull(candidate);
 		Objects.requireNonNull(filename);
 		logger.debug("Add file {} to candidate {}", filename, candidate);
-		final PhysicalFile physicalFile = fileService.uploadFile(inputStream, filename, false);
+		final PhysicalFile physicalFile = fileService.uploadFile(inputStream, false);
 		File file = new File();
 		file.setCreated(LocalDateTime.now());
 		file.setName(filename);

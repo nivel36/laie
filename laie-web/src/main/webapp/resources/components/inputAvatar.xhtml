@@ -20,6 +20,7 @@
 				<p:graphicImage styleClass="avatar" id="avatar" value="/images/#{cc.attrs.value}" rendered="#{not empty cc.attrs.value}" />
 				<p:graphicImage styleClass="avatar" value="/resources/img/default-avatar.png" rendered="#{empty cc.attrs.value}" />
 			</h:outputLabel>
+			<p:commandButton id="deleteButton" icon="pi pi-times" styleClass="delete-button icon ui-button-danger" process="@this avatar" rendered="#{not empty cc.attrs.value}" action="#{cc.attrs.deleteImage}" update="#{cc.clientId}" />
 			<c:if test="#{cc.attrs.allowCamera}">
 				<p:commandButton id="cameraButton" icon="pi pi-camera" onclick="PF('cameraDialog').show();" styleClass="camera-button icon" process="@this" />
 				<p:dialog widgetVar="cameraDialog" closable="true" dynamic="true" modal="true">
@@ -27,7 +28,6 @@
 					<p:commandButton type="button" value="Capture" onclick="PF('camera').capture()" />
 				</p:dialog>
 			</c:if>
-			<p:commandButton id="deleteButton" icon="pi pi-times" styleClass="delete-button icon ui-button-danger" process="@this avatar" rendered="#{not empty cc.attrs.value}" action="#{cc.attrs.deleteImage}" update="#{cc.clientId}" />
 		</div>
 	</composite:implementation>
 </ui:component>

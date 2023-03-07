@@ -70,18 +70,18 @@ public class UserService {
 
 		// Check if the manager has changed and if he/she meets the requirements to be
 		// the new manager.
-		changeUsersManager(userInDatabase, userInDatabase.getManager(), user.getManager());
+		this.changeUsersManager(userInDatabase, userInDatabase.getManager(), user.getManager());
 
-		final UserPicture picture = user.getPicture();
-		final UserPicture pictureInDatabase = userInDatabase.getPicture();
+		final PhysicalFile picture = user.getPicture();
+		final PhysicalFile pictureInDatabase = userInDatabase.getPicture();
 		if (pictureHasChanged(picture, pictureInDatabase) && pictureInDatabase != null) {
-			this.fileService.removeFile(pictureInDatabase.getPhysicalFile());
+			this.fileService.removeFile(pictureInDatabase);
 		}
 
 		return this.userDao.update(user);
 	}
 
-	private boolean pictureHasChanged(final UserPicture picture, final UserPicture pictureInDatabase) {
+	private boolean pictureHasChanged(final PhysicalFile picture, final PhysicalFile pictureInDatabase) {
 		if ((picture == null) != (pictureInDatabase == null)) {
 			return true;
 		}
@@ -122,16 +122,13 @@ public class UserService {
 		Objects.requireNonNull(user);
 		Objects.requireNonNull(image);
 		logger.debug("Change image to user {}", user);
-		final Long userId = user.getId();
-		final PhysicalFile newImage = this.fileService.uploadFile(image, userId + "_picture", true);
-		final UserPicture oldImage = user.getPicture();
-		final UserPicture candidateImage = new UserPicture();
-		candidateImage.setPhysicalFile(newImage);
-		user.setPicture(candidateImage);
+		final PhysicalFile newImage = this.fileService.uploadFile(image, true);
+		final PhysicalFile oldImage = user.getPicture();
+		user.setPicture(newImage);
 		final User updatedUser = userDao.update(user);
 		if (oldImage != null) {
 			logger.trace("Remove user {} old image", user);
-			this.fileService.removeFile(oldImage.getPhysicalFile());
+			this.fileService.removeFile(oldImage);
 		}
 		return updatedUser;
 	}

@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
-import es.nivel36.laie.ejb.candidate.File;
 import es.nivel36.laie.ejb.core.util.ConfigurationProperty;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
@@ -29,9 +28,9 @@ public class PhysicalFileService {
 
 	private @Inject @ConfigurationProperty(value = "file.directory") String fileDirectory;
 
-	public File findById(Long id) {
+	public PhysicalFile findById(Long id) {
 		Objects.requireNonNull(id);
-		return fileDao.find(File.class, id);
+		return fileDao.find(PhysicalFile.class, id);
 	}
 
 	public InputStream downloadFile(final PhysicalFile file) {
@@ -44,64 +43,12 @@ public class PhysicalFileService {
 		}
 	}
 
-	public PhysicalFile uploadTemporalPhisicalFile(final InputStream inputStream) {
-		final String uId = UUID.randomUUID().toString();
-		final Path relativePath = this.getRelativePath(TEMP_BUCKET, uId);
-		final Path absolutePath = this.getAbsolutePath(relativePath);
-		final String hash = this.uploadFileToFilesystem(absolutePath, inputStream);
-		final PhysicalFile newPhysicalFile = new PhysicalFile();
-		newPhysicalFile.setUId(uId);
-		newPhysicalFile.setBucket(TEMP_BUCKET.getName());
-		newPhysicalFile.setContentHash(hash);
-		newPhysicalFile.setAbsolutePath(absolutePath);
-		newPhysicalFile.setCreated(LocalDateTime.now());
-		newPhysicalFile.setRelativePath(relativePath);
-		this.fileDao.insert(newPhysicalFile);
-		return newPhysicalFile;
-	}
-
-	public void moveFromTemporalFile(final PhysicalFile file, boolean publicAccess) {
-		final FileBucket bucket = publicAccess ? PUBLIC_BUCKET : PRIVATE_BUCKET;
-		final Path relativePath = this.getRelativePath(bucket, file.getUId());
-		final Path absolutePath = this.getAbsolutePath(relativePath);
-		try {
-			final Path parent = absolutePath.getParent();
-			if (!Files.exists(parent)) {
-				Files.createDirectories(parent);
-			}
-			Files.copy(Path.of(file.getAbsolutePath()), absolutePath);
-		} catch (IOException e) {
-			throw new UncheckedIOException(e);
-		}
-		file.setAbsolutePath(absolutePath);
-		file.setBucket(bucket.getName());
-	}
-
-	private PhysicalFile uploadFileToBucket(final FileBucket bucket, final InputStream inputStream) {
-		final String uId = UUID.randomUUID().toString();
-		final Path relativePath = this.getRelativePath(bucket, uId);
-		final Path absolutePath = this.getAbsolutePath(relativePath);
-		final String hash = this.uploadFileToFilesystem(absolutePath, inputStream);
-		final PhysicalFile newPhysicalFile = new PhysicalFile();
-		newPhysicalFile.setUId(uId);
-		newPhysicalFile.setBucket(bucket.getName());
-		newPhysicalFile.setContentHash(hash);
-		newPhysicalFile.setAbsolutePath(absolutePath);
-		newPhysicalFile.setCreated(LocalDateTime.now());
-		newPhysicalFile.setRelativePath(relativePath);
-		return newPhysicalFile;
-	}
-
 	private Path getRelativePath(final FileBucket fileBucket, final String uId) {
 		return new PathBuilder().buildRelativePath(fileBucket, uId);
 	}
 
 	private Path getAbsolutePath(final Path relativePath) {
 		return new PathBuilder().buildAbsolutePath(this.fileDirectory, relativePath);
-	}
-
-	private String uploadFileToFilesystem(final Path path, final InputStream inputStream) {
-		return new Sha256DigestedFileWriter().write(path, inputStream);
 	}
 
 	public void removeFile(final PhysicalFile file) {
@@ -121,19 +68,65 @@ public class PhysicalFileService {
 			throw new FileUploadException(e);
 		}
 	}
+	
+	public PhysicalFile uploadTemporalPhisicalFile(final InputStream inputStream) {
+		Objects.requireNonNull(inputStream);
+		return this.uploadFile(inputStream, TEMP_BUCKET);
+	}
 
-	public PhysicalFile uploadFile(final InputStream inputStream, final String filename, final boolean publicAccess) {
+	public PhysicalFile uploadFile(final InputStream inputStream, final boolean publicAccess) {
 		Objects.requireNonNull(inputStream);
 		final FileBucket fileBucket = publicAccess ? PUBLIC_BUCKET : PRIVATE_BUCKET;
-		final PhysicalFile physicalFile = uploadFileToBucket(fileBucket, inputStream);
+		return this.uploadFile(inputStream, fileBucket);
+	}
+	
+	private PhysicalFile uploadFile(final InputStream inputStream, final FileBucket bucket) {
+		final PhysicalFile physicalFile = uploadFileToBucket(bucket, inputStream);
 		final String contentHash = physicalFile.getContentHash();
-		final String bucketName = fileBucket.getName();
+		final String bucketName = bucket.getName();
 		final PhysicalFile physicalFileInDdbb = this.fileDao.findPhysicalFileByHashAndBucket(contentHash, bucketName);
 		if (physicalFileInDdbb != null) {
 			deleteFileInFileSystem(physicalFile);
 			return physicalFileInDdbb;
 		} else {
+			this.fileDao.insert(physicalFile);
 			return physicalFile;
 		}
+	}
+	
+	private PhysicalFile uploadFileToBucket(final FileBucket bucket, final InputStream inputStream) {
+		final String uId = UUID.randomUUID().toString();
+		final Path relativePath = this.getRelativePath(bucket, uId);
+		final Path absolutePath = this.getAbsolutePath(relativePath);
+		final String hash = this.uploadFileToFilesystem(absolutePath, inputStream);
+		final PhysicalFile newPhysicalFile = new PhysicalFile();
+		newPhysicalFile.setUId(uId);
+		newPhysicalFile.setBucket(bucket.getName());
+		newPhysicalFile.setContentHash(hash);
+		newPhysicalFile.setAbsolutePath(absolutePath);
+		newPhysicalFile.setCreated(LocalDateTime.now());
+		newPhysicalFile.setRelativePath(relativePath);
+		return newPhysicalFile;
+	}
+	
+	private String uploadFileToFilesystem(final Path path, final InputStream inputStream) {
+		return new Sha256DigestedFileWriter().write(path, inputStream);
+	}
+	
+	public void moveFromTemporalFile(final PhysicalFile file, boolean publicAccess) {
+		final FileBucket bucket = publicAccess ? PUBLIC_BUCKET : PRIVATE_BUCKET;
+		final Path relativePath = this.getRelativePath(bucket, file.getUId());
+		final Path absolutePath = this.getAbsolutePath(relativePath);
+		try {
+			final Path parent = absolutePath.getParent();
+			if (!Files.exists(parent)) {
+				Files.createDirectories(parent);
+			}
+			Files.copy(Path.of(file.getAbsolutePath()), absolutePath);
+		} catch (IOException e) {
+			throw new UncheckedIOException(e);
+		}
+		file.setAbsolutePath(absolutePath);
+		file.setBucket(bucket.getName());
 	}
 }

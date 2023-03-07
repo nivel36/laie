@@ -13,6 +13,7 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
 
 import es.nivel36.laie.ejb.core.action.Auditable;
+import es.nivel36.laie.ejb.core.file.PhysicalFile;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
 import es.nivel36.laie.ejb.core.model.Address;
 import es.nivel36.laie.ejb.core.model.Ownerable;
@@ -105,8 +106,9 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	@Column(name = "PHONE_NUMBER", columnDefinition = "TEXT")
 	private String phoneNumber;
 
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "candidate")
-	private CandidatePicture picture;
+	@ManyToOne
+	@JoinColumn(name = "PICTURE_ID")
+	private PhysicalFile picture;
 
 	@GenericField(sortable = Sortable.YES)
 	@Column(name = "RATING", scale = 0, precision = 1)
@@ -235,7 +237,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 		return this.phoneNumber;
 	}
 
-	public CandidatePicture getPicture() {
+	public PhysicalFile getPicture() {
 		return this.picture;
 	}
 
@@ -345,9 +347,8 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 		this.phoneNumber = phoneNumber;
 	}
 
-	public void setPicture(final CandidatePicture picture) {
+	public void setPicture(final PhysicalFile picture) {
 		this.picture = picture;
-		this.picture.setCandidate(this);
 	}
 
 	public void setRating(final Integer rating) {

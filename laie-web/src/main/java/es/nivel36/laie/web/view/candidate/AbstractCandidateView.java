@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 
 
 import es.nivel36.laie.ejb.candidate.Candidate;
-import es.nivel36.laie.ejb.candidate.CandidatePicture;
 import es.nivel36.laie.ejb.candidate.CandidateService;
 import es.nivel36.laie.ejb.core.file.PhysicalFileService;
 import es.nivel36.laie.ejb.core.file.FileUploadException;
@@ -35,7 +34,7 @@ public abstract class AbstractCandidateView extends AbstractView {
 
 	protected Candidate candidate;
 
-	protected CandidatePicture candidateImage;
+	protected PhysicalFile candidateImage;
 
 	protected boolean imageChanged;
 	
@@ -75,7 +74,7 @@ public abstract class AbstractCandidateView extends AbstractView {
 			return;
 		}
 		logger.trace("Changing user image");
-		this.fileService.moveFromTemporalFile(this.candidateImage.getPhysicalFile(),false);
+		this.fileService.moveFromTemporalFile(this.candidateImage,false);
 	}
 	
 	public void uploadImage(final FileUploadEvent event) {
@@ -87,9 +86,7 @@ public abstract class AbstractCandidateView extends AbstractView {
 		}
 		logger.debug("Upload candidate {} image action performed", this.candidate);
 		try (final InputStream inputStream = uploadedFile.getInputStream()) {
-			final PhysicalFile file = this.fileService.uploadTemporalPhisicalFile( inputStream);
-			this.candidateImage = new CandidatePicture();
-			this.candidateImage.setPhysicalFile(file);
+			this.candidateImage = this.fileService.uploadTemporalPhisicalFile( inputStream);
 			candidate.setPicture(candidateImage);
 		} catch (final IOException e) {
 			throw new FileUploadException(e);
@@ -100,7 +97,7 @@ public abstract class AbstractCandidateView extends AbstractView {
 		return this.candidate;
 	}
 
-	public CandidatePicture getCandidateImage() {
+	public PhysicalFile getCandidateImage() {
 		return candidateImage;
 	}
 

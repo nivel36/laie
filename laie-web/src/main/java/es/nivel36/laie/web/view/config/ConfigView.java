@@ -19,7 +19,6 @@ import es.nivel36.laie.ejb.core.file.PhysicalFile;
 import es.nivel36.laie.ejb.user.BadManagerException;
 import es.nivel36.laie.ejb.user.DuplicateEmailException;
 import es.nivel36.laie.ejb.user.User;
-import es.nivel36.laie.ejb.user.UserPicture;
 import es.nivel36.laie.ejb.user.UserService;
 import es.nivel36.laie.web.core.view.AbstractView;
 import jakarta.annotation.PostConstruct;
@@ -41,13 +40,11 @@ public class ConfigView extends AbstractView {
 
 	private User user;
 
-	private UserPicture userImage;
+	private PhysicalFile userImage;
 
-	@Inject
-	private transient PhysicalFileService fileService;
+	private transient @Inject PhysicalFileService fileService;
 
-	@Inject
-	private transient UserService userService;
+	private transient @Inject UserService userService;
 
 	@PostConstruct
 	public void init() {
@@ -66,7 +63,7 @@ public class ConfigView extends AbstractView {
 		logger.debug("Upload camera image for user {} action performed", this.user);
 		try (final InputStream inputStream = new ByteArrayInputStream(data);) {
 			final PhysicalFile physicalFile = this.fileService.uploadTemporalPhisicalFile(inputStream);
-			this.userImage.setPhysicalFile(physicalFile);
+			this.userImage = physicalFile;
 		} catch (final IOException e) {
 			this.imageChanged = false;
 			throw new FileUploadException(e);
@@ -82,9 +79,7 @@ public class ConfigView extends AbstractView {
 		}
 		logger.debug("Upload user {} image action performed", this.user);
 		try (final InputStream inputStream = uploadedFile.getInputStream()) {
-			final PhysicalFile physicalFile = this.fileService.uploadTemporalPhisicalFile(inputStream);
-			this.userImage = new UserPicture();
-			this.userImage.setPhysicalFile(physicalFile);
+			this.userImage = this.fileService.uploadTemporalPhisicalFile(inputStream);
 		}
 	}
 
@@ -132,15 +127,15 @@ public class ConfigView extends AbstractView {
 			this.user.setPicture(null);
 			return;
 		}
-		this.fileService.moveFromTemporalFile(this.userImage.getPhysicalFile(), true);
-		this.user.setPicture(userImage);
+		this.fileService.moveFromTemporalFile(this.userImage, true);
+		this.user.setPicture(this.userImage);
 	}
 
 	public User getUser() {
 		return this.user;
 	}
 
-	public UserPicture getUserImage() {
+	public PhysicalFile getUserImage() {
 		return this.userImage;
 	}
 

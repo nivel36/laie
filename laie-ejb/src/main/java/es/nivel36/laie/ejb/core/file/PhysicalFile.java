@@ -68,6 +68,10 @@ public class PhysicalFile extends AbstractEntity {
 	public String getRelativePath() {
 		return this.relativePath;
 	}
+	
+	public String getPath() {
+		return this.relativePath;
+	}
 
 	public String getUId() {
 		return this.uId;

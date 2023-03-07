@@ -16,6 +16,7 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.KeywordFie
 import es.nivel36.laie.ejb.candidate.Rating;
 import es.nivel36.laie.ejb.client.Client;
 import es.nivel36.laie.ejb.core.bookmark.Bookmark;
+import es.nivel36.laie.ejb.core.file.PhysicalFile;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
 import es.nivel36.laie.ejb.core.subject.Subject;
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureEvent;
@@ -33,7 +34,6 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
@@ -94,8 +94,9 @@ public class User extends AbstractEntity implements Subject {
 	@Column(name = "PHONE_NUMBER", length = 12)
 	private String phoneNumber;
 
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
-	private UserPicture picture;
+	@ManyToOne
+	@JoinColumn(name = "PICTURE_ID")
+	private PhysicalFile picture;
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	private Set<Rating> ratings = new HashSet<>();
@@ -197,7 +198,7 @@ public class User extends AbstractEntity implements Subject {
 		return this.phoneNumber;
 	}
 
-	public UserPicture getPicture() {
+	public PhysicalFile getPicture() {
 		return this.picture;
 	}
 
@@ -288,9 +289,8 @@ public class User extends AbstractEntity implements Subject {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public void setPicture(final UserPicture picture) {
+	public void setPicture(final PhysicalFile picture) {
 		this.picture = picture;
-		this.picture.setUser(this);
 	}
 
 	public void setRatings(Set<Rating> ratings) {
