@@ -284,8 +284,7 @@
 			SELECT j 
 			FROM JobOffer j 
 			LEFT JOIN FETCH j.client
-			LEFT JOIN FETCH j.owner
-			LEFT JOIN FETCH j.owner.picture
+			LEFT JOIN  j.owner
 			WHERE :user MEMBER OF j.recruiters
 			OR j.owner = :user
 		]]></query>
@@ -459,6 +458,7 @@
 			FROM User u
 			LEFT JOIN FETCH u.manager
 			LEFT JOIN FETCH u.team
+			LEFT JOIN FETCH u.picture
 			WHERE u.id = :userId
 		]]></query>
 	</named-query>

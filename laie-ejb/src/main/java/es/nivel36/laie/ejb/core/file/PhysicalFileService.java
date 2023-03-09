@@ -68,7 +68,7 @@ public class PhysicalFileService {
 			throw new FileUploadException(e);
 		}
 	}
-	
+
 	public PhysicalFile uploadTemporalPhisicalFile(final InputStream inputStream) {
 		Objects.requireNonNull(inputStream);
 		return this.uploadFile(inputStream, TEMP_BUCKET);
@@ -79,7 +79,7 @@ public class PhysicalFileService {
 		final FileBucket fileBucket = publicAccess ? PUBLIC_BUCKET : PRIVATE_BUCKET;
 		return this.uploadFile(inputStream, fileBucket);
 	}
-	
+
 	private PhysicalFile uploadFile(final InputStream inputStream, final FileBucket bucket) {
 		final PhysicalFile physicalFile = uploadFileToBucket(bucket, inputStream);
 		final String contentHash = physicalFile.getContentHash();
@@ -93,7 +93,7 @@ public class PhysicalFileService {
 			return physicalFile;
 		}
 	}
-	
+
 	private PhysicalFile uploadFileToBucket(final FileBucket bucket, final InputStream inputStream) {
 		final String uId = UUID.randomUUID().toString();
 		final Path relativePath = this.getRelativePath(bucket, uId);
@@ -108,11 +108,11 @@ public class PhysicalFileService {
 		newPhysicalFile.setRelativePath(relativePath);
 		return newPhysicalFile;
 	}
-	
+
 	private String uploadFileToFilesystem(final Path path, final InputStream inputStream) {
 		return new Sha256DigestedFileWriter().write(path, inputStream);
 	}
-	
+
 	public void moveFromTemporalFile(final PhysicalFile file, boolean publicAccess) {
 		final FileBucket bucket = publicAccess ? PUBLIC_BUCKET : PRIVATE_BUCKET;
 		final Path relativePath = this.getRelativePath(bucket, file.getUId());
@@ -122,7 +122,9 @@ public class PhysicalFileService {
 			if (!Files.exists(parent)) {
 				Files.createDirectories(parent);
 			}
-			Files.copy(Path.of(file.getAbsolutePath()), absolutePath);
+			if (!Files.exists(absolutePath)) {
+				Files.copy(Path.of(file.getAbsolutePath()), absolutePath);
+			}
 		} catch (IOException e) {
 			throw new UncheckedIOException(e);
 		}
