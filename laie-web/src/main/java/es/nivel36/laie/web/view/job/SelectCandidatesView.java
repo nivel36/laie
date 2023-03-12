@@ -8,11 +8,15 @@ import java.util.Set;
 
 import org.omnifaces.cdi.Param;
 import org.omnifaces.util.Faces;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
+import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.job.candidature.JobCandidature;
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureService;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
+import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
@@ -28,11 +32,17 @@ public class SelectCandidatesView extends AbstractView {
 
 	private static final long serialVersionUID = -4200957281776169451L;
 
+	private static final Logger logger = LoggerFactory.getLogger(SelectCandidatesView.class);
+
 	private final Map<Long, Candidate> alredySelectedCandidates = new HashMap<>();
 
 	private @Inject CandidateLazyDataModel candidates;
 
-	private @Param JobOffer jobOffer;
+	private @Inject JobOfferService jobOfferService;
+
+	private @Param(name = "jobOffer", required = true) String jobOfferId;
+
+	private JobOffer jobOffer;
 
 	private String searchText;
 
@@ -42,22 +52,32 @@ public class SelectCandidatesView extends AbstractView {
 
 	@PostConstruct
 	public void init() {
-		if (this.jobOffer == null) {
-			throw new IllegalPageStateException();
-		}
+		logger.trace("Select Candidates for jobOffer {} init", this.jobOfferId);
+		findJobOfferCandidatures();
 		final User user = sessionUser.get();
 		if (!(this.sessionUser.isAdmin() || this.jobOffer.getOwner().equals(user)
 				|| this.jobOffer.getRecruiters().contains(user))) {
 			throw new SecurityException();
 		}
-		final Set<JobCandidature> jobCandidatures = this.jobOffer.getJobCandidatures();
-		if (jobCandidatures != null) {
-			for (final JobCandidature jobCandidature : jobCandidatures) {
-				final Candidate candidate = jobCandidature.getCandidate();
-				this.alredySelectedCandidates.put(candidate.getId(), candidate);
-			}
+		final List<JobCandidature> jobCandidatures = this.jobCandidatureService.findJobCandidaturesByJobOffer(jobOffer,
+				Page.ALL_RESULTS);
+		for (final JobCandidature jobCandidature : jobCandidatures) {
+			final Candidate candidate = jobCandidature.getCandidate();
+			this.alredySelectedCandidates.put(candidate.getId(), candidate);
 		}
 		this.search();
+	}
+
+	private void findJobOfferCandidatures() {
+		try {
+			final Long id = Long.parseLong(jobOfferId);
+			this.jobOffer = this.jobOfferService.findJobOfferById(id);
+			if (this.jobOffer == null) {
+				throw new IllegalPageStateException();
+			}
+		} catch (final NumberFormatException ex) {
+			throw new IllegalPageStateException();
+		}
 	}
 
 	public void search() {

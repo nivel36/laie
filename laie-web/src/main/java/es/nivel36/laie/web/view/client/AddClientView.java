@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.client.Client;
 import es.nivel36.laie.ejb.client.DuplicateCifException;
+import es.nivel36.laie.ejb.core.model.Address;
 import es.nivel36.laie.ejb.user.User;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
@@ -28,6 +29,7 @@ public class AddClientView extends AbstractClientView {
 		final User user = this.sessionUser.get();
 		this.checkPermissions();
 		this.client = new Client();
+		this.client.setAddress(new Address());
 		this.client.setOwner(user);
 	}
 

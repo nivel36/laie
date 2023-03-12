@@ -32,7 +32,7 @@ public class JobOfferCandidaturesLazyDataModel extends LazyDataModel<JobCandidat
 	public List<JobCandidature> load(int first, int pageSize, Map<String, SortMeta> sortBy,
 			Map<String, FilterMeta> filterBy) {
 		Objects.requireNonNull(jobOffer);
-		return service.findJobOffersJobCanditures(jobOffer, Page.of(first, pageSize));
+		return service.findJobCandidaturesByJobOffer(jobOffer, Page.of(first, pageSize));
 	}
 
 	public void setService(JobCandidatureService service) {

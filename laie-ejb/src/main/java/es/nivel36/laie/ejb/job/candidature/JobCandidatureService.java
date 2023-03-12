@@ -105,11 +105,11 @@ public class JobCandidatureService {
 		return this.jobCandidatureDao.findUsersJobCandidatures(user, page);
 	}
 
-	public List<JobCandidature> findJobOffersJobCanditures(final JobOffer jobOffer, final Page page) {
+	public List<JobCandidature> findJobCandidaturesByJobOffer(final JobOffer jobOffer, final Page page) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(page, "Page can't be null");
 		logger.debug("Find all job candidatures of the job offer {}", jobOffer);
-		return this.jobCandidatureDao.findJobOffersJobCanditures(jobOffer, page);
+		return this.jobCandidatureDao.findByJobOffer(jobOffer, page);
 	}
 	
 	public long countJobOffersJobCanditures(final JobOffer jobOffer) {

@@ -315,6 +315,6 @@ public class User extends AbstractEntity implements Subject {
 
 	@Override
 	public String toString() {
-		return this.email;
+		return this.getFullName();
 	}
 }
