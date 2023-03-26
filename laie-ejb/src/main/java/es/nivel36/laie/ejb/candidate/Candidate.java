@@ -12,8 +12,8 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericFie
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
 
+import es.nivel36.commons.file.PhysicalFile;
 import es.nivel36.laie.ejb.core.action.Auditable;
-import es.nivel36.laie.ejb.core.file.PhysicalFile;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
 import es.nivel36.laie.ejb.core.model.Address;
 import es.nivel36.laie.ejb.core.model.Ownerable;

@@ -13,10 +13,10 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.KeywordField;
 
+import es.nivel36.commons.file.PhysicalFile;
 import es.nivel36.laie.ejb.candidate.Rating;
 import es.nivel36.laie.ejb.client.Client;
 import es.nivel36.laie.ejb.core.bookmark.Bookmark;
-import es.nivel36.laie.ejb.core.file.PhysicalFile;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
 import es.nivel36.laie.ejb.core.subject.Subject;
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureEvent;

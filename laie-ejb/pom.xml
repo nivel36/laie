@@ -10,6 +10,11 @@
 	<packaging>ejb</packaging>
 	<dependencies>
 		<dependency>
+			<groupId>es.nivel36.commons</groupId>
+			<artifactId>file-api</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
 			<groupId>org.eclipse.microprofile.config</groupId>
 			<artifactId>microprofile-config-api</artifactId>
 			<scope>provided</scope>

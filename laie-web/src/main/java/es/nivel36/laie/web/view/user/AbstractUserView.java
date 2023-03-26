@@ -7,7 +7,7 @@ import org.omnifaces.cdi.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.core.file.PhysicalFileService;
+import es.nivel36.commons.file.PhysicalFileService;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserService;

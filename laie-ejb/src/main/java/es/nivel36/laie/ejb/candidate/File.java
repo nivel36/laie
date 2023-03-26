@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
-import es.nivel36.laie.ejb.core.file.PhysicalFile;
+import es.nivel36.commons.file.PhysicalFile;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

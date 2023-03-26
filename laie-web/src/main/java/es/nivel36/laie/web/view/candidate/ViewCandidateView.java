@@ -13,13 +13,13 @@ import org.primefaces.model.file.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import es.nivel36.commons.file.PhysicalFileService;
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.candidate.CandidateService;
 import es.nivel36.laie.ejb.candidate.File;
 import es.nivel36.laie.ejb.candidate.Rating;
 import es.nivel36.laie.ejb.candidate.RatingService;
 import es.nivel36.laie.ejb.core.bookmark.Bookmark;
-import es.nivel36.laie.ejb.core.file.PhysicalFileService;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.job.candidature.JobCandidatureService;
 import es.nivel36.laie.ejb.job.meeting.Meeting;
