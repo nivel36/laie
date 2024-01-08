@@ -16,23 +16,24 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>11</maven.compiler.source>
-		<maven.compiler.target>11</maven.compiler.target>
+		<maven.compiler.source>21</maven.compiler.source>
+		<maven.compiler.target>21</maven.compiler.target>
 
 		<timestamp>${maven.build.timestamp}</timestamp>
 		<maven.build.timestamp.format>dd-MM-yyyy HH:mm</maven.build.timestamp.format>
 		<laie.version>${project.version}</laie.version>
 
-		<primefaces.version>11.0.0</primefaces.version>
+		<primefaces.version>13.0.3</primefaces.version>
 		<poi.version>5.2.2</poi.version>
-		<omnifaces.version>4.0.1</omnifaces.version>
-		<commons-fileupload.version>1.4</commons-fileupload.version>
+		<omnifaces.version>4.3</omnifaces.version>
+		<commons-fileupload.version>1.5</commons-fileupload.version>
 		<owasp-java-html-sanitizer.version>20200713.1</owasp-java-html-sanitizer.version>
-		<html2pdf.version>4.0.3</html2pdf.version>
+		<html2pdf.version>3.0.5</html2pdf.version>
 
-		<version.mockito>3.11.0</version.mockito>
-		<version.server.bom>27.0.0.Final</version.server.bom>
-		<version.junit.bom>5.7.2</version.junit.bom>
+		<version.mockito>5.8.0</version.mockito>
+		<version.server.bom>30.0.0.Final</version.server.bom>
+		<version.junit.bom>5.10.1</version.junit.bom>
+		<version.sl4f-simple>2.0.9</version.sl4f-simple>
 
 		<maven.ear.plugin.version>3.0.1</maven.ear.plugin.version>
 		<maven.war.plugin.version>3.2.2</maven.war.plugin.version>
@@ -43,7 +44,7 @@
 		<dependencies>
 			<dependency>
 				<groupId>org.wildfly.bom</groupId>
-				<artifactId>wildfly-ee-with-tools</artifactId>
+				<artifactId>wildfly-ee-with-tools-builder</artifactId>
 				<version>${version.server.bom}</version>
 				<type>pom</type>
 				<scope>import</scope>
@@ -84,11 +85,36 @@
 				<version>${omnifaces.version}</version>
 			</dependency>
 
+			<!-- Apache POI -->
+			<dependency>
+				<groupId>org.apache.poi</groupId>
+				<artifactId>poi</artifactId>
+				<version>${poi.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.poi</groupId>
+				<artifactId>poi-ooxml</artifactId>
+				<version>${poi.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.poi</groupId>
+				<artifactId>poi-ooxml-full</artifactId>
+				<version>${poi.version}</version>
+			</dependency>
+
 			<!-- iText -->
 			<dependency>
 				<groupId>com.itextpdf</groupId>
 				<artifactId>html2pdf</artifactId>
 				<version>${html2pdf.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>es.nivel36</groupId>
+				<artifactId>laie-commons-excel</artifactId>
+				<version>${laie.version}</version>
 			</dependency>
 
 			<dependency>
@@ -132,6 +158,12 @@
 			</dependency>
 
 			<dependency>
+				<groupId>com.fasterxml.jackson.datatype</groupId>
+				<artifactId>jackson-datatype-hibernate5</artifactId>
+				<version>${jackson-datatype-hibernate5.version}</version>
+			</dependency>
+
+			<dependency>
 				<groupId>org.mockito</groupId>
 				<artifactId>mockito-inline</artifactId>
 				<version>${version.mockito}</version>
@@ -151,21 +183,15 @@
 				<version>${version.mockito}</version>
 				<scope>test</scope>
 			</dependency>
+
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-simple</artifactId>
+				<version>${version.sl4f-simple}</version>
+				<scope>test</scope>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
-
-	<repositories>
-		<repository>
-			<id>jboss-public-repository-group</id>
-			<name>JBoss Public Maven Repository Group</name>
-			<url>https://repository.jboss.org/nexus/content/groups/public-jboss/</url>
-		</repository>
-		<repository>
-			<id>jboss-enterprise-maven-repository</id>
-			<name>JBoss Enterprise Maven Repository</name>
-			<url>https://maven.repository.redhat.com/ga/</url>
-		</repository>
-	</repositories>
 
 	<build>
 		<plugins>
