@@ -1,6 +1,5 @@
 package es.nivel36.laie.web.view;
 
-import java.util.Locale;
 import java.util.Objects;
 
 import org.omnifaces.util.Faces;
@@ -10,16 +9,22 @@ import org.slf4j.LoggerFactory;
 import es.nivel36.laie.web.core.view.AbstractView;
 import es.nivel36.login.LoginService;
 import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.application.FacesMessage;
-import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.security.enterprise.AuthenticationStatus;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
 
+/**
+ * <p>
+ * Vista para la pantalla de login. Encargada de gestionar la autenticación de
+ * usuarios y redirección a la página principal si ya está autenticado.
+ * </p>
+ */
 @Named
-@ViewScoped
+@RequestScoped
 public class LoginView extends AbstractView {
 
 	private static final long serialVersionUID = 4112471805164466458L;
@@ -28,16 +33,15 @@ public class LoginView extends AbstractView {
 
 	public static final String URL = "/login.xhtml";
 
-	private Locale locale;
-
-	private transient String password;
-
-	private String username;
-
 	private transient @Inject LoginService loginService;
-
+	private String username;
+	private transient String password;
 	private String forwardURL;
 
+	/**
+	 * Método inicializador. Verifica si el usuario ya está autenticado y redirige a
+	 * la página principal si es necesario.
+	 */
 	@PostConstruct
 	public void init() {
 		logger.trace("Login init");
@@ -47,75 +51,88 @@ public class LoginView extends AbstractView {
 			this.gotoIndex();
 		}
 		if (forwardURL == null) {
-			HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
-			String requestURI = (String) request.getAttribute(RequestDispatcher.FORWARD_REQUEST_URI);
-			String queryString = (String) request.getAttribute(RequestDispatcher.FORWARD_QUERY_STRING);
+			final HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
+			final String requestURI = (String) request.getAttribute(RequestDispatcher.FORWARD_REQUEST_URI);
+			final String queryString = (String) request.getAttribute(RequestDispatcher.FORWARD_QUERY_STRING);
 			forwardURL = (queryString == null) ? requestURI : (requestURI + "?" + queryString);
 		}
-
-		this.setDefaultLocale();
 	}
 
+	/**
+	 * Realiza el inicio de sesión del usuario.
+	 * 
+	 * Autentica al usuario basándose en su nombre de usuario y contraseña, y carga
+	 * su rol en la sesión.
+	 */
 	public void login() {
-		logger.debug("User {} login", this.username);
 		if (this.username == null || this.password == null) {
 			loginError();
+			return;
 		}
+		logger.debug("User {} login", this.username);
 		final AuthenticationStatus status = this.loginService.login(this.username, this.password);
-		if (AuthenticationStatus.SEND_FAILURE.equals(status)) {
-			loginError();
+		String role;
+		if (this.externalContext.isUserInRole("laie.admin")) {
+			role = "laie.admin";
 		} else {
-			String role;
-			if (this.externalContext.isUserInRole("laie.admin")) {
-				role = "laie.admin";
-			} else {
-				role = "laie.user";
-			}
-			this.sessionUser.load(this.username, role);
-			if(forwardURL == null) {
-				Faces.redirect(es.nivel36.laie.web.view.IndexView.URL);
-			}
-			Faces.redirect(forwardURL);
+			role = "laie.user";
+		}
+		if (status == AuthenticationStatus.SEND_CONTINUE) {
+			this.sessionUser.load(username, role);
+			this.facesContext.responseComplete();
+		} else if (AuthenticationStatus.SEND_FAILURE.equals(status)) {
+			logger.warn("User {} error: bad username or password", username);
+			loginError();
+		} else if (AuthenticationStatus.SUCCESS.equals(status)) {
+			this.sessionUser.load(username, role);
+			gotoIndex();
 		}
 	}
 
 	private void loginError() {
 		this.addMessage(FacesMessage.SEVERITY_ERROR, "auth.message.error", "auth.message.error");
-		this.facesContext.validationFailed();
 	}
 
 	private void gotoIndex() {
-		Faces.redirect(IndexView.URL);
-	}
-
-	private void setDefaultLocale() {
-		this.locale = this.facesContext.getApplication().getDefaultLocale();
-	}
-
-	public Locale getLocale() {
-		return this.locale;
-	}
-
-	public String getPassword() {
-		return this.password;
+		if (forwardURL == null) {
+			Faces.redirect(IndexView.URL);
+		} else {
+			Faces.redirect(forwardURL);
+		}
 	}
 
 	public String getUsername() {
 		return this.username;
 	}
 
-	public void setLocale(final Locale locale) {
-		this.locale = locale;
+	public String getPassword() {
+		return this.password;
 	}
 
-	public void setPassword(final String password) {
-		this.password = password;
-	}
-
+	/**
+	 * Establece el nombre de usuario.
+	 * 
+	 * @param username Nombre de usuario.
+	 */
 	public void setUsername(final String username) {
 		this.username = username;
 	}
 
+	/**
+	 * Establece la contraseña del usuario.
+	 * 
+	 * @param password Contraseña del usuario.
+	 */
+	public void setPassword(final String password) {
+		this.password = password;
+	}
+
+	/**
+	 * Establece el servicio de inicio de sesión.
+	 * 
+	 * @param loginService El servicio de inicio de sesión.
+	 * @throws NullPointerException si loginService es null.
+	 */
 	public void setLoginService(final LoginService loginService) {
 		Objects.requireNonNull(loginService);
 		this.loginService = loginService;

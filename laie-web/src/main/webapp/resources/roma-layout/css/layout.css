@@ -4043,6 +4043,9 @@ a {
   margin-bottom: 2rem;
 }
 
+.card-w-title {
+  position: relative;
+}
 .card-w-title .card-header-buttons {
   position: absolute;
   top: 1rem;
