@@ -11,11 +11,11 @@ import org.hibernate.search.engine.search.query.SearchResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.commons.file.PhysicalFile;
-import es.nivel36.commons.file.PhysicalFileService;
 import es.nivel36.laie.ejb.core.action.Auditable;
 import es.nivel36.laie.ejb.core.action.Create;
 import es.nivel36.laie.ejb.core.action.Update;
+import es.nivel36.laie.ejb.core.file.PhysicalFile;
+import es.nivel36.laie.ejb.core.file.PhysicalFileService;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.SortField;
 import es.nivel36.laie.ejb.core.tag.Tag;

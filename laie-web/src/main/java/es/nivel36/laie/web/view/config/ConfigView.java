@@ -13,9 +13,9 @@ import org.primefaces.model.file.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.commons.file.FileUploadException;
-import es.nivel36.commons.file.PhysicalFile;
-import es.nivel36.commons.file.PhysicalFileService;
+import es.nivel36.laie.ejb.core.file.PhysicalFileService;
+import es.nivel36.laie.ejb.core.file.FileUploadException;
+import es.nivel36.laie.ejb.core.file.PhysicalFile;
 import es.nivel36.laie.ejb.user.BadManagerException;
 import es.nivel36.laie.ejb.user.DuplicateEmailException;
 import es.nivel36.laie.ejb.user.User;
