@@ -11,8 +11,8 @@
 	<ui:param name="selectedMenu" value="users" />
 
 	<ui:define name="content">
-		<div class="p-grid">
-			<div class="p-col-12 p-xl-8">
+		<div class="grid">
+			<div class="col-12 xl:col-8">
 				<div class="title-card">
 					<h:form>
 						<div class="title-card-content">
@@ -41,7 +41,7 @@
 
 				<cc:events title="#{i18n['event.last_events']}" rows="5" value="#{viewUserView.actions}" showUser="#{false}" />
 			</div>
-			<div class="p-col-12 p-xl-4">
+			<div class="col-12 xl:col-4">
 				<div class="card card-w-title">
 					<h5>#{i18n['user.details']}</h5>
 					<cc:outputText label="#{i18n['user.date_of_join']}" value="#{viewUserView.user.dateOfJoin}" styleClass="data date_of_join">

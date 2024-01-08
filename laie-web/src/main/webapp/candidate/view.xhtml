@@ -11,8 +11,8 @@
 	<ui:param name="selectedMenu" value="candidates" />
 
 	<ui:define name="content">
-		<div class="p-grid">
-			<div class="p-col-12 p-xl-8">
+		<div class="grid">
+			<div class="col-12 xl:col-8">
 				<div class="title-card">
 					<h:form>
 						<div class="title-card-content">
@@ -81,21 +81,21 @@
 							</p:dataTable>
 						</p:tab>
 						<p:tab title="#{i18n['candidate.ratings']}">
-							<div class="p-grid">
-								<div class="p-col-3">#{i18n['candidate.rating.your_rating']}</div>
-								<div class="p-col-3">
+							<div class="grid">
+								<div class="col-3">#{i18n['candidate.rating.your_rating']}</div>
+								<div class="col-3">
 									<p:rating value="#{viewCandidateView.rating.rating}" cancel="false" readonly="true" />
 								</div>
-								<div class="p-col-6">#{viewCandidateView.rating.comment}</div>
+								<div class="col-6">#{viewCandidateView.rating.comment}</div>
 							</div>
 
 							<ui:repeat var="rating" value="#{viewCandidateView.ratings}">
-								<h:panelGroup layout="block" styleClass="p-grid" rendered="#{sessionUser.get().email ne rating.user.email}">
-									<div class="p-col-3">#{rating.user.fullName}</div>
-									<div class="p-col-3">
+								<h:panelGroup layout="block" styleClass="grid" rendered="#{sessionUser.get().email ne rating.user.email}">
+									<div class="col-3">#{rating.user.fullName}</div>
+									<div class="col-3">
 										<p:rating value="#{rating.rating}" cancel="false" readonly="true" />
 									</div>
-									<div class="p-col-6">#{rating.comment}</div>
+									<div class="col-6">#{rating.comment}</div>
 								</h:panelGroup>
 							</ui:repeat>
 							<div class="form-buttons">
@@ -117,7 +117,7 @@
 					</p:tabView>
 				</div>
 			</div>
-			<div class="p-col-12 p-xl-4">
+			<div class="col-12 xl:col-4">
 				<div class="card card-w-title">
 					<h5>#{i18n['candidate.details']}</h5>
 					<cc:outputText label="#{i18n['candidate.skype']}" value="#{viewCandidateView.candidate.skype}" />
@@ -148,8 +148,8 @@
 				<div class="card card-w-title files">
 					<h5>#{i18n['file.files']}</h5>
 					<h:form id="file_form" enctype="multipart/form-data">
-						<div class="p-grid p-formgrid">
-							<div class="p-col-12">
+						<div class="grid formgrid">
+							<div class="col-12">
 								<p:dataTable var="file" id="files" value="#{viewCandidateView.files}" emptyMessage="#{i18n['file.no_files']}" paginator="true"
 									paginatorPosition="bottom" reflow="true" rows="5" rowKey="#{file.id}" styleClass="ui-datatable-borderless ui-datatable-headerless">
 
@@ -167,7 +167,7 @@
 									</p:column>
 								</p:dataTable>
 							</div>
-							<div class="p-col-12">
+							<div class="col-12">
 								<div class="card-header-buttons">
 									<p:fileUpload id="uploadFile" listener="#{viewCandidateView.uploadFile}" mode="simple" skinSimple="true" update="@form growl" auto="true"
 										styleClass="ui-button-outlined" label="" rendered="#{viewCandidateView.editable}" />
@@ -188,7 +188,7 @@
 					<h5>#{i18n['candidate.tags']}</h5>
 					<div class="text-container">
 						<ui:repeat value="#{viewCandidateView.candidate.tags}" var="tag" rendered="#{not empty viewCandidateView.candidate.tags}">
-							<p:tag value="#{tag}" styleClass="p-mr-2" />
+							<p:tag value="#{tag}" styleClass="mr-2" />
 						</ui:repeat>
 						<h:outputText id="emptyText" value="---" styleClass="text" rendered="#{empty viewCandidateView.candidate.tags}" />
 					</div>

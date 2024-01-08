@@ -13,34 +13,34 @@
 	<ui:define name="content">
 		<h:form id="clientForm">
 			<div class="card">
-				<div class="p-grid">
-					<div class="p-col-12 p-xl-6">
+				<div class="grid">
+					<div class="col-12 xl:col-6">
 						<div id="client" class="form-card ui-fluid">
 							<h5>#{i18n['client.client']}</h5>
-							<div class="p-grid p-formgrid">
-								<div class="p-col-12">
+							<div class="grid formgrid">
+								<div class="col-12">
 									<g:input id="name" label="#{i18n['client.name']}" value="#{editClientView.client.name}" required="true" />
 								</div>
-								<div class="p-col-12 p-sm-6">
+								<div class="col-12 sm:col--6">
 									<g:input id="cif" label="#{i18n['client.cif']}" value="#{editClientView.client.cif}" />
 								</div>
-								<div class="p-col-12 p-sm-6">
+								<div class="col-12 sm:col--6">
 									<g:input id="phoneNumber" label="#{i18n['client.phone_number']}" value="#{editClientView.client.phoneNumber}" />
 								</div>
-								<div class="p-col-12 p-sm-6">
+								<div class="col-12 sm:col--6">
 									<g:input id="city" label="#{i18n['client.city']}" value="#{editClientView.client.address.city}" />
 								</div>
-								<div class="p-col-12 p-sm-6">
+								<div class="col-12 sm:col--6">
 									<g:input id="state" label="#{i18n['client.state']}" value="#{editClientView.client.address.region}" />
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="p-col-12 p-md-6">
+					<div class="col-12 md:col-6">
 						<div class="form-card ui-fluid">
 							<h5>#{i18n['client.other_data']}</h5>
-							<div class="p-grid  p-formgrid">
-								<div class="p-col-12 p-sm-6">
+							<div class="grid  formgrid">
+								<div class="col-12 sm:col--6">
 									<cc:autocomplete id="owner" label="#{i18n['client.owner']}" value="#{editClientView.client.owner}"
 										completeMethod="#{editClientView.queryOwner}" required="true">
 										<p:column styleClass="user-select image">
@@ -51,7 +51,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="p-col-12">
+					<div class="col-12">
 						<div class="form-buttons">
 							<p:button value="#{i18n['action.cancel']}" outcome="/client/view" styleClass="ui-button-secondary ui-button-outlined">
 								<f:param name="client" value="#{editClientView.client.id}" />

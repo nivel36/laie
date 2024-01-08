@@ -13,21 +13,21 @@
 	<ui:define name="content">
 		<h:form id="jobOfferForm">
 			<div class="card">
-				<div class="p-grid">
-					<div class="p-col-12">
+				<div class="grid">
+					<div class="col-12">
 						<div class="form-card ui-fluid">
 							<h5>#{i18n['job.description']}</h5>
-							<div class="p-grid p-formgrid">
-								<div class="p-col-12 p-sm-6">
+							<div class="grid formgrid">
+								<div class="col-12 sm:col--6">
 									<g:input id="publish" label="#{i18n['job.publish']}" value="#{addDetailsJobView.jobOffer.published}" type="inputSwitch" />
 								</div>
-								<div class="p-col-12 p-sm-12">
+								<div class="col-12 sm:col--12">
 									<g:input id="description" label="#{i18n['job.description']}" value="#{addDetailsJobView.jobOffer.description}" type="rich" />
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="p-col-12">
+					<div class="col-12">
 						<div class="form-buttons">
 							<p:button value="#{i18n['action.cancel']}" outcome="/job/search.xhtml" styleClass="ui-button-secondary ui-button-outlined" />
 							<p:commandButton value="#{i18n['action.save']}" process="@form" update="@form growl" action="#{addDetailsJobView.save}"

@@ -46,6 +46,10 @@
         color: $actionIconHoverColor;
         border-color: $actionIconHoverBorderColor;
     }
+
+    &:focus {
+        @include focused();
+    }
 }
 
 @mixin secondary-button() {
@@ -147,7 +151,7 @@
 @mixin focused-listitem() {
 	outline: $focusOutline;
     outline-offset: $focusOutlineOffset;
-    box-shadow: $inputFocusShadow;
+    box-shadow: $inputListItemFocusShadow;
 }
 
 @mixin invalid-input() {
@@ -214,4 +218,34 @@
     :-moz-placeholder           {@content; opacity: 1}
     ::-moz-placeholder          {@content; opacity: 1}
     :-ms-input-placeholder      {@content}  
+}
+
+@mixin scaledPadding($val, $scale) {
+    padding: nth($val, 1) * $scale nth($val, 2) * $scale;
+}
+
+@mixin scaledFontSize($val, $scale) {
+    font-size: $val * $scale;
+}
+
+@mixin nested-submenu-indents($val, $index, $length) {
+    ul {
+        li {
+            a {
+                padding-left: $val * ($index + 1);
+            }
+
+            @if $index < $length {
+                @include nested-submenu-indents($val, $index + 2, $length);
+            }
+        }
+    }
+}
+
+@function tint($color, $percentage) {
+    @return mix(#fff, $color, $percentage);
+}
+
+@function shade($color, $percentage) {
+    @return mix(#000, $color, $percentage);
 }

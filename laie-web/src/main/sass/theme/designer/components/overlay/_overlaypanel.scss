@@ -15,8 +15,8 @@ body {
       position: absolute;
       width: $actionIconWidth;
       height: $actionIconHeight;
-      right: -1 * $actionIconWidth / 2;
-      top: -1 * $actionIconWidth / 2;
+      right: math.div(-1 * $actionIconWidth, 2);
+      top: math.div(-1 * $actionIconWidth, 2);
       background: $overlayPanelCloseIconBg;
       color: $overlayPanelCloseIconColor;
       transition: $transition;
@@ -31,7 +31,7 @@ body {
       }
 
       .ui-icon {
-        @include icon_override("\e90b");
+        @include icon-override("\e90b");
         display: inline-block;
         line-height: inherit;
       }

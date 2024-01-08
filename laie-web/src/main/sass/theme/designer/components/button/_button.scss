@@ -106,8 +106,8 @@ body {
         position: absolute;
         top: 50%;
         left: 50%;
-        margin-top: -1 * $iconSize / 2;
-        left: $iconSize / 2;
+        margin-top: math.div(-1 * $iconSize, 2);
+        left: math.div($iconSize, 2);
       }
     }
 
@@ -120,8 +120,8 @@ body {
         position: absolute;
         top: 50%;
         right: 50%;
-        margin-top: -1 * $iconSize / 2;
-        right: $iconSize / 2;
+        margin-top: math.div(-1 * $iconSize, 2);
+        right: math.div($iconSize, 2);
       }
     }
 
@@ -136,8 +136,8 @@ body {
         position: absolute;
         top: 50%;
         left: 50%;
-        margin-top: -1 * $iconSize / 2;
-        margin-left:  -1 * $iconSize / 2;
+        margin-top: math.div(-1 * $iconSize, 2);
+        margin-left:  math.div(-1 * $iconSize, 2);
       }
     }
 
@@ -155,7 +155,7 @@ body {
     }
 
     .ui-icon-triangle-1-s {
-      @include icon_override("\e902");
+      @include icon-override("\e902");
     }
   }
 
@@ -287,11 +287,15 @@ body {
     }
   }
 
-  .ui-button.ui-button-secondary, .ui-splitbutton.ui-button-secondary > .ui-button {
+  .ui-button.ui-button-secondary,
+  .ui-splitbutton.ui-button-secondary > .ui-button,
+  .ui-menubutton.ui-button-secondary > .ui-button {
     @include secondary-button();
   }
 
-  .ui-button.ui-button-success, .ui-splitbutton.ui-button-success > .ui-button {
+  .ui-button.ui-button-success,
+  .ui-splitbutton.ui-button-success > .ui-button,
+  .ui-menubutton.ui-button-success > .ui-button {
     background:$successButtonBg;
     color: $successButtonTextColor;
     border: $successButtonBorder;
@@ -316,13 +320,13 @@ body {
       color: $successButtonBg;
       border: $outlinedButtonBorder;
 
-      &:enabled:hover {
+      &.ui-state-hover {
         background: rgba($successButtonBg, $textButtonHoverBgOpacity);
         color: $successButtonBg;
         border: $outlinedButtonBorder;
       }
 
-      &:enabled:active {
+      &.ui-state-active {
         background: rgba($successButtonBg, $textButtonActiveBgOpacity);
         color: $successButtonBg;
         border: $outlinedButtonBorder;
@@ -334,13 +338,13 @@ body {
       color: $successButtonBg;
       border-color: transparent;
 
-      &:enabled:hover {
+      &.ui-state-hover {
         background: rgba($successButtonBg, $textButtonHoverBgOpacity);
         border-color: transparent;
         color: $successButtonBg;
       }
 
-      &:enabled:active {
+      &.ui-state-active {
         background: rgba($successButtonBg, $textButtonActiveBgOpacity);
         border-color: transparent;
         color: $successButtonBg;
@@ -348,7 +352,9 @@ body {
     }
   }
 
-  .ui-button.ui-button-warning, .ui-splitbutton.ui-button-warning > .ui-button {
+  .ui-button.ui-button-warning,
+  .ui-splitbutton.ui-button-warning > .ui-button,
+  .ui-menubutton.ui-button-warning > .ui-button {
     background: $warningButtonBg;
     color: $warningButtonTextColor;
     border: $warningButtonBorder;
@@ -374,13 +380,13 @@ body {
       color: $warningButtonBg;
       border: $outlinedButtonBorder;
 
-      &:enabled:hover {
+      &.ui-state-hover {
         background: rgba($warningButtonBg, $textButtonHoverBgOpacity);
         color: $warningButtonBg;
         border: $outlinedButtonBorder;
       }
 
-      &:enabled:active {
+      &.ui-state-active {
         background: rgba($warningButtonBg, $textButtonActiveBgOpacity);
         color: $warningButtonBg;
         border: $outlinedButtonBorder;
@@ -392,13 +398,13 @@ body {
       color: $warningButtonBg;
       border-color: transparent;
 
-      &:enabled:hover {
+      &.ui-state-hover {
         background: rgba($warningButtonBg, $textButtonHoverBgOpacity);
         border-color: transparent;
         color: $warningButtonBg;
       }
 
-      &:enabled:active {
+      &.ui-state-active {
         background: rgba($warningButtonBg, $textButtonActiveBgOpacity);
         border-color: transparent;
         color: $warningButtonBg;
@@ -406,7 +412,9 @@ body {
     }
   }
 
-  .ui-button.ui-button-help, .ui-splitbutton.ui-button-help > .ui-button {
+  .ui-button.ui-button-help,
+  .ui-splitbutton.ui-button-help > .ui-button,
+  .ui-menubutton.ui-button-help > .ui-button {
     background: $helpButtonBg;
     color: $helpButtonTextColor;
     border: $helpButtonBorder;
@@ -432,13 +440,13 @@ body {
       color: $helpButtonBg;
       border: $outlinedButtonBorder;
 
-      &:enabled:hover {
+      &.ui-state-hover {
         background: rgba($helpButtonBg, $textButtonHoverBgOpacity);
         color: $helpButtonBg;
         border: $outlinedButtonBorder;
       }
 
-      &:enabled:active {
+      &.ui-state-active {
         background: rgba($helpButtonBg, $textButtonActiveBgOpacity);
         color: $helpButtonBg;
         border: $outlinedButtonBorder;
@@ -450,13 +458,13 @@ body {
       color: $helpButtonBg;
       border-color: transparent;
 
-      &:enabled:hover {
+      &.ui-state-hover {
         background: rgba($helpButtonBg, $textButtonHoverBgOpacity);
         border-color: transparent;
         color: $helpButtonBg;
       }
 
-      &:enabled:active {
+      &.ui-state-active {
         background: rgba($helpButtonBg, $textButtonActiveBgOpacity);
         border-color: transparent;
         color: $helpButtonBg;
@@ -464,7 +472,9 @@ body {
     }
   }
 
-  .ui-button.ui-button-info, .ui-splitbutton.ui-button-info > .ui-button {
+  .ui-button.ui-button-info,
+  .ui-splitbutton.ui-button-info > .ui-button,
+  .ui-menubutton.ui-button-info > .ui-button {
     background: $infoButtonBg;
     color: $infoButtonTextColor;
     border: $infoButtonBorder;
@@ -490,13 +500,13 @@ body {
       color: $infoButtonBg;
       border: $outlinedButtonBorder;
 
-      &:enabled:hover {
+      &.ui-state-hover {
         background: rgba($infoButtonBg, $textButtonHoverBgOpacity);
         color: $infoButtonBg;
         border: $outlinedButtonBorder;
       }
 
-      &:enabled:active {
+      &.ui-state-active {
         background: rgba($infoButtonBg, $textButtonActiveBgOpacity);
         color: $infoButtonBg;
         border: $outlinedButtonBorder;
@@ -508,13 +518,13 @@ body {
       color: $infoButtonBg;
       border-color: transparent;
 
-      &:enabled:hover {
+      &.ui-state-hover {
         background: rgba($infoButtonBg, $textButtonHoverBgOpacity);
         border-color: transparent;
         color: $infoButtonBg;
       }
 
-      &:enabled:active {
+      &.ui-state-active {
         background: rgba($infoButtonBg, $textButtonActiveBgOpacity);
         border-color: transparent;
         color: $infoButtonBg;
@@ -522,7 +532,9 @@ body {
     }
   }
 
-  .ui-button.ui-button-danger, .ui-splitbutton.ui-button-danger > .ui-button {
+  .ui-button.ui-button-danger,
+  .ui-splitbutton.ui-button-danger > .ui-button,
+  .ui-menubutton.ui-button-danger > .ui-button {
     background: $dangerButtonBg;
     color: $dangerButtonTextColor;
     border: $dangerButtonBorder;
@@ -548,13 +560,13 @@ body {
       color: $dangerButtonBg;
       border: $outlinedButtonBorder;
 
-      &:enabled:hover {
+      &.ui-state-hover {
         background: rgba($dangerButtonBg, $textButtonHoverBgOpacity);
         color: $dangerButtonBg;
         border: $outlinedButtonBorder;
       }
 
-      &:enabled:active {
+      &.ui-state-active {
         background: rgba($dangerButtonBg, $textButtonActiveBgOpacity);
         color: $dangerButtonBg;
         border: $outlinedButtonBorder;
@@ -566,13 +578,13 @@ body {
       color: $dangerButtonBg;
       border-color: transparent;
 
-      &:enabled:hover {
+      &.ui-state-hover {
         background: rgba($dangerButtonBg, $textButtonHoverBgOpacity);
         border-color: transparent;
         color: $dangerButtonBg;
       }
 
-      &:enabled:active {
+      &.ui-state-active {
         background: rgba($dangerButtonBg, $textButtonActiveBgOpacity);
         border-color: transparent;
         color: $dangerButtonBg;

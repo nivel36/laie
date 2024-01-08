@@ -7,8 +7,8 @@ body {
 
     .ui-chip-text {
       line-height: 1.5;
-      margin-top: nth($inputPadding, 1) / 2;
-      margin-bottom: nth($inputPadding, 1) / 2;
+      margin-top: math.div(nth($inputPadding, 1), 2);
+      margin-bottom: math.div(nth($inputPadding, 1), 2);
     }
 
     .ui-chip-icon {

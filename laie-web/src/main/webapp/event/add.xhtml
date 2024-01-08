@@ -13,30 +13,30 @@
 	<ui:define name="content">
 		<h:form id="form">
 			<div class="card">
-				<div class="p-grid">
-					<div class="p-col-12 p-xl-7">
+				<div class="grid">
+					<div class="col-12 xl:col-7">
 						<div class="form-card ui-fluid">
 							<h1>#{i18n['event.event']}</h1>
-							<div class="p-grid">
-								<div class="p-col-12 p-xl-6">
+							<div class="grid">
+								<div class="col-12 xl:col-6">
 									<g:input type="selectOneMenu" label="#{i18n['event.state']}" value="#{addEventView.event.state}">
 										<f:selectItems value="#{addEventView.states}" var="state" itemValue="#{state}"
 											itemLabel="#{i18n['job_candidature_state.'.concat(state.name)]}" />
 									</g:input>
 								</div>
 
-								<div class="p-col-12 p-xl-6">
+								<div class="col-12 xl:col-6">
 									<g:input type="selectOneMenu" label="#{i18n['event.type']}" value="#{addEventView.event.type}">
 										<f:selectItems value="#{addEventView.types}" var="var" itemValue="#{var}" itemLabel="#{i18n['event_type.'.concat(var.name)]}" />
 									</g:input>
 								</div>
 
-								<div class="p-col-12">
+								<div class="col-12">
 									<g:input id="notes" label="#{i18n['event.notes']}" value="#{addEventView.event.notes}" type="textarea" />
 								</div>
 							</div>
 						</div>
-						<div class="p-col-12">
+						<div class="col-12">
 							<div class="form-buttons">
 								<p:button value="#{i18n['action.cancel']}" outcome="/job/view.xhtml" styleClass="ui-button-secondary ui-button-outlined" >
 								<f:param name="jobOffer" value="#{addEventView.jobCandidature.jobOffer.id}" />

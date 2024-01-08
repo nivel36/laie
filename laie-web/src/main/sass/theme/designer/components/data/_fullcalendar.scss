@@ -13,7 +13,10 @@ body {
       background: $panelHeaderBg;
       border: $panelHeaderBorder;
       color: $panelHeaderTextColor;
-      padding: $panelHeaderPadding;
+
+      > .fc-scrollgrid-sync-inner {
+        padding: $panelHeaderPadding;
+      }
     }
 
     td {
@@ -34,8 +37,7 @@ body {
       border-right: $panelHeaderBorder;
     }
 
-    .fc-event,
-    .fc-event .fc-event-main{
+    .fc-event {
       background: $scheduleEventBg;
       border: $scheduleEventBorder;
       color: $scheduleEventTextColor;

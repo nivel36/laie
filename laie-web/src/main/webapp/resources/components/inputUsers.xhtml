@@ -15,7 +15,7 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<div id="#{cc.clientId}" class="input-user input-group p-field #{cc.attrs.styleClass}">
+		<div id="#{cc.clientId}" class="input-user input-group field #{cc.attrs.styleClass}">
 			<p:outputLabel id="label" value="#{cc.attrs.label}" for="input" styleClass="label" />
 			<div class="ui-inputgroup">
 				<p:autoComplete id="input" value="#{cc.attrs.value}" required="#{cc.attrs.required}" binding="#{cc.input}" styleClass="input input-users"

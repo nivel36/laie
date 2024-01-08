@@ -13,27 +13,27 @@
 	<ui:define name="content">
 		<h:form id="gdprForm">
 			<div class="card">
-				<div class="p-grid">
-					<div class="p-col-12">
+				<div class="grid">
+					<div class="col-12">
 						<div id="client" class="form-card ui-fluid">
-							<div class="p-grid p-formgrid">
-								<div class="p-col-12 p-lg-5">
+							<div class="grid formgrid">
+								<div class="col-12 lg:col-5">
 									<g:input id="title" label="#{i18n['document.title']}" value="#{gdprMaintenanceView.document.title}" />
 								</div>
-								<div class="p-col-12 p-lg-2">
+								<div class="col-12 lg:col-2">
 									<g:input id="language" label="#{i18n['document.language']}" value="#{gdprMaintenanceView.language}" type="selectOneMenu">
 										<f:selectItems var="language" value="#{applicationView.languages}" itemValue="#{language}" itemLabel="#{i18n[language.code]}" />
 										<p:ajax event="change" process="@this" update="@form" listener="#{gdprMaintenanceView.searchDocument}" />
 									</g:input>
 								</div>
-								<div class="p-col-12">
+								<div class="col-12">
 									<g:input id="text" label="#{i18n['document.text']}" value="#{gdprMaintenanceView.document.text}" type="rich" styleClass="document" />
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="p-col-12">
+				<div class="col-12">
 					<div class="form-buttons">
 						<p:button value="#{i18n['action.cancel']}" outcome="/settings.xhtml" styleClass="ui-button-secondary ui-button-outlined" />
 						<p:commandButton value="#{i18n['action.export']}" action="#{gdprMaintenanceView.export}" ajax="false" />

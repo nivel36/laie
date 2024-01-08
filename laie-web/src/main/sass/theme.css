@@ -3309,7 +3309,7 @@ body ::-moz-placeholder {
 body :-ms-input-placeholder {
   color: #6c757d;
 }
-body .p-field small.ui-state-error {
+body .field small.ui-state-error {
   color: #f44336;
 }
 body .ui-float-label > label {

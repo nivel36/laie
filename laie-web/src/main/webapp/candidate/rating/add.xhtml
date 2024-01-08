@@ -17,20 +17,20 @@
 	<ui:param name="selectedMenu" value="candidates" />
 
 	<ui:define name="content">
-		<div class="p-grid">
-			<div class="p-col-12 p-xl-8">
+		<div class="grid">
+			<div class="col-12 xl:col-8">
 				<h:form id="candidateForm">
 					<div class="card">
 						<div class="form-card ui-fluid">
 							<h5>#{i18n['candidate.rating.add_rating']}</h5>
-							<div class="p-grid">
-								<div class="p-col-12">
-									<div class="p-grid p-formgrid">
-										<div class="p-col-12">
+							<div class="grid">
+								<div class="col-12">
+									<div class="grid formgrid">
+										<div class="col-12">
 											<p:rating id="rating" value="#{addRatingView.rating.rating}"
 												cancel="false" />
 										</div>
-										<div class="p-col-12">
+										<div class="col-12">
 											<g:input type="textarea" id="comment"
 												label="#{i18n['candidate.rating.comment']}"
 												value="#{addRatingView.rating.comment}" />
@@ -40,7 +40,7 @@
 							</div>
 
 						</div>
-						<div class="p-col-12">
+						<div class="col-12">
 							<div class="form-buttons">
 								<p:button value="#{i18n['action.cancel']}"
 									outcome="/candidate/view.xhtml"

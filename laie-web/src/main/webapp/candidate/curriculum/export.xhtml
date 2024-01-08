@@ -34,9 +34,9 @@
 
 	<ui:define name="content">
 		<h:form>
-			<div class="p-grid">
+			<div class="grid">
 				<ui:repeat var="template" value="#{exportCurriculumView.templates}">
-					<div class="p-col-12 p-xl-4">
+					<div class="col-12 xl:col-4">
 						<div class="card card-w-title ui-fluid">
 							<h1>#{i18n[template.title]}</h1>
 							<p>#{i18n[template.description]}</p>

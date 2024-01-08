@@ -13,15 +13,15 @@
 	<ui:define name="content">
 		<h:form id="jobOfferForm">
 			<div class="card">
-				<div class="p-grid">
-					<div class="p-col-12 p-md-6">
+				<div class="grid">
+					<div class="col-12 md:col-6">
 						<div class="form-card ui-fluid">
 							<h5>#{i18n['job.data']}</h5>
-							<div class="p-grid p-formgrid">
-								<div class="p-col-12">
+							<div class="grid formgrid">
+								<div class="col-12">
 									<g:input label="#{i18n['job.title']}" value="#{editJobView.jobOffer.title}" required="true" />
 								</div>
-								<div class="p-col-12">
+								<div class="col-12">
 									<cc:autocomplete id="client" label="#{i18n['job.client']}" value="#{editJobView.jobOffer.client}"
 										completeMethod="#{editJobView.completeClient}" itemSelectEvent="#{editJobView.addClient}" required="true"
 										update="jobOfferForm:city jobOfferForm:state">
@@ -30,50 +30,50 @@
 										</p:column>
 									</cc:autocomplete>
 								</div>
-								<div class="p-col-12 p-sm-6">
+								<div class="col-12 sm:col--6">
 									<g:input id="min_salary" label="#{i18n['job.min_salary']}" value="#{editJobView.jobOffer.minSalary}" type="money" />
 								</div>
-								<div class="p-col-12 p-sm-6">
+								<div class="col-12 sm:col--6">
 									<g:input id="max_salary" label="#{i18n['job.max_salary']}" value="#{editJobView.jobOffer.maxSalary}" type="money" />
 								</div>
-								<div class="p-col-12 p-sm-6">
+								<div class="col-12 sm:col--6">
 									<g:input id="places" label="#{i18n['job.places']}" value="#{editJobView.jobOffer.places}" type="number" min="0" />
 								</div>
-								<div class="p-col-12 p-sm-6"></div>
-								<div class="p-col-12 p-sm-6">
+								<div class="col-12 sm:col--6"></div>
+								<div class="col-12 sm:col--6">
 									<g:input id="city" label="#{i18n['job.city']}" value="#{editJobView.jobOffer.address.city}" required="true" />
 								</div>
-								<div class="p-col-12 p-sm-6">
+								<div class="col-12 sm:col--6">
 									<g:input id="state" label="#{i18n['job.state']}" value="#{editJobView.jobOffer.address.region}" required="true" />
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="p-col-12 p-md-6">
+					<div class="col-12 md:col-6">
 						<div class="form-card ui-fluid">
 							<h5>#{i18n['job.other_data']}</h5>
-							<div class="p-grid p-formgrid">
-								<div class="p-col-12 p-sm-6">
+							<div class="grid formgrid">
+								<div class="col-12 sm:col--6">
 									<g:input id="dateOpened" label="#{i18n['job.date_opened']}" value="#{editJobView.jobOffer.openDate}" type="calendar" />
 								</div>
-								<div class="p-col-12 p-sm-6">
+								<div class="col-12 sm:col--6">
 									<g:input id="dateClosed" label="#{i18n['job.date_closed']}" value="#{editJobView.jobOffer.closeDate}" type="calendar" />
 								</div>
-								<div class="p-col-12 p-sm-6">
+								<div class="col-12 sm:col--6">
 									<cc:autocomplete id="owner" label="#{i18n['job.owner']}" value="#{editJobView.jobOffer.owner}" completeMethod="#{editJobView.queryOwner}">
 										<p:column styleClass="user-select image">
 											<cc:person name="#{var.fullName}" path="#{var.picture.path}" />
 										</p:column>
 									</cc:autocomplete>
 								</div>
-								<div class="p-col-12">
+								<div class="col-12">
 									<cc:inputUsers id="recruiters" label="#{i18n['job.recruiters']}" completeMethod="#{editJobView.queryRecruiter}"
 										value="#{editJobView.recruiters}" />
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="p-col-12">
+					<div class="col-12">
 						<div class="form-buttons">
 							<p:button value="#{i18n['action.cancel']}" outcome="/job/view.xhtml" styleClass="ui-button-secondary ui-button-outlined">
 								<f:param name="jobOffer" value="#{editJobView.jobOffer.id}" />

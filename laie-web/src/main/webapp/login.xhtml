@@ -17,8 +17,8 @@
 	<h:form id="loginForm">
 		<div class="card login-panel ui-fluid">
 			<div class="login-panel-content">
-				<div class="p-grid">
-					<div class="p-col-12 username-container">
+				<div class="grid">
+					<div class="col-12 username-container">
 						<h:panelGroup>
 							<label>#{i18n['login.username']}</label>
 							<div class="login-input">
@@ -26,7 +26,7 @@
 							</div>
 						</h:panelGroup>
 					</div>
-					<div class="p-col-12 password-container">
+					<div class="col-12 password-container">
 						<h:panelGroup>
 							<label>#{i18n['login.password']}</label>
 							<div class="login-input">
@@ -34,16 +34,16 @@
 							</div>
 						</h:panelGroup>
 					</div>
-					<div class="p-col-12 p-sm-6 p-md-6 rememberme-container">
+					<div class="col-12 sm:col--6 md:col-6 rememberme-container">
 						<p:selectBooleanCheckbox />
 						<label>#{i18n['login.rememberme']}</label>
 					</div>
 
-					<div class="p-col-12 p-sm-6 p-md-6 forgetpassword-container">
+					<div class="col-12 sm:col--6 md:col-6 forgetpassword-container">
 						<a href="/forgetPassword.xhtml" class="forget-password">#{i18n['login.forget_password']}</a>
 					</div>
 
-					<div class="p-col-12 p-sm-6 p-md-6">
+					<div class="col-12 sm:col--6 md:col-6">
 						<p:commandButton action="#{loginView.login}" value="${i18n['login.enter']}" icon="fa fa-user" ajax="false" />
 					</div>
 				</div>

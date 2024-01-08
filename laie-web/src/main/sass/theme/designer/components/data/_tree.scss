@@ -26,15 +26,15 @@ body {
             @include action-icon();
 
             &.ui-icon-triangle-1-e {
-              @include icon_override("\e901");
+              @include icon-override("\e901");
             }
 
             &.ui-icon-triangle-1-s {
-              @include icon_override("\e902");
+              @include icon-override("\e902");
             }
 
             &.ui-icon-triangle-1-w {
-              @include icon_override("\e900");
+              @include icon-override("\e900");
             }
           }
 
@@ -68,9 +68,29 @@ body {
             margin-right: $inlineSpacing * 2;
 
             .ui-icon-minus {
-              @include icon_override("\e90f");
+              @include icon-override("\e90f");
               color: $panelContentTextColor;
             }
+          }
+
+          &.ui-state-highlight {
+            background: $inputListItemHighlightBg;
+            color: $inputListItemHighlightTextColor;
+
+            .ui-tree-toggler,
+            .ui-treenode-icon {
+                color: $inputListItemHighlightTextColor;
+
+                &:hover {
+                  color: $inputListItemHighlightTextColor;
+                }
+            }
+          }
+
+          &.ui-tree-selectable:not(.ui-state-highlight):hover,
+          &.ui-tree-selectable:not(.ui-state-highlight).ui-state-hover {
+            background: $inputListItemHoverBg;
+            color: $inputListItemTextHoverColor;
           }
         }
       }
@@ -79,6 +99,10 @@ body {
         &.ui-state-hover {
           background: $highlightBg;
         }
+      }
+
+      .ui-treenode-outline {
+        @include focused-listitem();
       }
     }
 
@@ -108,11 +132,11 @@ body {
           vertical-align: middle;
 
           &.ui-icon-minus {
-            @include icon_override("\e90f");
+            @include icon-override("\e90f");
           }
 
           &.ui-icon-plus {
-            @include icon_override("\e90d");
+            @include icon-override("\e90d");
           }
         }
 
@@ -130,24 +154,28 @@ body {
           margin-right: $inlineSpacing;
 
           .ui-icon-minus {
-            @include icon_override("\e90f");
+            @include icon-override("\e90f");
             color: $panelContentTextColor;
           }
         }
       }
+
+      .ui-treenode:before {
+        background-color: $panelContentBg;
+      } 
     }
 
     .ui-tree-filter-container {
       margin: 0 0 $inlineSpacing 0;
 
       .ui-icon {
-        @include icon_override("\e908");
+        @include icon-override("\e908");
         position: absolute;
         left: nth($inputPadding, 2);
         top: 50%;
         right: auto;
         bottom: auto;
-        margin-top: -1 * $iconSize / 2;
+        margin-top: math.div(-1 * $iconSize, 2);
         color: $inputIconColor;
       }
 

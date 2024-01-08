@@ -3,7 +3,8 @@ body {
     color: $inputPlaceholderTextColor;
   }
 
-  .p-field {
+  .field,
+  .field {
     small.ui-state-error {
       color: $inputErrorBorderColor;
     }
@@ -80,16 +81,16 @@ body {
     -webkit-appearance: none;
     appearance: none;
 
-    &.ui-state-error {
-      @include invalid-input();
-    }
-
     &.ui-state-hover {
       border-color: $inputHoverBorderColor;
     }
 
     &.ui-state-focus {
       @include focused-input();
+    }
+
+    &.ui-state-error {
+      @include invalid-input();
     }
   }
 

@@ -13,12 +13,12 @@
 	<ui:define name="content">
 		<h:form id="candidateForm">
 			<div class="card">
-				<div class="p-grid">
-					<div class="p-col-12 p-md-6">
+				<div class="grid">
+					<div class="col-12 md:col-6">
 						<div class="form-card ui-fluid">
 							<h5>#{i18n['rating.request']}</h5>
-							<div class="p-grid p-formgrid">
-								<div class="p-col-12 p-sm-6">
+							<div class="grid formgrid">
+								<div class="col-12 sm:col--6">
 									<cc:autocomplete id="requestTo" label="#{i18n['rating.request_to']}" value="#{addRatingRequest.requestTo}"
 										completeMethod="#{addRatingRequest.query}">
 										<p:column styleClass="user-select image">
@@ -26,14 +26,14 @@
 										</p:column>
 									</cc:autocomplete>
 								</div>
-								<div class="p-col-12">
+								<div class="col-12">
 									<g:input id="notes" type="textarea" label="#{i18n['rating.request_notes']}" value="#{addRatingRequest.notes}" />
 								</div>
 							</div>
 						</div>
 					</div>
 
-					<div class="p-col-12">
+					<div class="col-12">
 						<div class="form-buttons">
 							<p:button value="#{i18n['action.cancel']}" outcome="/candidate/view.xhtml" styleClass="ui-button-secondary ui-button-outlined">
 								<f:param name="candidate" value="#{addRatingRequest.candidate.id}" />

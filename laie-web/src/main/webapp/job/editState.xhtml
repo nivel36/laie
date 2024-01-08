@@ -13,24 +13,24 @@
 	<ui:define name="content">
 		<h:form id="userForm">
 			<div class="card">
-				<div class="p-grid">
+				<div class="grid">
 
-					<div class="p-col-12 p-md-6">
+					<div class="col-12 md:col-6">
 						<div class="form-card ui-fluid">
 							<h5>#{i18n['job.new_state']}</h5>
-							<div class="p-grid p-formgrid">
-								<div class="p-col-12">
+							<div class="grid formgrid">
+								<div class="col-12">
 									<g:input label="#{i18n['event.state']}" value="#{editJobStateView.state}" required="true" type="selectOneMenu">
 										<f:selectItems value="#{editJobStateView.states}" />
 									</g:input>
 								</div>
-								<div class="p-col-12">
+								<div class="col-12">
 									<g:input id="notes" label="#{i18n['job.edit_state.notes']}" value="#{editJobStateView.notes}" type="textarea" />
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="p-col-12">
+					<div class="col-12">
 						<div class="form-buttons">
 							<p:button value="#{i18n['action.cancel']}" outcome="/job/view.xhtml" styleClass="ui-button-secondary ui-button-outlined">
 								<f:param name="jobOffer" value="#{editJobStateView.jobOffer.id}" />

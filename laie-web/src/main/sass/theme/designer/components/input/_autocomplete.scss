@@ -7,6 +7,18 @@ body {
       }
     }
 
+    &.ui-state-loading {
+      .ui-icon-loading {
+        right: nth($inputPadding, 2); 
+      }
+
+      &.ui-autocomplete-dd {
+        .ui-icon-loading {
+          right: nth($inputPadding, 2) + $buttonIconOnlyWidth;
+        }
+      }
+    }
+
     .ui-autocomplete-dropdown {
       position: relative;
       height: auto;
@@ -24,7 +36,7 @@ body {
     }
 
     .ui-autocomplete-multiple-container {
-      padding: nth($inputPadding, 1) / 2 nth($inputPadding, 2);
+      padding: math.div(nth($inputPadding, 1), 2) nth($inputPadding, 2);
 
       .ui-autocomplete-token {
         padding: 1px 0;
@@ -37,19 +49,19 @@ body {
         border-radius: $borderRadius;
 
         .ui-autocomplete-token-label {
-          padding: 0 $iconSize * 2 0 $iconSize / 2;
+          padding: 0 $iconSize * 2 0 math.div($iconSize, 2);
         }
 
         .ui-autocomplete-token-icon {
-          margin-top: -1 * $iconSize / 2;
+          margin-top: math.div(-1 * $iconSize, 2);
           position: absolute;
-          @include icon_override("\e90b");
+          @include icon-override("\e90b");
         }
       }
 
       .ui-autocomplete-input-token {
         margin: 0;
-        padding: nth($inputPadding, 1) / 2 0;
+        padding: math.div(nth($inputPadding, 1), 2) 0;
         display: inline-block;
         vertical-align: middle;
         float: none;
@@ -76,6 +88,15 @@ body {
     background: $inputListBg;
     border: $inputOverlayBorder;
     box-shadow: $inputOverlayShadow;
+
+    .ui-autocomplete-emptyMessage,
+    .ui-autocomplete-empty-message {
+      border: $inputListItemBorder;
+      margin: $inputListItemMargin;
+      padding: $inputListItemPadding;
+      color: $inputListItemTextColor;
+      border-radius: $inputListItemBorderRadius;
+    }
 
     .ui-autocomplete-items {
       padding: $inputListPadding;

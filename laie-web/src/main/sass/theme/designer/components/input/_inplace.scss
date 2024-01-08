@@ -9,18 +9,22 @@ body {
         color: $inplaceTextHoverColor;
         transition: $transition;
       }
+
+      &.ui-state-focus {
+        @include focused-input();
+      }
     }
 
     .ui-inplace-save {
       .ui-icon {
-        @include icon_override("\e909");
+        @include icon-override("\e909");
       }
     }
 
     .ui-inplace-cancel {
-      margin-left: $inlineSpacing / 2;
+      margin-left: math.div($inlineSpacing, 2);
       .ui-icon {
-        @include icon_override("\e90b");
+        @include icon-override("\e90b");
       }
     }
 

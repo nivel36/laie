@@ -11,8 +11,8 @@
 	<ui:param name="selectedMenu" value="clients" />
 
 	<ui:define name="content">
-		<div class="p-grid">
-			<div class="p-col-12 p-xl-8">
+		<div class="grid">
+			<div class="col-12 xl:col-8">
 				<div class="title-card">
 					<h:form>
 						<div class="title-card-content">
@@ -51,7 +51,7 @@
 				</cc:jobOffers>
 			</div>
 
-			<div class="p-col-12 p-xl-4">
+			<div class="col-12 xl:col-4">
 				<div class="card card-w-title">
 					<h5>#{i18n['client.other_data']}</h5>
 					<cc:outputLink label="#{i18n['job.owner']}" value="#{viewClientView.client.owner.fullName}" outcome="/user/view.xhtml">

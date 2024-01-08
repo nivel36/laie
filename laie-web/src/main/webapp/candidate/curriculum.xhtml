@@ -12,8 +12,8 @@
 
 	<ui:define name="content">
 		<h:form id="form">
-			<div class="p-grid">
-				<div class="p-col-12 p-xl-8">
+			<div class="grid">
+				<div class="col-12 xl:col-8">
 					<div class="title-card">
 						<div class="title-card-content">
 							<cc:avatar styleClass="title-card-content-image" name="#{viewCandidateView.candidate.fullName}"
@@ -79,15 +79,15 @@
 														icon="pi pi-pencil" styleClass="ui-button-secondary ui-button-outlined" />
 												</h:panelGroup>
 											</h:panelGroup> <h:panelGroup layout="block" rendered="#{curriculumView.editJobExperienceIndex eq status.index}">
-												<div class="p-grid p-formgrid ui-fluid">
-													<div class="p-col-10 p-sm-5">
+												<div class="grid formgrid ui-fluid">
+													<div class="col-10 sm:col--5">
 														<g:input id="degree" label="#{i18n['job_experience.company_name']}" value="#{jobExperience.companyName}" required="true" />
 													</div>
-													<div class="p-col-10 p-sm-5">
+													<div class="col-10 sm:col--5">
 														<g:input id="jobPosition" label="#{i18n['job_experience.job_position']}" value="#{jobExperience.jobPosition}" required="true" />
 													</div>
-													<div class="p-col-10 p-sm-4">
-														<div class="p-field input-group input-year-month">
+													<div class="col-10 sm:col--4">
+														<div class="field input-group input-year-month">
 															<p:outputLabel for="startMonth" value="#{i18n['job.from_date']}" styleClass="label" />
 															<div class="input-container">
 																<p:selectOneMenu id="startMonth" value="#{jobExperience.startMonth}" required="true" styleClass="input input-select">
@@ -103,9 +103,9 @@
 															<p:message for="startYear" styleClass="message-error" />
 														</div>
 													</div>
-													<div class="p-col-10 p-sm-4">
+													<div class="col-10 sm:col--4">
 														<h:panelGroup layout="block" id="toDateWrapper">
-															<h:panelGroup class="p-field input-group input-year-month" rendered="#{not jobExperience.stillWorking}">
+															<h:panelGroup class="field input-group input-year-month" rendered="#{not jobExperience.stillWorking}">
 																<p:outputLabel for="startMonth" value="#{i18n['job.to_date']}" styleClass="label" />
 																<div class="input-container">
 																	<p:selectOneMenu id="endMonth" value="#{jobExperience.endMonth}" required="true" styleClass="input input-select">
@@ -123,12 +123,12 @@
 
 														</h:panelGroup>
 													</div>
-													<div class="p-col-10 p-sm-2">
+													<div class="col-10 sm:col--2">
 														<g:input id="still" label="#{i18n['job.still_working']}" value="#{jobExperience.stillWorking}" type="checkbox">
 															<f:ajax event="change" render="jobExperience:toDateWrapper" />
 														</g:input>
 													</div>
-													<div class="p-col-10">
+													<div class="col-10">
 														<g:input id="description" label="#{i18n['job_experience.description']}" value="#{jobExperience.description}" type="textarea" />
 													</div>
 												</div>
@@ -173,20 +173,20 @@
 														styleClass="ui-button-secondary ui-button-outlined" />
 												</h:panelGroup>
 											</h:panelGroup> <h:panelGroup layout="block" rendered="#{curriculumView.editEducationIndex eq status.index}">
-												<div class="p-grid p-formgrid ui-fluid">
-													<div class="p-col-10 p-sm-5">
+												<div class="grid formgrid ui-fluid">
+													<div class="col-10 sm:col--5">
 														<g:input id="degree" label="#{i18n['education.degree']}" value="#{education.degree}" required="true" />
 													</div>
-													<div class="p-col-10 p-sm-5">
+													<div class="col-10 sm:col--5">
 														<g:input id="school" label="#{i18n['education.school']}" value="#{education.school}" required="true" />
 													</div>
-													<div class="p-col-10 p-sm-3">
+													<div class="col-10 sm:col--3">
 														<g:input type="selectOneMenu" id="fromDate" label="#{i18n['education.from_date']}" value="#{education.startYear}">
 															<f:selectItem itemLabel="#{i18n['date.year']}" itemValue="" />
 															<f:selectItems var="year" value="#{curriculumView.years}" itemValue="#{year}" itemLabel="#{year}" />
 														</g:input>
 													</div>
-													<div class="p-col-10 p-sm-3">
+													<div class="col-10 sm:col--3">
 														<h:panelGroup layout="block" id="toDateWrapper">
 															<g:input type="selectOneMenu" id="toDate" label="#{i18n['education.to_date']}" value="#{education.endYear}"
 																rendered="#{not education.stillStudying}">
@@ -195,12 +195,12 @@
 															</g:input>
 														</h:panelGroup>
 													</div>
-													<div class="p-col-10 p-sm-3">
+													<div class="col-10 sm:col--3">
 														<g:input id="still" label="#{i18n['job.still_working']}" value="#{education.stillStudying}" type="checkbox">
 															<f:ajax event="change" render="education:toDateWrapper" />
 														</g:input>
 													</div>
-													<div class="p-col-10">
+													<div class="col-10">
 														<g:input id="description" label="#{i18n['education.description']}" value="#{education.description}" type="textarea" />
 													</div>
 												</div>
@@ -238,11 +238,11 @@
 														styleClass="ui-button-secondary ui-button-outlined" />
 												</h:panelGroup>
 											</h:panelGroup> <h:panelGroup layout="block" rendered="#{curriculumView.editLanguageIndex eq status.index}">
-												<div class="p-grid p-formgrid ui-fluid">
-													<div class="p-col-10 p-sm-5">
+												<div class="grid formgrid ui-fluid">
+													<div class="col-10 sm:col--5">
 														<g:input id="laguage-name" value="#{language.name}" required="true" />
 													</div>
-													<div class="p-col-10 p-sm-5">
+													<div class="col-10 sm:col--5">
 														<p:selectOneMenu id="level" required="true" styleClass="input input-select" value="#{language.level}">
 															<f:selectItem />
 															<f:selectItems value="#{curriculumView.languageLevels}" var="languageLevel" itemValue="#{languageLevel}"
@@ -274,13 +274,13 @@
 								<h:panelGroup layout="block" rendered="#{not curriculumView.editSkills}">
 									<ul>
 										<ui:repeat var="skill" value="#{curriculumView.curriculum.skills}">
-											<li><p:tag value="#{skill}" styleClass="p-mr-2" /></li>
+											<li><p:tag value="#{skill}" styleClass="mr-2" /></li>
 										</ui:repeat>
 									</ul>
 								</h:panelGroup>
 								<h:panelGroup layout="block" rendered="#{curriculumView.editSkills}">
-									<div class="p-grid p-formgrid ui-fluid">
-										<div class="p-col-10">
+									<div class="grid formgrid ui-fluid">
+										<div class="col-10">
 											<p:chips id="skill" value="#{curriculumView.skills}" />
 										</div>
 									</div>

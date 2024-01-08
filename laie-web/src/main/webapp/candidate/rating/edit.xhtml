@@ -14,21 +14,21 @@
 		<h:form id="candidateForm">
 			<div class="card">
 				<h5>#{i18n['candidate.rating.update_rating']}</h5>
-				<div class="p-grid">
-					<div class="p-col-12">
+				<div class="grid">
+					<div class="col-12">
 						<div class="form-card ui-fluid">
-							<div class="p-grid p-formgrid">
-								<div class="p-col-12 p-sm-6">
+							<div class="grid formgrid">
+								<div class="col-12 sm:col--6">
 									<p:rating id="rating" value="#{editRatingView.rating.rating}" cancel="false" />
 								</div>
-								<div class="p-col-12 p-sm-6">
+								<div class="col-12 sm:col--6">
 									<g:input type="textarea" id="comment" label="#{i18n['candidate.rating.comment']}" value="#{editRatingView.rating.comment}" />
 								</div>
 							</div>
 						</div>
 					</div>
 
-					<div class="p-col-12">
+					<div class="col-12">
 						<div class="form-buttons">
 							<p:button value="#{i18n['action.cancel']}" outcome="/candidate/view.xhtml" styleClass="ui-button-secondary ui-button-outlined" >
 								<f:param name="candidate" value="#{editRatingView.rating.candidate.id}"/>

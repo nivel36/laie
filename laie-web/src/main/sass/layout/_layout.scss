@@ -12,7 +12,6 @@
 @import './_utils';
 @import './_dashboard';
 @import './_login';
-@import './_change_password';
 @import './_exception';
 @import './_landing';
 @import './_widgets';
@@ -21,5 +20,5 @@
 @import './_invoice';
 @import './_config';
 @import './_fonts';
-@import '../overrides/layout_styles';
+@import '../overrides/_layout_styles';
 

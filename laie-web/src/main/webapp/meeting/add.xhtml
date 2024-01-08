@@ -13,47 +13,47 @@
 	<ui:define name="content">
 		<h:form id="meetingForm">
 			<div class="card">
-				<div class="p-grid">
-					<div class="p-col-12 p-xl-7">
+				<div class="grid">
+					<div class="col-12 xl:col-7">
 						<div class="form-card ui-fluid">
 							<h5>#{i18n['meeting.header.details']}</h5>
-							<div class="p-grid p-formgrid">
-								<div class="p-col-12">
+							<div class="grid formgrid">
+								<div class="col-12">
 									<g:input label="#{i18n['meeting.title']}" value="#{addMeetingView.meeting.title}" />
 								</div>
-								<div class="p-col-12 p-sm-4">
+								<div class="col-12 sm:col--4">
 									<g:input id="datePlanned" label="#{i18n['meeting.date_planned']}" value="#{addMeetingView.meetingDate}" required="true" type="calendar" />
 								</div>
-								<div class="p-col-12 p-sm-4">
+								<div class="col-12 sm:col--4">
 									<g:input label="#{i18n['meeting.hour_planned']}" value="#{addMeetingView.meetingHour}" required="true" type="selectOneMenu">
 										<f:selectItems value="#{addMeetingView.hours}" var="meetingHour" itemValue="#{meetingHour}" itemLabel="#{meetingHour}" />
 									</g:input>
 								</div>
-								<div class="p-col-12 p-sm-4">
+								<div class="col-12 sm:col--4">
 									<g:input label="#{i18n['meeting.duration']}" value="#{addMeetingView.meetingDuration}" required="true" type="selectOneMenu">
 										<f:selectItems value="#{addMeetingView.durations}" var="meetingDuration" itemLabel="#{meetingDuration}" />
 									</g:input>
 								</div>
-								<div class="p-col-12 p-sm-6">
+								<div class="col-12 sm:col--6">
 									<g:input label="#{i18n['meeting.location']}" value="#{addMeetingView.meeting.location}" />
 								</div>
-								<div class="p-col-12 p-sm-6">
+								<div class="col-12 sm:col--6">
 									<g:input label="#{i18n['meeting.type']}" value="#{addMeetingView.meeting.meetingType}" type="selectOneMenu">
 										<f:selectItem />
 										<f:selectItems value="#{addMeetingView.meetingTypes}" var="meetingType" itemValue="#{meetingType}" itemLabel="#{i18n[meetingType]}" />
 									</g:input>
 								</div>
-								<div class="p-col-12">
+								<div class="col-12">
 									<g:input label="#{i18n['meeting.description']}" value="#{addMeetingView.meeting.description}" type="textarea"/>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="p-col-12 p-xl-5">
+					<div class="col-12 xl:col-5">
 						<div class="form-card ui-fluid">
 							<h5>#{i18n['meeting.header.attendees']}</h5>
-							<div class="p-grid p-formgrid">
-								<div class="p-col-12">
+							<div class="grid formgrid">
+								<div class="col-12">
 									<cc:autocomplete id="attendee" value="#{addMeetingView.attendee}" completeMethod="#{addMeetingView.searchPerson}"
 										itemSelectEvent="#{addMeetingView.addAttendee}" update="@this meetingForm:attendees">
 										<p:column styleClass="user-select image">
@@ -61,14 +61,14 @@
 										</p:column>
 									</cc:autocomplete>
 								</div>
-								<div class="p-col-12">
+								<div class="col-12">
 									<h:panelGroup layout="block" id="attendees" styleClass="attendees">
 										<ui:repeat var="person" value="#{addMeetingView.attendees}" varStatus="varStatus">
 											<h:panelGroup layout="block" id="attendee" styleClass="attendee">
 												<cc:person name="#{person.fullName}" description="#{person.email}">
-													<p:tag styleClass="p-mr-2" icon="pi pi-check" severity="success" rounded="true" value="#{i18n['meeting.available']}"
+													<p:tag styleClass="mr-2" icon="pi pi-check" severity="success" rounded="true" value="#{i18n['meeting.available']}"
 														rendered="#{addMeetingView.isAvaliable(person)}" />
-													<p:tag styleClass="p-mr-2" icon="pi pi-times" severity="danger" rounded="true" value="#{i18n['meeting.non_available']}"
+													<p:tag styleClass="mr-2" icon="pi pi-times" severity="danger" rounded="true" value="#{i18n['meeting.non_available']}"
 														rendered="#{not addMeetingView.isAvaliable(person)}" />
 												</cc:person>
 												<div class="buttons">
@@ -82,7 +82,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="p-col-12">
+					<div class="col-12">
 						<div class="form-buttons">
 							<p:button value="#{i18n['action.cancel']}" outcome="/index.xhtml" styleClass="ui-button-secondary ui-button-outlined" />
 							<p:commandButton value="#{i18n['action.save']}" action="#{addMeetingView.save}" update="@form" styleClass="ui-button-success ui-button-outlined" />

@@ -11,30 +11,30 @@
 	<ui:define name="content">
 		<h:form id="contactForm">
 			<div class="card">
-				<div class="p-grid">
-					<div class="p-col-12 p-xl-6">
+				<div class="grid">
+					<div class="col-12 xl:col-6">
 						<div class="form-card ui-fluid">
 							<h5>#{i18n['contact.new_contact']}</h5>
-							<div class="p-grid p-formgrid">
-								<div class="p-col-12 p-sm-6">
+							<div class="grid formgrid">
+								<div class="col-12 sm:col--6">
 									<g:input id="name" label="#{i18n['contact.name']}" value="#{addContactView.contact.name}" required="true" />
 								</div>
-								<div class="p-col-12 p-sm-6">
+								<div class="col-12 sm:col--6">
 									<g:input id="surname" label="#{i18n['contact.surname']}" value="#{addContactView.contact.surname}" required="true" />
 								</div>
-								<div class="p-col-12 p-sm-6">
+								<div class="col-12 sm:col--6">
 									<g:input id="position" label="#{i18n['contact.position']}" value="#{addContactView.contact.position}" />
 								</div>
-								<div class="p-col-12 p-sm-6">
+								<div class="col-12 sm:col--6">
 									<g:input id="email" label="#{i18n['contact.email']}" value="#{addContactView.contact.email}" required="true" />
 								</div>
-								<div class="p-col-12 p-sm-6">
+								<div class="col-12 sm:col--6">
 									<g:input id="phone_number" label="#{i18n['contact.phone_number']}" value="#{addContactView.contact.phoneNumber}" />
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="p-col-12">
+					<div class="col-12">
 						<div class="form-buttons">
 							<p:button value="#{i18n['action.cancel']}" outcome="/client/view.xhtml" styleClass="ui-button-secondary ui-button-outlined">
 								<f:param name="client" value="#{addContactView.client.id}" />

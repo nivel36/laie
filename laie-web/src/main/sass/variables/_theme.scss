@@ -1,3 +1,18 @@
+$colors: (
+  "blue": #2196F3,
+  "green": #4caf50,
+  "yellow": #FBC02D,
+  "cyan": #00BCD4,
+  "pink": #E91E63,
+  "indigo": #3F51B5,
+  "teal": #009688,
+  "orange": #F57C00,
+  "bluegray": #607D8B,
+  "purple": #9C27B0,
+  "red": #FF4032,
+  "primary": $primaryColor
+) !default;
+
 //shades of gray
 $shade000:#ffffff !default;    //surface
 $shade100:#f8f9fa !default;    //header background
@@ -14,8 +29,11 @@ $shade900:#212529 !default;    //unused
 $fontSize:1rem !default;
 $fontFamily:'Inter UI',sans-serif;
 $textColor:$shade700 !default;
+$textSecondaryColor:$shade600 !default;
 $transitionDuration:.2s !default;
 $transition:background-color $transitionDuration, color $transitionDuration, border-color $transitionDuration, box-shadow $transitionDuration !default;
+$actionIconTransition:background-color $transitionDuration, color $transitionDuration, box-shadow $transitionDuration, opacity $transitionDuration ease-in-out !default;
+$listItemTransition: box-shadow $transitionDuration !default;
 $animationDuration:.4s !default;
 $animationTimingFunction:cubic-bezier(.05,.74,.2,.99) !default;
 $letterSpacing:normal !default;
@@ -89,7 +107,7 @@ $inputListItemHighlightTextColor:$highlightTextColor !default;
 $inputListItemBorder:0 none !default;
 $inputListItemBorderRadius:0 !default;
 $inputListItemMargin:0 !default;
-
+$inputListItemFocusShadow:inset 0 0 0 .15rem $focusOutlineColor !default;
 $inputListHeaderPadding:.5rem 1rem !default;
 $inputListHeaderBg:$shade100 !default;
 $inputListHeaderTextColor:$shade700 !default;
@@ -318,12 +336,16 @@ $keyboardButtonTextActiveColor:$shade000 !default;
 //switch
 $inputSwitchOffBg:$shade300 !default;
 $inputSwitchHandleOffBg:$shade000 !default;
+$inputSwitchHandleOffTextColor:$shade700 !default;
 $inputSwitchHandleOffBorder:2px solid $shade300 !default;
 $inputSwitchOnBg:$primaryColor !default;
 $inputSwitchHandleOnBg:$shade000 !default;
+$inputSwitchHandleOnTextColor:$shade700 !default;
 $inputSwitchHandleOnBorderColor:$primaryDarkerColor !default;
 $inputSwitchHandleBorderRadius:50% !default;
 $inputSwitchHandleShadow:0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0,0,0,.12) !default;
+$inputSwitchBorder:solid transparent !default;
+$inputSwitchBorderWidth:2px !default;
 $inputSwitchBorderRadius:30px !default;
 
 //panel common
@@ -478,6 +500,10 @@ $dataViewContentBorder:0 none !default;
 $dataViewListItemBorder:solid $shade200 !default;
 $dataViewListItemBorderWidth:0 0 1px 0 !default;
 
+//orderlist, picklist
+$orderListDropPlaceholderBg:scale-color($highlightBg, $lightness: -20%) !default;
+$pickListDropPlaceholderBg:scale-color($highlightBg, $lightness: -20%) !default;
+
 //schedule
 $scheduleCellBorderColor: $shade300 !default;
 $scheduleTodayBg:$highlightBg !default;
@@ -620,6 +646,16 @@ $cardContentPadding:1rem 0 !default;
 $cardFooterPadding:1rem 0 0 0 !default;
 $cardShadow:0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12) !default;
 
+//editor
+$editorToolbarBg:$panelHeaderBg !default;
+$editorToolbarBorder:$panelHeaderBorder !default;
+$editorToolbarPadding:$panelHeaderPadding !default;
+$editorToolbarIconColor:$textSecondaryColor !default;
+$editorToolbarIconHoverColor:$textColor !default;
+$editorIconActiveColor:$primaryColor !default;
+$editorContentBorder:$panelContentBorder !default;
+$editorContentBg:$panelContentBg !default;
+
 //divider
 $dividerHorizontalMargin:1rem 0 !default;
 $dividerHorizontalPadding:0 1rem !default;
@@ -669,6 +705,72 @@ $chronolineEventColor:$shade300 !default;
 $confirmPopupContentPadding:$panelContentPadding !default;
 $confirmPopupFooterPadding:0 1rem 1rem 1rem !default;
 
+//speeddial
+$speedDialButtonWidth: 4rem !default;
+$speedDialButtonHeight: 4rem !default;
+$speedDialButtonIconFontSize: 1.3rem !default;
+$speedDialActionWidth: 3rem !default;
+$speedDialActionHeight: 3rem !default;
+$speedDialActionBg: $shade700 !default;
+$speedDialActionHoverBg: $shade800 !default;
+$speedDialActionTextColor: #fff !default;
+$speedDialActionTextHoverColor: #fff !default;
+
+//carousel
+$carouselIndicatorsPadding:1rem !default;
+$carouselIndicatorBg:$shade200 !default;
+$carouselIndicatorHoverBg:$shade300 !default;
+$carouselIndicatorBorderRadius:0 !default;
+$carouselIndicatorWidth:2rem !default;
+$carouselIndicatorHeight:.5rem !default;
+
+//galleria
+$galleriaMaskBg:rgba(0,0,0,0.9) !default;
+$galleriaCloseIconMargin:.5rem !default;
+$galleriaCloseIconFontSize:2rem !default;
+$galleriaCloseIconBg:transparent !default;
+$galleriaCloseIconColor:$shade100 !default;
+$galleriaCloseIconHoverBg:rgba(255,255,255,0.1) !default;
+$galleriaCloseIconHoverColor:$shade100 !default;
+$galleriaCloseIconWidth:4rem !default;
+$galleriaCloseIconHeight:4rem !default;
+$galleriaCloseIconBorderRadius:50% !default;
+
+$galleriaItemNavigatorBg:transparent !default;
+$galleriaItemNavigatorColor:$shade100 !default;
+$galleriaItemNavigatorMargin:0 .5rem !default;
+$galleriaItemNavigatorFontSize:2rem !default;
+$galleriaItemNavigatorHoverBg:rgba(255,255,255,0.1) !default;
+$galleriaItemNavigatorHoverColor:$shade100 !default;
+$galleriaItemNavigatorWidth:4rem !default;
+$galleriaItemNavigatorHeight:4rem !default;
+$galleriaItemNavigatorBorderRadius:$borderRadius !default;
+
+$galleriaCaptionBg:rgba(0,0,0,.5) !default;
+$galleriaCaptionTextColor:$shade100 !default;
+$galleriaCaptionPadding:1rem !default;
+
+$galleriaIndicatorsPadding:1rem !default;
+$galleriaIndicatorBg:$shade200 !default;
+$galleriaIndicatorHoverBg:$shade300 !default;
+$galleriaIndicatorBorderRadius:50% !default;
+$galleriaIndicatorWidth:1rem !default;
+$galleriaIndicatorHeight:1rem !default;
+$galleriaIndicatorsBgOnItem:rgba(0,0,0,.5) !default;
+$galleriaIndicatorBgOnItem:rgba(255,255,255,.4) !default;
+$galleriaIndicatorHoverBgOnItem:rgba(255,255,255,.6) !default;
+
+$galleriaThumbnailContainerBg:rgba(0,0,0,.9) !default;
+$galleriaThumbnailContainerPadding:.8rem .25rem !default;
+$galleriaThumbnailContentMargin:.2rem !default;
+$galleriaThumbnailNavigatorBg:transparent !default;
+$galleriaThumbnailNavigatorColor:$shade100 !default;
+$galleriaThumbnailNavigatorHoverBg:rgba(255,255,255,0.1) !default;
+$galleriaThumbnailNavigatorHoverColor:$shade100 !default;
+$galleriaThumbnailNavigatorBorderRadius:50% !default;
+$galleriaThumbnailNavigatorWidth:2rem !default;
+$galleriaThumbnailNavigatorHeight:2rem !default;
+
 :root {
   --surface-a:#{$shade000};
   --surface-b:#{$shade100};
@@ -681,4 +783,36 @@ $confirmPopupFooterPadding:0 1rem 1rem 1rem !default;
   --primary-color:#{$primaryColor};
   --primary-color-text:#{$primaryTextColor};
   --font-family:#{$fontFamily};
+  --surface-0: #ffffff;
+  --surface-50: #FAFAFA;
+  --surface-100: #F5F5F5;
+  --surface-200: #EEEEEE;
+  --surface-300: #E0E0E0;
+  --surface-400: #BDBDBD;
+  --surface-500: #9E9E9E;
+  --surface-600: #757575;
+  --surface-700: #616161;
+  --surface-800: #424242;
+  --surface-900: #212121;
+  --gray-50: #FAFAFA;
+  --gray-100: #F5F5F5;
+  --gray-200: #EEEEEE;
+  --gray-300: #E0E0E0;
+  --gray-400: #BDBDBD;
+  --gray-500: #9E9E9E;
+  --gray-600: #757575;
+  --gray-700: #616161;
+  --gray-800: #424242;
+  --gray-900: #212121;
+  --content-padding:#{$panelContentPadding};
+  --inline-spacing:#{$inlineSpacing};
+  --border-radius:#{$borderRadius};
+  --surface-ground:#f8f9fa;
+  --surface-section:#ffffff;
+  --surface-card:#ffffff;
+  --surface-overlay:#ffffff;
+  --surface-border:#dee2e6;
+  --surface-hover: #e9ecef;
+  --maskbg: #{$maskBg};
+  --focus-ring: #{$focusShadow};
 }
