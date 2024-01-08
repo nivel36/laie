@@ -10,7 +10,6 @@
 		<query><![CDATA[
 			SELECT a 
 			FROM Action a
-			LEFT JOIN FETCH user.picture
 			WHERE a.user = :user
 			ORDER BY a.date DESC
 		]]></query>
