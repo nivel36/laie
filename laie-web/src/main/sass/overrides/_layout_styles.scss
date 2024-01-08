@@ -111,10 +111,6 @@
 }
 
 .card-w-title {
-	position: relative;
-	h1,h2,h3,h4,h5 {
-		margin-bottom: 2rem;		
-	}
 	.card-header-buttons {
 		position: absolute;
 		top: 1rem;
@@ -466,13 +462,6 @@
 	}
 }
 
-.jobOffers {
-	display: flex;
-	padding: 1rem;
-	flex-grow: 1;
-	flex-basis: 0;
-}
-
 .card.job-card {
 	padding: 0;
 	.card-header{
@@ -634,7 +623,7 @@
 	}
 }
 
-.ui-tag {
+.ui-chip {
 	&.user-role{
 		text-transform: uppercase;
 		font-weight: 700;

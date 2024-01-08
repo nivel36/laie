@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:g="http://nivel.36/laie/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:g="http://nivel.36/laie/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
 		#{i18n['user.user']} - #{viewUserView.user.fullName}
@@ -16,19 +23,26 @@
 				<div class="title-card">
 					<h:form>
 						<div class="title-card-content">
-							<cc:avatar styleClass="title-card-content-image" name="#{viewUserView.user.fullName}" path="#{viewUserView.user.picture.path}" size="xlarge" />
+							<cc:avatar styleClass="title-card-content-image"
+								name="#{viewUserView.user.fullName}"
+								path="#{viewUserView.user.picture.path}" size="xlarge" />
 							<div class="title-card-content-info">
 								<div class="title">#{viewUserView.user.fullName}</div>
 								<div class="subtitle">#{i18n[viewUserView.user.role]}</div>
 								<div class="text">
-									<span class="email"><i class="pi pi-envelope" aria-hidden="true" /> #{viewUserView.user.email}</span>
-									<h:panelGroup rendered="#{not empty viewUserView.user.phoneNumber}" styleClass="phone">
+									<span class="email"><i class="pi pi-envelope"
+										aria-hidden="true" /> #{viewUserView.user.email}</span>
+									<h:panelGroup
+										rendered="#{not empty viewUserView.user.phoneNumber}"
+										styleClass="phone">
 										<i class="pi pi-phone" aria-hidden="true" />#{viewUserView.user.phoneNumber}</h:panelGroup>
 								</div>
 							</div>
 
-							<p:menuButton styleClass="menu-button" icon="pi pi-ellipsis-v" id="menu-button">
-								<p:menuitem value="#{i18n['action.edit']}" outcome="/user/edit" icon="pi pi-pencil">
+							<p:menuButton styleClass="menu-button" icon="pi pi-ellipsis-v"
+								id="menu-button">
+								<p:menuitem value="#{i18n['action.edit']}" outcome="/user/edit"
+									icon="pi pi-pencil">
 									<f:param name="user" value="#{viewUserView.user.id}" />
 								</p:menuitem>
 							</p:menuButton>
@@ -36,20 +50,31 @@
 					</h:form>
 				</div>
 				<cc:jobOffers value="#{viewUserView.jobOffers}" rows="5">
-					<p:button icon="pi pi-plus" outcome="/job/add.xhtml" rendered="#{viewUserView.logedUser}" styleClass="ui-button-success ui-button-outlined" />
+					<p:button icon="pi pi-plus" outcome="/job/add.xhtml"
+						rendered="#{viewUserView.logedUser}"
+						styleClass="ui-button-success ui-button-outlined" />
 				</cc:jobOffers>
 
-				<cc:events title="#{i18n['event.last_events']}" rows="5" value="#{viewUserView.actions}" showUser="#{false}" />
+				<cc:events title="#{i18n['event.last_events']}" rows="5"
+					value="#{viewUserView.actions}" showUser="#{false}" />
 			</div>
 			<div class="col-12 xl:col-4">
-				<div class="card card-w-title">
-					<h5>#{i18n['user.details']}</h5>
-					<cc:outputText label="#{i18n['user.date_of_join']}" value="#{viewUserView.user.dateOfJoin}" styleClass="data date_of_join">
-						<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" for="text" />
+				<p:card styleClass="card card-w-title">
+					<f:facet name="title">
+						<h5>#{i18n['user.details']}</h5>
+					</f:facet>
+					<cc:outputText label="#{i18n['user.date_of_join']}"
+						value="#{viewUserView.user.dateOfJoin}"
+						styleClass="data date_of_join">
+						<f:convertDateTime type="localDate" pattern="dd/MM/yyyy"
+							for="text" />
 					</cc:outputText>
 
-					<cc:outputText label="#{i18n['user.last_login']}" value="#{viewUserView.user.lastConnection}" styleClass="data last_login">
-						<f:convertDateTime type="localDateTime" pattern="dd/MM/yyyy HH:mm" for="text" />
+					<cc:outputText label="#{i18n['user.last_login']}"
+						value="#{viewUserView.user.lastConnection}"
+						styleClass="data last_login">
+						<f:convertDateTime type="localDateTime" pattern="dd/MM/yyyy HH:mm"
+							for="text" />
 					</cc:outputText>
 
 					<div class="data manager">
@@ -57,24 +82,30 @@
 							<div class="label">#{i18n['user.manager']}</div>
 						</div>
 						<div class="text-container">
-							<h:panelGroup layout="block" styleClass="text" rendered="#{empty viewUserView.user.manager}"> --- </h:panelGroup>
-							<h:panelGroup layout="block" class="text" rendered="#{not empty viewUserView.user.manager}">
-								<p:link outcome="/user/view.xhtml" value="#{viewUserView.user.manager.fullName}">
+							<h:panelGroup layout="block" styleClass="text"
+								rendered="#{empty viewUserView.user.manager}"> --- </h:panelGroup>
+							<h:panelGroup layout="block" class="text"
+								rendered="#{not empty viewUserView.user.manager}">
+								<p:link outcome="/user/view.xhtml"
+									value="#{viewUserView.user.manager.fullName}">
 									<f:param name="user" value="#{viewUserView.user.manager.id}" />
 								</p:link>
 							</h:panelGroup>
 						</div>
 					</div>
-				</div>
+				</p:card>
 
 				<h:form id="jobMeetingsForm">
 					<cc:meetings value="#{viewUserView.meetings}" rows="5">
-						<p:button icon="pi pi-plus" outcome="/meeting/add.xhtml" rendered="#{viewUserView.logedUser}" styleClass="ui-button-success ui-button-outlined" />
+						<p:button icon="pi pi-plus" outcome="/meeting/add.xhtml"
+							rendered="#{viewUserView.logedUser}"
+							styleClass="ui-button-success ui-button-outlined" />
 					</cc:meetings>
 				</h:form>
 
 				<h:form id="userTeamForm">
-					<cc:users value="#{viewUserView.team}" title="#{i18n['user.team']}" rows="3" />
+					<cc:users value="#{viewUserView.team}" title="#{i18n['user.team']}"
+						rows="3" />
 				</h:form>
 			</div>
 		</div>

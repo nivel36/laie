@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://nivel.36/laie/ui"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:g="http://nivel.36/laie/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
 		#{i18n['user.users']}
@@ -14,30 +20,44 @@
 		<h:form id="searchUsers" enctype="multipart/form-data">
 			<div class="card">
 				<div class="searchBar-buttons">
-					<cc:inputSearch searchText="#{searchUserView.searchText}" searchAction="#{searchUserView.search}" update="searchUsers:users"
+					<cc:inputSearch searchText="#{searchUserView.searchText}"
+						searchAction="#{searchUserView.search}" update="searchUsers:users"
 						styleClass="ui-fluid" />
 					<div class="buttons">
-						<p:button value="#{i18n['user.new_user']}" outcome="/user/add.xhtml" styleClass="ui-button-success ui-button-outlined" />
+						<p:button value="#{i18n['user.new_user']}"
+							outcome="/user/add.xhtml"
+							styleClass="ui-button-success ui-button-outlined" />
 					</div>
 				</div>
 
-				<p:dataTable id="users" value="#{searchUserView.users}" var="user" emptyMessage="#{i18n['user.no_users_found']}" reflow="true" paginator="true"
-					paginatorPosition="bottom" rows="10" sortMode="single" lazy="true">
+				<p:dataTable id="users" value="#{searchUserView.users}" var="user"
+					emptyMessage="#{i18n['user.no_users_found']}" reflow="true"
+					paginator="true" paginatorPosition="bottom" rows="10"
+					sortMode="single" lazy="true">
 					<p:column headerText="#{i18n['user.name']}" sortBy="#{user.name}">
 						<h:link outcome="/user/view.xhtml">
-							<cc:avatar name="#{user.fullName}" path="#{user.picture.path}" styleClass="mr-2" />
+							<cc:avatar name="#{user.fullName}" path="#{user.picture.path}"
+								styleClass="mr-2" />
 							<h:outputText value="#{user.fullName}" />
 							<f:param name="user" value="#{user.id}" />
 						</h:link>
 					</p:column>
 
-					<p:column headerText="#{i18n['user.manager']}" sortBy="#{user.manager.name}">
-						<h:link value="#{user.manager.fullName}" styleClass="link" outcome="/user/view.xhtml" rendered="#{not empty user.manager}">
+					<p:column headerText="#{i18n['user.manager']}"
+						sortBy="#{user.manager.name}">
+						<h:link value="#{user.manager.fullName}" styleClass="link"
+							outcome="/user/view.xhtml" rendered="#{not empty user.manager}">
 							<f:param name="id" value="#{user.manager.id}" />
 						</h:link>
 					</p:column>
 
-					<p:column headerText="#{i18n['user.last_login']}" sortBy="#{user.lastConnection}" sortOrder="desc">
+					<p:column headerText="#{i18n['user.role']}" sortBy="user.role">
+						<p:chip label="#{i18n[user.role]}" styleClass="user-role role-#{user.role}" />
+					</p:column>
+
+
+					<p:column headerText="#{i18n['user.last_login']}"
+						sortBy="#{user.lastConnection}" sortOrder="desc">
 						<h:outputText value="#{user.lastConnection}">
 							<f:convertDateTime type="localDate" pattern="dd/MM/yyyy HH:mm" />
 						</h:outputText>

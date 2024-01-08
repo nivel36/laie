@@ -4043,12 +4043,6 @@ a {
   margin-bottom: 2rem;
 }
 
-.card-w-title {
-  position: relative;
-}
-.card-w-title h1, .card-w-title h2, .card-w-title h3, .card-w-title h4, .card-w-title h5 {
-  margin-bottom: 2rem;
-}
 .card-w-title .card-header-buttons {
   position: absolute;
   top: 1rem;
@@ -4367,13 +4361,6 @@ a {
   background-color: white;
 }
 
-.jobOffers {
-  display: flex;
-  padding: 1rem;
-  flex-grow: 1;
-  flex-basis: 0;
-}
-
 .card.job-card {
   padding: 0;
 }
@@ -4516,17 +4503,17 @@ a {
   margin-left: 1rem;
 }
 
-.ui-tag.user-role {
+.ui-chip.user-role {
   text-transform: uppercase;
   font-weight: 700;
   font-size: 0.8rem;
   letter-spacing: 0.3px;
 }
-.ui-tag.user-role.role-ADMIN {
+.ui-chip.user-role.role-ADMIN {
   background: #FEEDAF;
   color: #8A5340;
 }
-.ui-tag.user-role.role-USER {
+.ui-chip.user-role.role-USER {
   background: #C8E6C9;
   color: #256029;
 }
