@@ -19,7 +19,6 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.Session;
 import jakarta.mail.Transport;
 import jakarta.mail.internet.MimeMessage;
-import jakarta.ws.rs.core.MediaType;
 
 @Stateless
 public class MailService {
@@ -38,7 +37,7 @@ public class MailService {
 		message.setSubject(mail.getSubject());
 		message.setFrom(mail.getFrom());
 		message.setSentDate(new Date());
-		message.setContent(mail.getMessage(), MediaType.TEXT_HTML);
+		message.setContent(mail.getMessage(), "text/html");
 		return message;
 	}
 

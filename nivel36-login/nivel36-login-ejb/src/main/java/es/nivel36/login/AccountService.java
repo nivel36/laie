@@ -11,8 +11,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
-import jakarta.transaction.Transactional;
-import jakarta.transaction.Transactional.TxType;
 
 @Stateless
 public class AccountService {
@@ -49,7 +47,6 @@ public class AccountService {
 		}
 	}
 
-	@Transactional(value = TxType.MANDATORY)
 	public void changePassword(final String email, final String oldPassword, final String newPassword) {
 		Objects.requireNonNull(email);
 		Objects.requireNonNull(oldPassword);
