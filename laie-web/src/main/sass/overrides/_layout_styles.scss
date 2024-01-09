@@ -114,8 +114,8 @@
 	position: relative;
 	.card-header-buttons {
 		position: absolute;
-		top: 1rem;
-		right: 1rem;
+		top: 2rem;
+		right: 2rem;
 	}
 }
 
@@ -167,6 +167,16 @@
 		font-size: 1.1em;
 		font-weight: 800;			
 		padding-bottom: 0.2em;
+	}
+	.company {
+		font-weight: 500;
+	}
+	.school {
+		font-weight: 500;
+	}
+	.date-range {
+		color: $textSecondaryColor;
+		font-weight: 500;
 	}
 }
 
@@ -543,8 +553,12 @@
 		margin-right: 1rem;
 	}
 	.person-box {
+		.person-name-text {
+			font-weight: 500;
+		}
 		.person-description-text {
 			font-size: 0.9rem;
+			color: $textSecondaryColor
 		}
 	}
 	.person-data {
@@ -618,9 +632,9 @@
 	display: flex;
 	justify-content: right;
 	border-top: 1px solid #f0f0f0;
-	padding-top: 1rem;
+	padding-top: 2rem;
 	.ui-button {
-		margin-left: 1rem;
+		margin-left: 2rem;
 	}
 }
 

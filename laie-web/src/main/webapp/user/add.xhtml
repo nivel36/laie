@@ -20,7 +20,7 @@
 		<h:form id="userForm">
 			<div class="grid">
 				<div class="col-12 lg:col-6 lg:col-offset-3">
-					<p:card>
+					<p:card styleClass="card card-w-title">
 						<f:facet name="title">
 							<h4>#{i18n['user.new_user']}</h4>
 						</f:facet>
@@ -30,7 +30,7 @@
 							<div class="col-12 md:col-4">
 								<h5>#{i18n['user.personal_information']}</h5>
 							</div>
-								<div class="col-12 md:col-8">
+							<div class="col-12 md:col-8">
 								<div class="formgrid grid">
 									<g:input id="name" label="#{i18n['user.name']}"
 										value="#{addUserView.user.name}" required="true"
@@ -41,8 +41,10 @@
 								</div>
 								<g:input id="email" label="#{i18n['user.email']}"
 									value="#{addUserView.user.email}" required="true" />
-								<g:input id="phone_number" label="#{i18n['user.phone_number']}"
-									value="#{addUserView.user.phoneNumber}" />
+								<div class="formgrid grid">
+									<g:input id="phone_number" label="#{i18n['user.phone_number']}"
+										value="#{addUserView.user.phoneNumber}" styleClass="col-fixed" />
+								</div>
 							</div>
 							<p:divider />
 							<div class="col-12 md:col-4">
@@ -50,8 +52,8 @@
 							</div>
 							<div class="col-12 md:col-8">
 								<g:input type="selectOneMenu" id="role"
-									value="#{addUserView.user.role}"
-									label="#{i18n['user.role']}" required="true">
+									value="#{addUserView.user.role}" label="#{i18n['user.role']}"
+									required="true">
 									<f:selectItem itemValue="#{null}" noSelectionOption="true"
 										itemDisabled="#{not empty addUserView.user}" />
 									<f:selectItems value="#{roles.list}" var="role"
@@ -63,8 +65,7 @@
 								</g:input>
 								<h:panelGroup id="managerWrapper" class="form-field ui-fluid"
 									layout="block">
-									<cc:autocomplete id="manager"
-										label="#{i18n['user.manager']}"
+									<cc:autocomplete id="manager" label="#{i18n['user.manager']}"
 										value="#{addUserView.user.manager}"
 										completeMethod="#{addUserView.queryManager}">
 										<p:column styleClass="user-select image">
@@ -73,16 +74,18 @@
 										</p:column>
 									</cc:autocomplete>
 								</h:panelGroup>
-								<g:input id="date_of_join"
-									label="#{i18n['user.date_of_join']}"
-									value="#{addUserView.user.dateOfJoin}" type="calendar" />
+								<div class="formgrid grid">
+									<g:input id="date_of_join" label="#{i18n['user.date_of_join']}"
+										value="#{addUserView.user.dateOfJoin}" type="calendar"
+										styleClass="col-fixed" />
+								</div>
 							</div>
 						</div>
 						<f:facet name="footer">
 							<div class="flex justify-content-end">
 								<p:button value="#{i18n['action.cancel']}"
 									outcome="/user/search.xhtml"
-									styleClass="ui-button-warning mr-2 mb-2" />
+									styleClass="ui-button-secondary mr-2 mb-2" />
 								<p:commandButton value="#{i18n['action.save']}"
 									action="#{addUserView.save}" update="@form"
 									styleClass="ui-button-primary mr-2 mb-2" />

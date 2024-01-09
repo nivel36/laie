@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://nivel.36/laie/ui"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:g="http://nivel.36/laie/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
 		#{i18n['job.job_offer']} - #{viewJobView.jobOffer.title}
@@ -19,65 +25,90 @@
 							<div class="title-card-content-info">
 								<div class="title">#{viewJobView.jobOffer.title}</div>
 								<div class="subtitle">
-									<p:link outcome="/client/view.xhtml">#{viewJobView.jobOffer.client.name}<f:param name="client"
-											value="#{viewJobView.jobOffer.client.id}" />
+									<p:link outcome="/client/view.xhtml">#{viewJobView.jobOffer.client.name}<f:param
+											name="client" value="#{viewJobView.jobOffer.client.id}" />
 									</p:link>
 								</div>
 								<div class="text">
-									<span class="region"><i class="pi pi-map-marker" aria-hidden="true" />#{viewJobView.jobOffer.address.city}</span>
+									<span class="region"><i class="pi pi-map-marker"
+										aria-hidden="true" />#{viewJobView.jobOffer.address.city}</span>
 								</div>
 							</div>
 
-							<p:menuButton styleClass="menu-button" icon="pi pi-ellipsis-v" id="menu-button">
-								<p:menuitem value="#{i18n['action.edit']}" outcome="/job/edit.xhtml" icon="pi pi-pencil" rendered="#{viewJobView.editable}">
+							<p:menuButton styleClass="menu-button" icon="pi pi-ellipsis-v"
+								id="menu-button">
+								<p:menuitem value="#{i18n['action.edit']}"
+									outcome="/job/edit.xhtml" icon="pi pi-pencil"
+									rendered="#{viewJobView.editable}">
 									<f:param name="jobOffer" value="#{viewJobView.jobOffer.id}" />
 								</p:menuitem>
-								<p:menuitem value="#{i18n['bookmark.add_to_bookmarks']}" action="#{viewJobView.addBookmark}" rendered="#{viewJobView.bookmarkable}"
-									process="@this" update="bookmarks menu-button" icon="pi pi-bookmark" />
-								<p:menuitem value="#{i18n['bookmark.remove_from_bookmarks']}" action="#{viewJobView.removeFromBookmarks}"
-									rendered="#{not viewJobView.bookmarkable}" process="@this" update="bookmarks menu-button" icon="pi pi-bookmark" />
+								<p:menuitem value="#{i18n['bookmark.add_to_bookmarks']}"
+									action="#{viewJobView.addBookmark}"
+									rendered="#{viewJobView.bookmarkable}" process="@this"
+									update="menu-button" icon="pi pi-bookmark" />
+								<p:menuitem value="#{i18n['bookmark.remove_from_bookmarks']}"
+									action="#{viewJobView.removeFromBookmarks}"
+									rendered="#{not viewJobView.bookmarkable}" process="@this"
+									update="menu-button" icon="pi pi-bookmark" />
 							</p:menuButton>
 						</div>
 					</h:form>
 				</div>
 				<h:form>
-					<cc:jobCandidatures value="#{viewJobView.jobCandidatures}" showJobOffer="false" rows="5">
-						<p:button outcome="/job/selectCandidates.xhtml" process="@this" rendered="#{viewJobView.addCandidature}" icon="pi pi-plus"
+					<cc:jobCandidatures value="#{viewJobView.jobCandidatures}"
+						showJobOffer="false" rows="5">
+						<p:button outcome="/job/selectCandidates.xhtml" process="@this"
+							rendered="#{viewJobView.addCandidature}" icon="pi pi-plus"
 							styleClass="ui-button-success ui-button-outlined">
 							<f:param name="jobOffer" value="#{viewJobView.jobOffer.id}" />
 						</p:button>
 					</cc:jobCandidatures>
 				</h:form>
-				<cc:jobCandidatureEvents value="#{viewJobView.jobCandidatureEvents}" rows="5" />
+				<cc:jobCandidatureEvents value="#{viewJobView.jobCandidatureEvents}"
+					rows="5" />
 				<cc:jobOfferEvents value="#{viewJobView.jobOfferEvents}" rows="5" />
 			</div>
 
 			<div class="col-12 xl:col-4">
-				<div class="card card-w-title">
-					<h5>#{i18n['job.data']}</h5>
+				<p:card styleClass="card card-w-title">
+					<f:facet name="title">
+						<h5>#{i18n['job.data']}</h5>
+					</f:facet>
+
 					<div class="data">
 						<div class="label-container">
 							<span class="label">#{i18n['job.salary']}</span>
 						</div>
 						<div class="text-container">
-							<h:outputText id="min_salary" value="#{viewJobView.jobOffer.minSalary}" styleClass="text">
-								<f:convertNumber for="text" currencyCode="EUR" maxFractionDigits="0" type="currency" />
+							<h:outputText id="min_salary"
+								value="#{viewJobView.jobOffer.minSalary}" styleClass="text">
+								<f:convertNumber for="text" currencyCode="EUR"
+									maxFractionDigits="0" type="currency" />
 							</h:outputText>
 							<h:outputText value=" - " styleClass="text" />
-							<h:outputText id="max_salary" value="#{viewJobView.jobOffer.maxSalary}" styleClass="text">
-								<f:convertNumber for="text" currencyCode="EUR" maxFractionDigits="0" type="currency" />
+							<h:outputText id="max_salary"
+								value="#{viewJobView.jobOffer.maxSalary}" styleClass="text">
+								<f:convertNumber for="text" currencyCode="EUR"
+									maxFractionDigits="0" type="currency" />
 							</h:outputText>
 						</div>
 					</div>
-					<cc:outputText label="#{i18n['job.places']}" value="#{viewJobView.jobOffer.places}" />
-					<cc:outputLink label="#{i18n['job.preview']}" value="#{i18n['job.preview']}" outcome="/job/preview.xhtml" target="new">
+					<cc:outputText label="#{i18n['job.places']}"
+						value="#{viewJobView.jobOffer.places}" />
+					<cc:outputLink label="#{i18n['job.preview']}"
+						value="#{i18n['job.preview']}" outcome="/job/preview.xhtml"
+						target="new">
 						<f:param name="jobOffer" value="#{viewJobView.jobOffer.id}" />
 					</cc:outputLink>
-					<cc:outputLink label="#{i18n['job.description']}" value="#{applicationView.hostname}/open/jobOffer.xhtml" outcome="/open/jobOffer.xhtml"
-						target="new" rendered="#{viewJobView.jobOffer.published}">
+					<cc:outputLink label="#{i18n['job.description']}"
+						value="#{applicationView.hostname}/open/jobOffer.xhtml"
+						outcome="/open/jobOffer.xhtml" target="new"
+						rendered="#{viewJobView.jobOffer.published}">
 						<f:param name="jobOffer" value="#{viewJobView.jobOffer.id}" />
 					</cc:outputLink>
-					<cc:outputLink label="#{i18n['job.owner']}" value="#{viewJobView.jobOffer.owner.fullName}" outcome="/user/view.xhtml">
+					<cc:outputLink label="#{i18n['job.owner']}"
+						value="#{viewJobView.jobOffer.owner.fullName}"
+						outcome="/user/view.xhtml">
 						<f:param name="user" value="#{viewJobView.jobOffer.owner.id}" />
 					</cc:outputLink>
 					<div class="data">
@@ -87,7 +118,8 @@
 						<div class="text-container">
 							<h:form>
 								<div class="job-state">
-									<p:link outcome="/job/editState.xhtml" rendered="#{viewJobView.owner}">
+									<p:link outcome="/job/editState.xhtml"
+										rendered="#{viewJobView.owner}">
 										<cc:jobOfferState value="#{viewJobView.jobOffer.state}" />
 										<f:param name="jobOffer" value="#{viewJobView.jobOffer.id}" />
 									</p:link>
@@ -98,27 +130,33 @@
 							</h:form>
 						</div>
 					</div>
-					<cc:outputText label="#{i18n['job.date_opened']}" value="#{viewJobView.jobOffer.openDate}">
-						<f:convertDateTime type="localDate" pattern="dd / MM / yyyy" for="text" />
+					<cc:outputText label="#{i18n['job.date_opened']}"
+						value="#{viewJobView.jobOffer.openDate}">
+						<f:convertDateTime type="localDate" pattern="dd / MM / yyyy"
+							for="text" />
 					</cc:outputText>
-					<cc:outputText label="#{i18n['job.date_closed']}" value="#{viewJobView.jobOffer.closeDate}">
-						<f:convertDateTime type="localDate" pattern="dd / MM / yyyy" for="text" />
+					<cc:outputText label="#{i18n['job.date_closed']}"
+						value="#{viewJobView.jobOffer.closeDate}">
+						<f:convertDateTime type="localDate" pattern="dd / MM / yyyy"
+							for="text" />
 					</cc:outputText>
 					<div class="data">
 						<div class="label-container">
 							<div class="label">#{i18n['job.recruiters']}</div>
 						</div>
 						<div class="text-container">
-							<ui:repeat value="#{viewJobView.jobOffer.recruiters}" var="recruiter" varStatus="varStatus">
+							<ui:repeat value="#{viewJobView.jobOffer.recruiters}"
+								var="recruiter" varStatus="varStatus">
 								<p:link outcome="/user/view.xhtml">
 									<f:param name="user" value="#{recruiter.id}" />
 									<h:outputText value="#{recruiter.fullName}" />
 								</p:link>
-								<h:outputText value=", " styleClass="text" rendered="#{not varStatus.last}" />
+								<h:outputText value=", " styleClass="text"
+									rendered="#{not varStatus.last}" />
 							</ui:repeat>
 						</div>
 					</div>
-				</div>
+				</p:card>
 			</div>
 		</div>
 	</ui:define>

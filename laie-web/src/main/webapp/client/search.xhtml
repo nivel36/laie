@@ -12,7 +12,7 @@
 
 	<ui:define name="content">
 		<h:form id="clientSearchForm">
-			<div class="card">
+			<p:card styleClass="card card-w-title">
 				<div class="searchBar-buttons">
 					<cc:inputSearch searchText="#{searchClientView.searchText}" searchAction="#{searchClientView.search}" update="clientSearchForm:clients"
 						styleClass="ui-fluid" />
@@ -50,7 +50,7 @@
 						</h:link>
 					</p:column>
 				</p:dataTable>
-			</div>
+			</p:card>
 		</h:form>
 	</ui:define>
 </ui:composition>

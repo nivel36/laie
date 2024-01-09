@@ -29,20 +29,20 @@
 										</p:column>
 									</cc:autocomplete>
 								</div>
-								<div class="col-12 sm:col--6">
+								<div class="col-12 sm:col-6">
 									<g:input id="min_salary" label="#{i18n['job.min_salary']}" value="#{addJobView.jobOffer.minSalary}" type="money" />
 								</div>
-								<div class="col-12 sm:col--6">
+								<div class="col-12 sm:col-6">
 									<g:input id="max_salary" label="#{i18n['job.max_salary']}" value="#{addJobView.jobOffer.maxSalary}" type="money" />
 								</div>
-								<div class="col-12 sm:col--6">
+								<div class="col-12 sm:col-6">
 									<g:input id="places" label="#{i18n['job.places']}" value="#{addJobView.jobOffer.places}" type="number" min="0" />
 								</div>
-								<div class="col-12 sm:col--6"></div>
-								<div class="col-12 sm:col--6">
+								<div class="col-12 sm:col-6"></div>
+								<div class="col-12 sm:col-6">
 									<g:input id="city" label="#{i18n['job.city']}" value="#{addJobView.jobOffer.address.city}" required="true" />
 								</div>
-								<div class="col-12 sm:col--6">
+								<div class="col-12 sm:col-6">
 									<g:input id="state" label="#{i18n['job.state']}" value="#{addJobView.jobOffer.address.region}" required="true" />
 								</div>
 							</div>
@@ -52,13 +52,13 @@
 						<div class="form-card ui-fluid">
 							<h5>#{i18n['job.other_data']}</h5>
 							<div class="grid  formgrid">
-								<div class="col-12 sm:col--6">
+								<div class="col-12 sm:col-6">
 									<g:input id="dateOpened" label="#{i18n['job.date_opened']}" value="#{addJobView.jobOffer.openDate}" type="calendar" required="true" />
 								</div>
-								<div class="col-12 sm:col--6">
+								<div class="col-12 sm:col-6">
 									<g:input id="dateClosed" label="#{i18n['job.date_closed']}" value="#{addJobView.jobOffer.closeDate}" type="calendar" />
 								</div>
-								<div class="col-12 sm:col--6">
+								<div class="col-12 sm:col-6">
 									<cc:autocomplete id="owner" label="#{i18n['job.owner']}" value="#{addJobView.jobOffer.owner}" completeMethod="#{addJobView.queryOwner}">
 										<p:column styleClass="user-select image">
 											<cc:person name="#{var.fullName}" path="#{var.picture.path}" />

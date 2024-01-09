@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://nivel.36/laie/ui"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:g="http://nivel.36/laie/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
 		#{i18n['candidate.candidate']} - #{viewCandidateView.candidate.fullName}
@@ -16,63 +22,89 @@
 				<div class="title-card">
 					<h:form>
 						<div class="title-card-content">
-							<cc:avatar styleClass="title-card-content-image" name="#{viewCandidateView.candidate.fullName}"
+							<cc:avatar styleClass="title-card-content-image"
+								name="#{viewCandidateView.candidate.fullName}"
 								path="#{viewCandidateView.candidate.picture.path}" size="xlarge" />
 							<div class="title-card-content-info">
 								<div class="title">#{viewCandidateView.candidate.fullName}</div>
 								<div class="subtitle">#{viewCandidateView.candidate.jobProfile}</div>
 								<div class="text">
-									<span class="region"><i class="pi pi-map-marker" aria-hidden="true" />#{viewCandidateView.candidate.address.region}</span> <span
-										class="email"><i class="pi pi-envelope" aria-hidden="true" /> #{viewCandidateView.candidate.email}</span>
-									<h:panelGroup rendered="#{not empty viewCandidateView.candidate.phoneNumber}" styleClass="phone">
+									<span class="region"><i class="pi pi-map-marker"
+										aria-hidden="true" />#{viewCandidateView.candidate.address.region}</span>
+									<span class="email"><i class="pi pi-envelope"
+										aria-hidden="true" /> #{viewCandidateView.candidate.email}</span>
+									<h:panelGroup
+										rendered="#{not empty viewCandidateView.candidate.phoneNumber}"
+										styleClass="phone">
 										<i class="pi pi-phone" aria-hidden="true" />#{viewCandidateView.candidate.phoneNumber}</h:panelGroup>
 								</div>
 							</div>
 
-							<p:menuButton styleClass="menu-button" icon="pi pi-ellipsis-v" id="menu-button">
-								<p:menuitem value="#{i18n['action.edit']}" outcome="/candidate/edit" icon="pi pi-pencil" rendered="#{viewCandidateView.editable}">
-									<f:param name="candidate" value="#{viewCandidateView.candidate.id}" />
-								</p:menuitem>
-								<p:menuitem value="#{i18n['bookmark.add_to_bookmarks']}" action="#{viewCandidateView.addBookmark}"
-									rendered="#{viewCandidateView.bookmarkable}" process="@this" update="bookmarks menu-button" icon="pi pi-bookmark" />
-								<p:menuitem value="#{i18n['bookmark.remove_from_bookmarks']}" action="#{viewCandidateView.removeFromBookmarks}"
-									rendered="#{not viewCandidateView.bookmarkable}" process="@this" update="bookmarks menu-button" icon="pi pi-bookmark" />
-								<p:menuitem value="#{i18n['curriculum.view_curriculum']}" outcome="/candidate/curriculum" icon="pi pi-file"
+							<p:menuButton styleClass="menu-button" icon="pi pi-ellipsis-v"
+								id="menu-button">
+								<p:menuitem value="#{i18n['action.edit']}"
+									outcome="/candidate/edit" icon="pi pi-pencil"
 									rendered="#{viewCandidateView.editable}">
-									<f:param name="candidate" value="#{viewCandidateView.candidate.id}" />
+									<f:param name="candidate"
+										value="#{viewCandidateView.candidate.id}" />
+								</p:menuitem>
+								<p:menuitem value="#{i18n['bookmark.add_to_bookmarks']}"
+									action="#{viewCandidateView.addBookmark}"
+									rendered="#{viewCandidateView.bookmarkable}" process="@this"
+									update="menu-button" icon="pi pi-bookmark" />
+								<p:menuitem value="#{i18n['bookmark.remove_from_bookmarks']}"
+									action="#{viewCandidateView.removeFromBookmarks}"
+									rendered="#{not viewCandidateView.bookmarkable}"
+									process="@this" update="menu-button" icon="pi pi-bookmark" />
+								<p:menuitem value="#{i18n['curriculum.view_curriculum']}"
+									outcome="/candidate/curriculum" icon="pi pi-file"
+									rendered="#{viewCandidateView.editable}">
+									<f:param name="candidate"
+										value="#{viewCandidateView.candidate.id}" />
 								</p:menuitem>
 							</p:menuButton>
 						</div>
 					</h:form>
 				</div>
-				<div class="card card-w-title">
+				<p:card styleClass="card card-w-title">
 					<p:tabView>
 						<p:tab title="#{i18n['candidate.job_candidatures']}">
-							<p:dataTable var="jobCandidature" value="#{viewCandidateView.jobCandidatures}"
-								emptyMessage="#{i18n['job_candidature.no_job_candidatures_found']}" reflow="true" paginator="true" paginatorPosition="bottom" rows="5"
-								sortBy="#{jobOffer.title}" sortOrder="ascending" styleClass="ui-datatable-borderless">
+							<p:dataTable var="jobCandidature"
+								value="#{viewCandidateView.jobCandidatures}"
+								emptyMessage="#{i18n['job_candidature.no_job_candidatures_found']}"
+								reflow="true" paginator="true" paginatorPosition="bottom"
+								rows="5" sortBy="#{jobOffer.title}" sortOrder="ascending"
+								styleClass="ui-datatable-borderless">
 
 								<p:column headerText="#{i18n['job_candidature.job_offer']}">
-									<h:link value="#{jobCandidature.jobOffer.title}" outcome="/job/view.xhtml">
+									<h:link value="#{jobCandidature.jobOffer.title}"
+										outcome="/job/view.xhtml">
 										<f:param name="jobOffer" value="#{jobCandidature.jobOffer.id}" />
 									</h:link>
 								</p:column>
 								<p:column headerText="#{i18n['job_candidature.city']}">
 									<h:outputText value="#{jobCandidature.jobOffer.address.city}" />
-									<h:outputText value="(" rendered="#{not empty jobCandidature.jobOffer.address.region}" />
+									<h:outputText value="("
+										rendered="#{not empty jobCandidature.jobOffer.address.region}" />
 									<h:outputText value="#{jobCandidature.jobOffer.address.region}" />
-									<h:outputText value=")" rendered="#{not empty jobCandidature.jobOffer.address.region}" />
+									<h:outputText value=")"
+										rendered="#{not empty jobCandidature.jobOffer.address.region}" />
 								</p:column>
 								<p:column headerText="#{i18n['job_candidature.client']}">
-									<h:link value="#{jobCandidature.jobOffer.client.name}" outcome="/client/view.xhtml">
-										<f:param name="client" value="#{jobCandidature.jobOffer.client.id}" />
+									<h:link value="#{jobCandidature.jobOffer.client.name}"
+										outcome="/client/view.xhtml">
+										<f:param name="client"
+											value="#{jobCandidature.jobOffer.client.id}" />
 									</h:link>
 								</p:column>
 								<p:column rendered="#{cc.attrs.showCandidate}">
-									<cc:avatar name="#{jobCandidature.candidate.fullName}" path="#{jobCandidature.candidate.picture.path}" styleClass="small" />
+									<cc:avatar name="#{jobCandidature.candidate.fullName}"
+										path="#{jobCandidature.candidate.picture.path}"
+										styleClass="small" />
 								</p:column>
 
-								<p:column headerText="#{i18n['job_candidature.job_candidature_state']}">
+								<p:column
+									headerText="#{i18n['job_candidature.job_candidature_state']}">
 									<p:link outcome="/event/add.xhtml">
 										<f:param name="jobCandidature" value="#{jobCandidature.id}" />
 										<div class="tag">#{i18n['job_candidature_state.'.concat(jobCandidature.state.name)]}</div>
@@ -84,122 +116,160 @@
 							<div class="grid">
 								<div class="col-3">#{i18n['candidate.rating.your_rating']}</div>
 								<div class="col-3">
-									<p:rating value="#{viewCandidateView.rating.rating}" cancel="false" readonly="true" />
+									<p:rating value="#{viewCandidateView.rating.rating}"
+										cancel="false" readonly="true" />
 								</div>
 								<div class="col-6">#{viewCandidateView.rating.comment}</div>
 							</div>
 
 							<ui:repeat var="rating" value="#{viewCandidateView.ratings}">
-								<h:panelGroup layout="block" styleClass="grid" rendered="#{sessionUser.get().email ne rating.user.email}">
+								<h:panelGroup layout="block" styleClass="grid"
+									rendered="#{sessionUser.get().email ne rating.user.email}">
 									<div class="col-3">#{rating.user.fullName}</div>
 									<div class="col-3">
-										<p:rating value="#{rating.rating}" cancel="false" readonly="true" />
+										<p:rating value="#{rating.rating}" cancel="false"
+											readonly="true" />
 									</div>
 									<div class="col-6">#{rating.comment}</div>
 								</h:panelGroup>
 							</ui:repeat>
 							<div class="form-buttons">
-								<p:button value="#{i18n['action.add']}" outcome="/candidate/rating/add.xhtml" rendered="#{viewCandidateView.addRatingVisible}"
+								<p:button value="#{i18n['action.add']}"
+									outcome="/candidate/rating/add.xhtml"
+									rendered="#{viewCandidateView.addRatingVisible}"
 									styleClass="ui-button-secondary ui-button-outlined">
-									<f:param name="candidate" value="#{viewCandidateView.candidate.id}" />
+									<f:param name="candidate"
+										value="#{viewCandidateView.candidate.id}" />
 								</p:button>
-								<p:button value="#{i18n['action.edit']}" outcome="/candidate/rating/edit.xhtml" rendered="#{viewCandidateView.editRatingVisible}"
+								<p:button value="#{i18n['action.edit']}"
+									outcome="/candidate/rating/edit.xhtml"
+									rendered="#{viewCandidateView.editRatingVisible}"
 									styleClass="ui-button-secondary ui-button-outlined">
 									<f:param name="rating" value="#{viewCandidateView.rating.id}" />
-									<f:param name="candidate" value="#{viewCandidateView.candidate.id}" />
+									<f:param name="candidate"
+										value="#{viewCandidateView.candidate.id}" />
 								</p:button>
-								<p:button value="#{i18n['candidate.rating.request_new_rating']}" outcome="/candidate/rating/request.xhtml"
+								<p:button value="#{i18n['candidate.rating.request_new_rating']}"
+									outcome="/candidate/rating/request.xhtml"
 									styleClass="ui-button-secondary ui-button-outlined">
-									<f:param name="candidate" value="#{viewCandidateView.candidate.id}" />
+									<f:param name="candidate"
+										value="#{viewCandidateView.candidate.id}" />
 								</p:button>
 							</div>
 						</p:tab>
 					</p:tabView>
-				</div>
+				</p:card>
 			</div>
 			<div class="col-12 xl:col-4">
-				<div class="card card-w-title">
-					<h5>#{i18n['candidate.details']}</h5>
-					<cc:outputText label="#{i18n['candidate.skype']}" value="#{viewCandidateView.candidate.skype}" />
+				<p:card styleClass="card card-w-title">
+					<f:facet name="title">
+						<h5>#{i18n['candidate.details']}</h5>
+					</f:facet>
+					<cc:outputText label="#{i18n['candidate.skype']}"
+						value="#{viewCandidateView.candidate.skype}" />
 					<div class="data">
 						<div class="label-container">
 							<span class="label">#{i18n['candidate.linkedin']}</span>
 						</div>
 						<div class="text-container">
-							<a href="#{viewCandidateView.candidate.linkedinProfileUrl}" target="new"> <h:outputText id="linkedin-text"
-									value="#{i18n['candidate.linkedin']}" rendered="#{not empty viewCandidateView.candidate.linkedinProfileUrl}" />
+							<a href="#{viewCandidateView.candidate.linkedinProfileUrl}"
+								target="new"> <h:outputText id="linkedin-text"
+									value="#{i18n['candidate.linkedin']}"
+									rendered="#{not empty viewCandidateView.candidate.linkedinProfileUrl}" />
 							</a>
-							<h:outputText id="linkedin-emptyText" value="---" styleClass="text" rendered="#{empty viewCandidateView.candidate.linkedinProfileUrl}" />
+							<h:outputText id="linkedin-emptyText" value="---"
+								styleClass="text"
+								rendered="#{empty viewCandidateView.candidate.linkedinProfileUrl}" />
 						</div>
 					</div>
-					<cc:outputText label="#{i18n['candidate.bornDate']}" value="#{viewCandidateView.candidate.bornDate}">
-						<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" for="text" />
+					<cc:outputText label="#{i18n['candidate.bornDate']}"
+						value="#{viewCandidateView.candidate.bornDate}">
+						<f:convertDateTime type="localDate" pattern="dd/MM/yyyy"
+							for="text" />
 					</cc:outputText>
-					<cc:outputText label="#{i18n['candidate.salary']}" value="#{viewCandidateView.candidate.salary}">
-						<f:convertNumber for="text" currencyCode="EUR" maxFractionDigits="0" type="currency" />
+					<cc:outputText label="#{i18n['candidate.salary']}"
+						value="#{viewCandidateView.candidate.salary}">
+						<f:convertNumber for="text" currencyCode="EUR"
+							maxFractionDigits="0" type="currency" />
 					</cc:outputText>
-					<cc:outputText label="#{i18n['candidate.expected_salary']}" value="#{viewCandidateView.candidate.expectedSalary}">
-						<f:convertNumber for="text" currencyCode="EUR" maxFractionDigits="0" type="currency" />
+					<cc:outputText label="#{i18n['candidate.expected_salary']}"
+						value="#{viewCandidateView.candidate.expectedSalary}">
+						<f:convertNumber for="text" currencyCode="EUR"
+							maxFractionDigits="0" type="currency" />
 					</cc:outputText>
-					<cc:outputText label="#{i18n['candidate.origin']}" value="#{i18n[viewCandidateView.candidate.origin]}" />
+					<cc:outputText label="#{i18n['candidate.origin']}"
+						value="#{i18n[viewCandidateView.candidate.origin]}" />
+				</p:card>
 
-				</div>
-
-				<div class="card card-w-title files">
-					<h5>#{i18n['file.files']}</h5>
+				<p:card styleClass="card card-w-title files">
+					<f:facet name="title">
+						<h5>#{i18n['file.files']}</h5>
+					</f:facet>
 					<h:form id="file_form" enctype="multipart/form-data">
-						<div class="grid formgrid">
-							<div class="col-12">
-								<p:dataTable var="file" id="files" value="#{viewCandidateView.files}" emptyMessage="#{i18n['file.no_files']}" paginator="true"
-									paginatorPosition="bottom" reflow="true" rows="5" rowKey="#{file.id}" styleClass="ui-datatable-borderless ui-datatable-headerless">
+						<p:dataTable var="file" id="files"
+							value="#{viewCandidateView.files}"
+							emptyMessage="#{i18n['file.no_files']}" paginator="true"
+							paginatorPosition="bottom" reflow="true" rows="5"
+							rowKey="#{file.id}"
+							styleClass="ui-datatable-borderless ui-datatable-headerless">
 
-									<p:column>
-										<h:commandLink action="#{viewCandidateView.openFile(file)}">
-											<h:outputText value="#{file.name}" />
-										</h:commandLink>
-									</p:column>
+							<p:column>
+								<h:commandLink action="#{viewCandidateView.openFile(file)}">
+									<h:outputText value="#{file.name}" />
+								</h:commandLink>
+							</p:column>
 
-									<p:column>
-										<p:commandButton icon="pi pi-trash" styleClass="danger-button" action="#{viewCandidateView.removeFile(file)}" process="@this" update="@form"
-											rendered="#{viewCandidateView.editable}">
-											<p:confirm message="#{i18n['file.message.remove']}" icon="pi pi-exclamation-triangle" />
-										</p:commandButton>
-									</p:column>
-								</p:dataTable>
-							</div>
-							<div class="col-12">
-								<div class="card-header-buttons">
-									<p:fileUpload id="uploadFile" listener="#{viewCandidateView.uploadFile}" mode="simple" skinSimple="true" update="@form growl" auto="true"
-										styleClass="ui-button-outlined" label="" rendered="#{viewCandidateView.editable}" />
-								</div>
-							</div>
+							<p:column>
+								<p:commandButton icon="pi pi-trash" styleClass="danger-button"
+									action="#{viewCandidateView.removeFile(file)}" process="@this"
+									update="@form" rendered="#{viewCandidateView.editable}">
+									<p:confirm message="#{i18n['file.message.remove']}"
+										icon="pi pi-exclamation-triangle" />
+								</p:commandButton>
+							</p:column>
+						</p:dataTable>
+						<div class="card-header-buttons">
+							<p:fileUpload id="uploadFile"
+								listener="#{viewCandidateView.uploadFile}" mode="simple"
+								skinSimple="true" update="@form growl" auto="true"
+								styleClass="ui-button-outlined" label=""
+								rendered="#{viewCandidateView.editable}" />
 						</div>
 					</h:form>
-				</div>
+				</p:card>
 
 				<cc:meetings value="#{viewCandidateView.meetings}" rows="5">
 					<h:form>
-						<p:commandButton icon="pi pi-plus" action="#{viewCandidateView.newMeeting}" styleClass="ui-button-success ui-button-outlined"
+						<p:commandButton icon="pi pi-plus"
+							action="#{viewCandidateView.newMeeting}"
+							styleClass="ui-button-success ui-button-outlined"
 							rendered="#{viewCandidateView.editable}" />
 					</h:form>
 				</cc:meetings>
 
-				<div class="card card-w-title tags">
-					<h5>#{i18n['candidate.tags']}</h5>
-					<div class="text-container">
-						<ui:repeat value="#{viewCandidateView.candidate.tags}" var="tag" rendered="#{not empty viewCandidateView.candidate.tags}">
-							<p:tag value="#{tag}" styleClass="mr-2" />
-						</ui:repeat>
-						<h:outputText id="emptyText" value="---" styleClass="text" rendered="#{empty viewCandidateView.candidate.tags}" />
-					</div>
-				</div>
+				<p:card styleClass="card card-w-title tags">
+				<f:facet name="title">
+						<h5>#{i18n['candidate.tags']}</h5>
+					</f:facet>
+					<ui:repeat value="#{viewCandidateView.candidate.tags}" var="tag"
+						rendered="#{not empty viewCandidateView.candidate.tags}">
+						<p:tag value="#{tag}" styleClass="mr-2" />
+					</ui:repeat>
+					<h:outputText id="emptyText" value="---" styleClass="text"
+						rendered="#{empty viewCandidateView.candidate.tags}" />
+				</p:card>
 
-				<div class="card card-w-title">
-					<h5>#{i18n['candidate.other_data']}</h5>
-					<cc:outputLink label="#{i18n['job.owner']}" value="#{viewCandidateView.candidate.owner.fullName}" outcome="/user/view.xhtml">
-						<f:param name="user" value="#{viewCandidateView.candidate.owner.id}" />
+				<p:card styleClass="card card-w-title">
+					<f:facet name="title">
+						<h5>#{i18n['candidate.other_data']}</h5>
+					</f:facet>
+					<cc:outputLink label="#{i18n['job.owner']}"
+						value="#{viewCandidateView.candidate.owner.fullName}"
+						outcome="/user/view.xhtml">
+						<f:param name="user"
+							value="#{viewCandidateView.candidate.owner.id}" />
 					</cc:outputLink>
-				</div>
+				</p:card>
 			</div>
 		</div>
 	</ui:define>

@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://nivel.36/laie/ui"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:g="http://nivel.36/laie/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
 		#{i18n['client.edit_client']} - #{editClientView.client.name}
@@ -12,54 +18,67 @@
 
 	<ui:define name="content">
 		<h:form id="clientForm">
-			<div class="card">
-				<div class="grid">
-					<div class="col-12 xl:col-6">
-						<div id="client" class="form-card ui-fluid">
-							<h5>#{i18n['client.client']}</h5>
-							<div class="grid formgrid">
-								<div class="col-12">
-									<g:input id="name" label="#{i18n['client.name']}" value="#{editClientView.client.name}" required="true" />
+			<div class="col-12 xl:col-6 xl:col-offset-3">
+				<p:card styleClass="card card-w-title">
+					<f:facet name="title">
+						<h4>#{i18n['client.edit_client']} -
+							#{editClientView.client.name}</h4>
+					</f:facet>
+					<div class="grid">
+						<p:divider />
+						<div class="ui-fluid grid">
+							<div class="col-12 md:col-4">
+								<h5>#{i18n['client.client']}</h5>
+							</div>
+							<div class="col-12 md:col-8">
+								<g:input id="name" label="#{i18n['client.name']}"
+									value="#{editClientView.client.name}" required="true" />
+								<div class="formgrid grid">
+									<g:input id="cif" label="#{i18n['client.cif']}"
+										value="#{editClientView.client.cif}" styleClass="col-fixed" />
 								</div>
-								<div class="col-12 sm:col--6">
-									<g:input id="cif" label="#{i18n['client.cif']}" value="#{editClientView.client.cif}" />
+								<div class="formgrid grid">
+									<g:input id="phoneNumber"
+										label="#{i18n['client.phone_number']}"
+										value="#{editClientView.client.phoneNumber}"
+										styleClass="col-fixed" />
 								</div>
-								<div class="col-12 sm:col--6">
-									<g:input id="phoneNumber" label="#{i18n['client.phone_number']}" value="#{editClientView.client.phoneNumber}" />
-								</div>
-								<div class="col-12 sm:col--6">
-									<g:input id="city" label="#{i18n['client.city']}" value="#{editClientView.client.address.city}" />
-								</div>
-								<div class="col-12 sm:col--6">
-									<g:input id="state" label="#{i18n['client.state']}" value="#{editClientView.client.address.region}" />
+								<div class="formgrid grid">
+									<g:input id="city" label="#{i18n['client.city']}"
+										value="#{editClientView.client.address.city}" styleClass="col" />
+									<g:input id="state" label="#{i18n['client.state']}"
+										value="#{editClientView.client.address.region}"
+										styleClass="col" />
 								</div>
 							</div>
-						</div>
-					</div>
-					<div class="col-12 md:col-6">
-						<div class="form-card ui-fluid">
-							<h5>#{i18n['client.other_data']}</h5>
-							<div class="grid  formgrid">
-								<div class="col-12 sm:col--6">
-									<cc:autocomplete id="owner" label="#{i18n['client.owner']}" value="#{editClientView.client.owner}"
-										completeMethod="#{editClientView.queryOwner}" required="true">
-										<p:column styleClass="user-select image">
-											<cc:person name="#{var.fullName}" path="#{var.picture.path}" />
-										</p:column>
-									</cc:autocomplete>
-								</div>
+							<p:divider />
+							<div class="col-12 md:col-4">
+								<h5>#{i18n['client.other_data']}</h5>
+							</div>
+							<div class="col-12 md:col-8">
+								<cc:autocomplete id="owner" label="#{i18n['client.owner']}"
+									value="#{editClientView.client.owner}"
+									completeMethod="#{editClientView.queryOwner}" required="true">
+									<p:column styleClass="user-select image">
+										<cc:person name="#{var.fullName}" path="#{var.picture.path}" />
+									</p:column>
+								</cc:autocomplete>
 							</div>
 						</div>
+						<f:facet name="footer">
+							<div class="flex justify-content-end">
+								<p:button value="#{i18n['action.cancel']}"
+									outcome="/client/view"
+									styleClass="ui-button-secondary mr-2 mb-2">
+									<f:param name="client" value="#{editClientView.client.id}" />
+								</p:button>
+								<p:commandButton value="#{i18n['action.save']}"
+									action="#{editClientView.save}"
+									styleClass="ui-button-primary mr-2 mb-2" update="@form" />
+							</div>
+						</f:facet>
 					</div>
-					<div class="col-12">
-						<div class="form-buttons">
-							<p:button value="#{i18n['action.cancel']}" outcome="/client/view" styleClass="ui-button-secondary ui-button-outlined">
-								<f:param name="client" value="#{editClientView.client.id}" />
-							</p:button>
-							<p:commandButton value="#{i18n['action.save']}" action="#{editClientView.save}" styleClass="ui-button-success ui-button-outlined" update="@form"/>
-						</div>
-					</div>
-				</div>
+				</p:card>
 			</div>
 		</h:form>
 	</ui:define>

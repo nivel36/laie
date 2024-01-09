@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:p="http://primefaces.org/ui"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://nivel.36/laie/ui"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:g="http://nivel.36/laie/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
 		#{i18n['client.client']} - #{viewClientView.client.name}
@@ -20,30 +27,43 @@
 								<div class="title">#{viewClientView.client.name}</div>
 								<div class="subtitle">#{viewClientView.client.cif}</div>
 								<div class="text">
-									<h:panelGroup rendered="#{not empty viewClientView.client.address.region}" styleClass="region">
+									<h:panelGroup
+										rendered="#{not empty viewClientView.client.address.region}"
+										styleClass="region">
 										<i class="pi pi-map-marker" aria-hidden="true" />#{viewClientView.client.address.region}</h:panelGroup>
 
-									<h:panelGroup rendered="#{not empty viewClientView.client.phoneNumber}" styleClass="phone">
+									<h:panelGroup
+										rendered="#{not empty viewClientView.client.phoneNumber}"
+										styleClass="phone">
 										<i class="pi pi-phone" aria-hidden="true" />#{viewClientView.client.phoneNumber}</h:panelGroup>
 								</div>
 							</div>
 
-							<p:menuButton styleClass="menu-button" icon="pi pi-ellipsis-v" id="menu-button">
-								<p:menuitem value="#{i18n['action.edit']}" outcome="/client/edit.xhtml" icon="pi pi-pencil" rendered="#{viewClientView.editable}">
+							<p:menuButton styleClass="menu-button" icon="pi pi-ellipsis-v"
+								id="menu-button">
+								<p:menuitem value="#{i18n['action.edit']}"
+									outcome="/client/edit.xhtml" icon="pi pi-pencil"
+									rendered="#{viewClientView.editable}">
 									<f:param name="client" value="#{viewClientView.client.id}" />
 								</p:menuitem>
-								<p:menuitem value="#{i18n['bookmark.add_to_bookmarks']}" action="#{viewClientView.addBookmark}" rendered="#{viewClientView.bookmarkable}"
-									process="@this" update="bookmarks menu-button" icon="pi pi-bookmark" />
-								<p:menuitem value="#{i18n['bookmark.remove_from_bookmarks']}" action="#{viewClientView.removeFromBookmarks}"
-									rendered="#{not viewClientView.bookmarkable}" process="@this" update="bookmarks menu-button" icon="pi pi-bookmark" />
+								<p:menuitem value="#{i18n['bookmark.add_to_bookmarks']}"
+									action="#{viewClientView.addBookmark}"
+									rendered="#{viewClientView.bookmarkable}" process="@this"
+									update="menu-button" icon="pi pi-bookmark" />
+								<p:menuitem value="#{i18n['bookmark.remove_from_bookmarks']}"
+									action="#{viewClientView.removeFromBookmarks}"
+									rendered="#{not viewClientView.bookmarkable}" process="@this"
+									update="menu-button" icon="pi pi-bookmark" />
 							</p:menuButton>
 						</div>
 					</h:form>
 				</div>
 
-				<cc:jobOffers id="jobOffers" value="#{viewClientView.jobOffers}" rows="5" showClient="false">
+				<cc:jobOffers id="jobOffers" value="#{viewClientView.jobOffers}"
+					rows="5" showClient="false">
 					<h:form id="jobOffersForm">
-						<p:button icon="pi pi-plus" outcome="/job/add.xhtml" process="@this" styleClass="ui-button-success ui-button-outlined"
+						<p:button icon="pi pi-plus" outcome="/job/add.xhtml"
+							process="@this" styleClass="ui-button-success ui-button-outlined"
 							rendered="#{viewClientView.addJobOffer}">
 							<f:param name="client" value="#{viewClientView.client.id}" />
 						</p:button>
@@ -52,15 +72,20 @@
 			</div>
 
 			<div class="col-12 xl:col-4">
-				<div class="card card-w-title">
-					<h5>#{i18n['client.other_data']}</h5>
-					<cc:outputLink label="#{i18n['job.owner']}" value="#{viewClientView.client.owner.fullName}" outcome="/user/view.xhtml">
+				<p:card styleClass="card card-w-title">
+					<f:facet name="title">
+						<h5>#{i18n['client.other_data']}</h5>
+					</f:facet>
+					<cc:outputLink label="#{i18n['job.owner']}"
+						value="#{viewClientView.client.owner.fullName}"
+						outcome="/user/view.xhtml">
 						<f:param name="user" value="#{viewClientView.client.owner.id}" />
 					</cc:outputLink>
-				</div>
+				</p:card>
 
 				<cc:contacts value="#{viewClientView.contacts}">
-					<p:button icon="pi pi-plus" outcome="/client/contact/add.xhtml" process="@this" styleClass="ui-button-success ui-button-outlined">
+					<p:button icon="pi pi-plus" outcome="/client/contact/add.xhtml"
+						process="@this" styleClass="ui-button-success ui-button-outlined">
 						<f:param name="client" value="#{viewClientView.client.id}" />
 					</p:button>
 				</cc:contacts>

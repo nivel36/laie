@@ -20,7 +20,7 @@
 		<h:form id="userForm">
 			<div class="grid">
 				<div class="col-12 xl:col-6 xl:col-offset-3">
-					<p:card>
+					<p:card styleClass="card card-w-title">
 						<f:facet name="title">
 							<h4>#{i18n['user.edit_user']} -
 								#{editUserView.user.fullName}</h4>
@@ -42,9 +42,11 @@
 								</div>
 								<g:input id="email" label="#{i18n['user.email']}"
 									value="#{editUserView.user.email}" required="true" />
-								<g:input id="phone_number"
-									label="#{i18n['user.phone_number']}"
-									value="#{editUserView.user.phoneNumber}" />
+								<div class="formgrid grid">
+									<g:input id="phone_number" label="#{i18n['user.phone_number']}"
+										value="#{editUserView.user.phoneNumber}"
+										styleClass="col-fixed" />
+								</div>
 							</div>
 							<p:divider />
 							<div class="col-12 md:col-4">
@@ -52,8 +54,8 @@
 							</div>
 							<div class="col-12 md:col-8">
 								<g:input type="selectOneMenu" id="role"
-									value="#{editUserView.user.role}"
-									label="#{i18n['user.role']}" required="true">
+									value="#{editUserView.user.role}" label="#{i18n['user.role']}"
+									required="true">
 									<f:selectItem itemValue="#{null}" noSelectionOption="true"
 										itemDisabled="#{not empty editUserView.user}" />
 									<f:selectItems value="#{roles.list}" var="role"
@@ -65,8 +67,7 @@
 								</g:input>
 								<h:panelGroup id="managerWrapper" class="form-field ui-fluid"
 									layout="block">
-									<cc:autocomplete id="manager"
-										label="#{i18n['user.manager']}"
+									<cc:autocomplete id="manager" label="#{i18n['user.manager']}"
 										value="#{editUserView.user.manager}"
 										completeMethod="#{editUserView.queryManager}">
 										<p:column styleClass="user-select image">
@@ -75,16 +76,18 @@
 										</p:column>
 									</cc:autocomplete>
 								</h:panelGroup>
-								<g:input id="date_of_join"
-									label="#{i18n['user.date_of_join']}"
-									value="#{editUserView.user.dateOfJoin}" type="calendar" />
+								<div class="formgrid grid">
+									<g:input id="date_of_join" label="#{i18n['user.date_of_join']}"
+										value="#{editUserView.user.dateOfJoin}" type="calendar"
+										styleClass="col-fixed" />
+								</div>
 							</div>
 						</div>
 						<f:facet name="footer">
 							<div class="flex justify-content-end">
 								<p:button value="#{i18n['action.cancel']}"
 									outcome="/user/view.xhtml"
-									styleClass="ui-button-warning mr-2 mb-2">
+									styleClass="ui-button-secondary mr-2 mb-2">
 									<f:param name="user" value="#{editUserView.user.id}" />
 								</p:button>
 								<p:commandButton value="#{i18n['action.save']}"

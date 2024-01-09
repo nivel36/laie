@@ -34,16 +34,16 @@
 							</div>
 						</h:panelGroup>
 					</div>
-					<div class="col-12 sm:col--6 md:col-6 rememberme-container">
+					<div class="col-12 sm:col-6 md:col-6 rememberme-container">
 						<p:selectBooleanCheckbox />
 						<label>#{i18n['login.rememberme']}</label>
 					</div>
 
-					<div class="col-12 sm:col--6 md:col-6 forgetpassword-container">
+					<div class="col-12 sm:col-6 md:col-6 forgetpassword-container">
 						<a href="/forgetPassword.xhtml" class="forget-password">#{i18n['login.forget_password']}</a>
 					</div>
 
-					<div class="col-12 sm:col--6 md:col-6">
+					<div class="col-12 sm:col-6 md:col-6">
 						<p:commandButton action="#{loginView.login}" value="${i18n['login.enter']}" icon="fa fa-user" ajax="false" />
 					</div>
 				</div>

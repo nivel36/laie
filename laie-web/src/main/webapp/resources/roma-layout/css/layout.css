@@ -4048,8 +4048,8 @@ a {
 }
 .card-w-title .card-header-buttons {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  top: 2rem;
+  right: 2rem;
 }
 
 .curriculum {
@@ -4097,9 +4097,19 @@ a {
   font-weight: 800;
   padding-bottom: 0.2em;
 }
+.curriculum .company {
+  font-weight: 500;
+}
+.curriculum .school {
+  font-weight: 500;
+}
+.curriculum .date-range {
+  color: #65686a;
+  font-weight: 500;
+}
 
 .layout-wrapper .layout-topbar {
-  height: 4rem;
+  height: 4.25rem;
 }
 .layout-wrapper .layout-topbar .topbar-menu > li > ul {
   top: auto;
@@ -4131,8 +4141,8 @@ a {
 }
 @media screen and (max-width: 991px) {
   .layout-wrapper .layout-main {
-    height: 4rem;
-    padding-top: 5rem;
+    height: 4.25rem;
+    padding-top: 5.25rem;
   }
   .layout-wrapper .layout-topbar .topbar-menu-form {
     float: right;
@@ -4438,8 +4448,12 @@ a {
 .person .ui-avatar {
   margin-right: 1rem;
 }
+.person .person-box .person-name-text {
+  font-weight: 500;
+}
 .person .person-box .person-description-text {
   font-size: 0.9rem;
+  color: #65686a;
 }
 .person .person-data {
   margin-left: 1rem;
@@ -4500,10 +4514,10 @@ a {
   display: flex;
   justify-content: right;
   border-top: 1px solid #f0f0f0;
-  padding-top: 1rem;
+  padding-top: 2rem;
 }
 .form-buttons .ui-button {
-  margin-left: 1rem;
+  margin-left: 2rem;
 }
 
 .ui-chip.user-role {

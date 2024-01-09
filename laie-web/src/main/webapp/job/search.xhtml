@@ -12,7 +12,7 @@
 
 	<ui:define name="content">
 		<h:form id="jobOfferSearchform">
-			<div class="card">
+			<p:card styleClass="card card-w-title">
 				<div class="searchBar-buttons">
 					<cc:inputSearch searchText="#{searchJobView.searchText}" searchAction="#{searchJobView.search}" update="jobOfferSearchform:jobOffers"
 						styleClass="ui-fluid" />
@@ -50,7 +50,7 @@
 						<cc:jobOfferState value="#{jobOffer.state}" />
 					</p:column>
 				</p:dataTable>
-			</div>
+			</p:card>
 		</h:form>
 	</ui:define>
 </ui:composition>

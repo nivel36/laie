@@ -18,7 +18,7 @@
 
 	<ui:define name="content">
 		<h:form id="searchUsers" enctype="multipart/form-data">
-			<div class="card">
+			<p:card styleClass="card card-w-title">
 				<div class="searchBar-buttons">
 					<cc:inputSearch searchText="#{searchUserView.searchText}"
 						searchAction="#{searchUserView.search}" update="searchUsers:users"
@@ -52,9 +52,9 @@
 					</p:column>
 
 					<p:column headerText="#{i18n['user.role']}" sortBy="user.role">
-						<p:chip label="#{i18n[user.role]}" styleClass="user-role role-#{user.role}" />
+						<p:chip label="#{i18n[user.role]}"
+							styleClass="user-role role-#{user.role}" />
 					</p:column>
-
 
 					<p:column headerText="#{i18n['user.last_login']}"
 						sortBy="#{user.lastConnection}" sortOrder="desc">
@@ -63,7 +63,7 @@
 						</h:outputText>
 					</p:column>
 				</p:dataTable>
-			</div>
+			</p:card>
 		</h:form>
 	</ui:define>
 </ui:composition>

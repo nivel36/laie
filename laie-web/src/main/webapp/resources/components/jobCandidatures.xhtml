@@ -1,52 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:composite="http://xmlns.jcp.org/jsf/composite" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:g="http://nivel.36/laie/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:composite="http://xmlns.jcp.org/jsf/composite"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:g="http://nivel.36/laie/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<composite:interface>
 		<composite:attribute name="value" required="true" />
 		<composite:attribute name="showCandidate" default="true" />
 		<composite:attribute name="showJobOffer" default="true" />
 		<composite:attribute name="styleClass" required="false" default="" />
-		<composite:attribute name="title" required="false" default="#{i18n['job_candidature.job_candidatures']}" />
+		<composite:attribute name="title" required="false"
+			default="#{i18n['job_candidature.job_candidatures']}" />
 		<composite:attribute name="rows" required="false" default="10" />
 	</composite:interface>
 
 	<composite:implementation>
-		<div id="#{cc.clientId}" class="card card-w-title jobCandidatures #{cc.attrs.styleClass}">
-			<h5>#{cc.attrs.title}</h5>
+		<p:card id="#{cc.clientId}"
+			styleClass="card card-w-title jobCandidatures #{cc.attrs.styleClass}">
+			<f:facet name="title">
+				<h5>#{cc.attrs.title}</h5>
+			</f:facet>
 
-			<p:dataTable var="jobCandidature" value="#{cc.attrs.value}" emptyMessage="#{i18n['job_candidature.no_job_candidatures_found']}" reflow="true"
-				paginator="true" paginatorPosition="bottom" rows="#{cc.attrs.rows}" sortBy="#{jobOffer.title}" sortOrder="ascending"
-				styleClass="ui-datatable-borderless">
+			<p:dataTable var="jobCandidature" value="#{cc.attrs.value}"
+				emptyMessage="#{i18n['job_candidature.no_job_candidatures_found']}"
+				reflow="true" paginator="true" paginatorPosition="bottom"
+				rows="#{cc.attrs.rows}" sortBy="#{jobOffer.title}"
+				sortOrder="ascending" styleClass="ui-datatable-borderless">
 
-				<p:column headerText="#{i18n['job_candidature.job_offer']}" rendered="#{cc.attrs.showJobOffer}">
-					<h:link value="#{jobCandidature.jobOffer.title}" outcome="/job/view.xhtml">
+				<p:column headerText="#{i18n['job_candidature.job_offer']}"
+					rendered="#{cc.attrs.showJobOffer}">
+					<h:link value="#{jobCandidature.jobOffer.title}"
+						outcome="/job/view.xhtml">
 						<f:param name="jobOffer" value="#{jobCandidature.jobOffer.id}" />
 					</h:link>
 				</p:column>
-				<p:column headerText="#{i18n['job_candidature.city']}" rendered="#{cc.attrs.showJobOffer}">
-					#{jobCandidature.jobOffer.address.city} <h:outputText value="(" rendered="#{not empty jobCandidature.jobOffer.address.region}" /> #{jobCandidature.jobOffer.address.region}<h:outputText
-						value=")" rendered="#{not empty jobCandidature.jobOffer.address.region}" />
+				<p:column headerText="#{i18n['job_candidature.city']}"
+					rendered="#{cc.attrs.showJobOffer}">
+					#{jobCandidature.jobOffer.address.city} <h:outputText value="("
+						rendered="#{not empty jobCandidature.jobOffer.address.region}" /> #{jobCandidature.jobOffer.address.region}<h:outputText
+						value=")"
+						rendered="#{not empty jobCandidature.jobOffer.address.region}" />
 				</p:column>
-				<p:column headerText="#{i18n['job_candidature.client']}" rendered="#{cc.attrs.showJobOffer}">
-					<h:link value="#{jobCandidature.jobOffer.client.name}" outcome="/client/view.xhtml">
-						<f:param name="client" value="#{jobCandidature.jobOffer.client.id}" />
+				<p:column headerText="#{i18n['job_candidature.client']}"
+					rendered="#{cc.attrs.showJobOffer}">
+					<h:link value="#{jobCandidature.jobOffer.client.name}"
+						outcome="/client/view.xhtml">
+						<f:param name="client"
+							value="#{jobCandidature.jobOffer.client.id}" />
 					</h:link>
 				</p:column>
 				<p:column rendered="#{cc.attrs.showCandidate}">
-					<cc:avatar name="#{jobCandidature.candidate.fullName}" path="#{jobCandidature.candidate.picture.path}" styleClass="small" />
+					<cc:avatar name="#{jobCandidature.candidate.fullName}"
+						path="#{jobCandidature.candidate.picture.path}" styleClass="small" />
 				</p:column>
-				<p:column headerText="#{i18n['job_candidature.candidate']}" rendered="#{cc.attrs.showCandidate}">
-					<h:link value="#{jobCandidature.candidate.fullName}" outcome="/candidate/view.xhtml">
+				<p:column headerText="#{i18n['job_candidature.candidate']}"
+					rendered="#{cc.attrs.showCandidate}">
+					<h:link value="#{jobCandidature.candidate.fullName}"
+						outcome="/candidate/view.xhtml">
 						<f:param name="candidate" value="#{jobCandidature.candidate.id}" />
 					</h:link>
 				</p:column>
-				<p:column headerText="#{i18n['candidate.rating']}" rendered="#{cc.attrs.showCandidate}">
-					<p:rating value="#{jobCandidature.candidate.rating}" cancel="false" readonly="true" />
+				<p:column headerText="#{i18n['candidate.rating']}"
+					rendered="#{cc.attrs.showCandidate}">
+					<p:rating value="#{jobCandidature.candidate.rating}" cancel="false"
+						readonly="true" />
 				</p:column>
-				<p:column headerText="#{i18n['job_candidature.job_candidature_state']}">
+				<p:column
+					headerText="#{i18n['job_candidature.job_candidature_state']}">
 					<p:link outcome="/event/add.xhtml">
 						<f:param name="jobCandidature" value="#{jobCandidature.id}" />
 						<div class="tag">#{i18n['job_candidature_state.'.concat(jobCandidature.state.name)]}</div>
@@ -56,6 +82,6 @@
 			<div class="card-header-buttons">
 				<composite:insertChildren />
 			</div>
-		</div>
+		</p:card>
 	</composite:implementation>
 </ui:component>

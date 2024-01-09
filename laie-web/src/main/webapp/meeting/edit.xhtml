@@ -21,23 +21,23 @@
 								<div class="col-12">
 									<g:input label="#{i18n['meeting.title']}" value="#{editMeetingView.meeting.title}" />
 								</div>
-								<div class="col-12 sm:col--4">
+								<div class="col-12 sm:col-4">
 									<g:input id="datePlanned" label="#{i18n['meeting.date_planned']}" value="#{editMeetingView.meetingDate}" required="true" type="calendar" />
 								</div>
-								<div class="col-12 sm:col--4">
+								<div class="col-12 sm:col-4">
 									<g:input label="#{i18n['meeting.hour_planned']}" value="#{editMeetingView.meetingHour}" required="true" type="selectOneMenu">
 										<f:selectItems value="#{editMeetingView.hours}" var="meetingHour" itemValue="#{meetingHour}" itemLabel="#{meetingHour}" />
 									</g:input>
 								</div>
-								<div class="col-12 sm:col--4">
+								<div class="col-12 sm:col-4">
 									<g:input label="#{i18n['meeting.duration']}" value="#{editMeetingView.meetingDuration}" required="true" type="selectOneMenu">
 										<f:selectItems value="#{editMeetingView.durations}" var="meetingDuration" itemLabel="#{meetingDuration}" />
 									</g:input>
 								</div>
-								<div class="col-12 sm:col--6">
+								<div class="col-12 sm:col-6">
 									<g:input label="#{i18n['meeting.location']}" value="#{editMeetingView.meeting.location}" />
 								</div>
-								<div class="col-12 sm:col--6">
+								<div class="col-12 sm:col-6">
 									<g:input label="#{i18n['meeting.type']}" value="#{editMeetingView.meeting.meetingType}" type="selectOneMenu">
 										<f:selectItem />
 										<f:selectItems value="#{editMeetingView.meetingTypes}" var="meetingType" itemValue="#{meetingType}" itemLabel="#{i18n[meetingType]}" />

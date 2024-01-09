@@ -12,7 +12,7 @@
 
 	<ui:define name="content">
 		<h:form id="candidateSearchForm">
-			<div class="card">
+			<p:card styleClass="card card-w-title">
 				<div class="searchBar-buttons">
 					<cc:inputSearch searchText="#{searchCandidateView.searchText}" searchAction="#{searchCandidateView.search}"
 						update="candidateSearchForm:candidates" styleClass="ui-fluid" />
@@ -48,7 +48,7 @@
 						<p:rating value="#{candidate.rating}" cancel="false" readonly="true" />
 					</p:column>
 				</p:dataTable>
-			</div>
+			</p:card>
 		</h:form>
 	</ui:define>
 </ui:composition>

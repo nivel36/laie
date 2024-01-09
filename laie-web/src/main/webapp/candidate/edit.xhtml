@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://nivel.36/laie/ui"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:g="http://nivel.36/laie/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
 		#{i18n['candidate.candidate_edit']} - #{editCandidateView.candidate}
@@ -11,109 +17,131 @@
 	<ui:param name="selectedMenu" value="candidates" />
 
 	<ui:define name="content">
+		<h:form id="candidateForm" enctype="multipart/form-data">
+			<div class="grid">
+				<div class="col-12 xl:col-6 xl:col-offset-3">
+					<p:card>
+						<f:facet name="title">
+							<h4>#{i18n['candidate.candidate_edit']} -
+								#{editCandidateView.candidate}</h4>
+						</f:facet>
+						<p:divider />
+						<div class="ui-fluid grid">
+							<div class="col-12 md:col-4">
+								<h5>#{i18n['candidate.picture']}</h5>
+							</div>
+							<div class="col-12 md:col-8">
+								<cc:inputAvatar id="candidate_image"
+									value="#{editCandidateView.candidateImage.path}"
+									fileUploadListener="#{editCandidateView.uploadImage}"
+									deleteImage="#{editCandidateView.deleteImage}" />
+							</div>
 
-		<h:form id="candidateForm">
-			<div class="card">
-				<div class="grid">
-					<div class="col-12 md:col-6">
-						<div class="form-card ui-fluid">
-							<div class="grid justify-center">
-								<div class="col-3">
-									<div class="field">
-										<cc:inputAvatar id="candidate_image" value="#{editCandidateView.candidateImage.path}" fileUploadListener="#{editCandidateView.uploadImage}"
-											deleteImage="#{editCandidateView.deleteImage}" />
-									</div>
+							<p:divider />
+							<div class="col-12 md:col-4">
+								<h5>#{i18n['candidate.personal_information']}</h5>
+							</div>
+							<div class="col-12 md:col-8">
+								<div class="formgrid grid">
+									<g:input id="name" label="#{i18n['candidate.name']}"
+										value="#{editCandidateView.candidate.name}" required="true"
+										styleClass="col" />
+									<g:input id="surname" label="#{i18n['candidate.surname']}"
+										value="#{editCandidateView.candidate.surname}" required="true"
+										styleClass="col" />
+								</div>
+								<div class="formgrid grid">
+									<g:input id="city" label="#{i18n['candidate.city']}"
+										value="#{editCandidateView.candidate.address.city}"
+										styleClass="col" />
+									<g:input id="state" label="#{i18n['candidate.state']}"
+										value="#{editCandidateView.candidate.address.region}"
+										styleClass="col" />
+								</div>
+								<div class="formgrid grid">
+									<g:input id="born_date" label="#{i18n['candidate.bornDate']}"
+										value="#{editCandidateView.candidate.bornDate}"
+										yearRange="c-65:c-15" type="calendar" styleClass="col-fixed" />
 								</div>
 							</div>
-							<h5>#{i18n['candidate.personal_information']}</h5>
-							<div class="formgrid grid">
-								<div class="col-12 sm:col--6">
-									<g:input id="name" label="#{i18n['candidate.name']}" value="#{editCandidateView.candidate.name}" required="true" />
-								</div>
-								<div class="col-12 sm:col--6">
-									<g:input id="surname" label="#{i18n['candidate.surname']}" value="#{editCandidateView.candidate.surname}" required="true" />
-								</div>
-								<div class="col-12 sm:col--6">
-									<g:input id="city" label="#{i18n['candidate.city']}" value="#{editCandidateView.candidate.address.city}" />
-								</div>
-								<div class="col-12 sm:col--6">
-									<g:input id="state" label="#{i18n['candidate.state']}" value="#{editCandidateView.candidate.address.region}" />
-								</div>
-								<div class="col-12 sm:col--6">
-									<g:input id="born_date" label="#{i18n['candidate.bornDate']}" value="#{editCandidateView.candidate.bornDate}" yearRange="c-65:c-15"
-										type="calendar" />
-								</div>
+							<p:divider />
+							<div class="col-12 md:col-4">
+								<h5>#{i18n['candidate.contact_information']}</h5>
 							</div>
-						</div>
+							<div class="col-12 md:col-8">
+								<g:input id="email" label="#{i18n['candidate.email']}"
+									value="#{editCandidateView.candidate.email}" />
+								<div class="formgrid grid">
+									<g:input id="phone_number"
+										label="#{i18n['candidate.phone_number']}"
+										value="#{editCandidateView.candidate.phoneNumber}"
+										styleClass="col-fixed" />
+								</div>
+								<g:input id="linkedin" label="#{i18n['candidate.linkedin']}"
+									value="#{editCandidateView.candidate.linkedinProfileUrl}" />
+								<g:input id="skype" label="#{i18n['candidate.skype']}"
+									value="#{editCandidateView.candidate.skype}" />
+							</div>
+							<p:divider />
+							<div class="col-12 md:col-4">
+								<h5>#{i18n['candidate.job_information']}</h5>
+							</div>
+							<div class="col-12 md:col-8">
+								<g:input id="jobProfile" label="#{i18n['candidate.jobProfile']}"
+									value="#{editCandidateView.candidate.jobProfile}"
+									required="true" />
+								<div class="formgrid grid">
+									<g:input id="salary" label="#{i18n['candidate.salary']}"
+										value="#{editCandidateView.candidate.salary}" type="money"
+										styleClass="col" />
+									<g:input id="expected_salary"
+										label="#{i18n['candidate.expected_salary']}"
+										value="#{editCandidateView.candidate.expectedSalary}"
+										type="money" styleClass="col" />
+								</div>
 
-						<div class="form-card ui-fluid">
-							<h5>#{i18n['candidate.contact_information']}</h5>
-							<div class="formgrid grid">
-								<div class="col-12 sm:col--6">
-									<g:input id="email" label="#{i18n['candidate.email']}" value="#{editCandidateView.candidate.email}" />
-								</div>
-								<div class="col-12 sm:col--6">
-									<g:input id="phone_number" label="#{i18n['candidate.phone_number']}" value="#{editCandidateView.candidate.phoneNumber}" styleClass="small" />
-								</div>
-								<div class="col-12 sm:col--6">
-									<g:input id="linkedin" label="#{i18n['candidate.linkedin']}" value="#{editCandidateView.candidate.linkedinProfileUrl}" />
-								</div>
-								<div class="col-12 sm:col--6">
-									<g:input id="skype" label="#{i18n['candidate.skype']}" value="#{editCandidateView.candidate.skype}" />
+							</div>
+							<p:divider />
+							<div class="col-12 md:col-4">
+								<h5>#{i18n['candidate.other_data']}</h5>
+							</div>
+							<div class="col-12 md:col-8">
+								<cc:autocomplete id="owner" label="#{i18n['client.owner']}"
+									value="#{editCandidateView.candidate.owner}"
+									completeMethod="#{editCandidateView.queryOwner}"
+									required="true">
+									<p:column styleClass="user-select image">
+										<cc:person name="#{var.fullName}" path="#{var.picture.path}" />
+									</p:column>
+								</cc:autocomplete>
+								<g:input type="selectOneMenu"
+									label="#{i18n['candidate.origin']}"
+									value="#{editCandidateView.candidate.origin}">
+									<f:selectItems value="#{origins.list}" var="origin"
+										itemValue="#{origin}" itemLabel="#{i18n[origin.code]}" />
+								</g:input>
+								<div class="input-group field">
+									<p:outputLabel id="tags_label" for="tags"
+										value="#{i18n['candidate.tags']}" />
+									<p:chips id="tags" value="#{editCandidateView.tags}"
+										required="#{required}" />
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="col-12 xl:col-6">
-						<div class="form-card ui-fluid">
-							<h5>#{i18n['candidate.job_information']}</h5>
-							<div class="formgrid grid">
-								<div class="col-12">
-									<g:input id="jobProfile" label="#{i18n['candidate.jobProfile']}" value="#{editCandidateView.candidate.jobProfile}" required="true" />
-								</div>
-								<div class="col-12 sm:col--6">
-									<g:input id="salary" label="#{i18n['candidate.salary']}" value="#{editCandidateView.candidate.salary}" type="money" />
-								</div>
-								<div class="col-12 sm:col--6">
-									<g:input id="expected_salary" label="#{i18n['candidate.expected_salary']}" value="#{editCandidateView.candidate.expectedSalary}" type="money" />
-								</div>
+						<f:facet name="footer">
+							<div class="flex justify-content-end">
+								<p:button value="#{i18n['action.cancel']}"
+									outcome="/candidate/view.xhtml"
+									styleClass="ui-button-secondary mr-2 mb-2">
+									<f:param name="candidate"
+										value="#{editCandidateView.candidate.id}" />
+								</p:button>
+								<p:commandButton value="#{i18n['action.save']}" process="@form"
+									update="@form growl" action="#{editCandidateView.save}"
+									styleClass="ui-button-primary mr-2 mb-2" />
 							</div>
-						</div>
-
-						<div class="form-card ui-fluid">
-							<h5>#{i18n['candidate.other_data']}</h5>
-							<div class="formgrid grid">
-								<div class="col-12 sm:col--6">
-									<cc:autocomplete id="owner" label="#{i18n['client.owner']}" value="#{editCandidateView.candidate.owner}"
-										completeMethod="#{editCandidateView.queryOwner}" required="true">
-										<p:column styleClass="user-select image">
-											<cc:person name="#{var.fullName}" path="#{var.picture.path}" />
-										</p:column>
-									</cc:autocomplete>
-								</div>
-								<div class="col-12 sm:col--6">
-									<g:input type="selectOneMenu" label="#{i18n['candidate.origin']}" value="#{editCandidateView.candidate.origin}">
-										<f:selectItems value="#{origins.list}" var="origin" itemValue="#{origin}" itemLabel="#{i18n[origin.code]}" />
-									</g:input>
-								</div>
-								<div class="col-12">
-									<div class="input-group field">
-										<p:outputLabel id="tags_label" for="tags" value="#{i18n['candidate.tags']}" />
-										<p:chips id="tags" value="#{editCandidateView.tags}" required="#{required}" />
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-12">
-						<div class="form-buttons">
-							<p:button value="#{i18n['action.cancel']}" outcome="/candidate/view.xhtml" styleClass="ui-button-secondary ui-button-outlined">
-								<f:param name="candidate" value="#{editCandidateView.candidate.id}" />
-							</p:button>
-							<p:commandButton value="#{i18n['action.save']}" process="@form" update="@form growl" action="#{editCandidateView.save}"
-								styleClass="ui-button-success ui-button-outlined" />
-						</div>
-					</div>
+						</f:facet>
+					</p:card>
 				</div>
 			</div>
 		</h:form>
