@@ -1,7 +1,6 @@
 package es.nivel36.laie.web.view.job;
 
 import java.time.LocalDate;
-import java.util.stream.Collectors;
 
 import org.omnifaces.cdi.Param;
 import org.omnifaces.util.Faces;
@@ -36,26 +35,20 @@ public class AddJobView extends AbstractJobView {
 		}
 		this.jobOffer.setOpenDate(LocalDate.now());
 		this.jobOffer.setOwner(this.sessionUser.get());
-		this.recruiters = this.sessionUser.getTeam().stream().collect(Collectors.toList());
-	}
-
-	public void next() {
-		logger.debug("Create new job Offer action performed");
-		this.jobOffer.setRecruiters(recruiters);
-		this.jobOfferService.addJobOffer(this.jobOffer);
-		Faces.redirect("/job/addDetails.xhtml?jobOffer=" + this.jobOffer.getId());
+		this.recruiters = this.sessionUser.getTeam();
 	}
 
 	private boolean canAddJobOfferToClient() {
 		final User user = sessionUser.get();
-		final User owner = client.getOwner();
+		final User owner = this.jobOffer.getClient().getOwner();
 		final boolean isOwnersTeam = userService.isSubordinateUser(user, owner);
 		return sessionUser.isAdmin() || user.equals(owner) || isOwnersTeam;
 	}
 
 	public void save() {
 		if (canAddJobOfferToClient()) {
-			this.jobOfferService.updateJobOffer(this.jobOffer);
+			this.jobOffer.setRecruiters(recruiters);
+			this.jobOfferService.addJobOffer(this.jobOffer);
 			Faces.redirect(ViewJobView.getUrl(this.jobOffer.getId()));
 		} else {
 			this.addErrorToField("jobOfferForm:client", "job.error.no_permissions");
