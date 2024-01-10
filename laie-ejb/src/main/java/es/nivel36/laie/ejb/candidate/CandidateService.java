@@ -70,6 +70,12 @@ public class CandidateService {
 		}
 		candidate.setTags(normalizedTags);
 	}
+	
+	public Candidate updateCandidateRating(final Candidate candidate) {
+		Objects.requireNonNull(candidate);
+		logger.debug("Update rating of candidate {}", candidate);
+		return updateAndFireEvent(candidate);
+	}
 
 	public Candidate updateCandidate(final Candidate candidate) throws DuplicateEmailException {
 		Objects.requireNonNull(candidate);

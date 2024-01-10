@@ -26,9 +26,7 @@ public class AddRatingView extends AbstractView {
 	private static final Logger logger = LoggerFactory.getLogger(AddRatingView.class);
 
 	private transient @Inject RatingService ratingService;
-
 	private @Param(required = true) Candidate candidate;
-
 	private Rating rating;
 
 	@PostConstruct

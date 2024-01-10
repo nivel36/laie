@@ -13,6 +13,7 @@
 	<composite:interface>
 		<composite:attribute name="value" required="true" />
 		<composite:attribute name="styleClass" required="false" default="" />
+		<composite:attribute name="rowStyleClass" required="false" default="" />
 		<composite:attribute name="title" required="false"
 			default="#{i18n['event.events']}" />
 		<composite:attribute name="rows" required="false" default="10" />
@@ -25,55 +26,73 @@
 			<f:facet name="title">
 				<h5>#{cc.attrs.title}</h5>
 			</f:facet>
-			<p:dataTable var="event" id="events" value="#{cc.attrs.value}"
-				emptyMessage="#{i18n['event.no_events_found']}" reflow="true"
-				paginator="true" paginatorPosition="bottom" rows="#{cc.attrs.rows}"
-				sortBy="#{event.date}" sortOrder="ascending" lazy="true"
-				styleClass="ui-datatable-borderless">
-
-				<p:column headerText="">
-					<h:link value="#{event.entityTitle}" outcome="/client/view.xhtml"
-						rendered="#{event.entityName eq 'CLIENT'}">
-						<f:param name="client" value="#{event.entityId}" />
-					</h:link>
-					<h:link value="#{event.entityTitle}"
-						outcome="/candidate/view.xhtml"
-						rendered="#{event.entityName eq 'CANDIDATE'}">
-						<f:param name="candidate" value="#{event.entityId}" />
-					</h:link>
-					<h:link value="#{event.entityTitle}" outcome="/contact/view.xhtml"
-						rendered="#{event.entityName eq 'CONTACT'}">
-						<f:param name="contact" value="#{event.entityId}" />
-					</h:link>
-					<h:link value="#{event.entityTitle}" outcome="/job/view.xhtml"
-						rendered="#{event.entityName eq 'JOB_OFFER'}">
-						<f:param name="jobOffer" value="#{event.entityId}" />
-					</h:link>
-				</p:column>
-
-				<p:column headerText="#{i18n['event.type']}">
-					<h:outputText value="#{i18n['event.'.concat(event.type)]}" />
-				</p:column>
-
-				<p:column headerText="#{i18n['event.user']}" priority="5"
-					rendered="#{cc.attrs.showUser}">
-					<h:link value="#{event.user.fullName}" outcome="/user/view.xhtml">
-						<f:param name="user" value="#{event.user.id}" />
-					</h:link>
-				</p:column>
-
-				<p:column headerText="#{i18n['event.date']}" priority="4">
-					<h:outputText value="#{event.date}">
-						<f:convertDateTime type="localDateTime" pattern="dd/MM/yyyy" />
-					</h:outputText>
-				</p:column>
-				<p:column headerText="#{i18n['event.hour']}" priority="4">
-					<h:outputText value="#{event.date}">
-						<f:convertDateTime type="localDateTime" pattern="HH:mm:ss" />
-					</h:outputText>
-				</p:column>
-
-			</p:dataTable>
+			<p:dataView var="event" value="#{cc.attrs.value}"
+				gridIcon="pi pi-th-large" listIcon="pi pi-bars" paginator="true"
+				layout="grid" paginatorPosition="bottom" rows="5"
+				emptyMessage="#{i18n['user.no_team']}" lazy="true"
+				gridRowStyleClass="event #{cc.attrs.rowStyleClass}">
+				<p:dataViewGridItem columns="1">
+					<h:panelGroup rendered="#{event.entityName eq 'CLIENT'}">
+						<i class="pi pi-compass" />
+					</h:panelGroup>
+					<h:panelGroup rendered="#{event.entityName eq 'CANDIDATE'}">
+						<i class="pi pi-users" />
+					</h:panelGroup>
+					<h:panelGroup rendered="#{event.entityName eq 'CONTACT'}">
+						<i class="pi pi-user" />
+					</h:panelGroup>
+					<h:panelGroup rendered="#{event.entityName eq 'JOB_OFFER'}">
+						<i class="pi pi-briefcase" />
+					</h:panelGroup>
+					<span class="event-title"><h:link
+							value="#{event.entityTitle}" outcome="/client/view.xhtml"
+							rendered="#{event.entityName eq 'CLIENT'}">
+							<f:param name="client" value="#{event.entityId}" />
+						</h:link> <h:link value="#{event.entityTitle}"
+							outcome="/candidate/view.xhtml"
+							rendered="#{event.entityName eq 'CANDIDATE'}">
+							<f:param name="candidate" value="#{event.entityId}" />
+						</h:link> <h:link value="#{event.entityTitle}"
+							outcome="/contact/view.xhtml"
+							rendered="#{event.entityName eq 'CONTACT'}">
+							<f:param name="contact" value="#{event.entityId}" />
+						</h:link> <h:link value="#{event.entityTitle}" outcome="/job/view.xhtml"
+							rendered="#{event.entityName eq 'JOB_OFFER'}">
+							<f:param name="jobOffer" value="#{event.entityId}" />
+						</h:link></span>
+					<span class="event-time"><h:outputText value="#{event.date}">
+							<f:convertDateTime type="localDateTime"
+								pattern="HH:MM dd/MM/yyyy" />
+						</h:outputText></span>
+					<p>
+						<h:link value="#{event.user.fullName}" outcome="/user/view.xhtml">
+							<f:param name="user" value="#{event.user.id}" />
+						</h:link>
+						ha
+						<h:outputText value="#{i18n['event.'.concat(event.type)]}" />
+						<h:outputText value=" " />
+						<h:outputText value="#{i18n['event.'.concat(event.entityName)]}" />
+						<h:outputText value=" " />
+						<h:link value="#{event.entityTitle}" outcome="/client/view.xhtml"
+							rendered="#{event.entityName eq 'CLIENT'}">
+							<f:param name="client" value="#{event.entityId}" />
+						</h:link>
+						<h:link value="#{event.entityTitle}"
+							outcome="/candidate/view.xhtml"
+							rendered="#{event.entityName eq 'CANDIDATE'}">
+							<f:param name="candidate" value="#{event.entityId}" />
+						</h:link>
+						<h:link value="#{event.entityTitle}" outcome="/contact/view.xhtml"
+							rendered="#{event.entityName eq 'CONTACT'}">
+							<f:param name="contact" value="#{event.entityId}" />
+						</h:link>
+						<h:link value="#{event.entityTitle}" outcome="/job/view.xhtml"
+							rendered="#{event.entityName eq 'JOB_OFFER'}">
+							<f:param name="jobOffer" value="#{event.entityId}" />
+						</h:link>
+					</p>
+				</p:dataViewGridItem>
+			</p:dataView>
 			<div class="card-header-buttons">
 				<composite:insertChildren />
 			</div>

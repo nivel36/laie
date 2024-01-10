@@ -54,9 +54,6 @@
 						rendered="#{viewUserView.logedUser}"
 						styleClass="ui-button-success ui-button-outlined" />
 				</cc:jobOffers>
-
-				<cc:events title="#{i18n['event.last_events']}" rows="5"
-					value="#{viewUserView.actions}" showUser="#{false}" />
 			</div>
 			<div class="col-12 xl:col-4">
 				<p:card styleClass="card card-w-title">
@@ -105,8 +102,11 @@
 
 				<h:form id="userTeamForm">
 					<cc:users value="#{viewUserView.team}" title="#{i18n['user.team']}"
-						rows="3" />
+						rows="5" />
 				</h:form>
+				
+				<cc:events title="#{i18n['event.last_events']}" rows="5"
+					value="#{viewUserView.actions}" showUser="#{false}" />
 			</div>
 		</div>
 

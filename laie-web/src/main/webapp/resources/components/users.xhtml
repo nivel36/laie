@@ -26,7 +26,7 @@
 			</f:facet>
 			<p:dataView var="user" value="#{cc.attrs.value}"
 				gridIcon="pi pi-th-large" listIcon="pi pi-bars" paginator="true"
-				layout="grid" paginatorPosition="bottom" rows="4"
+				layout="grid" paginatorPosition="bottom" rows="#{cc.attrs.rows}"
 				emptyMessage="#{i18n['user.no_team']}" lazy="true">
 				<p:dataViewGridItem columns="1">
 					<h:link outcome="/user/view.xhtml">

@@ -1,60 +1,150 @@
+.events {
+	.ui-dataview-header {
+		display: none;
+	}
+
+	.ui-dataview-row {
+		a {
+			color: $textColor;
+		}
+	}
+
+	.event-title {
+		vertical-align: middle;
+		font-weight: 500;
+	}
+
+	.event-time {
+		background-color: #ebebef;
+		padding: .25em;
+		vertical-align: middle;
+		margin-left: 1em;
+		display: inline-block;
+		@include border-radius($borderRadius);
+	}
+	
+	
+
+	img {
+		width: 100%;
+	}
+
+	.event {
+		border-bottom: 1px solid #ebebef;
+		padding: 1em;
+
+		i {
+			font-size: 2em;
+			margin-right: .25em;
+			vertical-align: middle;
+		}
+
+		&:nth-child(1) {
+			i {
+				color: #0f97c7;
+			}
+		}
+
+		&:nth-child(2) {
+			i {
+				color: #1cb9d7;
+			}
+		}
+
+		&:nth-child(3) {
+			i {
+				color: #f56f64;
+			}
+		}
+
+		&:nth-child(4) {
+			i {
+				color: #9643F9;
+			}
+		}
+
+		&:last-child {
+			border-bottom: 0 none;
+		}
+	}
+
+	p {
+		color: $textSecondaryColor;
+		margin: .5em 0;
+	}
+}
+
 .meeting {
 	display: flex;
 	margin-bottom: 1rem;
 	color: $textColor;
+
 	.meeting-date {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		flex: 1;
+
 		.meeting-date-day {
 			display: flex;
-			font-size:3rem;
+			font-size: 3rem;
 			padding: 0.2rem 0.5rem;
 			background-color: $primaryColor;
 			color: $primaryTextColor;
 		}
+
 		.meeting-date-month {
-			font-size:1.5rem;
+			font-size: 1.5rem;
 			text-transform: uppercase
 		}
 	}
+
 	.meeting-content {
 		display: flex;
 		margin-left: 1.2rem;
 		flex-direction: column;
 		flex: 4;
+
 		.meeting-title {
-			font-size:1.2rem;
+			font-size: 1.2rem;
 			font-weight: 600;
 		}
+
 		.meeting-day {
-			font-size:1rem;
+			font-size: 1rem;
 		}
+
 		.meeting-time {
-			font-size:1rem;
+			font-size: 1rem;
 		}
+
 		.meeting-detail {
-			font-size:1rem;
+			font-size: 1rem;
 			line-height: 2rem;
+
 			.meeting-detail-data {
-				margin-right: 1rem;	
+				margin-right: 1rem;
+
 				i {
 					margin-right: 0.2rem;
 				}
 			}
+
 			.meeting-detail-day_of_week {
 				text-transform: capitalize;
 			}
+
 			.meeting-detail-data {
-				font-size:1rem;
+				font-size: 1rem;
 			}
+
 			.meeting-detail-time {
-				font-size:1rem;
+				font-size: 1rem;
 			}
 		}
+
 		.meeting-description {
-			font-size:1rem;
+			font-size: 1rem;
 		}
 	}
 }
@@ -63,6 +153,7 @@
 	.login-panel {
 		display: flex;
 		align-items: center;
+
 		.login-panel-content {
 			margin: 0;
 		}
@@ -73,6 +164,7 @@
 	.login-panel {
 		display: flex;
 		align-items: center;
+
 		.login-panel-content {
 			margin: 0;
 		}
@@ -88,6 +180,7 @@
 .layout-aside {
 	float: left;
 	width: 20%;
+
 	.layout-aside-content {
 		padding: 16px 0 16px 16px;
 	}
@@ -95,7 +188,7 @@
 
 @media all and (max-width: 1200px) {
 	.layout-aside {
-		display:none;
+		display: none;
 	}
 }
 
@@ -105,6 +198,7 @@
 	border: 1px solid $dividerColor;
 	border-radius: 5px;
 	margin-bottom: 2rem;
+
 	h5 {
 		margin-bottom: 2rem;
 	}
@@ -112,6 +206,7 @@
 
 .card-w-title {
 	position: relative;
+
 	.card-header-buttons {
 		position: absolute;
 		top: 2rem;
@@ -120,60 +215,69 @@
 }
 
 .curriculum {
-	display:flex;
+	display: flex;
 	flex-direction: column;
 	padding: 2em;
-	
+
 	.buttons {
 		justify-content: flex-end;
 		display: flex;
 		margin-top: -3em;
 	}
-	
+
 	.section {
-		display:flex;
+		display: flex;
 		flex-direction: column;
+
 		&.skills {
 			ul {
 				flex-direction: row;
+
 				li {
-					display:flex;
+					display: flex;
 					border-bottom: 0px
 				}
 			}
 		}
+
 		.text-content {
 			margin-right: 10em;
 		}
 	}
+
 	ul {
-		display:flex;
+		display: flex;
 		flex-direction: column;
 		margin-top: 1em;
+
 		li {
-			display:flex;
+			display: flex;
 			flex-direction: column;
 			border-bottom: 1px solid $dividerColor;
 			margin-bottom: 2em;
 			padding-bottom: 2em;
-			 &:last-child {
-   				 border-bottom: 0;
-   				 margin-bottom: inherit;
+
+			&:last-child {
+				border-bottom: 0;
+				margin-bottom: inherit;
 			}
 		}
 	}
-		
+
 	.language-name {
 		font-size: 1.1em;
-		font-weight: 800;			
+		font-weight: 800;
 		padding-bottom: 0.2em;
 	}
+
 	.company {
 		font-weight: 500;
 	}
+
 	.school {
 		font-weight: 500;
 	}
+
 	.date-range {
 		color: $textSecondaryColor;
 		font-weight: 500;
@@ -181,29 +285,32 @@
 }
 
 
-.layout-wrapper{
-	.layout-topbar{
+.layout-wrapper {
+	.layout-topbar {
 		height: $topbarHeight;
-		.topbar-menu > li > ul {
+
+		.topbar-menu>li>ul {
 			top: auto;
 		}
+
 		.layout-right-panel-button {
 			width: 2rem;
 			height: 2rem;
-			line-height: 2rem;			
+			line-height: 2rem;
 		}
+
 		.user-profile {
 			.user-image {
 				width: 2.5rem;
 				height: 2.5rem;
-				font-size: 1.25rem;				
+				font-size: 1.25rem;
 			}
 		}
 	}
 }
 
 @media screen and (min-width: 992px) {
-	.layout-wrapper.layout-horizontal{
+	.layout-wrapper.layout-horizontal {
 		.layout-menu-container {
 			width: auto;
 			float: left;
@@ -211,11 +318,12 @@
 			min-height: 2rem;
 		}
 	}
-	
+
 	.layout-topbar {
 		.topbar-menu-form {
 			float: right;
 		}
+
 		.layout-menu-button {
 			line-height: normal;
 		}
@@ -223,15 +331,17 @@
 }
 
 @media screen and (max-width: 991px) {
-	.layout-wrapper{
+	.layout-wrapper {
 		.layout-main {
 			height: $topbarHeight;
 			padding-top: $topbarHeight + 1rem;
 		}
+
 		.layout-topbar {
 			.topbar-menu-form {
 				float: right;
 			}
+
 			.layout-menu-button {
 				line-height: normal;
 			}
@@ -242,7 +352,8 @@
 .bookmark {
 	display: flex;
 	align-items: center;
-	.bookmark-url{
+
+	.bookmark-url {
 		margin-left: 1em;
 	}
 }
@@ -250,15 +361,18 @@
 .searchBar-buttons {
 	display: flex;
 	padding-bottom: 2rem;
+
 	.input-search-group {
 		flex: 1;
 	}
+
 	.buttons {
 		flex: 1;
 		display: flex;
 		padding: 0rem;
 		justify-content: flex-end;
 		margin-left: auto;
+
 		.ui-button {
 			margin-left: 1rem;
 		}
@@ -272,64 +386,70 @@
 	border-radius: 2px;
 	display: flex;
 	flex-direction: column;
-	
+
 	.title-card-content {
 		height: 10rem;
 		padding: 1.5rem;
 		background: linear-gradient(30deg, $primaryColor 0%, $primaryLightColor 150%);
-		background-color:$primaryColor;
+		background-color: $primaryColor;
 		color: $primaryTextColor;
 		display: flex;
 		justify-content: space-between;
-		
+
 		.title-card-content-image {
 			width: 5rem;
 			height: 5rem;
 			order: 2;
 			margin-left: auto;
 			margin-right: 1.5rem;
+
 			img {
 				margin: 0;
 				width: 5rem;
 				height: 5rem;
 			}
 		}
-		
+
 		.title-card-content-info {
 			display: flex;
 			flex-direction: column;
+
 			.title {
 				font-size: 1.5rem;
 				font-weight: 700;
 				white-space: nowrap;
 			}
-		
+
 			.subtitle {
 				font-size: 1.2rem;
 				font-weight: 500;
 				white-space: nowrap;
+
 				a {
 					color: $primaryTextColor;
-					text-decoration:none;
+					text-decoration: none;
 					font-size: 1.2rem;
 					font-weight: 500;
 				}
 			}
-			
+
 			.text {
 				font-size: 0.9rem;
 				margin-top: 2.5rem;
 			}
 		}
-		
+
 		.menu-button {
 			order: 3;
+
 			button.ui-button {
 				background-color: transparent;
 				border: 0px;
+
 				&.ui-state-focus {
 					box-shadow: none;
 				}
+
 				.ui-icon {
 					font-size: 1.5rem;
 				}
@@ -340,24 +460,29 @@
 
 .card.client-card {
 	padding: 0;
-	.client-card-header{
+
+	.client-card-header {
 		height: 9rem;
 		overflow: hidden;
 		background: linear-gradient(30deg, $primaryColor 0%, $primaryLightColor 150%);
 		background-color: $primaryColor;
 		color: $primaryTextColor;
 	}
+
 	.client-card-content {
 		.label-container {
 			font-size: 0.9em;
 			padding-bottom: 0.3em;
+
 			.label {
 				color: $darkMenuBgColor;
-			}	
+			}
 		}
+
 		.text {
 			color: $menuitemTextColor;
 		}
+
 		.client-card-name {
 			font-size: 2em;
 			color: #ffffff;
@@ -367,6 +492,7 @@
 			font-weight: 700;
 			white-space: nowrap;
 		}
+
 		.client-detail {
 			padding: 0 2.5em 2em 2.5em;
 		}
@@ -375,9 +501,11 @@
 
 .linkedin {
 	margin-right: 1rem;
+
 	i {
 		margin-right: 0.3rem;
 	}
+
 	a {
 		color: $primaryTextColor;
 	}
@@ -385,6 +513,7 @@
 
 .skype {
 	margin-right: 1rem;
+
 	i {
 		margin-right: 0.3rem;
 	}
@@ -392,6 +521,7 @@
 
 .phone {
 	margin-right: 1rem;
+
 	i {
 		margin-right: 0.3rem;
 	}
@@ -399,6 +529,7 @@
 
 .email {
 	margin-right: 1rem;
+
 	i {
 		margin-right: 0.3rem;
 	}
@@ -406,6 +537,7 @@
 
 .region {
 	margin-right: 1rem;
+
 	i {
 		margin-right: 0.3rem;
 	}
@@ -415,12 +547,14 @@
 	display: flex;
 	margin-bottom: 1rem;
 	justify-content: space-between;
+
 	.label-container {
 		font-weight: 400;
 		margin-right: 1rem;
 	}
+
 	.text-container {
-		font-weight: 500;	
+		font-weight: 500;
 	}
 }
 
@@ -430,32 +564,37 @@
 	justify-content: space-between;
 
 	.contact-box {
-		display:flex;
+		display: flex;
 		flex-direction: column;
 		line-height: 1.2em;
-		
+
 		.contact-name {
 			font-size: 1.1rem;
 			font-weight: 800;
 			padding-bottom: 0.2rem;
 		}
+
 		.contact-position {
 			font-weight: 400;
 			padding-bottom: 0.1rem;
 		}
+
 		.contact-data {
 			display: flex;
 			flex-direction: column;
+
 			i {
 				display: inline-block;
 				margin-right: 0.4rem;
 			}
+
 			.contact-phone {
 				font-size: 0.8rem;
 				font-weight: 400;
 				display: flex;
 				align-items: center;
 			}
+
 			.contact-email {
 				font-size: 0.8rem;
 				font-weight: 400;
@@ -464,9 +603,10 @@
 			}
 		}
 	}
-	
-	.buttons{
+
+	.buttons {
 		padding: 0;
+
 		button {
 			background-color: white;
 		}
@@ -475,27 +615,33 @@
 
 .card.job-card {
 	padding: 0;
-	.card-header{
+
+	.card-header {
 		height: 80px;
 		overflow: hidden;
 		background: linear-gradient(30deg, $primaryColor 0%, $primaryLightColor 150%);
 		background-color: $primaryColor;
 		color: $primaryTextColor;
 	}
+
 	.job-card-content {
-		.job-detail{
-		    padding: 0 2.5em 2em 2.5em;
+		.job-detail {
+			padding: 0 2.5em 2em 2.5em;
 		}
+
 		.label-container {
 			font-size: 0.9em;
 			padding-bottom: 0.3em;
+
 			.label {
 				color: $darkMenuBgColor;
-			}	
+			}
 		}
+
 		.text {
 			color: $menuitemTextColor;
 		}
+
 		.job-card-name {
 			font-size: 2em;
 			color: #ffffff;
@@ -505,6 +651,7 @@
 			font-weight: 700;
 			white-space: nowrap;
 		}
+
 		.job-card-client {
 			font-size: 1em;
 			color: #ffffff;
@@ -521,48 +668,52 @@
 	position: relative;
 	height: 10rem;
 	width: 10rem;
-	
+
 	img {
 		cursor: pointer;
 		width: 10rem;
 		height: 10rem;
 		object-fit: cover;
 	}
-	
+
 	.camera-button {
 		position: absolute;
 		right: 0;
 		bottom: 0;
 	}
-	
+
 	.delete-button {
-    	position: absolute;
-    	right: 31px;
-    	bottom: 0;
+		position: absolute;
+		right: 31px;
+		bottom: 0;
 	}
-	
+
 	.ui-fileupload {
 		display: none;
 	}
 }
 
 .person {
-	display:flex;
+	display: flex;
 	align-items: center;
+
 	.ui-avatar {
 		margin-right: 1rem;
 	}
+
 	.person-box {
 		.person-name-text {
 			font-weight: 500;
 		}
+
 		.person-description-text {
 			font-size: 0.9rem;
 			color: $textSecondaryColor
 		}
 	}
+
 	.person-data {
-		margin-left:1rem;
+		margin-left: 1rem;
 	}
 }
 
@@ -576,30 +727,37 @@
 		background-color: $primaryColor;
 		color: $primaryTextColor;
 	}
+
 	.user-card-content {
 		.label-container {
 			font-size: 0.9em;
 			padding-bottom: 0.3em;
+
 			.label {
 				color: $darkMenuBgColor;
-			}	
+			}
 		}
+
 		.text {
 			color: $menuitemTextColor;
 		}
+
 		img {
 			width: 60px;
 			height: 60px;
 			margin: 0;
 		}
+
 		.user-image {
 			width: 60px;
 			height: 60px;
-			margin: -30px 0 0 24px;		
+			margin: -30px 0 0 24px;
+
 			.ui-avatar-text {
 				font-size: 2rem;
 			}
 		}
+
 		.user-detail {
 			padding: 0 2.5em 2em 2.5em;
 		}
@@ -608,8 +766,9 @@
 
 .contacts {
 	.ui-dataview-header {
-		display:none;		
+		display: none;
 	}
+
 	.ui-dataview-row {
 		a {
 			color: $textColor;
@@ -619,8 +778,9 @@
 
 .users {
 	.ui-dataview-header {
-		display:none;		
+		display: none;
 	}
+
 	.ui-dataview-row {
 		a {
 			color: $textColor;
@@ -633,21 +793,24 @@
 	justify-content: right;
 	border-top: 1px solid #f0f0f0;
 	padding-top: 2rem;
+
 	.ui-button {
 		margin-left: 2rem;
 	}
 }
 
 .ui-chip {
-	&.user-role{
+	&.user-role {
 		text-transform: uppercase;
 		font-weight: 700;
 		font-size: 0.8rem;
 		letter-spacing: 0.3px;
-		&.role-ADMIN{
+
+		&.role-ADMIN {
 			background: #FEEDAF;
 			color: #8A5340;
 		}
+
 		&.role-USER {
 			background: #C8E6C9;
 			color: #256029;
@@ -658,16 +821,19 @@
 .files {
 	.ui-fileupload-simple {
 		.ui-fileupload-filename {
-			display:none;
+			display: none;
 		}
-		.ui-button  {
+
+		.ui-button {
 			background-color: transparent;
 			color: #689F38;
 			border: 1px solid;
-			&.ui-button-text-icon-left{
-				 .ui-button-text {
-					padding: 0.5rem 1rem 0.5rem 1rem;				
+
+			&.ui-button-text-icon-left {
+				.ui-button-text {
+					padding: 0.5rem 1rem 0.5rem 1rem;
 				}
+
 				.ui-icon {
 					left: 0.65rem
 				}

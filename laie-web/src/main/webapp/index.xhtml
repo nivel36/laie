@@ -79,9 +79,6 @@
 						<p:button icon="pi pi-plus" outcome="/candidate/add.xhtml"
 							styleClass="ui-button-success ui-button-outlined" />
 					</cc:candidates>
-
-					<cc:events title="#{i18n['event.last_events']}" rows="5"
-						value="#{indexView.actions}" />
 				</div>
 
 				<div class="col-12 xl:col-4">
@@ -91,6 +88,9 @@
 						<p:button icon="pi pi-plus" outcome="/meeting/add.xhtml"
 							styleClass="ui-button-success ui-button-outlined" />
 					</cc:meetings>
+					
+					<cc:events title="#{i18n['event.last_events']}" rows="5"
+						value="#{indexView.actions}" />
 				</div>
 			</div>
 		</h:form>

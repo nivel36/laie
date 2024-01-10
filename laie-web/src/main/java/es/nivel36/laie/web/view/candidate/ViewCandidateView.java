@@ -21,7 +21,6 @@ import es.nivel36.laie.ejb.candidate.RatingService;
 import es.nivel36.laie.ejb.core.bookmark.Bookmark;
 import es.nivel36.laie.ejb.core.file.PhysicalFileService;
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.job.candidature.JobCandidatureService;
 import es.nivel36.laie.ejb.job.meeting.Meeting;
 import es.nivel36.laie.ejb.job.meeting.MeetingService;
 import es.nivel36.laie.web.core.IllegalPageStateException;
@@ -44,39 +43,23 @@ public class ViewCandidateView extends AbstractView {
 	private static final String URL = "/candidate/view.xhtml";
 
 	private @Param(required = true, name = "candidate") String candidateId;
-
 	private Candidate candidate;
-
 	private boolean editable;
-
 	private List<File> files;
-
 	private @Inject JobCandidatureByCandidateLazyDataModel jobCandidatures;
-
 	private List<Meeting> meetings;
-
 	private boolean bookmarkable;
-
 	private Bookmark bookmark;
-
+	
 	private boolean addRatingVisible;
-
 	private boolean editRatingVisible;
-
 	private Rating rating;
-
 	private List<Rating> ratings;
 
 	private transient @Inject CandidateService candidateService;
-
 	private transient @Inject PhysicalFileService fileUploadService;
-
 	private transient @Inject MeetingService meetingService;
-
-	private transient @Inject JobCandidatureService jobCandidatureService;
-
 	private transient @Inject EditCandidatePermission editCandidatePermission;
-
 	private transient @Inject RatingService ratingService;
 
 	@PostConstruct
@@ -237,11 +220,6 @@ public class ViewCandidateView extends AbstractView {
 	public void setMeetingService(final MeetingService meetingService) {
 		Objects.requireNonNull(meetingService);
 		this.meetingService = meetingService;
-	}
-
-	public void setJobCandidatureService(final JobCandidatureService jobCandidatureService) {
-		Objects.requireNonNull(jobCandidatureService);
-		this.jobCandidatureService = jobCandidatureService;
 	}
 
 	public void setEditCandidatePermission(final EditCandidatePermission editCandidatePermission) {

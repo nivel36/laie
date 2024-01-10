@@ -56,7 +56,7 @@ public class RatingService {
 		Objects.requireNonNull(rating);
 		logger.debug("Adding rating {}", rating);
 		this.ratingDao.insert(rating);
-		updateMeanRating(rating.getCandidate());
+		this.updateMeanRating(rating.getCandidate());
 	}
 
 	public Rating updateRating(final Rating rating) {
@@ -88,11 +88,7 @@ public class RatingService {
 		}
 		float median = add / size;
 		candidate.setRating(Integer.valueOf((int) Math.floor(median)));
-		try {
-			this.candidateService.updateCandidate(candidate);
-		} catch (DuplicateEmailException e) {
-			// can't happen
-		}
+		this.candidateService.updateCandidateRating(candidate);
 	}
 
 	public void setRatingDao(RatingDao ratingDao) {

@@ -3936,6 +3936,58 @@ a {
   font-weight: 700;
   src: url("#{resource['roma-layout:fonts/Inter-UI-Bold.otf']}") format("opentype"), url("#{resource['roma-layout:fonts/Inter-UI-Bold.woff2']}") format("woff2"), url("#{resource['roma-layout:fonts/Inter-UI-Bold.woff']}") format("woff"), url("#{resource['roma-layout:fonts/Inter-UI-Bold.ttf']}") format("truetype"); /* Safari, Android, iOS */
 }
+.events .ui-dataview-header {
+  display: none;
+}
+.events .ui-dataview-row a {
+  color: #252529;
+}
+.events .event-title {
+  vertical-align: middle;
+  font-weight: 500;
+}
+.events .event-time {
+  background-color: #ebebef;
+  padding: 0.25em;
+  vertical-align: middle;
+  margin-left: 1em;
+  display: inline-block;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+}
+.events img {
+  width: 100%;
+}
+.events .event {
+  border-bottom: 1px solid #ebebef;
+  padding: 1em;
+}
+.events .event i {
+  font-size: 2em;
+  margin-right: 0.25em;
+  vertical-align: middle;
+}
+.events .event:nth-child(1) i {
+  color: #0f97c7;
+}
+.events .event:nth-child(2) i {
+  color: #1cb9d7;
+}
+.events .event:nth-child(3) i {
+  color: #f56f64;
+}
+.events .event:nth-child(4) i {
+  color: #9643F9;
+}
+.events .event:last-child {
+  border-bottom: 0 none;
+}
+.events p {
+  color: #65686a;
+  margin: 0.5em 0;
+}
+
 .meeting {
   display: flex;
   margin-bottom: 1rem;
