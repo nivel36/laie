@@ -1,10 +1,8 @@
 package es.nivel36.laie.web.view.job;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import org.omnifaces.cdi.Param;
 
@@ -24,7 +22,7 @@ public abstract class AbstractJobView extends AbstractView {
 
 	protected @Param JobOffer jobOffer;
 
-	protected transient List<String> recruiters = new ArrayList<>();
+	protected transient List<User> recruiters = new ArrayList<>();
 
 	protected transient @Inject ClientService clientService;
 
@@ -52,27 +50,7 @@ public abstract class AbstractJobView extends AbstractView {
 		this.jobOffer.setAddress(this.jobOffer.getClient().getAddress());		
 	}
 
-	protected void convertRecruiters() {
-		final Set<User> jobOfferRecruiters = this.jobOffer.getRecruiters();
-		final Set<User> newJobOfferRecruiters = new HashSet<User>();
-		for (final String email : this.recruiters) {
-			boolean oldRecruiter = false;
-			for (final User user : jobOfferRecruiters) {
-				if (user.getEmail().equals(email)) {
-					oldRecruiter = true;
-					newJobOfferRecruiters.add(user);
-					break;
-				}
-			}
-			if (!oldRecruiter) {
-				final User newRecruiter = this.userService.findUserByEmail(email);
-				newJobOfferRecruiters.add(newRecruiter);
-			}
-		}
-		this.jobOffer.setRecruiters(newJobOfferRecruiters);
-	}
-
-	public List<String> getRecruiters() {
+	public List<User> getRecruiters() {
 		return this.recruiters;
 	}
 
@@ -80,7 +58,7 @@ public abstract class AbstractJobView extends AbstractView {
 		this.jobOffer = jobOffer;
 	}
 
-	public void setRecruiters(final List<String> recruiters) {
+	public void setRecruiters(final List<User> recruiters) {
 		this.recruiters = recruiters;
 	}
 

@@ -90,6 +90,14 @@ public class JobOfferDao extends AbstractDao {
 		final Parameters parameters = map("jobOffer", jobOffer);
 		return this.findByQuery(JobOfferEvent.class, namedQuery, parameters, page);
 	}
+	
+	public List<User> findRecruitersByJobOffer(final JobOffer jobOffer, final Page page) {
+		Objects.requireNonNull(jobOffer);
+		Objects.requireNonNull(page);
+		final String namedQuery = "JobOffer.findRecruitersByJobOffer";
+		final Parameters parameters = map("jobOffer", jobOffer);
+		return this.findByQuery(User.class, namedQuery, parameters, page);
+	}
 
 	public SearchResult<JobOffer> search(final String searchText, final Page page, final SortField sortField,
 			final String[] searchFacets) {

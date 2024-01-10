@@ -1,11 +1,10 @@
 package es.nivel36.laie.web.view.job;
 
-import java.util.stream.Collectors;
-
 import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import jakarta.annotation.PostConstruct;
@@ -46,13 +45,13 @@ public class EditJobView extends AbstractJobView {
 	}
 
 	private void fillRecruiters() {
-		this.recruiters = this.jobOffer.getRecruiters().stream().map(User::getEmail).collect(Collectors.toList());
+		this.recruiters =this.jobOfferService.findRecruitersByJobOffer(jobOffer, Page.ALL_RESULTS);
 	}
 
 	public void save() {
 		logger.debug("Save job offer action performed");
 		if (canAddJobOfferToClient()) {
-			this.convertRecruiters();
+			jobOffer.setRecruiters(recruiters);
 			this.jobOfferService.updateJobOffer(jobOffer);
 			Faces.redirect(ViewJobView.getUrl(this.jobOffer.getId()));
 		} else {
@@ -68,7 +67,7 @@ public class EditJobView extends AbstractJobView {
 	}
 
 	public void next() {
-		this.convertRecruiters();
+		jobOffer.setRecruiters(recruiters);
 		this.jobOffer = this.jobOfferService.updateJobOffer(jobOffer);
 		Faces.redirect("/job/editDetails.xhtml?jobOffer=" + this.jobOffer.getId());
 	}

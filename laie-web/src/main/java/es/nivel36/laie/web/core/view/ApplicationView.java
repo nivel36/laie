@@ -1,5 +1,7 @@
 package es.nivel36.laie.web.core.view;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,7 +15,9 @@ import jakarta.inject.Named;
 public class ApplicationView extends AbstractView {
 
 	private static final long serialVersionUID = 1L;
-
+	
+	private String hostname;
+	
 	private List<Language> languages;
 
 	public List<Language> getLanguages() {
@@ -21,7 +25,12 @@ public class ApplicationView extends AbstractView {
 	}
 
 	@PostConstruct
-	public void init() {
+	public void init() throws UnknownHostException {
 		this.languages = Arrays.asList(Language.values());
+		hostname = InetAddress.getLocalHost().getHostName();
+	}
+
+	public String getHostname() {
+		return hostname;
 	}
 }

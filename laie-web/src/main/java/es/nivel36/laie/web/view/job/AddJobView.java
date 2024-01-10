@@ -36,12 +36,12 @@ public class AddJobView extends AbstractJobView {
 		}
 		this.jobOffer.setOpenDate(LocalDate.now());
 		this.jobOffer.setOwner(this.sessionUser.get());
-		this.recruiters = this.sessionUser.getTeam().stream().map(User::getEmail).collect(Collectors.toList());
+		this.recruiters = this.sessionUser.getTeam().stream().collect(Collectors.toList());
 	}
 
 	public void next() {
 		logger.debug("Create new job Offer action performed");
-		this.convertRecruiters();
+		this.jobOffer.setRecruiters(recruiters);
 		this.jobOfferService.addJobOffer(this.jobOffer);
 		Faces.redirect("/job/addDetails.xhtml?jobOffer=" + this.jobOffer.getId());
 	}

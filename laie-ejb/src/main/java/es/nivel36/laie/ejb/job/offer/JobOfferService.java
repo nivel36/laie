@@ -179,6 +179,12 @@ public class JobOfferService {
 		Objects.requireNonNull(page);
 		return jobOfferDao.findJobOfferEventsByJobOffer(jobOffer, page);
 	}
+	
+	public List<User> findRecruitersByJobOffer(final JobOffer jobOffer, final Page page) {
+		Objects.requireNonNull(jobOffer);
+		Objects.requireNonNull(page);
+		return jobOfferDao.findRecruitersByJobOffer(jobOffer, page);
+	}
 
 	public SearchResult<JobOffer> search(final String searchText, final Page page) {
 		return this.search(searchText, page, null, null);

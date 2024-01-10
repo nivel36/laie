@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://nivel.36/laie/ui"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:g="http://nivel.36/laie/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
 		#{i18n['maintenance.maintenances']}
@@ -13,37 +19,48 @@
 	<ui:define name="breadcrumb">
 		<p:breadCrumb>
 			<p:menuitem value="#{i18n['menu.index']}" outcome="/index.xhtml" />
-			<p:menuitem value="#{i18n['maintenance.maintenances']}" disabled="true" />
+			<p:menuitem value="#{i18n['maintenance.maintenances']}"
+				disabled="true" />
 		</p:breadCrumb>
 	</ui:define>
 
 	<ui:define name="content">
 		<div class="grid">
 			<div class="col-12 xl:col-6">
-				<div class="card card-w-title">
-					<h5>#{i18n['maintenance.job_candidatures']}</h5>
+				<p:card styleClass="card card-w-title">
+					<f:facet name="title">
+						<h5>#{i18n['maintenance.job_candidatures']}</h5>
+					</f:facet>
 					<ul>
 						<li><h:link outcome="/settings/jobCandidatureStates.xhtml"
-								value="#{i18n['job_candidature.job_candidature_states']}" styleClass="link" /></li>
-						<li><h:link outcome="/settings/jobOfferStates.xhtml" value="#{i18n['job.job_offer_states']}" styleClass="link" /></li>
+								value="#{i18n['job_candidature.job_candidature_states']}"
+								styleClass="link" /></li>
+						<li><h:link outcome="/settings/jobOfferStates.xhtml"
+								value="#{i18n['job.job_offer_states']}" styleClass="link" /></li>
 					</ul>
-				</div>
+				</p:card>
 			</div>
 			<div class="col-12 xl:col-6">
-				<div class="card card-w-title">
-					<h5>#{i18n['maintenance.reports']}</h5>
+				<p:card styleClass="card card-w-title">
+					<f:facet name="title">
+						<h5>#{i18n['maintenance.reports']}</h5>
+					</f:facet>
 					<ul>
-						<li><h:link outcome="/settings/reports.xhtml" value="#{i18n['maintenance.reports']}" /></li>
+						<li><h:link outcome="/settings/reports.xhtml"
+								value="#{i18n['maintenance.reports']}" /></li>
 					</ul>
-				</div>
+				</p:card>
 			</div>
-				<div class="col-12 xl:col-6">
-				<div class="card card-w-title">
-					<h5>#{i18n['maintenance.documents']}</h5>
+			<div class="col-12 xl:col-6">
+				<p:card styleClass="card card-w-title">
+					<f:facet name="title">
+						<h5>#{i18n['maintenance.documents']}</h5>
+					</f:facet>
 					<ul>
-						<li><h:link outcome="/settings/gdpr.xhtml" value="#{i18n['maintenance.gdpr']}" /></li>
+						<li><h:link outcome="/settings/gdpr.xhtml"
+								value="#{i18n['maintenance.gdpr']}" /></li>
 					</ul>
-				</div>
+				</p:card>
 			</div>
 		</div>
 	</ui:define>

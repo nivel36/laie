@@ -265,6 +265,14 @@
 			WHERE j.name = :name
 		]]></query>
 	</named-query>
+	
+	<named-query name="JobOffer.findRecruitersByJobOffer">
+		<query><![CDATA[
+			SELECT u 
+			FROM User u 
+			WHERE :jobOffer MEMBER OF u.recruiterOfJobOffers			
+		]]></query>
+	</named-query>
 
 	<named-query name="JobOffer.findJobOfferData">
 		<query><![CDATA[

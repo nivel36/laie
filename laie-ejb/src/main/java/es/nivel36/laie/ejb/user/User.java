@@ -69,7 +69,7 @@ public class User extends AbstractEntity implements Subject {
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "owner", orphanRemoval = true)
 	private Set<JobOffer> jobOffers = new HashSet<>();
-
+	
 	@Column(name = "LANGUAGE", nullable = false)
 	private String language;
 
@@ -100,6 +100,10 @@ public class User extends AbstractEntity implements Subject {
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	private Set<Rating> ratings = new HashSet<>();
+
+	@ManyToMany
+	@JoinTable(name = "JOB_PERSON", joinColumns = @JoinColumn(name = "JOB_ID"), inverseJoinColumns = @JoinColumn(name = "PERSON_ID"))
+	private Set<JobOffer> recruiterOfJobOffers = new HashSet<>();
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "ROLE", nullable = false, length = 16)
@@ -206,6 +210,10 @@ public class User extends AbstractEntity implements Subject {
 		return ratings;
 	}
 
+	public Set<JobOffer> getRecruiterOfJobOffers() {
+		return recruiterOfJobOffers;
+	}
+
 	public Role getRole() {
 		return role;
 	}
@@ -295,6 +303,10 @@ public class User extends AbstractEntity implements Subject {
 
 	public void setRatings(Set<Rating> ratings) {
 		this.ratings = ratings;
+	}
+
+	public void setRecruiterOfJobOffers(Set<JobOffer> recruiterOfJobOffers) {
+		this.recruiterOfJobOffers = recruiterOfJobOffers;
 	}
 
 	public void setRole(Role role) {
