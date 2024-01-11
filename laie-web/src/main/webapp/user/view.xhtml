@@ -51,7 +51,7 @@
 				</div>
 				<cc:jobOffers value="#{viewUserView.jobOffers}" rows="5">
 					<p:button icon="pi pi-plus" outcome="/job/add.xhtml"
-						rendered="#{viewUserView.logedUser}"
+						rendered="#{viewUserView.loggedUser}"
 						styleClass="ui-button-success ui-button-outlined" />
 				</cc:jobOffers>
 			</div>
@@ -95,7 +95,7 @@
 				<h:form id="jobMeetingsForm">
 					<cc:meetings value="#{viewUserView.meetings}" rows="5">
 						<p:button icon="pi pi-plus" outcome="/meeting/add.xhtml"
-							rendered="#{viewUserView.logedUser}"
+							rendered="#{viewUserView.loggedUser}"
 							styleClass="ui-button-success ui-button-outlined" />
 					</cc:meetings>
 				</h:form>

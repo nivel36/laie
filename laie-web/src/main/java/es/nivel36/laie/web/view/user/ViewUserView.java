@@ -8,16 +8,13 @@ import org.omnifaces.cdi.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.job.meeting.Meeting;
-import es.nivel36.laie.ejb.job.meeting.MeetingService;
-import es.nivel36.laie.ejb.job.offer.JobOfferService;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserService;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
 import es.nivel36.laie.web.view.action.ActionsByUserLazyDataModel;
 import es.nivel36.laie.web.view.job.JobOffersByOwnerOrRecruiterLazyDataModel;
+import es.nivel36.laie.web.view.meeting.MeetingsByUserLazyDataModel;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
@@ -28,63 +25,37 @@ import jakarta.inject.Named;
 public class ViewUserView extends AbstractView {
 
 	private static final long serialVersionUID = -6450384052805715881L;
-
 	private static final Logger logger = LoggerFactory.getLogger(ViewUserView.class);
 
-	private static final String URL = "/user/view.xhtml";
-
-	private @Param(required = true, name = "user") String userId;
-
-	private User user;
-
-	private boolean editable;
-
-	private List<Meeting> meetings;
-
-	private List<User> team;
-
-	private boolean loggedUser;
-
-	private @Inject ActionsByUserLazyDataModel actions;
-	
-	private @Inject JobOffersByOwnerOrRecruiterLazyDataModel jobOffers;
-
-	private transient @Inject MeetingService meetingService;
-
-	private transient @Inject UserService userService;
-
-	private transient @Inject JobOfferService jobOfferService;
-
-	@PostConstruct
-	public void init() {
-		logger.trace("User {} init", this.userId);
-		findUser();
-		this.team = new ArrayList<>(this.user.getTeam());
-		this.meetings = this.meetingService.findPlannedMeetings(this.user, Page.ALL_RESULTS);
-		this.loggedUser = this.sessionUser.get().equals(this.user);
-		this.editable = this.sessionUser.isAdmin() || loggedUser;
-		actions.setUser(user);
-		jobOffers.setUser(user);
-	}
-
-	private void findUser() {
-		try {
-			final Long id = Long.parseLong(userId);
-			this.user = this.userService.findAllUserData(id);
-			if (this.user == null) {
-				throw new IllegalPageStateException();
-			}
-		} catch (final NumberFormatException ex) {
-			throw new IllegalPageStateException();
-		}
-	}
+	public static final String URL = "/user/view.xhtml";
 
 	public static String getUrl(long userId) {
 		return URL + "?user=" + userId;
 	}
 
-	public boolean isLogedUser() {
-		return loggedUser;
+	private @Param(required = true, name = "user") String userId;
+	private User user;
+	private boolean editable;
+	private List<User> team;
+
+	private boolean loggedUser;
+	private @Inject ActionsByUserLazyDataModel actions;
+	private @Inject JobOffersByOwnerOrRecruiterLazyDataModel jobOffers;
+	private transient @Inject MeetingsByUserLazyDataModel meetings;
+
+	private transient @Inject UserService userService;
+
+	private User findUser() {
+		try {
+			final Long id = Long.parseLong(userId);
+			final User user = this.userService.findAllUserData(id);
+			if (user == null) {
+				throw new IllegalPageStateException();
+			}
+			return user;
+		} catch (final NumberFormatException ex) {
+			throw new IllegalPageStateException();
+		}
 	}
 
 	public ActionsByUserLazyDataModel getActions() {
@@ -92,11 +63,12 @@ public class ViewUserView extends AbstractView {
 	}
 
 	public JobOffersByOwnerOrRecruiterLazyDataModel getJobOffers() {
+		Objects.requireNonNull(jobOffers);
 		return this.jobOffers;
 	}
 
-	public List<Meeting> getMeetings() {
-		return this.meetings;
+	public MeetingsByUserLazyDataModel getMeetings() {
+		return meetings;
 	}
 
 	public List<User> getTeam() {
@@ -107,26 +79,47 @@ public class ViewUserView extends AbstractView {
 		return this.user;
 	}
 
+	@PostConstruct
+	public void init() {
+		logger.trace("User {} init", this.userId);
+		this.user = findUser();
+		this.team = new ArrayList<>(this.user.getTeam());
+		this.loggedUser = this.sessionUser.get().equals(this.user);
+		this.editable = this.sessionUser.isAdmin() || loggedUser;
+		this.actions.setUser(user);
+		this.jobOffers.setUser(user);
+		this.meetings.setUser(user);
+	}
+
 	public boolean isEditable() {
 		return this.editable;
 	}
 
-	public void setUser(final User user) {
-		this.user = user;
+	public boolean isLoggedUser() {
+		return loggedUser;
 	}
 
-	public void setMeetingService(final MeetingService meetingService) {
-		Objects.requireNonNull(meetingService);
-		this.meetingService = meetingService;
+	public void setActions(ActionsByUserLazyDataModel actions) {
+		Objects.requireNonNull(actions);
+		this.actions = actions;
+	}
+
+	public void setJobOffers(JobOffersByOwnerOrRecruiterLazyDataModel jobOffers) {
+		Objects.requireNonNull(jobOffers);
+		this.jobOffers = jobOffers;
+	}
+
+	public void setMeetings(MeetingsByUserLazyDataModel meetings) {
+		Objects.requireNonNull(meetings);
+		this.meetings = meetings;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public void setUserService(final UserService userService) {
 		Objects.requireNonNull(userService);
 		this.userService = userService;
-	}
-
-	public void setJobOfferService(final JobOfferService jobOfferService) {
-		Objects.requireNonNull(jobOfferService);
-		this.jobOfferService = jobOfferService;
 	}
 }

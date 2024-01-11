@@ -362,6 +362,15 @@
 			ORDER BY m.datePlanned ASC
 		]]></query>
 	</named-query>
+	
+	<named-query name="Meeting.countPlannedByOwner">
+		<query><![CDATA[
+			SELECT COUNT(m) 
+			FROM Meeting m
+			WHERE m.owner = :owner
+			AND m.datePlanned >= current_date
+		]]></query>
+	</named-query>
 
 	<named-query name="Meeting.findConductedByOwner">
 		<query><![CDATA[
@@ -370,6 +379,15 @@
 			WHERE m.owner = :owner
 			AND m.datePlanned < current_date 
 			ORDER BY m.datePlanned ASC
+		]]></query>
+	</named-query>
+	
+	<named-query name="Meeting.countConductedByOwner">
+		<query><![CDATA[
+			SELECT COUNT(m) 
+			FROM Meeting m
+			WHERE m.owner = :owner
+			AND m.datePlanned < current_date 
 		]]></query>
 	</named-query>
 

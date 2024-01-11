@@ -116,6 +116,12 @@ public class MeetingService {
 		logger.debug("Find planned meetings by owner {}", owner);
 		return this.meetingDao.findPlannedMeetings(owner, page);
 	}
+	
+	public long countPlannedMeetings(final User owner) {
+		Objects.requireNonNull(owner);
+		logger.debug("Count planned meetings by owner {}", owner);
+		return this.meetingDao.countPlannedMeetings(owner);
+	}
 
 	public List<Subject> searchPerson(final String query) {
 		Objects.requireNonNull(query);

@@ -28,6 +28,13 @@ public class MeetingDao extends AbstractDao {
 		final Parameters parameters = map("owner", owner).and("now", LocalDateTime.now());
 		return this.findByQuery(Meeting.class, namedQuery, parameters, page);
 	}
+	
+	public long countConductedMeetings(final User owner) {
+		Objects.requireNonNull(owner);
+		final String namedQuery = "Meeting.countConductedByOwner";
+		final Parameters parameters = map("owner", owner).and("now", LocalDateTime.now());
+		return this.findByQuery(Long.class, namedQuery, parameters);
+	}
 
 	public List<Meeting> findPlannedMeetings(final User owner, final Page page) {
 		Objects.requireNonNull(owner);
@@ -35,6 +42,13 @@ public class MeetingDao extends AbstractDao {
 		final String namedQuery = "Meeting.findPlannedByOwner";
 		final Parameters parameters = map("owner", owner);
 		return this.findByQuery(Meeting.class, namedQuery, parameters, page);
+	}
+	
+	public long countPlannedMeetings(final User owner) {
+		Objects.requireNonNull(owner);
+		final String namedQuery = "Meeting.countPlannedMeetings";
+		final Parameters parameters = map("owner", owner).and("now", LocalDateTime.now());
+		return this.findByQuery(Long.class, namedQuery, parameters);
 	}
 
 	public Meeting findMeetingById(long id) {

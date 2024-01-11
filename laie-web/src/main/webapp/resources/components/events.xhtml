@@ -10,7 +10,7 @@
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<composite:interface>
+	<composite:interface componentType="events">
 		<composite:attribute name="value" required="true" />
 		<composite:attribute name="styleClass" required="false" default="" />
 		<composite:attribute name="rowStyleClass" required="false" default="" />
@@ -33,16 +33,16 @@
 				gridRowStyleClass="event #{cc.attrs.rowStyleClass}">
 				<p:dataViewGridItem columns="1">
 					<h:panelGroup rendered="#{event.entityName eq 'CLIENT'}">
-						<i class="pi pi-compass" />
+						<i class="pi pi-compass client" />
 					</h:panelGroup>
 					<h:panelGroup rendered="#{event.entityName eq 'CANDIDATE'}">
-						<i class="pi pi-users" />
+						<i class="pi pi-users candidate" />
 					</h:panelGroup>
 					<h:panelGroup rendered="#{event.entityName eq 'CONTACT'}">
-						<i class="pi pi-user" />
+						<i class="pi pi-user contact" />
 					</h:panelGroup>
 					<h:panelGroup rendered="#{event.entityName eq 'JOB_OFFER'}">
-						<i class="pi pi-briefcase" />
+						<i class="pi pi-briefcase job" />
 					</h:panelGroup>
 					<span class="event-title"><h:link
 							value="#{event.entityTitle}" outcome="/client/view.xhtml"
@@ -60,10 +60,8 @@
 							rendered="#{event.entityName eq 'JOB_OFFER'}">
 							<f:param name="jobOffer" value="#{event.entityId}" />
 						</h:link></span>
-					<span class="event-time"><h:outputText value="#{event.date}">
-							<f:convertDateTime type="localDateTime"
-								pattern="HH:MM dd/MM/yyyy" />
-						</h:outputText></span>
+					<span class="event-time"><h:outputText
+							value="#{cc.elapsedTime(event.date)}" /></span>
 					<p>
 						<h:link value="#{event.user.fullName}" outcome="/user/view.xhtml">
 							<f:param name="user" value="#{event.user.id}" />

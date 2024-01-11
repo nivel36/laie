@@ -31,19 +31,15 @@ import jakarta.inject.Named;
 public class ConfigView extends AbstractView {
 
 	private static final long serialVersionUID = -1963260899429126179L;
-
 	private static final Logger logger = LoggerFactory.getLogger(ConfigView.class);
 
 	public static final String URL = "/config.xhtml";
-
+	
 	private boolean imageChanged;
-
 	private User user;
-
 	private PhysicalFile userImage;
-
+	
 	private transient @Inject PhysicalFileService fileService;
-
 	private transient @Inject UserService userService;
 
 	@PostConstruct

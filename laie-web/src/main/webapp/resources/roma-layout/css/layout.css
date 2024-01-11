@@ -3968,16 +3968,16 @@ a {
   margin-right: 0.25em;
   vertical-align: middle;
 }
-.events .event:nth-child(1) i {
+.events .event i.job {
   color: #0f97c7;
 }
-.events .event:nth-child(2) i {
+.events .event i.client {
   color: #1cb9d7;
 }
-.events .event:nth-child(3) i {
+.events .event i.contact {
   color: #f56f64;
 }
-.events .event:nth-child(4) i {
+.events .event i.candidate {
   color: #9643F9;
 }
 .events .event:last-child {
