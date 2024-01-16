@@ -1,10 +1,16 @@
-insert into JOB_CANDIDATURE_STATE( ID, VERSION, NAME, FIRST, APPROVED, DECLINED ) values ( 10, 0, 'not_contacted', true, false, false);
-insert into JOB_CANDIDATURE_STATE( ID, VERSION, NAME, FIRST, APPROVED, DECLINED ) values ( 11, 0, 'contacted', false, false, false);
-insert into JOB_CANDIDATURE_STATE( ID, VERSION, NAME, FIRST, APPROVED, DECLINED ) values ( 12, 0, 'submitted', false, false, false);
-insert into JOB_CANDIDATURE_STATE( ID, VERSION, NAME, FIRST, APPROVED, DECLINED ) values ( 13, 0, 'declined', false, false, true);
-insert into JOB_CANDIDATURE_STATE( ID, VERSION, NAME, FIRST, APPROVED, DECLINED ) values ( 14, 0, 'interviewed', false, false, false);
-insert into JOB_CANDIDATURE_STATE( ID, VERSION, NAME, FIRST, APPROVED, DECLINED ) values ( 15, 0, 'offered', false, false, false);
-insert into JOB_CANDIDATURE_STATE( ID, VERSION, NAME, FIRST, APPROVED, DECLINED ) values ( 16, 0, 'approved', false, true, false);
+insert into JOB_CANDIDATURE_STATE( ID, VERSION, NAME, FIRST, APPROVED, DECLINED, COLOR, BACKGROUND_COLOR ) values ( 10, 0, 'not_contacted', true, false, false, '#FFFFFF', '#0288D1');
+insert into JOB_CANDIDATURE_STATE( ID, VERSION, NAME, FIRST, APPROVED, DECLINED, COLOR, BACKGROUND_COLOR ) values ( 11, 0, 'contacted', false, false, false, '#FFFFFF', '#0288D1');
+insert into JOB_CANDIDATURE_STATE( ID, VERSION, NAME, FIRST, APPROVED, DECLINED, COLOR, BACKGROUND_COLOR ) values ( 12, 0, 'submitted', false, false, false, '#FFFFFF', '#0288D1');
+insert into JOB_CANDIDATURE_STATE( ID, VERSION, NAME, FIRST, APPROVED, DECLINED, COLOR, BACKGROUND_COLOR ) values ( 13, 0, 'declined', false, false, true, '#FFFFFF', '#0288D1');
+insert into JOB_CANDIDATURE_STATE( ID, VERSION, NAME, FIRST, APPROVED, DECLINED, COLOR, BACKGROUND_COLOR ) values ( 14, 0, 'interviewed', false, false, false, '#FFFFFF', '#0288D1');
+insert into JOB_CANDIDATURE_STATE( ID, VERSION, NAME, FIRST, APPROVED, DECLINED, COLOR, BACKGROUND_COLOR ) values ( 15, 0, 'offered', false, false, false, '#FFFFFF', '#0288D1');
+insert into JOB_CANDIDATURE_STATE( ID, VERSION, NAME, FIRST, APPROVED, DECLINED, COLOR, BACKGROUND_COLOR ) values ( 16, 0, 'approved', false, true, false, '#FFFFFF', '#0288D1');
+
+insert into JOB_OFFER_STATE( ID, VERSION, NAME, CLOSE, OPEN, COLOR, BACKGROUND_COLOR ) values ( 100, 0, 'closed', true, false, false, '#FFFFFF', '#0288D1');
+insert into JOB_OFFER_STATE( ID, VERSION, NAME, CLOSE, OPEN, COLOR, BACKGROUND_COLOR ) values ( 101, 0, 'created', false, false, false, '#FFFFFF', '#0288D1');
+insert into JOB_OFFER_STATE( ID, VERSION, NAME, CLOSE, OPEN, COLOR, BACKGROUND_COLOR ) values ( 102, 0, 'finished', false, false, false, '#FFFFFF', '#0288D1');
+insert into JOB_OFFER_STATE( ID, VERSION, NAME, CLOSE, OPEN, COLOR, BACKGROUND_COLOR ) values ( 103, 0, 'opened', false, false, true, '#FFFFFF', '#0288D1');
+insert into JOB_OFFER_STATE( ID, VERSION, NAME, CLOSE, OPEN, COLOR, BACKGROUND_COLOR ) values ( 104, 0, 'paused', false, false, false, '#FFFFFF', '#0288D1');
 
 insert into JOB_CANDIDATURE_STATE_REL( PARENT_ID, JOB_CANDIDATURE_ID ) values ( 10, 13);
 insert into JOB_CANDIDATURE_STATE_REL( PARENT_ID, JOB_CANDIDATURE_ID ) values ( 10, 11);
@@ -98,14 +104,18 @@ insert into JOB_CANDIDATURE(ID, VERSION, CANDIDATE_ID, JOB_OFFER_ID, JOB_CANDIDA
 
 insert into JOB_CANDIDATURE_EVENT(ID, VERSION, DATE, JOB_CANDIDATURE_ID, NOTES, JOB_CANDIDATURE_STATE_ID, TYPE, USER_ID) values (1720, 1, (TO_TIMESTAMP('17/12/2021 20:12:54', 'DD/MM/YYYY  HH24:MI:SS')), 1710, 'El candidato parece realmente interesado en el trabajo', 11, 'PHONE_CALL', 500)
 
-insert into ACTION(ID, VERSION, DATE, ENTITY_ID, ENTITY_NAME, ENTITY_TITLE, TYPE, USER_ID) values (1730, 1, (TO_TIMESTAMP('17/12/2021 20:02:02', 'DD/MM/YYYY HH24:MI:SS')), 1000, 'CLIENT', 'Nivel 36', 'CREATE', 500)
-insert into ACTION(ID, VERSION, DATE, ENTITY_ID, ENTITY_NAME, ENTITY_TITLE, TYPE, USER_ID) values (1731, 1, (TO_TIMESTAMP('17/12/2021 20:04:13', 'DD/MM/YYYY HH24:MI:SS')), 510, 'CANDIDATE', 'Abel Ferrer', 'CREATE', 500)
-insert into ACTION(ID, VERSION, DATE, ENTITY_ID, ENTITY_NAME, ENTITY_TITLE, TYPE, USER_ID) values (1732, 1, (TO_TIMESTAMP('17/12/2021 20:05:12', 'DD/MM/YYYY HH24:MI:SS')), 1600, 'JOB_OFFER', 'Arquitecto de Software', 'CREATE', 500)
-insert into ACTION(ID, VERSION, DATE, ENTITY_ID, ENTITY_NAME, ENTITY_TITLE, TYPE, USER_ID) values (1733, 1, (TO_TIMESTAMP('17/12/2021 20:12:24', 'DD/MM/YYYY HH24:MI:SS')), 1601, 'JOB_OFFER', 'Arquitecto Java', 'CREATE', 500)
-insert into ACTION(ID, VERSION, DATE, ENTITY_ID, ENTITY_NAME, ENTITY_TITLE, TYPE, USER_ID) values (1734, 1, (TO_TIMESTAMP('17/12/2021 20:22:55', 'DD/MM/YYYY HH24:MI:SS')), 1601, 'JOB_OFFER', 'Arquitecto Java', 'UPDATE', 500)
+insert into ACTION(ID, VERSION, DATE, ENTITY_ID, ENTITY_NAME, ENTITY_TITLE, TYPE, USER_ID) values (1730, 1, (TO_TIMESTAMP('17/12/2023 20:02:02', 'DD/MM/YYYY HH24:MI:SS')), 1000, 'CLIENT', 'Nivel 36', 'CREATE', 500)
+insert into ACTION(ID, VERSION, DATE, ENTITY_ID, ENTITY_NAME, ENTITY_TITLE, TYPE, USER_ID) values (1731, 1, (TO_TIMESTAMP('17/12/2023 20:04:13', 'DD/MM/YYYY HH24:MI:SS')), 510, 'CANDIDATE', 'Abel Ferrer', 'CREATE', 500)
+insert into ACTION(ID, VERSION, DATE, ENTITY_ID, ENTITY_NAME, ENTITY_TITLE, TYPE, USER_ID) values (1732, 1, (TO_TIMESTAMP('19/12/2023 20:05:12', 'DD/MM/YYYY HH24:MI:SS')), 1600, 'JOB_OFFER', 'Arquitecto de Software', 'CREATE', 500)
+insert into ACTION(ID, VERSION, DATE, ENTITY_ID, ENTITY_NAME, ENTITY_TITLE, TYPE, USER_ID) values (1733, 1, (TO_TIMESTAMP('31/12/2023 20:12:24', 'DD/MM/YYYY HH24:MI:SS')), 1601, 'JOB_OFFER', 'Arquitecto Java', 'CREATE', 500)
+insert into ACTION(ID, VERSION, DATE, ENTITY_ID, ENTITY_NAME, ENTITY_TITLE, TYPE, USER_ID) values (1734, 1, (TO_TIMESTAMP('05/01/2024 20:22:55', 'DD/MM/YYYY HH24:MI:SS')), 1601, 'JOB_OFFER', 'Arquitecto Java', 'UPDATE', 500)
 
-insert into MEETING(ID, VERSION, DATE_PLANNED, DURATION, MEETING_TYPE, OWNER_ID, DESCRIPTION, TITLE) values (600, 1, (TO_TIMESTAMP('17/12/2022 08:30:00', 'DD/MM/YYYY HH24:MI:SS')), 5400, 'PHONE', 500, 'Hay que valorar si el candidato es adecuado para el puesto de arquitecto', 'Reunión para candidatura')
+insert into MEETING(ID, VERSION, DATE_PLANNED, DURATION, MEETING_TYPE, OWNER_ID, DESCRIPTION, TITLE) values (600, 1, (TO_TIMESTAMP('27/02/2024 08:30:00', 'DD/MM/YYYY HH24:MI:SS')), 5400, 'PHONE', 500, 'Hay que valorar si el candidato es adecuado para el puesto de arquitecto', 'Reunión para candidatura')
+insert into MEETING(ID, VERSION, DATE_PLANNED, DURATION, MEETING_TYPE, OWNER_ID, DESCRIPTION, TITLE) values (601, 1, (TO_TIMESTAMP('01/03/2024 12:30:00', 'DD/MM/YYYY HH24:MI:SS')), 5400, 'PHONE', 500, 'El responsable técnico ha de valorar los conocimientos de Java e Hibernate del candidato', 'Reunión para evaluación')
 
 insert into EMAILS(MEETING_ID, EMAIL) values (600, 'abel.ferrer.jimenez@gmail.com');
 insert into EMAILS(MEETING_ID, EMAIL) values (600, 'aferrer@gmail.com');
+
+insert into EMAILS(MEETING_ID, EMAIL) values (601, 'abel.ferrer.jimenez@gmail.com');
+insert into EMAILS(MEETING_ID, EMAIL) values (601, 'aferrer@gmail.com');
 

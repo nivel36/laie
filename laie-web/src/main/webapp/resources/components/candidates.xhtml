@@ -19,42 +19,45 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<p:card id="#{cc.clientId}"
-			class="card card-w-title candidates #{cc.attrs.styleClass}">
-			<f:facet name="title">
-				<h5>#{cc.attrs.title}</h5>
-			</f:facet>
+		<div id="#{cc.clientId}"
+			class="ui-card card card-w-title candidates #{cc.attrs.styleClass}">
+			<div class="ui-card-body">
+				<div class="ui-card-title">
+					<h5>#{cc.attrs.title}</h5>
+				</div>
+				<div class="ui-card-content">
+					<p:dataTable var="candidate" id="candidates"
+						value="#{cc.attrs.value}"
+						emptyMessage="#{i18n['candidate.no_candidates_found']}"
+						reflow="true" paginator="true" paginatorPosition="bottom"
+						rows="#{cc.attrs.rows}" lazy="true"
+						styleClass="ui-datatable-borderless" widgetVar="candidates">
 
-			<p:dataTable var="candidate" id="candidates"
-				value="#{cc.attrs.value}"
-				emptyMessage="#{i18n['candidate.no_candidates_found']}"
-				reflow="true" paginator="true" paginatorPosition="bottom"
-				rows="#{cc.attrs.rows}" lazy="true"
-				styleClass="ui-datatable-borderless">
+						<p:column headerText="#{i18n['candidate.name']}"
+							sortBy="#{candidate.name}" sortOrder="asc">
+							<h:link outcome="/candidate/view">
+								<cc:avatar name="#{candidate.fullName}"
+									path="#{candidate.picture.path}" styleClass="mr-2" />
+								<h:outputText styleClass="link" value="#{candidate.fullName}" />
+								<f:param name="candidate" value="#{candidate.id}" />
+							</h:link>
+						</p:column>
 
-				<p:column headerText="#{i18n['candidate.name']}"
-					sortBy="#{candidate.name}" sortOrder="asc">
-					<h:link outcome="/candidate/view">
-						<cc:avatar name="#{candidate.fullName}"
-							path="#{candidate.picture.path}" styleClass="mr-2" />
-						<h:outputText styleClass="link" value="#{candidate.fullName}" />
-						<f:param name="candidate" value="#{candidate.id}" />
-					</h:link>
-				</p:column>
+						<p:column headerText="#{i18n['candidate.jobProfile']}"
+							priority="5">
+							<h:outputText value="#{candidate.jobProfile}" />
+						</p:column>
 
-				<p:column headerText="#{i18n['candidate.jobProfile']}" priority="5">
-					<h:outputText value="#{candidate.jobProfile}" />
-				</p:column>
-
-				<p:column headerText="#{i18n['candidate.rating']}"
-					sortBy="#{candidate.rating}" priority="4">
-					<p:rating value="#{candidate.rating}" cancel="false"
-						readonly="true" />
-				</p:column>
-			</p:dataTable>
-			<div class="card-header-buttons">
-				<composite:insertChildren />
+						<p:column headerText="#{i18n['candidate.rating']}" sortable="true"
+							sortBy="#{candidate.rating}" priority="4">
+							<p:rating value="#{candidate.rating}" readonly="true" />
+						</p:column>
+					</p:dataTable>
+					<div class="card-header-buttons">
+						<composite:insertChildren />
+					</div>
+				</div>
 			</div>
-		</p:card>
+		</div>
 	</composite:implementation>
 </ui:component>

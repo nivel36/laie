@@ -1,3 +1,14 @@
+.job-offer-state {
+	&.job-offer-state-created {
+		background-color: #689F38;
+		color: #ffffff;
+	}
+	&.job-offer-state-opened {
+		background-color: #0288D1;
+		color: #ffffff;
+	}
+}
+
 .events {
 	.ui-dataview-header {
 		display: none;
@@ -66,18 +77,18 @@
 
 .meeting {
 	display: flex;
-	margin-bottom: 1rem;
+	margin-bottom: 2rem;
 	color: $textColor;
 
 	.meeting-date {
 		display: flex;
 		flex-direction: column;
-		align-items: center;
+		align-items: flex-start;
 		flex: 1;
 
 		.meeting-date-day {
 			display: flex;
-			font-size: 3rem;
+			font-size: 2rem;
 			padding: 0.2rem 0.5rem;
 			background-color: $primaryColor;
 			color: $primaryTextColor;
@@ -91,9 +102,9 @@
 
 	.meeting-content {
 		display: flex;
-		margin-left: 1.2rem;
+		margin-left: 1rem;
 		flex-direction: column;
-		flex: 4;
+		flex: 8;
 
 		.meeting-title {
 			font-size: 1.2rem;

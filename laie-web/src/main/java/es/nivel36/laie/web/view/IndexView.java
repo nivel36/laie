@@ -24,20 +24,15 @@ import jakarta.inject.Named;
 public class IndexView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(IndexView.class);
-
 	private static final long serialVersionUID = 469723251635970418L;
-
 	public static final String URL = "/index.xhtml";
 
 	private @Inject ActionsByUserLazyDataModel actions;
-
 	private @Inject CandidateLazyDataModel candidates;
-
 	private @Inject JobOfferLazyDataModel jobOffers;
+	private transient @Inject MeetingService meetingService;
 
 	private List<Meeting> meetings;
-
-	private transient @Inject MeetingService meetingService;
 	
 	@PostConstruct
 	public void init() {

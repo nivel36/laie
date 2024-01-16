@@ -33,7 +33,13 @@ public class JobCandidatureState extends AbstractEntity implements EventState {
 
 	@Column(name = "FIRST")
 	private boolean first;
-
+	
+	@Column(name = "COLOR")
+	private String color;
+	
+	@Column(name = "BACKGROUND_COLOR")
+	private String backgroundColor;
+	
 	@OneToMany(mappedBy = "state", fetch = FetchType.LAZY)
 	private Set<JobCandidature> jobCandidatures = new HashSet<>();
 
@@ -41,7 +47,7 @@ public class JobCandidatureState extends AbstractEntity implements EventState {
 	@KeywordField(name = "name", aggregable = Aggregable.YES)
 	@Column(name = "NAME", unique = true)
 	private String name;
-	
+
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "JOB_CANDIDATURE_STATE_REL", joinColumns = {
 			@JoinColumn(name = "PARENT_ID") }, inverseJoinColumns = { @JoinColumn(name = "JOB_CANDIDATURE_ID") })
@@ -62,6 +68,14 @@ public class JobCandidatureState extends AbstractEntity implements EventState {
 		return Objects.equals(this.name, other.name);
 	}
 
+	public String getBackgroundColor() {
+		return backgroundColor;
+	}
+
+	public String getColor() {
+		return color;
+	}
+	
 	public Set<JobCandidature> getJobCandidatures() {
 		return jobCandidatures;
 	}
@@ -98,6 +112,14 @@ public class JobCandidatureState extends AbstractEntity implements EventState {
 
 	public void setApproved(final boolean approved) {
 		this.approved = approved;
+	}
+
+	public void setBackgroundColor(String backgroundColor) {
+		this.backgroundColor = backgroundColor;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
 	}
 
 	public void setDeclined(final boolean declined) {

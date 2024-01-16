@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://nivel.36/laie/ui"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:g="http://nivel.36/laie/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
 		#{i18n['candidate.candidates']}
@@ -14,19 +20,27 @@
 		<h:form id="candidateSearchForm">
 			<p:card styleClass="card card-w-title">
 				<div class="searchBar-buttons">
-					<cc:inputSearch searchText="#{searchCandidateView.searchText}" searchAction="#{searchCandidateView.search}"
+					<cc:inputSearch searchText="#{searchCandidateView.searchText}"
+						searchAction="#{searchCandidateView.search}"
 						update="candidateSearchForm:candidates" styleClass="ui-fluid" />
 					<div class="buttons">
-						<p:button value="#{i18n['candidate.new_candidate']}" outcome="/candidate/add.xhtml" styleClass="ui-button-success ui-button-outlined"
+						<p:button value="#{i18n['candidate.new_candidate']}"
+							outcome="/candidate/add.xhtml"
+							styleClass="ui-button-success ui-button-outlined"
 							rendered="#{searchCandidateView.insertable}" />
 					</div>
 				</div>
-				<p:dataTable var="candidate" id="candidates" value="#{searchCandidateView.candidates}" emptyMessage="#{i18n['candidate.no_candidates_found']}"
-					reflow="true" paginator="true" paginatorPosition="bottom" rows="10" lazy="true">
+				<p:dataTable var="candidate" id="candidates"
+					value="#{searchCandidateView.candidates}"
+					emptyMessage="#{i18n['candidate.no_candidates_found']}"
+					reflow="true" paginator="true" paginatorPosition="bottom" rows="5"
+					lazy="true">
 
-					<p:column headerText="#{i18n['candidate.name']}" sortBy="#{candidate.name}" sortOrder="asc">
+					<p:column headerText="#{i18n['candidate.name']}"
+						sortBy="#{candidate.name}" sortOrder="asc">
 						<h:link outcome="/candidate/view.xhtml">
-							<cc:avatar name="#{candidate.fullName}" path="#{candidate.picture.path}" styleClass="mr-2" />
+							<cc:avatar name="#{candidate.fullName}"
+								path="#{candidate.picture.path}" styleClass="mr-2" />
 							<h:outputText styleClass="link" value="#{candidate.fullName}" />
 							<f:param name="candidate" value="#{candidate.id}" />
 						</h:link>
@@ -40,12 +54,15 @@
 						<h:outputText value="#{candidate.email}" />
 					</p:column>
 
-					<p:column headerText="#{i18n['candidate.phone_number']}" priority="6">
+					<p:column headerText="#{i18n['candidate.phone_number']}"
+						priority="6">
 						<h:outputText value="#{candidate.phoneNumber}" />
 					</p:column>
 
-					<p:column headerText="#{i18n['candidate.rating']}" sortBy="#{candidate.rating}" priority="4">
-						<p:rating value="#{candidate.rating}" cancel="false" readonly="true" />
+					<p:column headerText="#{i18n['candidate.rating']}"
+						sortBy="#{candidate.rating}" priority="4">
+						<p:rating value="#{candidate.rating}" cancel="false"
+							readonly="true" />
 					</p:column>
 				</p:dataTable>
 			</p:card>

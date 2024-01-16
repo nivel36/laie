@@ -1,15 +1,22 @@
-<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:composite="http://xmlns.jcp.org/jsf/composite"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://nivel.36/laie/ui" xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:composite="http://xmlns.jcp.org/jsf/composite"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:g="http://nivel.36/laie/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<composite:interface>
-		<composite:attribute name="value" type="es.nivel36.laie.ejb.job.offer.JobOfferState" required="true" />
+		<composite:attribute name="value"
+			type="es.nivel36.laie.ejb.job.offer.JobOfferState" required="true" />
 		<composite:attribute name="styleClass" required="false" default="" />
 	</composite:interface>
 
 	<composite:implementation>
-		<span class="#{cc.attrs.styleClass} job-offer-state job-offer-state-#{cc.attrs.value.name}">#{i18n['job_offer_state.'.concat(cc.attrs.value.name)]}</span>
+		<p:chip
+			styleClass="#{cc.attrs.styleClass} job-offer-state job-offer-state-#{cc.attrs.value.name}">#{i18n['job_offer_state.'.concat(cc.attrs.value.name)]}</p:chip>
 	</composite:implementation>
 </ui:component>

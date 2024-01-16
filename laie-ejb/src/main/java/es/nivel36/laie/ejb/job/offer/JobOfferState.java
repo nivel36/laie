@@ -1,30 +1,32 @@
 package es.nivel36.laie.ejb.job.offer;
 
 import es.nivel36.laie.ejb.core.EventState;
+import es.nivel36.laie.ejb.core.model.AbstractEntity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
-public enum JobOfferState implements EventState {
+@Entity
+@Table(name = "JOB_OFFER_STATE")
+public class JobOfferState extends AbstractEntity implements EventState {
 
-	CLOSED("closed", false, true), //
-	CREATED("created", true, false), //
-	FINISHED("finished", false, true), //
-	OPENED("opened", true, false), //
-	PAUSED("paused", false, false);
+	private static final long serialVersionUID = -8009230673860174776L;
 
+	@Column(name = "CLOSE")
 	private boolean closeState;
 
+	@Column(name = "NAME")
 	private String name;
 
+	@Column(name = "OPEN")
 	private boolean openState;
-
-	JobOfferState(final String name) {
-		this(name, false, false);
-	}
-
-	JobOfferState(final String name, final boolean openState, final boolean closeState) {
-		this.name = name;
-		this.openState = openState;
-		this.closeState = closeState;
-	}
+	
+	@Column(name = "COLOR")
+	private String color;
+	
+	@Column(name = "BACKGROUND_COLOR")
+	private String backgroundColor;
+	
 
 	@Override
 	public String getName() {

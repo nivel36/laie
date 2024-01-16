@@ -3936,6 +3936,15 @@ a {
   font-weight: 700;
   src: url("#{resource['roma-layout:fonts/Inter-UI-Bold.otf']}") format("opentype"), url("#{resource['roma-layout:fonts/Inter-UI-Bold.woff2']}") format("woff2"), url("#{resource['roma-layout:fonts/Inter-UI-Bold.woff']}") format("woff"), url("#{resource['roma-layout:fonts/Inter-UI-Bold.ttf']}") format("truetype"); /* Safari, Android, iOS */
 }
+.job-offer-state.job-offer-state-created {
+  background-color: #689F38;
+  color: #ffffff;
+}
+.job-offer-state.job-offer-state-opened {
+  background-color: #0288D1;
+  color: #ffffff;
+}
+
 .events .ui-dataview-header {
   display: none;
 }
@@ -3990,18 +3999,18 @@ a {
 
 .meeting {
   display: flex;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   color: #252529;
 }
 .meeting .meeting-date {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   flex: 1;
 }
 .meeting .meeting-date .meeting-date-day {
   display: flex;
-  font-size: 3rem;
+  font-size: 2rem;
   padding: 0.2rem 0.5rem;
   background-color: #0f97c7;
   color: #ffffff;
@@ -4012,9 +4021,9 @@ a {
 }
 .meeting .meeting-content {
   display: flex;
-  margin-left: 1.2rem;
+  margin-left: 1rem;
   flex-direction: column;
-  flex: 4;
+  flex: 8;
 }
 .meeting .meeting-content .meeting-title {
   font-size: 1.2rem;
