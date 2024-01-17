@@ -53,18 +53,7 @@
 								<h5>#{i18n['user.professional_information']}</h5>
 							</div>
 							<div class="col-12 md:col-8">
-								<g:input type="selectOneMenu" id="role"
-									value="#{editUserView.user.role}" label="#{i18n['user.role']}"
-									required="true">
-									<f:selectItem itemValue="#{null}" noSelectionOption="true"
-										itemDisabled="#{not empty editUserView.user}" />
-									<f:selectItems value="#{roles.list}" var="role"
-										itemValue="#{role}" itemLabel="#{i18n[role]}" />
-									<p:ajax event="change"
-										update=":userForm:role :userForm:managerWrapper"
-										process=":userForm:role"
-										listener="#{editUserView.changeRoleListener}" />
-								</g:input>
+								
 								<h:panelGroup id="managerWrapper" class="form-field ui-fluid"
 									layout="block">
 									<cc:autocomplete id="manager" label="#{i18n['user.manager']}"

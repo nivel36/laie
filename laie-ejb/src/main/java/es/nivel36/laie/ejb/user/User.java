@@ -77,7 +77,7 @@ public class User extends AbstractEntity implements Subject {
 	@Column(name = "LAST_CONNECTION")
 	private LocalDateTime lastConnection;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "MANAGER_ID")
 	@IndexedEmbedded(includeDepth = 1)
 	private User manager;
