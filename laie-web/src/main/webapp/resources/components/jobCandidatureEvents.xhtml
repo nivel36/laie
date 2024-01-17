@@ -19,82 +19,87 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<p:card id="#{cc.clientId}"
-			styleClass="card card-w-title events #{cc.attrs.styleClass}">
-			<f:facet name="title">
-				<h5>#{cc.attrs.title}</h5>
-			</f:facet>
+		<div id="#{cc.clientId}"
+			class="card card-w-title events #{cc.attrs.styleClass}">
+			<div class="ui-card-body">
+				<div class="ui-card-title">
+					<h5>#{cc.attrs.title}</h5>
+				</div>
+				<div class="ui-card-content">
+					<div id="#{cc.clientId}:table">
+						<p:dataTable var="event" id="events" value="#{cc.attrs.value}"
+							emptyMessage="#{i18n['event.no_events_found']}" reflow="true"
+							paginator="true" paginatorPosition="bottom"
+							rows="#{cc.attrs.rows}" sortBy="#{event.date}"
+							sortOrder="ascending" lazy="true"
+							styleClass="ui-datatable-borderless">
 
-			<div id="#{cc.clientId}:table">
-				<p:dataTable var="event" id="events" value="#{cc.attrs.value}"
-					emptyMessage="#{i18n['event.no_events_found']}" reflow="true"
-					paginator="true" paginatorPosition="bottom" rows="#{cc.attrs.rows}"
-					sortBy="#{event.date}" sortOrder="ascending" lazy="true"
-					styleClass="ui-datatable-borderless">
+							<p:column headerText="#{i18n['event.candidate']}">
+								<h:link value="#{event.jobCandidature.candidate.fullName}"
+									outcome="/candidate/view.xhtml">
+									<f:param name="candidate"
+										value="#{event.jobCandidature.candidate.id}" />
+								</h:link>
+							</p:column>
 
-					<p:column headerText="#{i18n['event.candidate']}">
-						<h:link value="#{event.jobCandidature.candidate.fullName}"
-							outcome="/candidate/view.xhtml">
-							<f:param name="candidate"
-								value="#{event.jobCandidature.candidate.id}" />
-						</h:link>
-					</p:column>
+							<p:column headerText="#{i18n['event.state']}">
+								<h:outputText
+									value="#{i18n['job_candidature_state.'.concat(event.state)]}" />
+							</p:column>
 
-					<p:column headerText="#{i18n['event.state']}">
-						<h:outputText
-							value="#{i18n['job_candidature_state.'.concat(event.state)]}" />
-					</p:column>
+							<p:column headerText="#{i18n['event.type']}">
+								<h:outputText
+									value="#{i18n['job_candidature_event.'.concat(event.type)]}" />
+							</p:column>
 
-					<p:column headerText="#{i18n['event.type']}">
-						<h:outputText
-							value="#{i18n['job_candidature_event.'.concat(event.type)]}" />
-					</p:column>
+							<p:column headerText="#{i18n['event.date']}">
+								<h:outputText value="#{event.date}">
+									<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</p:column>
 
-					<p:column headerText="#{i18n['event.date']}">
-						<h:outputText value="#{event.date}">
-							<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-						</h:outputText>
-					</p:column>
-
-					<p:column>
-						<p:commandButton icon="pi pi-eye"
-							onclick="$(PrimeFaces.escapeClientId('#{cc.clientId}:detail:#{event.id}')).css('display', 'block');$(PrimeFaces.escapeClientId('#{cc.clientId}:table')).css('display', 'none')" />
-					</p:column>
-				</p:dataTable>
-				<h:panelGroup id="children" styleClass="buttons">
-					<composite:insertChildren />
-				</h:panelGroup>
-			</div>
-			<div id="#{cc.clientId}:detail">
-				<ui:repeat var="event" value="#{cc.attrs.value}">
-					<div id="#{cc.clientId}:detail:#{event.id}" style="display: none">
-						<cc:outputLink label="#{i18n['event.candidate']}"
-							value="#{event.jobCandidature.candidate.fullName}"
-							outcome="/candidate/view">
-							<f:param name="candidate"
-								value="#{event.jobCandidature.candidate.id}" />
-						</cc:outputLink>
-						<cc:outputLink label="#{i18n['event.user']}"
-							value="#{event.user.fullName}" outcome="/user/view">
-							<f:param name="user" value="#{event.user.id}" />
-						</cc:outputLink>
-						<cc:outputText label="#{i18n['event.state']}"
-							value="#{i18n['job_candidature_state.'.concat(event.state)]}" />
-						<cc:outputText label="#{i18n['event.type']}"
-							value="#{i18n['job_candidature_event.'.concat(event.type)]}" />
-						<cc:outputText label="#{i18n['event.date']}" value="#{event.date}">
-							<f:convertDateTime type="localDate" pattern="dd/MM/yyyy HH:mm:ss"
-								for="text" />
-						</cc:outputText>
-						<cc:outputText label="#{i18n['event.notes']}"
-							value="#{event.notes}" />
-						<div class="form-buttons">
-							<p:commandButton icon="pi pi-times"
-								onclick="$(PrimeFaces.escapeClientId('#{cc.clientId}:detail:#{event.id}')).css('display', 'none');$(PrimeFaces.escapeClientId('#{cc.clientId}:table')).css('display', 'block')" />
-						</div>
+							<p:column>
+								<p:commandButton icon="pi pi-eye"
+									onclick="$(PrimeFaces.escapeClientId('#{cc.clientId}:detail:#{event.id}')).css('display', 'block');$(PrimeFaces.escapeClientId('#{cc.clientId}:table')).css('display', 'none')" />
+							</p:column>
+						</p:dataTable>
+						<h:panelGroup id="children" styleClass="buttons">
+							<composite:insertChildren />
+						</h:panelGroup>
 					</div>
-				</ui:repeat>
+					<div id="#{cc.clientId}:detail">
+						<ui:repeat var="event" value="#{cc.attrs.value}">
+							<div id="#{cc.clientId}:detail:#{event.id}" style="display: none">
+								<cc:outputLink label="#{i18n['event.candidate']}"
+									value="#{event.jobCandidature.candidate.fullName}"
+									outcome="/candidate/view">
+									<f:param name="candidate"
+										value="#{event.jobCandidature.candidate.id}" />
+								</cc:outputLink>
+								<cc:outputLink label="#{i18n['event.user']}"
+									value="#{event.user.fullName}" outcome="/user/view">
+									<f:param name="user" value="#{event.user.id}" />
+								</cc:outputLink>
+								<cc:outputText label="#{i18n['event.state']}"
+									value="#{i18n['job_candidature_state.'.concat(event.state)]}" />
+								<cc:outputText label="#{i18n['event.type']}"
+									value="#{i18n['job_candidature_event.'.concat(event.type)]}" />
+								<cc:outputText label="#{i18n['event.date']}"
+									value="#{event.date}">
+									<f:convertDateTime type="localDate"
+										pattern="dd/MM/yyyy HH:mm:ss" for="text" />
+								</cc:outputText>
+								<cc:outputText label="#{i18n['event.notes']}"
+									value="#{event.notes}" />
+								<div class="form-buttons">
+									<p:commandButton icon="pi pi-times"
+										onclick="$(PrimeFaces.escapeClientId('#{cc.clientId}:detail:#{event.id}')).css('display', 'none');$(PrimeFaces.escapeClientId('#{cc.clientId}:table')).css('display', 'block')" />
+								</div>
+							</div>
+						</ui:repeat>
+					</div>
+				</div>
 			</div>
-		</p:card>
+		</div>
 	</composite:implementation>
 </ui:component>

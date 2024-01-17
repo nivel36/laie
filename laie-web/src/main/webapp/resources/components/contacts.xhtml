@@ -19,23 +19,27 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<p:card id="#{cc.clientId}"
-			styleClass="card card-w-title contacts #{cc.attrs.styleClass}">
-			<f:facet name="title">
-				<h5>#{cc.attrs.title}</h5>
-			</f:facet>
-			<p:dataView var="contact" value="#{cc.attrs.value}"
-				gridIcon="pi pi-th-large" listIcon="pi pi-bars" paginator="true"
-				layout="grid" paginatorPosition="bottom" rows="4"
-				emptyMessage="#{i18n['client.no_contacts_found']}" lazy="true">
-				<p:dataViewGridItem columns="1">
-					<cc:contact value="#{contact}" />
-				</p:dataViewGridItem>
-			</p:dataView>
+		<div id="#{cc.clientId}"
+			class="ui-card card card-w-title contacts #{cc.attrs.styleClass}">
+			<div class="ui-card-body">
+				<div class="ui-card-title">
+					<h5>#{cc.attrs.title}</h5>
+				</div>
+				<div class="ui-card-content">
+					<p:dataView var="contact" value="#{cc.attrs.value}"
+						gridIcon="pi pi-th-large" listIcon="pi pi-bars" paginator="true"
+						layout="grid" paginatorPosition="bottom" rows="4"
+						emptyMessage="#{i18n['client.no_contacts_found']}" lazy="true">
+						<p:dataViewGridItem columns="1">
+							<cc:contact value="#{contact}" />
+						</p:dataViewGridItem>
+					</p:dataView>
 
-			<div class="card-header-buttons">
-				<composite:insertChildren />
+					<div class="card-header-buttons">
+						<composite:insertChildren />
+					</div>
+				</div>
 			</div>
-		</p:card>
+		</div>
 	</composite:implementation>
 </ui:component>

@@ -21,79 +21,86 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<p:card id="#{cc.clientId}"
-			class="card card-w-title events #{cc.attrs.styleClass}">
-			<f:facet name="title">
-				<h5>#{cc.attrs.title}</h5>
-			</f:facet>
-			<p:dataView var="event" value="#{cc.attrs.value}"
-				gridIcon="pi pi-th-large" listIcon="pi pi-bars" paginator="true"
-				layout="grid" paginatorPosition="bottom" rows="5"
-				emptyMessage="#{i18n['user.no_team']}" lazy="true"
-				gridRowStyleClass="event #{cc.attrs.rowStyleClass}">
-				<p:dataViewGridItem columns="1">
-					<h:panelGroup rendered="#{event.entityName eq 'CLIENT'}">
-						<i class="pi pi-compass client" />
-					</h:panelGroup>
-					<h:panelGroup rendered="#{event.entityName eq 'CANDIDATE'}">
-						<i class="pi pi-users candidate" />
-					</h:panelGroup>
-					<h:panelGroup rendered="#{event.entityName eq 'CONTACT'}">
-						<i class="pi pi-user contact" />
-					</h:panelGroup>
-					<h:panelGroup rendered="#{event.entityName eq 'JOB_OFFER'}">
-						<i class="pi pi-briefcase job" />
-					</h:panelGroup>
-					<span class="event-title"><h:link
-							value="#{event.entityTitle}" outcome="/client/view.xhtml"
-							rendered="#{event.entityName eq 'CLIENT'}">
-							<f:param name="client" value="#{event.entityId}" />
-						</h:link> <h:link value="#{event.entityTitle}"
-							outcome="/candidate/view.xhtml"
-							rendered="#{event.entityName eq 'CANDIDATE'}">
-							<f:param name="candidate" value="#{event.entityId}" />
-						</h:link> <h:link value="#{event.entityTitle}"
-							outcome="/contact/view.xhtml"
-							rendered="#{event.entityName eq 'CONTACT'}">
-							<f:param name="contact" value="#{event.entityId}" />
-						</h:link> <h:link value="#{event.entityTitle}" outcome="/job/view.xhtml"
-							rendered="#{event.entityName eq 'JOB_OFFER'}">
-							<f:param name="jobOffer" value="#{event.entityId}" />
-						</h:link></span>
-					<span class="event-time"><h:outputText
-							value="#{cc.elapsedTime(event.date)}" /></span>
-					<p>
-						<h:link value="#{event.user.fullName}" outcome="/user/view.xhtml">
-							<f:param name="user" value="#{event.user.id}" />
-						</h:link>
-						ha
-						<h:outputText value="#{i18n['event.'.concat(event.type)]}" />
-						<h:outputText value=" " />
-						<h:outputText value="#{i18n['event.'.concat(event.entityName)]}" />
-						<h:outputText value=" " />
-						<h:link value="#{event.entityTitle}" outcome="/client/view.xhtml"
-							rendered="#{event.entityName eq 'CLIENT'}">
-							<f:param name="client" value="#{event.entityId}" />
-						</h:link>
-						<h:link value="#{event.entityTitle}"
-							outcome="/candidate/view.xhtml"
-							rendered="#{event.entityName eq 'CANDIDATE'}">
-							<f:param name="candidate" value="#{event.entityId}" />
-						</h:link>
-						<h:link value="#{event.entityTitle}" outcome="/contact/view.xhtml"
-							rendered="#{event.entityName eq 'CONTACT'}">
-							<f:param name="contact" value="#{event.entityId}" />
-						</h:link>
-						<h:link value="#{event.entityTitle}" outcome="/job/view.xhtml"
-							rendered="#{event.entityName eq 'JOB_OFFER'}">
-							<f:param name="jobOffer" value="#{event.entityId}" />
-						</h:link>
-					</p>
-				</p:dataViewGridItem>
-			</p:dataView>
-			<div class="card-header-buttons">
-				<composite:insertChildren />
+		<div id="#{cc.clientId}"
+			class="ui-card card card-w-title events #{cc.attrs.styleClass}">
+			<div class="ui-card-body">
+				<div class="ui-card-title">
+					<h5>#{cc.attrs.title}</h5>
+				</div>
+				<div class="ui-card-content">
+					<p:dataView var="event" value="#{cc.attrs.value}"
+						gridIcon="pi pi-th-large" listIcon="pi pi-bars" paginator="true"
+						layout="grid" paginatorPosition="bottom" rows="5"
+						emptyMessage="#{i18n['user.no_team']}" lazy="true"
+						gridRowStyleClass="event #{cc.attrs.rowStyleClass}">
+						<p:dataViewGridItem columns="1">
+							<h:panelGroup rendered="#{event.entityName eq 'CLIENT'}">
+								<i class="pi pi-compass client" />
+							</h:panelGroup>
+							<h:panelGroup rendered="#{event.entityName eq 'CANDIDATE'}">
+								<i class="pi pi-users candidate" />
+							</h:panelGroup>
+							<h:panelGroup rendered="#{event.entityName eq 'CONTACT'}">
+								<i class="pi pi-user contact" />
+							</h:panelGroup>
+							<h:panelGroup rendered="#{event.entityName eq 'JOB_OFFER'}">
+								<i class="pi pi-briefcase job" />
+							</h:panelGroup>
+							<span class="event-title"><h:link
+									value="#{event.entityTitle}" outcome="/client/view.xhtml"
+									rendered="#{event.entityName eq 'CLIENT'}">
+									<f:param name="client" value="#{event.entityId}" />
+								</h:link> <h:link value="#{event.entityTitle}"
+									outcome="/candidate/view.xhtml"
+									rendered="#{event.entityName eq 'CANDIDATE'}">
+									<f:param name="candidate" value="#{event.entityId}" />
+								</h:link> <h:link value="#{event.entityTitle}"
+									outcome="/contact/view.xhtml"
+									rendered="#{event.entityName eq 'CONTACT'}">
+									<f:param name="contact" value="#{event.entityId}" />
+								</h:link> <h:link value="#{event.entityTitle}" outcome="/job/view.xhtml"
+									rendered="#{event.entityName eq 'JOB_OFFER'}">
+									<f:param name="jobOffer" value="#{event.entityId}" />
+								</h:link></span>
+							<span class="event-time"><h:outputText
+									value="#{cc.elapsedTime(event.date)}" /></span>
+							<p>
+								<h:link value="#{event.user.fullName}"
+									outcome="/user/view.xhtml">
+									<f:param name="user" value="#{event.user.id}" />
+								</h:link>
+								ha
+								<h:outputText value="#{i18n['event.'.concat(event.type)]}" />
+								<h:outputText value=" " />
+								<h:outputText value="#{i18n['event.'.concat(event.entityName)]}" />
+								<h:outputText value=" " />
+								<h:link value="#{event.entityTitle}"
+									outcome="/client/view.xhtml"
+									rendered="#{event.entityName eq 'CLIENT'}">
+									<f:param name="client" value="#{event.entityId}" />
+								</h:link>
+								<h:link value="#{event.entityTitle}"
+									outcome="/candidate/view.xhtml"
+									rendered="#{event.entityName eq 'CANDIDATE'}">
+									<f:param name="candidate" value="#{event.entityId}" />
+								</h:link>
+								<h:link value="#{event.entityTitle}"
+									outcome="/contact/view.xhtml"
+									rendered="#{event.entityName eq 'CONTACT'}">
+									<f:param name="contact" value="#{event.entityId}" />
+								</h:link>
+								<h:link value="#{event.entityTitle}" outcome="/job/view.xhtml"
+									rendered="#{event.entityName eq 'JOB_OFFER'}">
+									<f:param name="jobOffer" value="#{event.entityId}" />
+								</h:link>
+							</p>
+						</p:dataViewGridItem>
+					</p:dataView>
+					<div class="card-header-buttons">
+						<composite:insertChildren />
+					</div>
+				</div>
 			</div>
-		</p:card>
+		</div>
 	</composite:implementation>
 </ui:component>

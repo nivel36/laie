@@ -22,25 +22,29 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<p:card id="#{cc.clientId}"
-			class="card card-w-title meetings #{cc.attrs.styleClass}">
-			<f:facet name="title">
-				<h5>#{cc.attrs.title}</h5>
-			</f:facet>
-			<ui:repeat var="meeting" value="#{cc.attrs.value}"
-				rendered="#{not empty cc.attrs.value}">
-				<h:link outcome="/meeting/edit.xhtml" style="display:block;">
-					<f:param name="meeting" value="#{meeting.id}" />
-					<cc:meeting value="#{meeting}" />
-				</h:link>
-			</ui:repeat>
-			<h:panelGroup class="meetings-empty-message"
-				rendered="#{empty cc.attrs.value}">
-				<h:outputText value="#{cc.attrs.emptyMessage}" />
-			</h:panelGroup>
-			<div class="card-header-buttons">
-				<composite:insertChildren />
+		<div id="#{cc.clientId}"
+			class="ui-card card card-w-title meetings #{cc.attrs.styleClass}">
+			<div class="ui-card-body">
+				<div class="ui-card-title">
+					<h5>#{cc.attrs.title}</h5>
+				</div>
+				<div class="ui-card-content">
+					<ui:repeat var="meeting" value="#{cc.attrs.value}"
+						rendered="#{not empty cc.attrs.value}">
+						<h:link outcome="/meeting/edit.xhtml" style="display:block;">
+							<f:param name="meeting" value="#{meeting.id}" />
+							<cc:meeting value="#{meeting}" />
+						</h:link>
+					</ui:repeat>
+					<h:panelGroup class="meetings-empty-message"
+						rendered="#{empty cc.attrs.value}">
+						<h:outputText value="#{cc.attrs.emptyMessage}" />
+					</h:panelGroup>
+					<div class="card-header-buttons">
+						<composite:insertChildren />
+					</div>
+				</div>
 			</div>
-		</p:card>
+		</div>
 	</composite:implementation>
 </ui:component>

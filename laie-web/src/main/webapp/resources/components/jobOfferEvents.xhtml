@@ -19,46 +19,51 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<p:card id="#{cc.clientId}"
-			styleClass="card card-w-title events #{cc.attrs.styleClass}">
-			<f:facet name="title">
-				<h5>#{cc.attrs.title}</h5>
-			</f:facet>
-			<p:dataTable var="event" id="events" value="#{cc.attrs.value}"
-				emptyMessage="#{i18n['event.no_events_found']}" reflow="true"
-				paginator="true" paginatorPosition="bottom" rows="#{cc.attrs.rows}"
-				sortBy="#{event.date}" sortOrder="ascending" lazy="true"
-				styleClass="ui-datatable-borderless">
+		<div id="#{cc.clientId}"
+			class="ui-card card card-w-title events #{cc.attrs.styleClass}">
+			<div class="ui-card-body">
+				<div class="ui-card-title">
+					<h5>#{cc.attrs.title}</h5>
+				</div>
+				<div class="ui-card-content">
+					<p:dataTable var="event" id="events" value="#{cc.attrs.value}"
+						emptyMessage="#{i18n['event.no_events_found']}" reflow="true"
+						paginator="true" paginatorPosition="bottom"
+						rows="#{cc.attrs.rows}" sortBy="#{event.date}"
+						sortOrder="ascending" lazy="true"
+						styleClass="ui-datatable-borderless">
 
-				<p:column headerText="#{i18n['event.state']}">
-					<h:outputText
-						value="#{i18n['job_offer_state.'.concat(event.state)]}" />
-				</p:column>
+						<p:column headerText="#{i18n['event.state']}">
+							<h:outputText
+								value="#{i18n['job_offer_state.'.concat(event.state)]}" />
+						</p:column>
 
-				<p:column headerText="#{i18n['event.date']}" priority="4">
-					<h:outputText value="#{event.date}">
-						<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-					</h:outputText>
-				</p:column>
+						<p:column headerText="#{i18n['event.date']}" priority="4">
+							<h:outputText value="#{event.date}">
+								<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
 
-				<p:column headerText="#{i18n['event.user']}" priority="4">
-					<h:link value="#{event.user.fullName}" outcome="/user/view.xhtml">
-						<f:param name="user" value="#{event.user.id}" />
-					</h:link>
-				</p:column>
+						<p:column headerText="#{i18n['event.user']}" priority="4">
+							<h:link value="#{event.user.fullName}" outcome="/user/view.xhtml">
+								<f:param name="user" value="#{event.user.id}" />
+							</h:link>
+						</p:column>
 
-				<p:column headerText="#{i18n['event.type']}">
-					<h:outputText value="#{i18n['job_event.'.concat(event.type)]}" />
-				</p:column>
+						<p:column headerText="#{i18n['event.type']}">
+							<h:outputText value="#{i18n['job_event.'.concat(event.type)]}" />
+						</p:column>
 
-				<p:column headerText="#{i18n['event.notes']}" priority="4">
-					<h:outputText value="#{event.notes}" />
-				</p:column>
+						<p:column headerText="#{i18n['event.notes']}" priority="4">
+							<h:outputText value="#{event.notes}" />
+						</p:column>
 
-			</p:dataTable>
-			<div class="card-header-buttons">
-				<composite:insertChildren />
+					</p:dataTable>
+					<div class="card-header-buttons">
+						<composite:insertChildren />
+					</div>
+				</div>
 			</div>
-		</p:card>
+		</div>
 	</composite:implementation>
 </ui:component>

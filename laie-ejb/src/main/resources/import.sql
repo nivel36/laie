@@ -6,12 +6,6 @@ insert into JOB_CANDIDATURE_STATE( ID, VERSION, NAME, FIRST, APPROVED, DECLINED,
 insert into JOB_CANDIDATURE_STATE( ID, VERSION, NAME, FIRST, APPROVED, DECLINED, COLOR, BACKGROUND_COLOR ) values ( 15, 0, 'offered', false, false, false, '#FFFFFF', '#0288D1');
 insert into JOB_CANDIDATURE_STATE( ID, VERSION, NAME, FIRST, APPROVED, DECLINED, COLOR, BACKGROUND_COLOR ) values ( 16, 0, 'approved', false, true, false, '#FFFFFF', '#0288D1');
 
-insert into JOB_OFFER_STATE( ID, VERSION, NAME, CLOSE, OPEN, COLOR, BACKGROUND_COLOR ) values ( 100, 0, 'closed', true, false, false, '#FFFFFF', '#0288D1');
-insert into JOB_OFFER_STATE( ID, VERSION, NAME, CLOSE, OPEN, COLOR, BACKGROUND_COLOR ) values ( 101, 0, 'created', false, false, false, '#FFFFFF', '#0288D1');
-insert into JOB_OFFER_STATE( ID, VERSION, NAME, CLOSE, OPEN, COLOR, BACKGROUND_COLOR ) values ( 102, 0, 'finished', false, false, false, '#FFFFFF', '#0288D1');
-insert into JOB_OFFER_STATE( ID, VERSION, NAME, CLOSE, OPEN, COLOR, BACKGROUND_COLOR ) values ( 103, 0, 'opened', false, false, true, '#FFFFFF', '#0288D1');
-insert into JOB_OFFER_STATE( ID, VERSION, NAME, CLOSE, OPEN, COLOR, BACKGROUND_COLOR ) values ( 104, 0, 'paused', false, false, false, '#FFFFFF', '#0288D1');
-
 insert into JOB_CANDIDATURE_STATE_REL( PARENT_ID, JOB_CANDIDATURE_ID ) values ( 10, 13);
 insert into JOB_CANDIDATURE_STATE_REL( PARENT_ID, JOB_CANDIDATURE_ID ) values ( 10, 11);
 insert into JOB_CANDIDATURE_STATE_REL( PARENT_ID, JOB_CANDIDATURE_ID ) values ( 11, 12);

@@ -21,67 +21,71 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<p:card id="#{cc.clientId}"
-			styleClass="card card-w-title jobCandidatures #{cc.attrs.styleClass}">
-			<f:facet name="title">
-				<h5>#{cc.attrs.title}</h5>
-			</f:facet>
+		<div id="#{cc.clientId}"
+			class="ui-card card card-w-title jobCandidatures #{cc.attrs.styleClass}">
+			<div class="ui-card-body">
+				<div class="ui-card-title">
+					<h5>#{cc.attrs.title}</h5>
+				</div>
+				<div class="ui-card-content">
+					<p:dataTable var="jobCandidature" value="#{cc.attrs.value}"
+						emptyMessage="#{i18n['job_candidature.no_job_candidatures_found']}"
+						reflow="true" paginator="true" paginatorPosition="bottom"
+						rows="#{cc.attrs.rows}" sortBy="#{jobOffer.title}"
+						sortOrder="ascending" styleClass="ui-datatable-borderless">
 
-			<p:dataTable var="jobCandidature" value="#{cc.attrs.value}"
-				emptyMessage="#{i18n['job_candidature.no_job_candidatures_found']}"
-				reflow="true" paginator="true" paginatorPosition="bottom"
-				rows="#{cc.attrs.rows}" sortBy="#{jobOffer.title}"
-				sortOrder="ascending" styleClass="ui-datatable-borderless">
-
-				<p:column headerText="#{i18n['job_candidature.job_offer']}"
-					rendered="#{cc.attrs.showJobOffer}">
-					<h:link value="#{jobCandidature.jobOffer.title}"
-						outcome="/job/view.xhtml">
-						<f:param name="jobOffer" value="#{jobCandidature.jobOffer.id}" />
-					</h:link>
-				</p:column>
-				<p:column headerText="#{i18n['job_candidature.city']}"
-					rendered="#{cc.attrs.showJobOffer}">
+						<p:column headerText="#{i18n['job_candidature.job_offer']}"
+							rendered="#{cc.attrs.showJobOffer}">
+							<h:link value="#{jobCandidature.jobOffer.title}"
+								outcome="/job/view.xhtml">
+								<f:param name="jobOffer" value="#{jobCandidature.jobOffer.id}" />
+							</h:link>
+						</p:column>
+						<p:column headerText="#{i18n['job_candidature.city']}"
+							rendered="#{cc.attrs.showJobOffer}">
 					#{jobCandidature.jobOffer.address.city} <h:outputText value="("
-						rendered="#{not empty jobCandidature.jobOffer.address.region}" /> #{jobCandidature.jobOffer.address.region}<h:outputText
-						value=")"
-						rendered="#{not empty jobCandidature.jobOffer.address.region}" />
-				</p:column>
-				<p:column headerText="#{i18n['job_candidature.client']}"
-					rendered="#{cc.attrs.showJobOffer}">
-					<h:link value="#{jobCandidature.jobOffer.client.name}"
-						outcome="/client/view.xhtml">
-						<f:param name="client"
-							value="#{jobCandidature.jobOffer.client.id}" />
-					</h:link>
-				</p:column>
-				<p:column rendered="#{cc.attrs.showCandidate}">
-					<cc:avatar name="#{jobCandidature.candidate.fullName}"
-						path="#{jobCandidature.candidate.picture.path}" styleClass="small" />
-				</p:column>
-				<p:column headerText="#{i18n['job_candidature.candidate']}"
-					rendered="#{cc.attrs.showCandidate}">
-					<h:link value="#{jobCandidature.candidate.fullName}"
-						outcome="/candidate/view.xhtml">
-						<f:param name="candidate" value="#{jobCandidature.candidate.id}" />
-					</h:link>
-				</p:column>
-				<p:column headerText="#{i18n['candidate.rating']}"
-					rendered="#{cc.attrs.showCandidate}">
-					<p:rating value="#{jobCandidature.candidate.rating}" cancel="false"
-						readonly="true" />
-				</p:column>
-				<p:column
-					headerText="#{i18n['job_candidature.job_candidature_state']}">
-					<p:link outcome="/event/add.xhtml">
-						<f:param name="jobCandidature" value="#{jobCandidature.id}" />
-						<div class="tag">#{i18n['job_candidature_state.'.concat(jobCandidature.state.name)]}</div>
-					</p:link>
-				</p:column>
-			</p:dataTable>
-			<div class="card-header-buttons">
-				<composite:insertChildren />
+								rendered="#{not empty jobCandidature.jobOffer.address.region}" /> #{jobCandidature.jobOffer.address.region}<h:outputText
+								value=")"
+								rendered="#{not empty jobCandidature.jobOffer.address.region}" />
+						</p:column>
+						<p:column headerText="#{i18n['job_candidature.client']}"
+							rendered="#{cc.attrs.showJobOffer}">
+							<h:link value="#{jobCandidature.jobOffer.client.name}"
+								outcome="/client/view.xhtml">
+								<f:param name="client"
+									value="#{jobCandidature.jobOffer.client.id}" />
+							</h:link>
+						</p:column>
+						<p:column rendered="#{cc.attrs.showCandidate}">
+							<cc:avatar name="#{jobCandidature.candidate.fullName}"
+								path="#{jobCandidature.candidate.picture.path}"
+								styleClass="small" />
+						</p:column>
+						<p:column headerText="#{i18n['job_candidature.candidate']}"
+							rendered="#{cc.attrs.showCandidate}">
+							<h:link value="#{jobCandidature.candidate.fullName}"
+								outcome="/candidate/view.xhtml">
+								<f:param name="candidate" value="#{jobCandidature.candidate.id}" />
+							</h:link>
+						</p:column>
+						<p:column headerText="#{i18n['candidate.rating']}"
+							rendered="#{cc.attrs.showCandidate}">
+							<p:rating value="#{jobCandidature.candidate.rating}"
+								cancel="false" readonly="true" />
+						</p:column>
+						<p:column
+							headerText="#{i18n['job_candidature.job_candidature_state']}">
+							<p:link outcome="/event/add.xhtml">
+								<f:param name="jobCandidature" value="#{jobCandidature.id}" />
+								<div class="tag">#{i18n['job_candidature_state.'.concat(jobCandidature.state.name)]}</div>
+							</p:link>
+						</p:column>
+					</p:dataTable>
+					<div class="card-header-buttons">
+						<composite:insertChildren />
+					</div>
+				</div>
 			</div>
-		</p:card>
+		</div>
 	</composite:implementation>
 </ui:component>
