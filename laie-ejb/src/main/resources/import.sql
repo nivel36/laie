@@ -106,10 +106,14 @@ insert into ACTION(ID, VERSION, DATE, ENTITY_ID, ENTITY_NAME, ENTITY_TITLE, TYPE
 
 insert into MEETING(ID, VERSION, DATE_PLANNED, DURATION, MEETING_TYPE, OWNER_ID, DESCRIPTION, TITLE) values (600, 1, (TO_TIMESTAMP('27/02/2024 08:30:00', 'DD/MM/YYYY HH24:MI:SS')), 5400, 'PHONE', 500, 'Hay que valorar si el candidato es adecuado para el puesto de arquitecto', 'Reunión para candidatura')
 insert into MEETING(ID, VERSION, DATE_PLANNED, DURATION, MEETING_TYPE, OWNER_ID, DESCRIPTION, TITLE) values (601, 1, (TO_TIMESTAMP('01/03/2024 12:30:00', 'DD/MM/YYYY HH24:MI:SS')), 5400, 'PHONE', 500, 'El responsable técnico ha de valorar los conocimientos de Java e Hibernate del candidato', 'Reunión para evaluación')
+insert into MEETING(ID, VERSION, DATE_PLANNED, DURATION, MEETING_TYPE, OWNER_ID, DESCRIPTION, TITLE) values (602, 1, (TO_TIMESTAMP('27/02/2024 12:30:00', 'DD/MM/YYYY HH24:MI:SS')), 5400, 'IN_PERSON', 500, 'Reunión interna para valorar el candidato', 'Reunión interna')
 
 insert into EMAILS(MEETING_ID, EMAIL) values (600, 'abel.ferrer.jimenez@gmail.com');
 insert into EMAILS(MEETING_ID, EMAIL) values (600, 'aferrer@gmail.com');
 
 insert into EMAILS(MEETING_ID, EMAIL) values (601, 'abel.ferrer.jimenez@gmail.com');
 insert into EMAILS(MEETING_ID, EMAIL) values (601, 'aferrer@gmail.com');
+
+insert into EMAILS(MEETING_ID, EMAIL) values (602, 'abel.ferrer.jimenez@gmail.com');
+insert into EMAILS(MEETING_ID, EMAIL) values (602, 'isabel.vallejo.medina@gmail.com');
 
