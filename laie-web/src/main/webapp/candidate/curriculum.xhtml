@@ -19,7 +19,7 @@
 	<ui:define name="content">
 		<h:form id="form">
 			<div class="grid">
-				<div class="col-12 xl:col-8 xl:col-offset-2">
+				<div class="col-12 xl:col-6 xl:col-offset-3">
 					<div class="title-card">
 						<div class="title-card-content">
 							<cc:avatar styleClass="title-card-content-image"
@@ -83,19 +83,19 @@
 																rendered="#{jobExperience.stillWorking}" /> <h:outputText
 																value=" ( " /> <h:panelGroup
 																rendered="#{(jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12 gt 0}">
-																<h:outputText
-																	value="#{(jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12}">
-																	<f:convertNumber maxFractionDigits="0" />
-																</h:outputText>
-																<h:outputText
-																	value=" #{(jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12 gt 1 ? i18n['date.years'] : i18n['date.year']}" />
+																<h:outputFormat
+																	value=" #{(jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12 gt 1 ? i18n['date.years'] : i18n['date.year']}">
+																	<f:param
+																		value="#{(jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12}" />
+																</h:outputFormat>
 															</h:panelGroup> <h:outputText value=" #{i18n['date.and']}  "
 																rendered="#{jobExperience.monthsWorked%12 gt 0 and (jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12 gt 0}" />
 															<h:panelGroup
 																rendered="#{jobExperience.monthsWorked%12 gt 0}">
-																<h:outputText value="#{jobExperience.monthsWorked%12}" />
-																<h:outputText
-																	value=" #{jobExperience.monthsWorked%12 gt 1 ? i18n['date.months'] : i18n['date.month']}" />
+																<h:outputFormat
+																	value=" #{jobExperience.monthsWorked%12 gt 1 ? i18n['date.months'] : i18n['date.month']}">
+																	<f:param value="#{jobExperience.monthsWorked%12}" />
+																</h:outputFormat>
 															</h:panelGroup> <h:outputText value=" #{i18n['date.days']} "
 																rendered="#{jobExperience.monthsWorked%12 eq 0 and (jobExperience.monthsWorked - jobExperience.monthsWorked%12)/12 eq 0}" />
 															<h:outputText value=" ) " /></span>
