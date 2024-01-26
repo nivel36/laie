@@ -93,7 +93,7 @@
 				</p:card>
 
 				<h:form id="jobMeetingsForm">
-					<cc:meetings value="#{viewUserView.meetings}" rows="5">
+					<cc:meetings value="#{viewUserView.meetings}" >
 						<p:button icon="pi pi-plus" outcome="/meeting/add.xhtml"
 							rendered="#{viewUserView.loggedUser}"
 							styleClass="ui-button-success ui-button-outlined" />

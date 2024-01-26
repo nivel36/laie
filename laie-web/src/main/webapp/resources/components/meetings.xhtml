@@ -29,8 +29,7 @@
 					<h5>#{cc.attrs.title}</h5>
 				</div>
 				<div class="ui-card-content">
-					<ui:repeat var="meeting" value="#{cc.attrs.value}"
-						rendered="#{not empty cc.attrs.value}">
+					<ui:repeat var="meeting" value="#{cc.attrs.value}">
 						<h:link outcome="/meeting/edit.xhtml" style="display:block;">
 							<f:param name="meeting" value="#{meeting.id}" />
 							<cc:meeting value="#{meeting}" />

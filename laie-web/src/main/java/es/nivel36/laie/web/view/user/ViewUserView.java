@@ -68,7 +68,7 @@ public class ViewUserView extends AbstractView {
 	}
 
 	public MeetingsByUserLazyDataModel getMeetings() {
-		return meetings;
+		return meetings.;
 	}
 
 	public List<User> getTeam() {

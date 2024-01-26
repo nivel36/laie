@@ -23,3 +23,4 @@ Las pantallas de cliente o candidato no pueden cargar todos los datos en una con
     * Falta una pantalla de vista de reuniones
     * Falta un boton de quitar reunión
     * De alguna manera se ha de saber si un email (puesto que un asistente a una reunión puede ser quien quiera) tiene horas libres o no.
+    * Hay que poner un número máximo de invitados a una reunión.

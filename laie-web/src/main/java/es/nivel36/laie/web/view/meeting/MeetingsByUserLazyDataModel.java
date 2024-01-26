@@ -18,9 +18,9 @@ public class MeetingsByUserLazyDataModel extends LazyDataModel<Meeting> {
 
 	private static final long serialVersionUID = 6084482828895151751L;
 
-	private transient @Inject MeetingService meetingService;
-
 	private User user;
+	
+	private @Inject MeetingService meetingService;
 
 	@Override
 	public int count(Map<String, FilterMeta> filterBy) {
@@ -31,6 +31,12 @@ public class MeetingsByUserLazyDataModel extends LazyDataModel<Meeting> {
 	public List<Meeting> load(int first, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) {
 		return meetingService.findPlannedMeetings(this.user, Page.of(first, pageSize));
 	}
+	
+	public void setMeetingService(final MeetingService meetingService) {
+		Objects.requireNonNull(meetingService);
+		this.meetingService = meetingService;
+	}
+
 
 	public void setUser(final User user) {
 		Objects.requireNonNull(user);
