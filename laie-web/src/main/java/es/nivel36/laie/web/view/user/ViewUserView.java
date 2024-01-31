@@ -8,13 +8,15 @@ import org.omnifaces.cdi.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import es.nivel36.laie.ejb.core.model.Page;
+import es.nivel36.laie.ejb.job.meeting.Meeting;
+import es.nivel36.laie.ejb.job.meeting.MeetingService;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserService;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
 import es.nivel36.laie.web.view.action.ActionsByUserLazyDataModel;
 import es.nivel36.laie.web.view.job.JobOffersByOwnerOrRecruiterLazyDataModel;
-import es.nivel36.laie.web.view.meeting.MeetingsByUserLazyDataModel;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
@@ -41,7 +43,8 @@ public class ViewUserView extends AbstractView {
 	private boolean loggedUser;
 	private @Inject ActionsByUserLazyDataModel actions;
 	private @Inject JobOffersByOwnerOrRecruiterLazyDataModel jobOffers;
-	private transient @Inject MeetingsByUserLazyDataModel meetings;
+	private transient @Inject MeetingService meetingService;
+	private List<Meeting> meetings;
 
 	private transient @Inject UserService userService;
 
@@ -67,8 +70,8 @@ public class ViewUserView extends AbstractView {
 		return this.jobOffers;
 	}
 
-	public MeetingsByUserLazyDataModel getMeetings() {
-		return meetings.;
+	public List<Meeting> getMeetings() {
+		return meetings;
 	}
 
 	public List<User> getTeam() {
@@ -88,7 +91,7 @@ public class ViewUserView extends AbstractView {
 		this.editable = this.sessionUser.isAdmin() || loggedUser;
 		this.actions.setUser(user);
 		this.jobOffers.setUser(user);
-		this.meetings.setUser(user);
+		this.meetings = this.meetingService.findPlannedMeetings(user, Page.of(0, 5));
 	}
 
 	public boolean isEditable() {
@@ -107,11 +110,6 @@ public class ViewUserView extends AbstractView {
 	public void setJobOffers(JobOffersByOwnerOrRecruiterLazyDataModel jobOffers) {
 		Objects.requireNonNull(jobOffers);
 		this.jobOffers = jobOffers;
-	}
-
-	public void setMeetings(MeetingsByUserLazyDataModel meetings) {
-		Objects.requireNonNull(meetings);
-		this.meetings = meetings;
 	}
 
 	public void setUserId(String userId) {

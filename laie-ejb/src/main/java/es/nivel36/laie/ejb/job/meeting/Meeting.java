@@ -30,7 +30,7 @@ public class Meeting extends AbstractEntity implements Ownerable {
 	private static final long serialVersionUID = -8068167269155086050L;
 
 	@ElementCollection(fetch = FetchType.EAGER)
-	@CollectionTable(name = "EMAILS", joinColumns = @JoinColumn(name = "MEETING_ID"))
+	@CollectionTable(name = "MEETING_EMAILS", joinColumns = @JoinColumn(name = "MEETING_ID"))
 	@Column(name = "EMAIL")
 	private Set<String> attendeesEmails = new HashSet<>();
 

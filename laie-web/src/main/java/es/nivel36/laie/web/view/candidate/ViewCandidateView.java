@@ -70,7 +70,7 @@ public class ViewCandidateView extends AbstractView {
 		logger.trace("Candidate {} init", this.candidateId);
 		findCandidate();
 		this.editable = editCandidatePermission.validate(candidate);
-		this.meetings = this.meetingService.findMeetingsByCandidate(this.candidate, Page.ALL_RESULTS);
+		this.meetings = this.meetingService.findMeetingsByCandidate(this.candidate, Page.of(0,5));
 		this.files = new ArrayList<>(this.candidate.getFiles());
 		this.bookmark = this.buildBookmark();
 		this.bookmarkable = !this.sessionUser.getBookmarks().contains(this.bookmark);

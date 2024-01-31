@@ -387,7 +387,7 @@
 			SELECT COUNT(m) 
 			FROM Meeting m
 			WHERE m.owner = :owner
-			AND m.datePlanned < current_date 
+			AND m.datePlanned < current_date
 		]]></query>
 	</named-query>
 
@@ -395,8 +395,7 @@
 		<query><![CDATA[
 			SELECT m 
 			FROM Meeting m
-			LEFT JOIN FETCH m.owner
-			WHERE m.datePlanned < current_date 
+			WHERE m.datePlanned >= current_date
 			AND :email MEMBER OF m.attendeesEmails
 			ORDER BY m.datePlanned ASC
 		]]></query>
