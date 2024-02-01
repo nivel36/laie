@@ -1,44 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://nivel.36/laie/ui"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:g="http://nivel.36/laie/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
-		#{i18n['candidate.rating.update_rating']}
+		#{i18n['candidate.rating.add_rating']}
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="candidates" />
 
 	<ui:define name="content">
 		<h:form id="candidateForm">
-			<div class="card">
-				<h5>#{i18n['candidate.rating.update_rating']}</h5>
-				<div class="grid">
-					<div class="col-12">
-						<div class="form-card ui-fluid">
-							<div class="grid formgrid">
-								<div class="col-12 sm:col-6">
-									<p:rating id="rating" value="#{editRatingView.rating.rating}" cancel="false" />
-								</div>
-								<div class="col-12 sm:col-6">
-									<g:input type="textarea" id="comment" label="#{i18n['candidate.rating.comment']}" value="#{editRatingView.rating.comment}" />
-								</div>
-							</div>
+			<div class="col-12 xl:col-6 xl:col-offset-3">
+				<p:card styleClass="card card-w-title">
+					<f:facet name="title">
+						<h4>#{i18n['candidate.rating.add_rating']}</h4>
+					</f:facet>
+					<p:divider />
+					<div class="ui-fluid grid">
+						<div class="col-12 md:col-4">
+							<h5>#{i18n['candidate.rating']}</h5>
+						</div>
+						<div class="col-12 md:col-8">
+							<p:rating id="rating" value="#{editRatingView.rating.rating}"
+								cancel="false" styleClass="mb-5" />
+							<g:input type="textarea" id="comment"
+								label="#{i18n['candidate.rating.comment']}"
+								value="#{editRatingView.rating.comment}" />
 						</div>
 					</div>
 
-					<div class="col-12">
-						<div class="form-buttons">
-							<p:button value="#{i18n['action.cancel']}" outcome="/candidate/view.xhtml" styleClass="ui-button-secondary ui-button-outlined" >
-								<f:param name="candidate" value="#{editRatingView.rating.candidate.id}"/>
+					<f:facet name="footer">
+						<div class="flex justify-content-end">
+							<p:button value="#{i18n['action.cancel']}"
+								outcome="/candidate/view.xhtml"
+								styleClass="ui-button-secondary mr-2 mb-2">
+								<f:param name="candidate"
+									value="#{editRatingView.rating.candidate.id}" />
 							</p:button>
-							<p:commandButton value="#{i18n['action.save']}" action="#{editRatingView.save}" update="@form growl"
-								styleClass="ui-button-success ui-button-outlined" process="@form" />
+							<p:commandButton value="#{i18n['action.save']}"
+								action="#{editRatingView.save}" update="@form growl"
+								styleClass="ui-button-primary mb-2"
+								process="@form" />
 						</div>
-					</div>
-				</div>
+					</f:facet>
+				</p:card>
 			</div>
 		</h:form>
 	</ui:define>
 </ui:composition>
+

@@ -11,7 +11,7 @@
 	template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
-		#{i18n['meeting.edit_meeting']}
+		#{i18n['meeting.add_meeting']}
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="meeting" />
@@ -116,7 +116,7 @@
 								styleClass="ui-button-warning mr-2 mb-2" />
 							<p:commandButton value="#{i18n['action.save']}"
 								action="#{editMeetingView.save}" update="@form"
-								styleClass="ui-button-success mb-2" />
+								styleClass="ui-button-primary mb-2" />
 						</div>
 					</f:facet>
 				</p:card>

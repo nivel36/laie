@@ -14,57 +14,62 @@
 		#{clientEditView.client.name}
 	</ui:define>
 
+	<ui:param name="selectedMenu" value="client" />
+
 	<ui:define name="content">
 		<h:form id="contactForm">
-			<div class="card">
-				<div class="grid">
-					<div class="col-12 xl:col-6">
-						<div class="form-card ui-fluid">
-							<h5>#{i18n['contact.data']}</h5>
-							<div class="grid formgrid">
-								<div class="col-12 sm:col-6">
+			<div class="grid">
+				<div class="col-12 xl:col-6 xl:col-offset-3">
+					<p:card>
+						<f:facet name="title">
+							<h4>#{i18n['contact.new_contact']}</h4>
+						</f:facet>
+						<p:divider />
+						<div class="ui-fluid grid">
+							<div class="col-12 md:col-4">
+								<h5>#{i18n['contact.data']}</h5>
+							</div>
+							<div class="col-12 md:col-8">
+								<div class="formgrid grid">
 									<g:input id="name" label="#{i18n['contact.name']}"
-										value="#{editContactView.contact.name}" required="true" />
-								</div>
-								<div class="col-12 sm:col-6">
+										value="#{editContactView.contact.name}" required="true"
+										styleClass="col" />
 									<g:input id="surname" label="#{i18n['contact.surname']}"
-										value="#{editContactView.contact.surname}" required="true" />
+										value="#{editContactView.contact.surname}" required="true"
+										styleClass="col" />
 								</div>
-								<div class="col-12 sm:col-6">
-									<g:input id="position" label="#{i18n['contact.position']}"
-										value="#{editContactView.contact.position}" />
-								</div>
-								<div class="col-12 sm:col-6">
-									<g:input id="email" label="#{i18n['contact.email']}"
-										value="#{editContactView.contact.email}" />
-								</div>
-								<div class="col-12 sm:col-6">
+								<g:input id="position" label="#{i18n['contact.position']}"
+									value="#{editContactView.contact.position}" />
+								<g:input id="email" label="#{i18n['contact.email']}"
+									value="#{editContactView.contact.email}" required="true" />
+								<div class="formgrid grid">
 									<g:input id="phone_number"
 										label="#{i18n['contact.phone_number']}"
-										value="#{editContactView.contact.phoneNumber}" />
+										value="#{editContactView.contact.phoneNumber}"
+										styleClass="col-fixed" />
 								</div>
 							</div>
 						</div>
-					</div>
-				</div>
-				<div class="col-12">
-					<div class="form-buttons">
-						<p:button value="#{i18n['action.cancel']}"
-							outcome="/client/view.xhtml"
-							styleClass="ui-button-secondary ui-button-outlined">
-							<f:param name="client"
-								value="#{editContactView.contact.client.id}" />
-						</p:button>
-						<p:commandButton value="#{i18n['action.delete']}"
-							action="#{editContactView.delete}"
-							styleClass="ui-button-danger ui-button-outlined">
-							<p:confirm message="#{i18n['contact.message.remove']}"
-								icon="pi pi-exclamation-triangle" />
-						</p:commandButton>
-						<p:commandButton value="#{i18n['action.save']}"
-							action="#{editContactView.save}"
-							styleClass="ui-button-success ui-button-outlined" />
-					</div>
+						<f:facet name="footer">
+							<div class="flex justify-content-end">
+								<p:button value="#{i18n['action.cancel']}"
+									outcome="/client/view.xhtml"
+									styleClass="ui-button-secondary mr-2 mb-2">
+									<f:param name="client"
+										value="#{editContactView.contact.client.id}" />
+								</p:button>
+								<p:commandButton value="#{i18n['action.delete']}"
+									action="#{editContactView.delete}"
+									styleClass="ui-button-danger mr-2 mb-2">
+									<p:confirm message="#{i18n['contact.message.remove']}"
+										icon="pi pi-exclamation-triangle" />
+								</p:commandButton>
+								<p:commandButton value="#{i18n['action.save']}"
+									action="#{editContactView.save}"
+									styleClass="ui-button-primary mb-2" />
+							</div>
+						</f:facet>
+					</p:card>
 				</div>
 			</div>
 		</h:form>
