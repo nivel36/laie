@@ -3,9 +3,32 @@
 		background-color: #689F38;
 		color: #ffffff;
 	}
+
 	&.job-offer-state-opened {
 		background-color: #0288D1;
 		color: #ffffff;
+	}
+}
+
+
+.user-detail-box {
+
+	padding: .5em 1em;
+	position: relative;
+	border: 1px solid #dadada;
+	color: #252529;
+	aspect-ratio: 16/7;
+	@include border-radius($borderRadius);
+
+	.user-detail-box-detail {
+		color: $textSecondaryColor;
+	}
+
+	i {
+		position: absolute;
+		color: #8b8b90;
+		top: .5em;
+		right: .5em;
 	}
 }
 

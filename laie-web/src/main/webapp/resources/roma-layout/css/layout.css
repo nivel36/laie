@@ -3945,6 +3945,26 @@ a {
   color: #ffffff;
 }
 
+.user-detail-box {
+  padding: 0.5em 1em;
+  position: relative;
+  border: 1px solid #dadada;
+  color: #252529;
+  aspect-ratio: 16/7;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+}
+.user-detail-box .user-detail-box-detail {
+  color: #65686a;
+}
+.user-detail-box i {
+  position: absolute;
+  color: #8b8b90;
+  top: 0.5em;
+  right: 0.5em;
+}
+
 .events .ui-dataview-header {
   display: none;
 }
