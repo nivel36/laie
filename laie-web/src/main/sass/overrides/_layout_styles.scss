@@ -10,21 +10,50 @@
 	}
 }
 
-
 .user-detail-box {
-
 	padding: .5em 1em;
 	position: relative;
 	border: 1px solid #dadada;
 	color: #252529;
-	aspect-ratio: 16/7;
+	aspect-ratio: 16/8;
+	display: flex;
 	@include border-radius($borderRadius);
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 
+	.user-detail-box-name {
+		display: flex;
+		font-weight: 600;
+	}
+	
 	.user-detail-box-detail {
+		display: flex;
 		color: $textSecondaryColor;
 	}
+	
+	.contact-data {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width:100%;
+		padding: 1rem;
+		
+		i {
+			margin-right: 0.5rem;
+		}
+		
+		.contact-phone {
+			float: left;
+		}
+		
+		.contact-email {
+			float: right;
+		}
+		
+	}
 
-	i {
+	.buttons {
 		position: absolute;
 		color: #8b8b90;
 		top: .5em;

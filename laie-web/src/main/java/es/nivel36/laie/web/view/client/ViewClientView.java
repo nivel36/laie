@@ -1,5 +1,6 @@
 package es.nivel36.laie.web.view.client;
 
+import java.util.Map;
 import java.util.Objects;
 
 import org.omnifaces.cdi.Param;
@@ -15,6 +16,7 @@ import es.nivel36.laie.web.view.client.contact.ContactLazyDataModel;
 import es.nivel36.laie.web.view.job.JobOfferByClientLazyDataModel;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -48,6 +50,24 @@ public class ViewClientView extends AbstractView {
 	private @Inject ContactLazyDataModel contacts;
 
 	private transient @Inject EditClientPermission editClientPermission;
+	
+	private int columns;
+	
+	public int getColumns() {
+		return columns;
+	}
+	
+	public void updateColumns() {
+	    FacesContext context = FacesContext.getCurrentInstance();
+	    Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+	    String columnsParam = params.get("columns");
+	    int columns = Integer.parseInt(columnsParam);
+	    
+	    // Asumiendo que tienes una propiedad `columns` para manejar esto
+	    this.columns = columns;
+	    
+	    // Actualiza el modelo de datos si es necesario
+	}
 
 	@PostConstruct
 	public void init() {
