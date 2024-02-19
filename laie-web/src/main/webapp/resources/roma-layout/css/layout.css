@@ -3988,6 +3988,14 @@ a {
   color: #8b8b90;
   top: 0.5em;
   right: 0.5em;
+  opacity: 0;
+}
+.user-detail-box:hover {
+  border: 1px solid #000;
+}
+.user-detail-box:hover .buttons {
+  transition: opacity 0.5s ease;
+  opacity: 1;
 }
 
 .events .ui-dataview-header {
