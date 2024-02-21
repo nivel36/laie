@@ -66,7 +66,7 @@
 						</div>
 					</h:form>
 				</div>
-				<p:card styleClass="card card-w-title">
+				<p:card styleClass="card card-w-title nopad">
 					<p:tabView>
 						<p:tab title="#{i18n['candidate.job_candidatures']}">
 							<p:dataTable var="jobCandidature"
@@ -211,16 +211,16 @@
 							emptyMessage="#{i18n['file.no_files']}" paginator="true"
 							paginatorPosition="bottom" reflow="true" rows="5"
 							rowKey="#{file.id}"
-							styleClass="ui-datatable-borderless ui-datatable-headerless">
+							styleClass="ui-datatable-headerless ui-datatable-borderless">
 
-							<p:column>
+							<p:column styleClass="nopad-left">
 								<h:commandLink action="#{viewCandidateView.openFile(file)}">
 									<h:outputText value="#{file.name}" />
 								</h:commandLink>
 							</p:column>
 
-							<p:column style="text-align: right">
-								<p:commandButton icon="pi pi-trash" styleClass="danger-button"
+							<p:column styleClass="button nopad-right">
+								<p:commandButton icon="pi pi-times" styleClass="ui-button-danger ui-button-outlined"
 									action="#{viewCandidateView.removeFile(file)}" process="@this"
 									update="@form" rendered="#{viewCandidateView.editable}">
 									<p:confirm message="#{i18n['file.message.remove']}"

@@ -37,7 +37,7 @@
 					lazy="true">
 
 					<p:column headerText="#{i18n['candidate.name']}"
-						sortBy="#{candidate.name}" sortOrder="asc">
+						sortBy="#{candidate.name}" sortOrder="asc" styleClass="align-center">
 						<h:link outcome="/candidate/view.xhtml">
 							<cc:avatar name="#{candidate.fullName}"
 								path="#{candidate.picture.path}" styleClass="mr-2" />

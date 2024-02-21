@@ -7705,9 +7705,18 @@ body .ui-wizard .ui-icon-arrowthick-1-e:before {
 body .ui-datatable table {
   table-layout: auto;
 }
-body .ui-datatable table tbody tr a {
+body .ui-datatable table tbody td.align-center a {
   display: flex;
   align-items: center;
+}
+body .ui-datatable table tbody td.button {
+  text-align: right;
+}
+body .ui-datatable table tbody td.nopad-left {
+  padding-left: 0;
+}
+body .ui-datatable table tbody td.nopad-right {
+  padding-right: 0;
 }
 
 body .ui-dataview .ui-paginator.ui-paginator-bottom {
@@ -7722,14 +7731,8 @@ body .ui-inputnumber .ui-inputtext {
   text-align: right;
 }
 
-body .ui-datatable.ui-datatable-borderless .ui-paginator-top {
-  border-left: 0 none;
-  border-right: 0 none;
-  border-bottom: 1px solid #d8d8dc;
-}
-body .ui-datatable.ui-datatable-borderless .ui-paginator-bottom {
-  border-left: 0 none;
-  border-right: 0 none;
+body .ui-datatable.ui-datatable-borderless .ui-paginator {
+  border: 0 none;
 }
 body .ui-datatable.ui-datatable-borderless .ui-datatable-header {
   border-top: 0 none;

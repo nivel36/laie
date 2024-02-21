@@ -56,15 +56,15 @@
 									value="#{jobCandidature.jobOffer.client.id}" />
 							</h:link>
 						</p:column>
-						<p:column rendered="#{cc.attrs.showCandidate}">
-							<cc:avatar name="#{jobCandidature.candidate.fullName}"
-								path="#{jobCandidature.candidate.picture.path}"
-								styleClass="small" />
-						</p:column>
 						<p:column headerText="#{i18n['job_candidature.candidate']}"
-							rendered="#{cc.attrs.showCandidate}">
-							<h:link value="#{jobCandidature.candidate.fullName}"
-								outcome="/candidate/view.xhtml">
+							rendered="#{cc.attrs.showCandidate}" styleClass="align-center">
+
+							<h:link outcome="/candidate/view.xhtml">
+								<cc:avatar name="#{jobCandidature.candidate.fullName}"
+									path="#{jobCandidature.candidate.picture.path}"
+									styleClass="small mr-2" />
+								<h:outputText styleClass="link"
+									value="#{jobCandidature.candidate.fullName}" />
 								<f:param name="candidate" value="#{jobCandidature.candidate.id}" />
 							</h:link>
 						</p:column>

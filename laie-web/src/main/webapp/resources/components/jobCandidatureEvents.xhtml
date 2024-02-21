@@ -19,8 +19,9 @@
 	</composite:interface>
 
 	<composite:implementation>
+
 		<div id="#{cc.clientId}"
-			class="card card-w-title events #{cc.attrs.styleClass}">
+			class="ui-card card card-w-title events #{cc.attrs.styleClass}">
 			<div class="ui-card-body">
 				<div class="ui-card-title">
 					<h5>#{cc.attrs.title}</h5>
@@ -58,7 +59,7 @@
 								</h:outputText>
 							</p:column>
 
-							<p:column>
+							<p:column styleClass="button">
 								<p:commandButton icon="pi pi-eye"
 									onclick="$(PrimeFaces.escapeClientId('#{cc.clientId}:detail:#{event.id}')).css('display', 'block');$(PrimeFaces.escapeClientId('#{cc.clientId}:table')).css('display', 'none')" />
 							</p:column>
