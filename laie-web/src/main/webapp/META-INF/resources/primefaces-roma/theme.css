@@ -7754,6 +7754,9 @@ body .ui-datatable.ui-datatable-borderless .ui-datatable-data > tr {
 body .ui-datatable.ui-datatable-headerless thead {
   display: none;
 }
+body .ui-datatable.ui-datatable-headerless .ui-datatable-data {
+  border-top: 1px solid #e9ecef;
+}
 
 body .ui-avatar img {
   object-fit: cover;

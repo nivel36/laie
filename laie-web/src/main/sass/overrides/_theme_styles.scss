@@ -64,6 +64,9 @@ body .ui-datatable.ui-datatable-headerless {
 	thead {
 		display: none;
 	}
+	.ui-datatable-data {
+		border-top: 1px solid $shade200;
+	}
 }
 
 body .ui-avatar img {

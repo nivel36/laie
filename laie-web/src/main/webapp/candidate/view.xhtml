@@ -215,12 +215,14 @@
 
 							<p:column styleClass="nopad-left">
 								<h:commandLink action="#{viewCandidateView.openFile(file)}">
+									<i class="pi pi-file mr-2" style="font-size: 2rem" />
 									<h:outputText value="#{file.name}" />
 								</h:commandLink>
 							</p:column>
 
 							<p:column styleClass="button nopad-right">
-								<p:commandButton icon="pi pi-times" styleClass="ui-button-danger ui-button-outlined"
+								<p:commandButton icon="pi pi-times"
+									styleClass="ui-button-danger ui-button-outlined"
 									action="#{viewCandidateView.removeFile(file)}" process="@this"
 									update="@form" rendered="#{viewCandidateView.editable}">
 									<p:confirm message="#{i18n['file.message.remove']}"
@@ -248,7 +250,7 @@
 				</cc:meetings>
 
 				<p:card styleClass="card card-w-title tags">
-				<f:facet name="title">
+					<f:facet name="title">
 						<h5>#{i18n['candidate.tags']}</h5>
 					</f:facet>
 					<ui:repeat value="#{viewCandidateView.candidate.tags}" var="tag"
