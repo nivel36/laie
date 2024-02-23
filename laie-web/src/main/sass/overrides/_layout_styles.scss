@@ -10,65 +10,6 @@
 	}
 }
 
-.user-detail-box {
-	padding: .5em 1em;
-	position: relative;
-	border: 1px solid #dadada;
-	color: #252529;
-	aspect-ratio: 16/8;
-	display: flex;
-	@include border-radius($borderRadius);
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	
-	.user-detail-box-name {
-		display: flex;
-		font-weight: 600;
-	}
-
-	.user-detail-box-detail {
-		display: flex;
-		color: $textSecondaryColor;
-	}
-
-	.contact-data {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		width: 100%;
-		padding: 1rem;
-
-		i {
-			margin-right: 0.5rem;
-		}
-
-		.contact-phone {
-			float: left;
-		}
-
-		.contact-email {
-			float: right;
-		}
-	}
-
-	.buttons {
-		position: absolute;
-		color: #8b8b90;
-		top: .5em;
-		right: .5em;
-		opacity: 0;
-	}
-
-	&:hover {
-		border: 1px solid #000;
-		.buttons {
-			transition: opacity 0.5s ease;
-			opacity: 1;
-		}
-	}
-}
-
 .events {
 	.ui-dataview-header {
 		display: none;
@@ -624,54 +565,51 @@
 	display: flex;
 	justify-content: space-between;
 
-	.contact-box {
+
+
+	.contact-name {
+		font-size: 1.1rem;
+		font-weight: 800;
+		padding-bottom: 0.2rem;
+	}
+
+	.contact-position {
+		font-weight: 400;
+		padding-bottom: 0.1rem;
+	}
+
+	.contact-data {
 		display: flex;
 		flex-direction: column;
-		line-height: 1.2em;
 
-		.contact-name {
-			font-size: 1.1rem;
-			font-weight: 800;
-			padding-bottom: 0.2rem;
+		i {
+			display: inline-block;
+			margin-right: 0.4rem;
 		}
 
-		.contact-position {
+		.contact-phone {
+			font-size: 0.8rem;
 			font-weight: 400;
-			padding-bottom: 0.1rem;
-		}
-
-		.contact-data {
 			display: flex;
-			flex-direction: column;
+			align-items: center;
+		}
 
-			i {
-				display: inline-block;
-				margin-right: 0.4rem;
-			}
-
-			.contact-phone {
-				font-size: 0.8rem;
-				font-weight: 400;
-				display: flex;
-				align-items: center;
-			}
-
-			.contact-email {
-				font-size: 0.8rem;
-				font-weight: 400;
-				display: flex;
-				align-items: center;
-			}
+		.contact-email {
+			font-size: 0.8rem;
+			font-weight: 400;
+			display: flex;
+			align-items: center;
 		}
 	}
+}
 
-	.buttons {
-		padding: 0;
+.buttons {
+	padding: 0;
 
-		button {
-			background-color: white;
-		}
+	button {
+		background-color: white;
 	}
+
 }
 
 .card.job-card {

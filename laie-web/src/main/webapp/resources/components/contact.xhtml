@@ -16,20 +16,20 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<div id="#{cc.clientId}"
-			class="user-detail-box #{cc.attrs.styleClass}">
-			<div class="user-detail-box-name">#{cc.attrs.value.fullName}</div>
-			<h:panelGroup layout="block" styleClass="user-detail-box-detail"
-				rendered="#{not empty cc.attrs.value.position}">#{cc.attrs.value.position}</h:panelGroup>
-			<div class="contact-data">
-				<h:panelGroup layout="block" styleClass="contact-phone"
-					rendered="#{not empty cc.attrs.value.phoneNumber}">
-					<i class="pi pi-phone" aria-hidden="true" />#{cc.attrs.value.phoneNumber}
+		<div id="#{cc.clientId}" class="contact #{cc.attrs.styleClass}">
+				<div class="contact-name">#{cc.attrs.value.fullName}</div>
+				<h:panelGroup layout="block" styleClass="contact-position"
+					rendered="#{not empty cc.attrs.value.position}">#{cc.attrs.value.position}</h:panelGroup>
+				<div class="contact-data">
+					<h:panelGroup layout="block" styleClass="contact-phone"
+						rendered="#{not empty cc.attrs.value.phoneNumber}">
+						<i class="pi pi-phone" aria-hidden="true" />#{cc.attrs.value.phoneNumber}
 					</h:panelGroup>
-				<h:panelGroup layout="block" styleClass="contact-email"
-					rendered="#{not empty cc.attrs.value.email}">
-					<i class="pi pi-envelope" aria-hidden="true" />#{cc.attrs.value.email}
+					<h:panelGroup layout="block" styleClass="contact-email"
+						rendered="#{not empty cc.attrs.value.email}">
+						<i class="pi pi-envelope" aria-hidden="true" />#{cc.attrs.value.email}
 					</h:panelGroup>
+				</div>
 			</div>
 			<div class="buttons">
 				<p:button icon="pi pi-pencil" outcome="/client/contact/edit.xhtml"
@@ -37,7 +37,6 @@
 					<f:param name="contact" value="#{cc.attrs.value.id}" />
 					<f:param name="client" value="#{cc.attrs.value.client.id}" />
 				</p:button>
-			</div>
 		</div>
 	</composite:implementation>
 </ui:component>

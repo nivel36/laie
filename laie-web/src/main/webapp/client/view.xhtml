@@ -69,12 +69,6 @@
 						</p:button>
 					</h:form>
 				</cc:jobOffers>
-				<cc:contacts value="#{viewClientView.contacts}">
-					<p:button icon="pi pi-plus" outcome="/client/contact/add.xhtml"
-						process="@this" styleClass="ui-button-success ui-button-outlined">
-						<f:param name="client" value="#{viewClientView.client.id}" />
-					</p:button>
-				</cc:contacts>
 			</div>
 
 			<div class="col-12 xl:col-4">
@@ -88,6 +82,12 @@
 						<f:param name="user" value="#{viewClientView.client.owner.id}" />
 					</cc:outputLink>
 				</p:card>
+				<cc:contacts value="#{viewClientView.contacts}">
+					<p:button icon="pi pi-plus" outcome="/client/contact/add.xhtml"
+						process="@this" styleClass="ui-button-success ui-button-outlined">
+						<f:param name="client" value="#{viewClientView.client.id}" />
+					</p:button>
+				</cc:contacts>
 			</div>
 		</div>
 	</ui:define>

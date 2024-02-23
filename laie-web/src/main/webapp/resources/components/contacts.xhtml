@@ -25,19 +25,17 @@
 				<div class="ui-card-title">
 					<h5>#{cc.attrs.title}</h5>
 				</div>
-				<div class="user-detail">
-					<p:dataView var="contact" value="#{cc.attrs.value}"
-						gridIcon="pi pi-th-large" listIcon="pi pi-bars" paginator="true"
-						layout="grid" paginatorPosition="bottom" rows="3"
-						emptyMessage="#{i18n['client.no_contacts_found']}" lazy="true">
-						<p:dataViewGridItem columns="3">
-							<cc:contact value="#{contact}" />
-						</p:dataViewGridItem>
-					</p:dataView>
+				<p:dataView var="contact" value="#{cc.attrs.value}"
+					gridIcon="pi pi-th-large" listIcon="pi pi-bars" paginator="true"
+					layout="grid" paginatorPosition="bottom" rows="5"
+					emptyMessage="#{i18n['client.no_contacts_found']}" lazy="true">
+					<p:dataViewGridItem columns="1">
+						<cc:contact value="#{contact}" />
+					</p:dataViewGridItem>
+				</p:dataView>
 
-					<div class="card-header-buttons">
-						<composite:insertChildren />
-					</div>
+				<div class="card-header-buttons">
+					<composite:insertChildren />
 				</div>
 			</div>
 		</div>
