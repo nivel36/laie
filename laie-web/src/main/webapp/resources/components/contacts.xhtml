@@ -28,9 +28,31 @@
 				<p:dataView var="contact" value="#{cc.attrs.value}"
 					gridIcon="pi pi-th-large" listIcon="pi pi-bars" paginator="true"
 					layout="grid" paginatorPosition="bottom" rows="5"
-					emptyMessage="#{i18n['client.no_contacts_found']}" lazy="true">
+					emptyMessage="#{i18n['client.no_contacts_found']}" lazy="true"
+					gridRowStyleClass="contact #{cc.attrs.rowStyleClass}">
 					<p:dataViewGridItem columns="1">
-						<cc:contact value="#{contact}" />
+						<i class="pi pi-user contact-icon" />
+						<div class="contact-name">#{contact.fullName}</div>
+						<h:panelGroup layout="block" styleClass="contact-position"
+							rendered="#{not empty contact.position}">#{contact.position}</h:panelGroup>
+						<div class="contact-data">
+							<h:panelGroup layout="block" styleClass="contact-email"
+								rendered="#{not empty contact.email}">
+								<i class="pi pi-envelope email-icon" aria-hidden="true" />#{contact.email}
+					</h:panelGroup>
+							<h:panelGroup layout="block" styleClass="contact-phone"
+								rendered="#{not empty contact.phoneNumber}">
+								<i class="pi pi-phone phone-icon" aria-hidden="true" />#{contact.phoneNumber}
+					</h:panelGroup>
+						</div>
+						<div class="contact-buttons">
+							<p:button icon="pi pi-pencil"
+								outcome="/client/contact/edit.xhtml"
+								styleClass="ui-button-outlined">
+								<f:param name="contact" value="#{contact.id}" />
+								<f:param name="client" value="#{contact.client.id}" />
+							</p:button>
+						</div>
 					</p:dataViewGridItem>
 				</p:dataView>
 

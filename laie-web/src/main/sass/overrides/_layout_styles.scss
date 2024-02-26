@@ -560,58 +560,6 @@
 	}
 }
 
-.contact {
-	position: relative;
-	display: flex;
-	justify-content: space-between;
-
-
-
-	.contact-name {
-		font-size: 1.1rem;
-		font-weight: 800;
-		padding-bottom: 0.2rem;
-	}
-
-	.contact-position {
-		font-weight: 400;
-		padding-bottom: 0.1rem;
-	}
-
-	.contact-data {
-		display: flex;
-		flex-direction: column;
-
-		i {
-			display: inline-block;
-			margin-right: 0.4rem;
-		}
-
-		.contact-phone {
-			font-size: 0.8rem;
-			font-weight: 400;
-			display: flex;
-			align-items: center;
-		}
-
-		.contact-email {
-			font-size: 0.8rem;
-			font-weight: 400;
-			display: flex;
-			align-items: center;
-		}
-	}
-}
-
-.buttons {
-	padding: 0;
-
-	button {
-		background-color: white;
-	}
-
-}
-
 .card.job-card {
 	padding: 0;
 
@@ -764,6 +712,7 @@
 }
 
 .contacts {
+
 	.ui-dataview-header {
 		display: none;
 	}
@@ -771,6 +720,93 @@
 	.ui-dataview-row {
 		a {
 			color: $textColor;
+		}
+	}
+
+	.contact {
+		position: relative;
+		border-bottom: 1px solid #ebebef;
+		padding: 1rem;
+
+		i {
+			font-size: 2em;
+			margin-right: .25em;
+			vertical-align: middle;
+
+			&.contact-icon {
+				color: #1cb9d7;
+			}
+
+			&.phone-icon {
+				color: #0f97c7;
+				padding-right:0.5rem;
+			}
+
+			&.email-icon {
+				color: #9643F9;
+				padding-right:0.5rem;
+			}
+		}
+
+		.contact-name {
+			font-size: 1.1rem;
+			font-weight: 500;
+			display: inline-block;
+		}
+
+		.contact-position {
+			background-color: #ebebef;
+			padding: .25em;
+			vertical-align: middle;
+			margin-left: 1em;
+			display: inline-block;
+			@include border-radius($borderRadius);
+		}
+
+		.contact-data {
+			display: flex;
+			margin-top: 0.8rem;
+
+			i {
+				font-size: 1.4em;
+				display: inline-block;
+				margin-right: 0.2rem;
+			}
+
+			.contact-phone {
+				font-weight: 400;
+				display: flex;
+				align-items: center;
+				margin-left: 2.5rem;
+			}
+
+			.contact-email {
+				font-weight: 400;
+				display: flex;
+				align-items: center;
+			}
+		}
+
+		.contact-buttons {
+			position: absolute;
+			top: 1rem;
+			right: 0rem;
+			opacity: 0;
+			transition: opacity 0.3s;
+
+			button {
+				background-color: white;
+			}
+		}
+
+		&:hover {
+			.contact-buttons {
+				opacity: 1;
+			}
+		}
+
+		&:last-child {
+			border-bottom: 0 none;
 		}
 	}
 }

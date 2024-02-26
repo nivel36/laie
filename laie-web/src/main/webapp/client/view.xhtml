@@ -72,22 +72,29 @@
 			</div>
 
 			<div class="col-12 xl:col-4">
-				<p:card styleClass="card card-w-title">
-					<f:facet name="title">
-						<h5>#{i18n['client.other_data']}</h5>
-					</f:facet>
-					<cc:outputLink label="#{i18n['job.owner']}"
-						value="#{viewClientView.client.owner.fullName}"
-						outcome="/user/view.xhtml">
-						<f:param name="user" value="#{viewClientView.client.owner.id}" />
-					</cc:outputLink>
-				</p:card>
-				<cc:contacts value="#{viewClientView.contacts}">
-					<p:button icon="pi pi-plus" outcome="/client/contact/add.xhtml"
-						process="@this" styleClass="ui-button-success ui-button-outlined">
-						<f:param name="client" value="#{viewClientView.client.id}" />
-					</p:button>
-				</cc:contacts>
+				<div class="grid nopad">
+					<div class="col-12 md:col-6 xl:col-12">
+						<p:card styleClass="card card-w-title">
+							<f:facet name="title">
+								<h5>#{i18n['client.other_data']}</h5>
+							</f:facet>
+							<cc:outputLink label="#{i18n['job.owner']}"
+								value="#{viewClientView.client.owner.fullName}"
+								outcome="/user/view.xhtml">
+								<f:param name="user" value="#{viewClientView.client.owner.id}" />
+							</cc:outputLink>
+						</p:card>
+					</div>
+					<div class="col-12 md:col-6 xl:col-12">
+						<cc:contacts value="#{viewClientView.contacts}">
+							<p:button icon="pi pi-plus" outcome="/client/contact/add.xhtml"
+								process="@this"
+								styleClass="ui-button-success ui-button-outlined">
+								<f:param name="client" value="#{viewClientView.client.id}" />
+							</p:button>
+						</cc:contacts>
+					</div>
+				</div>
 			</div>
 		</div>
 	</ui:define>

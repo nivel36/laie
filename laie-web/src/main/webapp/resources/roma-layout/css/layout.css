@@ -4389,48 +4389,6 @@ a {
   font-weight: 500;
 }
 
-.contact {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-}
-.contact .contact-name {
-  font-size: 1.1rem;
-  font-weight: 800;
-  padding-bottom: 0.2rem;
-}
-.contact .contact-position {
-  font-weight: 400;
-  padding-bottom: 0.1rem;
-}
-.contact .contact-data {
-  display: flex;
-  flex-direction: column;
-}
-.contact .contact-data i {
-  display: inline-block;
-  margin-right: 0.4rem;
-}
-.contact .contact-data .contact-phone {
-  font-size: 0.8rem;
-  font-weight: 400;
-  display: flex;
-  align-items: center;
-}
-.contact .contact-data .contact-email {
-  font-size: 0.8rem;
-  font-weight: 400;
-  display: flex;
-  align-items: center;
-}
-
-.buttons {
-  padding: 0;
-}
-.buttons button {
-  background-color: white;
-}
-
 .card.job-card {
   padding: 0;
 }
@@ -4558,6 +4516,78 @@ a {
 }
 .contacts .ui-dataview-row a {
   color: #252529;
+}
+.contacts .contact {
+  position: relative;
+  border-bottom: 1px solid #ebebef;
+  padding: 1rem;
+}
+.contacts .contact i {
+  font-size: 2em;
+  margin-right: 0.25em;
+  vertical-align: middle;
+}
+.contacts .contact i.contact-icon {
+  color: #1cb9d7;
+}
+.contacts .contact i.phone-icon {
+  color: #0f97c7;
+  padding-right: 0.5rem;
+}
+.contacts .contact i.email-icon {
+  color: #9643F9;
+  padding-right: 0.5rem;
+}
+.contacts .contact .contact-name {
+  font-size: 1.1rem;
+  font-weight: 500;
+  display: inline-block;
+}
+.contacts .contact .contact-position {
+  background-color: #ebebef;
+  padding: 0.25em;
+  vertical-align: middle;
+  margin-left: 1em;
+  display: inline-block;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+}
+.contacts .contact .contact-data {
+  display: flex;
+  margin-top: 0.8rem;
+}
+.contacts .contact .contact-data i {
+  font-size: 1.4em;
+  display: inline-block;
+  margin-right: 0.2rem;
+}
+.contacts .contact .contact-data .contact-phone {
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  margin-left: 2.5rem;
+}
+.contacts .contact .contact-data .contact-email {
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+}
+.contacts .contact .contact-buttons {
+  position: absolute;
+  top: 1rem;
+  right: 0rem;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.contacts .contact .contact-buttons button {
+  background-color: white;
+}
+.contacts .contact:hover .contact-buttons {
+  opacity: 1;
+}
+.contacts .contact:last-child {
+  border-bottom: 0 none;
 }
 
 .users .ui-dataview-header {
