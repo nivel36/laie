@@ -10,6 +10,7 @@ import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.util.Parameters;
 import es.nivel36.laie.ejb.user.User;
+import jakarta.persistence.TypedQuery;
 
 public class MeetingDao extends AbstractDao {
 
@@ -21,6 +22,20 @@ public class MeetingDao extends AbstractDao {
 		return this.findByQuery(Meeting.class, namedQuery, parameters, page);
 	}
 
+	public List<Meeting> findMonthMeetings(final User user, final LocalDateTime date) {
+		Objects.requireNonNull(user);
+		Objects.requireNonNull(date);
+		final String namedQuery = "Meeting.findMonthdMeetingsByUser";
+		final TypedQuery<Meeting> query = this.em.createNamedQuery(namedQuery, Meeting.class);
+		query.setParameter("email", user.getEmail());
+		LocalDateTime startDate = date.withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0);
+		LocalDateTime endDate = startDate.plusMonths(1).minusSeconds(1);
+		query.setParameter("startDate", startDate);
+		query.setParameter("endDate", endDate);
+		
+		return query.getResultList();
+	}
+
 	public List<Meeting> findConductedMeetings(final User owner, final Page page) {
 		Objects.requireNonNull(owner);
 		Objects.requireNonNull(page);
@@ -28,7 +43,7 @@ public class MeetingDao extends AbstractDao {
 		final Parameters parameters = map("owner", owner).and("now", LocalDateTime.now());
 		return this.findByQuery(Meeting.class, namedQuery, parameters, page);
 	}
-	
+
 	public long countConductedMeetings(final User owner) {
 		Objects.requireNonNull(owner);
 		final String namedQuery = "Meeting.countConductedByOwner";
@@ -43,7 +58,7 @@ public class MeetingDao extends AbstractDao {
 		final Parameters parameters = map("owner", owner);
 		return this.findByQuery(Meeting.class, namedQuery, parameters, page);
 	}
-	
+
 	public long countPlannedMeetings(final User owner) {
 		Objects.requireNonNull(owner);
 		final String namedQuery = "Meeting.countPlannedMeetings";

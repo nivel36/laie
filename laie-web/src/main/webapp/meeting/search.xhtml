@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components" xmlns:f="http://java.sun.com/jsf/core" xmlns:g="http://nivel.36/laie/ui"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:g="http://nivel.36/laie/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
 		#{i18n['calendar.calendar']}
@@ -12,18 +18,11 @@
 
 	<ui:define name="content">
 		<h:form>
-			<div class="grid">
-				<div class="col-12 xl:col-6">
-					<cc:meetings value="#{searchMeetingView.plannedMeetings}" title="#{i18n['meeting.planned_meetings']}"
-						emptyMessage="#{i18n['meeting.no_planned']}">
-						<p:button icon="pi pi-plus" outcome="/meeting/add.xhtml" styleClass="ui-button-success ui-button-outlined" />
-					</cc:meetings>
-				</div>
-				<div class="col-12 xl:col-6">
-					<cc:meetings value="#{searchMeetingView.conductedMeetings}" title="#{i18n['meeting.conducted_meetings']}"
-						emptyMessage="#{i18n['meeting.no_conducted']}" />
-				</div>
-			</div>
+			<p:schedule id="schedule" value="#{searchMeetingView.eventModel}"
+				widgetVar="myschedule"
+				timeZone="#{searchMeetingView.serverTimeZone}"
+				clientTimeZone="#{searchMeetingView.serverTimeZone}">
+			</p:schedule>
 		</h:form>
 	</ui:define>
 </ui:composition>

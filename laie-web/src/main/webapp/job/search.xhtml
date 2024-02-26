@@ -22,7 +22,7 @@
 				</div>
 
 				<p:dataTable id="jobOffers" var="jobOffer" value="#{searchJobView.jobOffers}" emptyMessage="#{i18n['job.no_jobs_found']}" reflow="true"
-					paginator="true" paginatorPosition="bottom" rows="10" lazy="true">
+					paginator="true" paginatorPosition="bottom" rows="10" lazy="true" styleClass="ui-datatable-borderless">
 
 					<p:column headerText="#{i18n['job.title']}" sortBy="#{jobOffer.title}" sortOrder="asc">
 						<h:link outcome="/job/view.xhtml">#{jobOffer.title} <h:outputText value="-" rendered="#{not empty jobOffer.address.city}" /> ${jobOffer.address.city}

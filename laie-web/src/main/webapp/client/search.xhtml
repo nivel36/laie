@@ -23,7 +23,7 @@
 				</div>
 
 				<p:dataTable var="client" id="clients" value="#{searchClientView.clients}" emptyMessage="#{i18n['client.no_clients_found']}" reflow="true"
-					paginator="true" paginatorPosition="bottom" rows="10" lazy="true">
+					paginator="true" paginatorPosition="bottom" rows="10" lazy="true" styleClass="ui-datatable-borderless">
 
 					<p:column headerText="#{i18n['client.name']}" sortBy="#{client.name}" sortOrder="asc">
 						<h:link value="#{client.name}" outcome="/client/view.xhtml" styleClass="link">

@@ -1,5 +1,6 @@
 package es.nivel36.laie.ejb.job.meeting;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -25,13 +26,9 @@ public class MeetingService {
 	private static final Logger logger = LoggerFactory.getLogger(MeetingService.class);
 
 	private @Inject MeetingDao meetingDao;
-
 	private @Inject UserDao userDao;
-
 	private @Inject CandidateDao candidateDao;
-
 	private @Inject ContactDao contactDao;
-
 	private @Inject SubjectDao subjectDao;
 
 	public void addMeeting(final Meeting meeting) {
@@ -115,6 +112,12 @@ public class MeetingService {
 		Objects.requireNonNull(owner);
 		logger.debug("Find planned meetings by owner {}", owner);
 		return this.meetingDao.findPlannedMeetings(owner, page);
+	}
+	
+	public List<Meeting> findMonthMeetings(final User user, final LocalDateTime date ) {
+		Objects.requireNonNull(user);
+		logger.debug("Find planned meetings by user {} and year {}/month {}", user, date.getYear(), date.getMonth());
+		return this.meetingDao.findMonthMeetings(user, date);
 	}
 	
 	public long countPlannedMeetings(final User owner) {

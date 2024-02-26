@@ -98,7 +98,7 @@
 			WHERE c.client = :client
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="Contact.deleteByIdAndClientId">
 		<query><![CDATA[
 			DELETE FROM Contact c WHERE c = :contact AND c.client = :client
@@ -236,7 +236,7 @@
 			WHERE j.jobOffer = :jobOffer
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="JobCandidature.countByJobOffer">
 		<query><![CDATA[
 			SELECT COUNT(j) 
@@ -271,7 +271,7 @@
 			WHERE j.name = :name
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="JobOffer.findRecruitersByJobOffer">
 		<query><![CDATA[
 			SELECT u 
@@ -368,7 +368,18 @@
 			ORDER BY m.datePlanned ASC
 		]]></query>
 	</named-query>
-	
+
+	<named-query name="Meeting.findMonthdMeetingsByUser">
+		<query><![CDATA[
+			SELECT m 
+			FROM Meeting m
+			WHERE m.datePlanned >= :startDate
+			AND m.datePlanned <= :endDate
+			AND :email MEMBER OF m.attendeesEmails
+			ORDER BY m.datePlanned ASC
+		]]></query>
+	</named-query>
+
 	<named-query name="Meeting.countPlannedByOwner">
 		<query><![CDATA[
 			SELECT COUNT(m) 
@@ -387,7 +398,7 @@
 			ORDER BY m.datePlanned ASC
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="Meeting.countConductedByOwner">
 		<query><![CDATA[
 			SELECT COUNT(m) 

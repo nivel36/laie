@@ -33,7 +33,7 @@
 				<p:dataTable id="users" value="#{searchUserView.users}" var="user"
 					emptyMessage="#{i18n['user.no_users_found']}" reflow="true"
 					paginator="true" paginatorPosition="bottom" rows="10"
-					sortMode="single" lazy="true">
+					sortMode="single" lazy="true" styleClass="ui-datatable-borderless">
 					<p:column headerText="#{i18n['user.name']}" sortBy="#{user.name}" styleClass="align-center">
 						<h:link outcome="/user/view.xhtml">
 							<cc:avatar name="#{user.fullName}" path="#{user.picture.path}"
