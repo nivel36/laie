@@ -4595,6 +4595,28 @@ a {
 }
 .users .ui-dataview-row a {
   color: #252529;
+  display: flex;
+}
+.users .user {
+  border-bottom: 1px solid #ebebef;
+  padding: 1em;
+  display: flex;
+}
+.users .user .ui-avatar {
+  margin-right: 1rem;
+}
+.users .user .person-box .person-name-text {
+  font-weight: 500;
+}
+.users .user .person-box .person-description-text {
+  font-size: 0.9rem;
+  color: #65686a;
+}
+.users .user .person-data {
+  margin-left: 1rem;
+}
+.users .user:last-child {
+  border-bottom: 0 none;
 }
 
 .form-buttons {
@@ -4622,6 +4644,19 @@ a {
   color: #256029;
 }
 
+.files .ui-dataview-header {
+  display: none;
+}
+.files .ui-dataview-row a {
+  color: #252529;
+}
+.files .file {
+  border-bottom: 1px solid #ebebef;
+  padding: 1em;
+}
+.files:last-child {
+  border-bottom: 0 none;
+}
 .files .ui-fileupload-simple .ui-fileupload-filename {
   display: none;
 }

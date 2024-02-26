@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.core.action.Auditable;
-import es.nivel36.laie.ejb.core.action.Create;
 import es.nivel36.laie.ejb.core.action.Update;
 import es.nivel36.laie.ejb.core.model.Page;
 import jakarta.ejb.Stateless;
@@ -21,16 +20,12 @@ public class ContactService {
 
 	private @Inject ContactDao contactDao;
 
-	private @Inject ClientDao clientDao;
-
-	private @Inject @Create Event<Auditable> createClientEvent;
-
 	private @Inject @Update Event<Auditable> updateClientEvent;
 
 	public void addContact(final Contact contact) {
 		logger.debug("Add contact {}", contact);
 		contactDao.insert(contact);
-		this.createClientEvent.fireAsync(contact.getClient());
+		this.updateClientEvent.fireAsync(contact.getClient());
 	}
 
 	public Contact updateContact(final Contact contact) {
@@ -41,13 +36,11 @@ public class ContactService {
 		return updatedContact;
 	}
 
-	public Client deleteContact(final Contact contact) {
+	public void deleteContact(final Contact contact) {
 		Objects.requireNonNull(contact);
 		logger.debug("Delete contact {}", contact);
-		contact.getClient().getContacts().remove(contact);
-		final Client updatedClient = this.clientDao.update(contact.getClient());
-		this.updateClientEvent.fireAsync(updatedClient);
-		return updatedClient;
+		this.contactDao.deleteContactByIdAndClientId(contact, contact.getClient());
+		this.updateClientEvent.fireAsync(contact.getClient());
 	}
 
 	public Contact findContactByEmail(final String email) {
@@ -68,8 +61,7 @@ public class ContactService {
 		logger.debug("Find contacts by client {}, offset {} limit of {}", client, page.getOffset(), page.getLimit());
 		return this.contactDao.findContactsByClient(client, page);
 	}
-	
-	
+
 	public long countContactsByClient(final Client client) {
 		Objects.requireNonNull(client);
 		logger.debug("Count contacts by client {}", client);

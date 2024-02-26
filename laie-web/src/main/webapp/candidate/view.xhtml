@@ -201,44 +201,47 @@
 						value="#{i18n[viewCandidateView.candidate.origin]}" />
 				</p:card>
 
-				<p:card styleClass="card card-w-title files">
-					<f:facet name="title">
-						<h5>#{i18n['file.files']}</h5>
-					</f:facet>
-					<h:form id="file_form" enctype="multipart/form-data">
-						<p:dataTable var="file" id="files"
-							value="#{viewCandidateView.files}"
-							emptyMessage="#{i18n['file.no_files']}" paginator="true"
-							paginatorPosition="bottom" reflow="true" rows="5"
-							rowKey="#{file.id}"
-							styleClass="ui-datatable-headerless ui-datatable-borderless">
-
-							<p:column styleClass="nopad-left">
-								<h:commandLink action="#{viewCandidateView.openFile(file)}">
-									<i class="pi pi-file mr-2" style="font-size: 2rem" />
-									<h:outputText value="#{file.name}" />
-								</h:commandLink>
-							</p:column>
-
-							<p:column styleClass="button nopad-right">
-								<p:commandButton icon="pi pi-times"
-									styleClass="ui-button-danger ui-button-outlined"
-									action="#{viewCandidateView.removeFile(file)}" process="@this"
-									update="@form" rendered="#{viewCandidateView.editable}">
-									<p:confirm message="#{i18n['file.message.remove']}"
-										icon="pi pi-exclamation-triangle" />
-								</p:commandButton>
-							</p:column>
-						</p:dataTable>
-						<div class="card-header-buttons">
-							<p:fileUpload id="uploadFile"
-								listener="#{viewCandidateView.uploadFile}" mode="simple"
-								skinSimple="true" update="@form growl" auto="true"
-								styleClass="ui-button-outlined" label=""
-								rendered="#{viewCandidateView.editable}" />
+				<div class="ui-card card card-w-title files">
+					<div class="ui-card-body">
+						<div class="ui-card-title">
+							<h5>#{i18n['file.files']}</h5>
 						</div>
-					</h:form>
-				</p:card>
+
+						<h:form id="file_form" enctype="multipart/form-data">
+							<p:dataTable var="file" id="files"
+								value="#{viewCandidateView.files}"
+								emptyMessage="#{i18n['file.no_files']}" paginator="true"
+								paginatorPosition="bottom" reflow="true" rows="5"
+								rowKey="#{file.id}" rowStyleClass="file"
+								styleClass="ui-datatable-headerless ui-datatable-borderless">
+								
+								<p:column styleClass="nopad-left">
+									<h:commandLink action="#{viewCandidateView.openFile(file)}">
+										<i class="pi pi-file mr-2" style="font-size: 2rem" />
+										<h:outputText value="#{file.name}" />
+									</h:commandLink>
+								</p:column>
+
+								<p:column styleClass="button nopad-right">
+									<p:commandButton icon="pi pi-times"
+										styleClass="ui-button-danger ui-button-outlined"
+										action="#{viewCandidateView.removeFile(file)}" process="@this"
+										update="@form" rendered="#{viewCandidateView.editable}">
+										<p:confirm message="#{i18n['file.message.remove']}"
+											icon="pi pi-exclamation-triangle" />
+									</p:commandButton>
+								</p:column>
+							</p:dataTable>
+							<div class="card-header-buttons">
+								<p:fileUpload id="uploadFile"
+									listener="#{viewCandidateView.uploadFile}" mode="simple"
+									skinSimple="true" update="@form growl" auto="true"
+									styleClass="ui-button-outlined" label=""
+									rendered="#{viewCandidateView.editable}" />
+							</div>
+						</h:form>
+					</div>
+				</div>
 
 				<cc:meetings value="#{viewCandidateView.meetings}" rows="5">
 					<h:form>

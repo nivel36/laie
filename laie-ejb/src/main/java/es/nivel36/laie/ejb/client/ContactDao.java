@@ -14,6 +14,7 @@ import es.nivel36.laie.ejb.core.model.SortField;
 import es.nivel36.laie.ejb.core.util.Parameters;
 import jakarta.inject.Inject;
 import jakarta.persistence.NoResultException;
+import jakarta.persistence.Query;
 
 public class ContactDao extends AbstractDao {
 
@@ -25,6 +26,15 @@ public class ContactDao extends AbstractDao {
 		final String namedQuery = "Contact.findByClient";
 		final Parameters parameters = map("client", client);
 		return this.findByQuery(Contact.class, namedQuery, parameters, page);
+	}
+
+	public int deleteContactByIdAndClientId(final Contact contact, final Client client) {
+		Objects.requireNonNull(client);
+		final String namedQuery = "Contact.deleteByIdAndClientId";
+		Query query = this.em.createNamedQuery(namedQuery);
+		query.setParameter("client", client);
+		query.setParameter("contact", contact);
+		return query.executeUpdate();
 	}
 
 	public long countContactsByClient(final Client client) {

@@ -29,12 +29,20 @@
 					<p:dataView var="user" value="#{cc.attrs.value}"
 						gridIcon="pi pi-th-large" listIcon="pi pi-bars" paginator="true"
 						layout="grid" paginatorPosition="bottom" rows="#{cc.attrs.rows}"
-						emptyMessage="#{i18n['user.no_team']}" lazy="true">
+						emptyMessage="#{i18n['user.no_team']}" lazy="true"
+						gridRowStyleClass="user">
 						<p:dataViewGridItem columns="1">
 							<h:link outcome="/user/view.xhtml">
 								<f:param name="user" value="#{user.id}" />
-								<cc:person name="#{user.fullName}" path="#{user.picture.path}"
-									description="#{user.email}" />
+								<cc:avatar name="#{user.fullName}" path="#{user.picture.path}" />
+								<div class="person-box">
+									<div class="person-name">
+										<span class="person-name-text">#{user.fullName}</span>
+									</div>
+									<div class="person-description">
+										<span class="person-description-text">#{user.email}</span>
+									</div>
+								</div>
 							</h:link>
 						</p:dataViewGridItem>
 					</p:dataView>

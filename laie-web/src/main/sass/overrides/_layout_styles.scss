@@ -739,12 +739,12 @@
 
 			&.phone-icon {
 				color: #0f97c7;
-				padding-right:0.5rem;
+				padding-right: 0.5rem;
 			}
 
 			&.email-icon {
 				color: #9643F9;
-				padding-right:0.5rem;
+				padding-right: 0.5rem;
 			}
 		}
 
@@ -819,8 +819,40 @@
 	.ui-dataview-row {
 		a {
 			color: $textColor;
+			display: flex;
 		}
 	}
+
+	.user {
+		border-bottom: 1px solid #ebebef;
+		padding: 1em;
+		display: flex;
+
+		.ui-avatar {
+			margin-right: 1rem;
+		}
+
+		.person-box {
+			.person-name-text {
+				font-weight: 500;
+			}
+
+			.person-description-text {
+				font-size: 0.9rem;
+				color: $textSecondaryColor
+			}
+		}
+
+		.person-data {
+			margin-left: 1rem;
+		}
+
+
+		&:last-child {
+			border-bottom: 0 none;
+		}
+	}
+
 }
 
 .form-buttons {
@@ -854,6 +886,26 @@
 }
 
 .files {
+
+	.ui-dataview-header {
+		display: none;
+	}
+
+	.ui-dataview-row {
+		a {
+			color: $textColor;
+		}
+	}
+
+	.file {
+		border-bottom: 1px solid #ebebef;
+		padding: 1em;
+	}
+
+	&:last-child {
+		border-bottom: 0 none;
+	}
+
 	.ui-fileupload-simple {
 		.ui-fileupload-filename {
 			display: none;

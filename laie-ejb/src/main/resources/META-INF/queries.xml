@@ -98,6 +98,12 @@
 			WHERE c.client = :client
 		]]></query>
 	</named-query>
+	
+	<named-query name="Contact.deleteByIdAndClientId">
+		<query><![CDATA[
+			DELETE FROM Contact c WHERE c = :contact AND c.client = :client
+		]]></query>
+	</named-query>
 
 	<named-query name="Client.findAllData">
 		<query><![CDATA[
