@@ -3,12 +3,16 @@ package es.nivel36.laie.web.view.job;
 import java.util.Objects;
 
 import org.omnifaces.cdi.Param;
+import org.primefaces.model.menu.DefaultMenuItem;
+import org.primefaces.model.menu.DefaultMenuModel;
+import org.primefaces.model.menu.MenuModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.core.bookmark.Bookmark;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.job.offer.JobOfferService;
+import es.nivel36.laie.ejb.job.offer.JobOfferState;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
@@ -27,28 +31,19 @@ public class ViewJobView extends AbstractView {
 
 	private static String URL = "/job/view.xhtml";
 
-	private JobOffer jobOffer;
-
 	private @Param(required = true, name = "jobOffer") String jobOfferId;
-
+	private JobOffer jobOffer;
 	private boolean editable;
-
 	private boolean bookmarkable;
-
 	private boolean owner;
-
 	private boolean recruiter;
-
 	private boolean addCandidature;
-
 	private Bookmark bookmark;
+	private MenuModel menuModel;
 
 	private @Inject JobOfferCandidaturesLazyDataModel jobCandidatures;
-
 	private @Inject JobOfferEventsLazyDataModel jobOfferEvents;
-
 	private @Inject JobCandidatureEventsLazyDataModel jobCandidatureEvents;
-
 	private @Inject JobOfferService jobOfferService;
 
 	@PostConstruct
@@ -65,10 +60,39 @@ public class ViewJobView extends AbstractView {
 		final boolean userCanEdit = this.owner || sessionUser.isAdmin() || this.sessionUser.isManagerOf(owner);
 		this.editable = jobOffer.isOpen() && userCanEdit;
 		this.addCandidature = jobOffer.isOpen() && (this.recruiter || userCanEdit);
-		
+
 		this.jobCandidatures.setJobOffer(jobOffer);
 		this.jobOfferEvents.setJobOffer(jobOffer);
 		this.jobCandidatureEvents.setJobOffer(jobOffer);
+
+		this.menuModel = new DefaultMenuModel();
+		fillMenuModel();
+	}
+
+	private DefaultMenuItem buildMenuItem(String text, JobOfferState state) {
+		return DefaultMenuItem.builder().value(this.translator.message(text))
+				.command("#{viewJobView.changeState('" + state.getName() + "')}").ajax(true).build();
+	}
+
+	private void fillMenuModel() {
+		if (jobOffer.getState().equals(JobOfferState.OPENED)) {
+			menuModel.getElements().add(buildMenuItem("job_offer_state.pause", JobOfferState.PAUSED));
+			menuModel.getElements().add(buildMenuItem("job_offer_state.close", JobOfferState.CLOSED));
+			menuModel.getElements().add(buildMenuItem("job_offer_state.finish", JobOfferState.FINISHED));
+		} else if (jobOffer.getState().equals(JobOfferState.CLOSED)) {
+			menuModel.getElements().add(buildMenuItem("job_offer_state.open", JobOfferState.OPENED));
+		} else if (jobOffer.getState().equals(JobOfferState.FINISHED)) {
+			menuModel.getElements().add(buildMenuItem("job_offer_state.pause", JobOfferState.PAUSED));
+		} else if (jobOffer.getState().equals(JobOfferState.PAUSED)) {
+			menuModel.getElements().add(buildMenuItem("job_offer_state.open", JobOfferState.OPENED));
+			menuModel.getElements().add(buildMenuItem("job_offer_state.close", JobOfferState.CLOSED));
+			menuModel.getElements().add(buildMenuItem("job_offer_state.finish", JobOfferState.FINISHED));
+		} else if (jobOffer.getState().equals(JobOfferState.CREATED)) {
+			menuModel.getElements().add(buildMenuItem("job_offer_state.open", JobOfferState.OPENED));
+			menuModel.getElements().add(buildMenuItem("job_offer_state.pause", JobOfferState.PAUSED));
+			menuModel.getElements().add(buildMenuItem("job_offer_state.close", JobOfferState.CLOSED));
+			menuModel.getElements().add(buildMenuItem("job_offer_state.finish", JobOfferState.FINISHED));
+		}
 	}
 
 	private void findJobOffer() {
@@ -139,7 +163,11 @@ public class ViewJobView extends AbstractView {
 	public boolean isEditable() {
 		return this.editable;
 	}
-
+	
+	public MenuModel getMenuModel() {
+		return this.menuModel;
+	}
+	
 	public void setJobCandidatureEvents(JobCandidatureEventsLazyDataModel jobCandidatureEvents) {
 		Objects.requireNonNull(jobCandidatureEvents);
 		this.jobCandidatureEvents = jobCandidatureEvents;

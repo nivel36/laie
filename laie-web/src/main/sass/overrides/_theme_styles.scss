@@ -9,12 +9,15 @@ body .ui-datatable table {
 					align-items: center;
 				}
 			}
+
 			&.button {
 				text-align: right;
 			}
+
 			&.nopad-left {
 				padding-left: 0;
 			}
+
 			&.nopad-right {
 				padding-right: 0;
 			}
@@ -58,6 +61,20 @@ body .ui-datatable.ui-datatable-borderless {
 
 	.ui-datatable-data>tr {
 		border: 0 none;
+	}
+}
+
+body .ui-dataview {
+	.ui-dataview-content {
+		.ui-dataview-column {
+			&:last-child {
+				padding-bottom: 0;
+			}
+		}
+	}
+
+	.ui-paginator-bottom {
+		margin-top: 1rem;
 	}
 }
 

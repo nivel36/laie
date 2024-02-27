@@ -7752,6 +7752,13 @@ body .ui-datatable.ui-datatable-borderless .ui-datatable-data > tr {
   border: 0 none;
 }
 
+body .ui-dataview .ui-dataview-content .ui-dataview-column:last-child {
+  padding-bottom: 0;
+}
+body .ui-dataview .ui-paginator-bottom {
+  margin-top: 1rem;
+}
+
 body .ui-datatable.ui-datatable-headerless thead {
   display: none;
 }

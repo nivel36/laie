@@ -118,11 +118,9 @@
 						<div class="text-container">
 							<h:form>
 								<div class="job-state">
-									<p:link outcome="/job/editState.xhtml"
-										rendered="#{viewJobView.owner}">
-										<cc:jobOfferState value="#{viewJobView.jobOffer.state}" />
-										<f:param name="jobOffer" value="#{viewJobView.jobOffer.id}" />
-									</p:link>
+									<p:splitButton value="#{i18n['job_offer_state.'.concat(viewJobView.jobOffer.state.name)]}"
+										model="#{viewJobView.menuModel}"
+										rendered="#{viewJobView.owner}" />
 									<h:panelGroup rendered="#{not viewJobView.owner}">
 										<cc:jobOfferState value="#{viewJobView.jobOffer.state}" />
 									</h:panelGroup>
