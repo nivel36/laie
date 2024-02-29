@@ -116,12 +116,12 @@
 						</div>
 						<div class="text-container">
 							<div class="job-state">
-								<h:form>
+								<o:form includeViewParams="true">
 									<p:splitButton
 										value="#{i18n['job_offer_state.'.concat(viewJobView.jobOffer.state.name)]}"
 										model="#{viewJobView.menuModel}"
 										rendered="#{viewJobView.owner}" />
-								</h:form>
+								</o:form>
 								<h:panelGroup rendered="#{not viewJobView.owner}">
 									<cc:jobOfferState value="#{viewJobView.jobOffer.state}" />
 								</h:panelGroup>

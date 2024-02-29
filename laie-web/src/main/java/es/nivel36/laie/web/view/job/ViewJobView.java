@@ -70,9 +70,9 @@ public class ViewJobView extends AbstractView {
 	}
 
 	private DefaultMenuItem buildMenuItem(final String text, final JobOfferState state) {
-		return DefaultMenuItem.builder().value(this.translator.message(text))
-				.command("#{viewJobView.changeState('" + state.getName() + "')}").ajax(false)
-				.process("@this").update("@form :closeDate :openDate").build();
+		return DefaultMenuItem.builder().value(this.translator.message(text)).escape(true)
+				.command("#{viewJobView.changeState('" + state.getName() + "')}")
+				.ajax(false).build();
 	}
 
 	public void changeState(final String newState) {
