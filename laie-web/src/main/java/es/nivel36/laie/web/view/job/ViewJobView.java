@@ -69,12 +69,20 @@ public class ViewJobView extends AbstractView {
 		fillMenuModel();
 	}
 
-	private DefaultMenuItem buildMenuItem(String text, JobOfferState state) {
+	private DefaultMenuItem buildMenuItem(final String text, final JobOfferState state) {
 		return DefaultMenuItem.builder().value(this.translator.message(text))
-				.command("#{viewJobView.changeState('" + state.getName() + "')}").ajax(true).build();
+				.command("#{viewJobView.changeState('" + state.getName() + "')}").ajax(false)
+				.process("@this").update("@form :closeDate :openDate").build();
+	}
+
+	public void changeState(final String newState) {
+		this.jobOffer = this.jobOfferService.changeState(jobOffer, JobOfferState.valueOf(newState.toUpperCase()), null,
+				sessionUser.getUser());
+		fillMenuModel();
 	}
 
 	private void fillMenuModel() {
+		menuModel.getElements().clear();
 		if (jobOffer.getState().equals(JobOfferState.OPENED)) {
 			menuModel.getElements().add(buildMenuItem("job_offer_state.pause", JobOfferState.PAUSED));
 			menuModel.getElements().add(buildMenuItem("job_offer_state.close", JobOfferState.CLOSED));
@@ -163,11 +171,11 @@ public class ViewJobView extends AbstractView {
 	public boolean isEditable() {
 		return this.editable;
 	}
-	
+
 	public MenuModel getMenuModel() {
 		return this.menuModel;
 	}
-	
+
 	public void setJobCandidatureEvents(JobCandidatureEventsLazyDataModel jobCandidatureEvents) {
 		Objects.requireNonNull(jobCandidatureEvents);
 		this.jobCandidatureEvents = jobCandidatureEvents;

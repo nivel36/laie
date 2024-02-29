@@ -139,7 +139,6 @@ public class JobOfferService {
 		jobOffer.setState(newState);
 		if (newState.isCloseState()) {
 			jobOffer.setCloseDate(LocalDate.now());
-			jobOffer.setState(JobOfferState.CLOSED);
 		}
 		if (newState.isOpenState()) {
 			jobOffer.setCloseDate(null);

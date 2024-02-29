@@ -74,7 +74,6 @@
 					<f:facet name="title">
 						<h5>#{i18n['job.data']}</h5>
 					</f:facet>
-
 					<div class="data">
 						<div class="label-container">
 							<span class="label">#{i18n['job.salary']}</span>
@@ -116,25 +115,26 @@
 							<div class="label">#{i18n['job.job_offer_state']}</div>
 						</div>
 						<div class="text-container">
-							<h:form>
-								<div class="job-state">
-									<p:splitButton value="#{i18n['job_offer_state.'.concat(viewJobView.jobOffer.state.name)]}"
+							<div class="job-state">
+								<h:form>
+									<p:splitButton
+										value="#{i18n['job_offer_state.'.concat(viewJobView.jobOffer.state.name)]}"
 										model="#{viewJobView.menuModel}"
 										rendered="#{viewJobView.owner}" />
-									<h:panelGroup rendered="#{not viewJobView.owner}">
-										<cc:jobOfferState value="#{viewJobView.jobOffer.state}" />
-									</h:panelGroup>
-								</div>
-							</h:form>
+								</h:form>
+								<h:panelGroup rendered="#{not viewJobView.owner}">
+									<cc:jobOfferState value="#{viewJobView.jobOffer.state}" />
+								</h:panelGroup>
+							</div>
 						</div>
 					</div>
 					<cc:outputText label="#{i18n['job.date_opened']}"
-						value="#{viewJobView.jobOffer.openDate}">
+						value="#{viewJobView.jobOffer.openDate}" id="openDate">
 						<f:convertDateTime type="localDate" pattern="dd / MM / yyyy"
 							for="text" />
 					</cc:outputText>
 					<cc:outputText label="#{i18n['job.date_closed']}"
-						value="#{viewJobView.jobOffer.closeDate}">
+						value="#{viewJobView.jobOffer.closeDate}" id="closeDate">
 						<f:convertDateTime type="localDate" pattern="dd / MM / yyyy"
 							for="text" />
 					</cc:outputText>
