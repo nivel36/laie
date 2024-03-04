@@ -3751,7 +3751,7 @@ body ::-moz-placeholder {
 body :-ms-input-placeholder {
   color: #6c757d;
 }
-body .field small.ui-state-error,
+body .p-field small.ui-state-error,
 body .field small.ui-state-error {
   color: #f44336;
 }

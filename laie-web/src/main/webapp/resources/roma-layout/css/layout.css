@@ -4088,11 +4088,6 @@ a {
   padding: 16px 0 16px 16px;
 }
 
-@media all and (max-width: 1200px) {
-  .layout-aside {
-    display: none;
-  }
-}
 .form-card {
   box-shadow: none;
   padding: 2rem 1rem 0 1rem;
@@ -4169,49 +4164,6 @@ a {
   font-weight: 500;
 }
 
-.layout-wrapper .layout-topbar {
-  height: 4.25rem;
-}
-.layout-wrapper .layout-topbar .topbar-menu > li > ul {
-  top: auto;
-}
-.layout-wrapper .layout-topbar .layout-right-panel-button {
-  width: 2rem;
-  height: 2rem;
-  line-height: 2rem;
-}
-.layout-wrapper .layout-topbar .user-profile .user-image {
-  width: 2.5rem;
-  height: 2.5rem;
-  font-size: 1.25rem;
-}
-
-@media screen and (min-width: 992px) {
-  .layout-wrapper.layout-horizontal .layout-menu-container {
-    width: auto;
-    float: left;
-    padding: 0;
-    min-height: 2rem;
-  }
-  .layout-topbar .topbar-menu-form {
-    float: right;
-  }
-  .layout-topbar .layout-menu-button {
-    line-height: normal;
-  }
-}
-@media screen and (max-width: 991px) {
-  .layout-wrapper .layout-main {
-    height: 4.25rem;
-    padding-top: 5.25rem;
-  }
-  .layout-wrapper .layout-topbar .topbar-menu-form {
-    float: right;
-  }
-  .layout-wrapper .layout-topbar .layout-menu-button {
-    line-height: normal;
-  }
-}
 .bookmark {
   display: flex;
   align-items: center;

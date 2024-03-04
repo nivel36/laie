@@ -1,9 +1,47 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:po="http://primefaces.org/roma">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:h="http://java.sun.com/jsf/html" 
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:po="http://primefaces.org/roma">
 
-	<div class="layout-menu-container">
-		<div class="menu-scroll-content">
-			<h:form id="menuform">
+    <div class="layout-menu-container">
+        <div class="menu-scroll-content">
+            <h:form id="menuform">
+                <ui:fragment rendered="#{guestPreferences.profileMode == 'inline' ? true : false}">
+                    <div class="layout-profile">
+                        <a class="layout-profile-button" href="#">
+                            <p:graphicImage name="images/avatar/avatar.png" library="roma-layout" />
+                            <div class="layout-profile-userinfo">
+                                <span class="layout-profile-name">Arlene Welch</span>
+                                <span class="layout-profile-role">Design Ops</span>
+                            </div>
+                        </a>
+                        <ul class="layout-profile-menu">
+                            <li>
+                                <a href="#">
+                                    <i class="pi pi-user"/><span>Profile</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="pi pi-cog"/><span>Settings</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="pi pi-envelope"/><span>Messages</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="pi pi-bell"/><span>Notifications</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </ui:fragment>
+                
 				<po:menu widgetVar="RomaMenuWidget">
 					<p:menuitem id="om_index" value="#{i18n['menu.index']}" icon="pi pi-home"
 						containerStyleClass="#{selectedMenu eq 'index' ? 'active-menuitem' : 'menuitem' }" outcome="/index.xhtml" />
@@ -17,8 +55,6 @@
 						containerStyleClass="#{selectedMenu eq 'reports' ? 'active-menuitem' : 'menuitem' }" outcome="/report/search.xhtml" />
 					<p:menuitem id="om_users" value="#{i18n['menu.users']}" icon="pi pi-user"
 						containerStyleClass="#{selectedMenu eq 'users' ? 'active-menuitem' : 'menuitem' }" outcome="/user/search.xhtml" />
-					<p:menuitem id="om_config" value="#{i18n['menu.settings']}" icon="pi pi-cog"
-						containerStyleClass="#{selectedMenu eq 'settings' ? 'active-menuitem' : 'menuitem' }" outcome="/settings.xhtml" />
 				</po:menu>
 			</h:form>
 		</div>

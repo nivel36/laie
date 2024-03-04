@@ -188,12 +188,6 @@
 	}
 }
 
-@media all and (max-width: 1200px) {
-	.layout-aside {
-		display: none;
-	}
-}
-
 .form-card {
 	box-shadow: none;
 	padding: 2rem 1rem 0 1rem;
@@ -283,71 +277,6 @@
 	.date-range {
 		color: $textSecondaryColor;
 		font-weight: 500;
-	}
-}
-
-
-.layout-wrapper {
-	.layout-topbar {
-		height: $topbarHeight;
-
-		.topbar-menu>li>ul {
-			top: auto;
-		}
-
-		.layout-right-panel-button {
-			width: 2rem;
-			height: 2rem;
-			line-height: 2rem;
-		}
-
-		.user-profile {
-			.user-image {
-				width: 2.5rem;
-				height: 2.5rem;
-				font-size: 1.25rem;
-			}
-		}
-	}
-}
-
-@media screen and (min-width: 992px) {
-	.layout-wrapper.layout-horizontal {
-		.layout-menu-container {
-			width: auto;
-			float: left;
-			padding: 0;
-			min-height: 2rem;
-		}
-	}
-
-	.layout-topbar {
-		.topbar-menu-form {
-			float: right;
-		}
-
-		.layout-menu-button {
-			line-height: normal;
-		}
-	}
-}
-
-@media screen and (max-width: 991px) {
-	.layout-wrapper {
-		.layout-main {
-			height: $topbarHeight;
-			padding-top: $topbarHeight + 1rem;
-		}
-
-		.layout-topbar {
-			.topbar-menu-form {
-				float: right;
-			}
-
-			.layout-menu-button {
-				line-height: normal;
-			}
-		}
 	}
 }
 
@@ -852,7 +781,6 @@
 			border-bottom: 0 none;
 		}
 	}
-
 }
 
 .form-buttons {

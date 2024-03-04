@@ -9,9 +9,11 @@
 	<f:facet name="first">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 		<meta name="apple-mobile-web-app-capable" content="yes" />
-		<link rel="shortcut icon" type="image/x-icon" href="#{resource['roma-layout/images/favicon.ico']}" />
+		<link rel="shortcut icon" type="image/x-icon"
+			href="#{resource['roma-layout/images/favicon.ico']}" />
 	</f:facet>
 	<title><ui:insert name="title">Laie</ui:insert></title>
 	<h:outputScript name="js/prism.js" library="roma-layout" />
@@ -19,12 +21,13 @@
 	<ui:insert name="head" />
 </h:head>
 
-<h:body styleClass="outlined" onload="document.body.style.opacity='1'">
+<h:body styleClass="#{guestPreferences.inputStyleClass}">
 	<p:growl id="growl" globalOnly="true" />
-
 	<div
-		class="layout-wrapper layout-horizontal layout-menu-dark layout-topbar-dark">
+		class="layout-wrapper #{guestPreferences.menuMode} layout-menu-#{guestPreferences.menuColor} layout-topbar-#{guestPreferences.topbarColor}">
 		<ui:include src="./topbar.xhtml" />
+		<ui:include src="./menu.xhtml" />
+		<ui:include src="./right-panel.xhtml" />
 
 		<div class="layout-main">
 			<div class="layout-content">
@@ -45,6 +48,7 @@
 			</f:facet>
 		</p:ajaxStatus>
 	</div>
+
 	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
 		responsive="true" width="350">
 		<p:commandButton value="#{i18n['action.confirm.no']}" type="button"
@@ -55,6 +59,7 @@
 
 	<h:outputStylesheet name="css/primeicons.css" library="roma-layout" />
 	<h:outputStylesheet name="css/primeflex.min.css" library="roma-layout" />
+	<h:outputStylesheet name="css/demo.css" library="demo" />
 	<h:outputStylesheet name="css/layout.css" library="roma-layout" />
 </h:body>
 
