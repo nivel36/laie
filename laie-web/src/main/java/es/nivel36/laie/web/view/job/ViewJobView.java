@@ -71,8 +71,8 @@ public class ViewJobView extends AbstractView {
 
 	private DefaultMenuItem buildMenuItem(final String text, final JobOfferState state) {
 		return DefaultMenuItem.builder().value(this.translator.message(text)).escape(true)
-				.command("#{viewJobView.changeState('" + state.getName() + "')}")
-				.ajax(false).build();
+				.command("#{viewJobView.changeState('" + state.getName() + "')}").ajax(true)
+				.update("@this :openDate :closeDate").process("@this").build();
 	}
 
 	public void changeState(final String newState) {
