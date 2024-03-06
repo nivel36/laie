@@ -1,29 +1,29 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:po="http://primefaces.org/roma">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:h="http://java.sun.com/jsf/html" 
+ xmlns:f="http://java.sun.com/jsf/core"
+ xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+ xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:po="http://primefaces.org/roma">
 
     <div class="layout-topbar">
-        <a class="layout-right-panel-button layout-topbar-icon" href="#">
-            <i class="pi pi-ellipsis-v" />
-        </a>
-
         <a class="layout-menu-button layout-topbar-icon" href="#">
             <i class="pi pi-bars" />
         </a>
 
         <h:link id="logo-link" outcome="/index" styleClass="layout-topbar-logo">
-            <p:graphicImage name="images/#{guestPreferences.lightLogo ? 'logo-roma-white.svg' : 'logo-roma.svg'}" library="roma-layout" />
+            <p:graphicImage name="images/#{guestPreferences.lightLogo ? 'logo-laie-white.svg' : 'logo-laie.svg'}" library="roma-layout" />
         </h:link>
 
         <span class="layout-topbar-search">
             <i class="pi pi-search"></i>
-            <input type="text" placeholder="Enter your search term"/>
+            <input type="text" placeholder="#{i18n['menu.search']}"/>
         </span>
 
         <ul class="topbar-menu fadeInDown">
             <ui:fragment rendered="#{guestPreferences.profileMode == 'popup' ? true : false}">
                 <li class="user-profile">
                     <a href="#">
-                        <p:graphicImage name="images/avatar/avatar.png" library="roma-layout" />
+       		             <cc:avatar name="#{sessionUser.get().fullName}" path="#{sessionUser.get().picture.path}"
+								styleClass="mt-1" />          
                         <div class="layout-profile-userinfo">
                             <span class="layout-profile-name">#{sessionUser.get().fullName}</span>
                             <span class="layout-profile-role">#{i18n[sessionUser.get().role]}</span>
@@ -31,28 +31,30 @@
                     </a>
                     <ul>
                         <li>
-                            <a href="#">
+                            <a href="/user/view.xhtml?user=#{sessionUser.get().id}">
                                 <i class="pi pi-user"></i>
                                 <span>#{i18n['menu.profile']}</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="/config.xhtml">
                                 <i class="pi pi-cog"></i>
-                                <span>#{i18n['menu.settings']}</span>
+                                <span>#{i18n['menu.setting']}</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="/meeting/search.xhtml">
                                 <i class="pi pi-calendar"></i>
                                 <span>#{i18n['menu.meetings']}</span>
                             </a>
                         </li>
                           <li>
-                            <a href="#">
-                                <i class="pi pi-sign-out"></i>
-                                <span>#{i18n['user.logout']}</span>
-                            </a>
+                          <h:form>
+	                            <h:commandLink action="#{sessionUser.logout}" >
+	                                <i class="pi pi-sign-out"></i>
+	                                <span>#{i18n['user.logout']}</span>
+	                            </h:commandLink>
+                            </h:form>
                         </li>
                        
                     </ul>
