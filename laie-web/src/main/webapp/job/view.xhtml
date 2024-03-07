@@ -16,6 +16,15 @@
 
 	<ui:param name="selectedMenu" value="offers" />
 
+	<ui:define name="panel-content">
+		<h:panelGroup id="panelParent">
+			<h:panelGroup id="panel" rendered="#{viewJobView.showChangeStatus}">
+				<span class="region"><i class="pi pi-map-marker"
+					aria-hidden="true" />#{viewJobView.jobOffer.address.city}</span>
+			</h:panelGroup>
+		</h:panelGroup>
+	</ui:define>
+
 	<ui:define name="content">
 		<div class="grid">
 			<div class="col-12 xl:col-8">
@@ -120,7 +129,9 @@
 									<p:commandButton
 										value="#{i18n['job_offer_state.'.concat(viewJobView.jobOffer.state.name)]}"
 										rendered="#{viewJobView.owner}"
-										styleClass="layout-right-panel-button" process="@this" />
+										action="#{viewJobView.showChangeStatus}"
+										styleClass="layout-right-panel-button" process="@this"
+										update="panelParent" />
 								</h:form>
 								<h:panelGroup rendered="#{not viewJobView.owner}">
 									<cc:jobOfferState value="#{viewJobView.jobOffer.state}" />

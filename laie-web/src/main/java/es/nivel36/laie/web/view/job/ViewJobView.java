@@ -41,6 +41,8 @@ public class ViewJobView extends AbstractView {
 	private Bookmark bookmark;
 	private MenuModel menuModel;
 
+	private boolean showChangeStatus = false;
+
 	private @Inject JobOfferCandidaturesLazyDataModel jobCandidatures;
 	private @Inject JobOfferEventsLazyDataModel jobOfferEvents;
 	private @Inject JobCandidatureEventsLazyDataModel jobCandidatureEvents;
@@ -67,6 +69,14 @@ public class ViewJobView extends AbstractView {
 
 		this.menuModel = new DefaultMenuModel();
 		fillMenuModel();
+	}
+
+	public void showChangeStatus() {
+		this.showChangeStatus = true;
+	}
+
+	public boolean isShowChangeStatus() {
+		return this.showChangeStatus;
 	}
 
 	private DefaultMenuItem buildMenuItem(final String text, final JobOfferState state) {
