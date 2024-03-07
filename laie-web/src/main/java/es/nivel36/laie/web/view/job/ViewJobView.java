@@ -1,11 +1,10 @@
 package es.nivel36.laie.web.view.job;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import org.omnifaces.cdi.Param;
-import org.primefaces.model.menu.DefaultMenuItem;
-import org.primefaces.model.menu.DefaultMenuModel;
-import org.primefaces.model.menu.MenuModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +16,7 @@ import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
 import jakarta.annotation.PostConstruct;
+import jakarta.faces.model.SelectItem;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -39,9 +39,12 @@ public class ViewJobView extends AbstractView {
 	private boolean recruiter;
 	private boolean addCandidature;
 	private Bookmark bookmark;
-	private MenuModel menuModel;
 
+	// Pestaña de cambio de estados
 	private boolean showChangeStatus = false;
+	private String newState;
+	private String comment;
+	private List<SelectItem> states;
 
 	private @Inject JobOfferCandidaturesLazyDataModel jobCandidatures;
 	private @Inject JobOfferEventsLazyDataModel jobOfferEvents;
@@ -67,50 +70,7 @@ public class ViewJobView extends AbstractView {
 		this.jobOfferEvents.setJobOffer(jobOffer);
 		this.jobCandidatureEvents.setJobOffer(jobOffer);
 
-		this.menuModel = new DefaultMenuModel();
 		fillMenuModel();
-	}
-
-	public void showChangeStatus() {
-		this.showChangeStatus = true;
-	}
-
-	public boolean isShowChangeStatus() {
-		return this.showChangeStatus;
-	}
-
-	private DefaultMenuItem buildMenuItem(final String text, final JobOfferState state) {
-		return DefaultMenuItem.builder().value(this.translator.message(text)).escape(true)
-				.command("#{viewJobView.changeState('" + state.getName() + "')}").ajax(true)
-				.update("@this :openDate :closeDate").process("@this").build();
-	}
-
-	public void changeState(final String newState) {
-		this.jobOffer = this.jobOfferService.changeState(jobOffer, JobOfferState.valueOf(newState.toUpperCase()), null,
-				sessionUser.getUser());
-		fillMenuModel();
-	}
-
-	private void fillMenuModel() {
-		menuModel.getElements().clear();
-		if (jobOffer.getState().equals(JobOfferState.OPENED)) {
-			menuModel.getElements().add(buildMenuItem("job_offer_state.pause", JobOfferState.PAUSED));
-			menuModel.getElements().add(buildMenuItem("job_offer_state.close", JobOfferState.CLOSED));
-			menuModel.getElements().add(buildMenuItem("job_offer_state.finish", JobOfferState.FINISHED));
-		} else if (jobOffer.getState().equals(JobOfferState.CLOSED)) {
-			menuModel.getElements().add(buildMenuItem("job_offer_state.open", JobOfferState.OPENED));
-		} else if (jobOffer.getState().equals(JobOfferState.FINISHED)) {
-			menuModel.getElements().add(buildMenuItem("job_offer_state.pause", JobOfferState.PAUSED));
-		} else if (jobOffer.getState().equals(JobOfferState.PAUSED)) {
-			menuModel.getElements().add(buildMenuItem("job_offer_state.open", JobOfferState.OPENED));
-			menuModel.getElements().add(buildMenuItem("job_offer_state.close", JobOfferState.CLOSED));
-			menuModel.getElements().add(buildMenuItem("job_offer_state.finish", JobOfferState.FINISHED));
-		} else if (jobOffer.getState().equals(JobOfferState.CREATED)) {
-			menuModel.getElements().add(buildMenuItem("job_offer_state.open", JobOfferState.OPENED));
-			menuModel.getElements().add(buildMenuItem("job_offer_state.pause", JobOfferState.PAUSED));
-			menuModel.getElements().add(buildMenuItem("job_offer_state.close", JobOfferState.CLOSED));
-			menuModel.getElements().add(buildMenuItem("job_offer_state.finish", JobOfferState.FINISHED));
-		}
 	}
 
 	private void findJobOffer() {
@@ -182,8 +142,64 @@ public class ViewJobView extends AbstractView {
 		return this.editable;
 	}
 
-	public MenuModel getMenuModel() {
-		return this.menuModel;
+	// Panel de cambio de estado
+
+	public void showChangeStatus() {
+		this.showChangeStatus = true;
+	}
+
+	public boolean isShowChangeStatus() {
+		return this.showChangeStatus;
+	}
+
+	public void changeState(final String newState) {
+		this.newState = newState;
+	}
+
+	public void changeState() {
+		this.jobOfferService.changeState(jobOffer, JobOfferState.valueOf(newState), comment, this.sessionUser.get());
+	}
+
+	private void fillMenuModel() {
+		states = new ArrayList<>();
+		if (jobOffer.getState().equals(JobOfferState.OPENED)) {
+			states.add(new SelectItem(JobOfferState.CLOSED, this.translator.message("job_offer_state.close")));
+			states.add(new SelectItem(JobOfferState.FINISHED, this.translator.message("job_offer_state.finish")));
+			states.add(new SelectItem(JobOfferState.PAUSED, this.translator.message("job_offer_state.pause")));
+		} else if (jobOffer.getState().equals(JobOfferState.CLOSED)) {
+			states.add(new SelectItem(JobOfferState.OPENED, this.translator.message("job_offer_state.open")));
+		} else if (jobOffer.getState().equals(JobOfferState.FINISHED)) {
+			states.add(new SelectItem(JobOfferState.OPENED, this.translator.message("job_offer_state.open")));
+		} else if (jobOffer.getState().equals(JobOfferState.PAUSED)) {
+			states.add(new SelectItem(JobOfferState.OPENED, this.translator.message("job_offer_state.open")));
+			states.add(new SelectItem(JobOfferState.CLOSED, this.translator.message("job_offer_state.close")));
+			states.add(new SelectItem(JobOfferState.FINISHED, this.translator.message("job_offer_state.finish")));
+		} else if (jobOffer.getState().equals(JobOfferState.CREATED)) {
+			states.add(new SelectItem(JobOfferState.OPENED, this.translator.message("job_offer_state.open")));
+			states.add(new SelectItem(JobOfferState.CLOSED, this.translator.message("job_offer_state.close")));
+			states.add(new SelectItem(JobOfferState.FINISHED, this.translator.message("job_offer_state.finish")));
+			states.add(new SelectItem(JobOfferState.PAUSED, this.translator.message("job_offer_state.close")));
+		}
+	}
+	
+	public List<SelectItem> getStates() {
+		return states;
+	}
+
+	public String getNewState() {
+		return newState;
+	}
+
+	public void setNewState(String newState) {
+		this.newState = newState;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
 	public void setJobCandidatureEvents(JobCandidatureEventsLazyDataModel jobCandidatureEvents) {

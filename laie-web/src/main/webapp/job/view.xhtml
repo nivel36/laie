@@ -19,8 +19,17 @@
 	<ui:define name="panel-content">
 		<h:panelGroup id="panelParent">
 			<h:panelGroup id="panel" rendered="#{viewJobView.showChangeStatus}">
-				<span class="region"><i class="pi pi-map-marker"
-					aria-hidden="true" />#{viewJobView.jobOffer.address.city}</span>
+				<h:form>
+					<g:input label="#{i18n['event.state']}"
+						value="#{viewJobView.newState}" required="true"
+						type="selectOneMenu">
+						<f:selectItems value="#{viewJobView.states}" />
+					</g:input>
+					<p:textEditor value="#{viewJobView.comment}" />
+					<p:commandButton action="#{viewJobView.changeState}"
+						process="@form" update="@all" />
+				test
+				</h:form>
 			</h:panelGroup>
 		</h:panelGroup>
 	</ui:define>
