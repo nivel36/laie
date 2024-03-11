@@ -17,9 +17,9 @@
 	<ui:param name="selectedMenu" value="candidates" />
 
 	<ui:define name="content">
-		<h:form id="form">
-			<div class="grid">
-				<div class="col-12 xl:col-6 xl:col-offset-3">
+		<div class="grid">
+			<div class="col-12 xl:col-8">
+				<h:form id="form">
 					<div class="title-card">
 						<div class="title-card-content">
 							<cc:avatar styleClass="title-card-content-image"
@@ -444,8 +444,15 @@
 							</h:panelGroup>
 						</p:card>
 					</div>
-				</div>
+				</h:form>
 			</div>
-		</h:form>
+			<div class="col-12 xl:col-4">
+				<p:card styleClass="card card-w-title">
+					<f:facet name="title">
+						<h5>#{i18n['cv_template.templates']}</h5>
+					</f:facet>
+				</p:card>
+			</div>
+		</div>
 	</ui:define>
 </ui:composition>
