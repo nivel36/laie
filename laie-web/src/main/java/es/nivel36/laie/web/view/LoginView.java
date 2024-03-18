@@ -89,6 +89,14 @@ public class LoginView extends AbstractView {
 		}
 	}
 
+	public String getForwardURL() {
+		return forwardURL;
+	}
+
+	public void setForwardURL(String forwardURL) {
+		this.forwardURL = forwardURL;
+	}
+
 	private void loginError() {
 		this.addMessage(FacesMessage.SEVERITY_ERROR, "auth.message.error", "auth.message.error");
 	}
