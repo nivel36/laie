@@ -27,11 +27,8 @@ public class LoginService {
 	private static final Logger logger = LoggerFactory.getLogger(LoginService.class);
 
 	private @Inject ExternalContext externalContext;
-
 	private @Inject FacesContext facesContext;
-
 	private @Inject RememberMeIdentityStore rememberMeIdentityStore;
-
 	private @Inject SecurityContext securityContext;
 
 	private AuthenticationStatus authenticate(final AuthenticationParameters parameters) {

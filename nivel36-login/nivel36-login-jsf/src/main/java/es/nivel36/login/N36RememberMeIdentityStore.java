@@ -16,7 +16,6 @@ import jakarta.servlet.http.HttpServletRequest;
 public class N36RememberMeIdentityStore extends AbstractIdentityStore implements RememberMeIdentityStore {
 	
 	private @Inject LoginTokenService loginTokenService;
-
 	private @Inject HttpServletRequest request;
 	
 	@Override

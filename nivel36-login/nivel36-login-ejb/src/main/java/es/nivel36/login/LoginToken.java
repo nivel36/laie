@@ -17,8 +17,8 @@ import jakarta.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "LOGIN_TOKEN", indexes = {
-		@Index(name = "UX_LOGIN_TOKEN_TOKEN_HASH", unique = true, columnList = "TOKEN_HASH") }, uniqueConstraints = {
-				@UniqueConstraint(name = "UQ_LOGIN_TOKEN_TOKEN_HASH", columnNames = { "TOKEN_HASH" }) })
+		@Index(name = "UX_LOGIN_TOKEN_TOKEN_HASH", unique = true, columnList = "TOKEN_HASH") }, //
+		uniqueConstraints = { @UniqueConstraint(name = "UQ_LOGIN_TOKEN_TOKEN_HASH", columnNames = { "TOKEN_HASH" }) })
 public class LoginToken implements Serializable {
 
 	public enum TokenType {

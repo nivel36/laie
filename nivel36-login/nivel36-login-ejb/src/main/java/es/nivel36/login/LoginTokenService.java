@@ -19,7 +19,6 @@ import jakarta.persistence.TypedQuery;
 public class LoginTokenService {
 
 	private @PersistenceContext(unitName = "nivel36-login") EntityManager em;
-
 	private @Inject AccountService accountService;
 
 	public LoginToken findByTokenHash(final String tokenHash) {
