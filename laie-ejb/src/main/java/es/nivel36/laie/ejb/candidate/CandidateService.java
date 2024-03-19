@@ -32,13 +32,10 @@ public class CandidateService {
 	private static final Logger logger = LoggerFactory.getLogger(CandidateService.class);
 
 	private @Inject CandidateDao candidateDao;
-
 	private @Inject PhysicalFileService fileService;
-
 	private @Inject TagDao tagDao;
-
+	private @Inject FileDao fileDao;
 	private @Inject @Create Event<Auditable> createCandidateEvent;
-
 	private @Inject @Update Event<Auditable> updateCandidateEvent;
 
 	public void addCandidate(final Candidate candidate) throws DuplicateEmailException {
@@ -141,8 +138,21 @@ public class CandidateService {
 		logger.debug("Find candidate data by id {}", candidateId);
 		return this.candidateDao.findAllData(candidateId);
 	}
+	
+	public List<File> findFiles(final Candidate candidate, final Page page) {
+		Objects.requireNonNull(candidate);
+		Objects.requireNonNull(page);
+		logger.debug("Find all files {} of candidate {}", candidate);
+		return this.fileDao.findFilesByCandidate(candidate, page);
+	}
+	
+	public long countFiles(final Candidate candidate) {
+		Objects.requireNonNull(candidate);
+		logger.debug("Count all files {} of candidate {}", candidate);
+		return this.fileDao.countFilesByCandidate(candidate);
+	}
 
-	public Candidate addFile(final Candidate candidate, final InputStream inputStream, String filename) {
+	public void addFile(final Candidate candidate, final InputStream inputStream, String filename) {
 		Objects.requireNonNull(inputStream);
 		Objects.requireNonNull(candidate);
 		Objects.requireNonNull(filename);
@@ -153,19 +163,18 @@ public class CandidateService {
 		file.setName(filename);
 		file.setPublicAccess(false);
 		file.setPhysicalFile(physicalFile);
-		candidate.addFile(file);
-		return this.updateAndFireEvent(candidate);
+		file.setCandidate(candidate);
+		this.fileDao.insert(file);
+		this.updateCandidateEvent.fireAsync(candidate);
 	}
 
-	public Candidate deleteFile(final File file) {
+	public void deleteFile(final File file) {
 		Objects.requireNonNull(file);
 		final Candidate candidate = file.getCandidate();
 		logger.debug("Remove file {} from candidate {}", file, candidate);
 		this.fileService.removeFile(file.getPhysicalFile());
-		candidate.removeFile(file);
-		final Candidate updatedCandidate = this.candidateDao.update(candidate);
-		this.updateCandidateEvent.fireAsync(updatedCandidate);
-		return updatedCandidate;
+		this.fileDao.deleteFile(file);
+		this.updateCandidateEvent.fireAsync(candidate);
 	}
 
 	public SearchResult<Candidate> search(final String searchText, final Page page) {

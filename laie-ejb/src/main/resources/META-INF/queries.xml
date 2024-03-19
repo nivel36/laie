@@ -10,6 +10,7 @@
 		<query><![CDATA[
 			SELECT a 
 			FROM Action a
+			LEFT JOIN FETCH a.user
 			WHERE a.user = :user
 			ORDER BY a.date DESC
 		]]></query>
@@ -67,7 +68,6 @@
 		<query><![CDATA[
 			SELECT c
 			FROM Candidate c
-			LEFT JOIN FETCH c.files
 			LEFT JOIN FETCH c.tags
 			LEFT JOIN FETCH c.owner
 			WHERE c.id = :candidateId
@@ -148,6 +148,28 @@
 			FROM DocumentTemplate d 
 			WHERE d.name = :name
 			AND d.language = :language
+		]]></query>
+	</named-query>
+	
+	<named-query name="File.findByCandidate">
+		<query><![CDATA[
+			SELECT f 
+			FROM File f 
+			WHERE f.candidate = :candidate
+		]]></query>
+	</named-query>
+	
+	<named-query name="File.countByCandidate">
+		<query><![CDATA[
+			SELECT count(f) 
+			FROM File f 
+			WHERE f.candidate = :candidate
+		]]></query>
+	</named-query>
+	
+	<named-query name="File.delete">
+		<query><![CDATA[
+			DELETE FROM File f WHERE f = :file
 		]]></query>
 	</named-query>
 
@@ -297,7 +319,7 @@
 			SELECT j 
 			FROM JobOffer j 
 			LEFT JOIN FETCH j.client
-			LEFT JOIN  j.owner
+			LEFT JOIN FETCH j.owner
 			WHERE :user MEMBER OF j.recruiters
 			OR j.owner = :user
 		]]></query>

@@ -2,7 +2,6 @@ package es.nivel36.laie.web.view.candidate;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -37,20 +36,17 @@ import jakarta.inject.Named;
 public class ViewCandidateView extends AbstractView {
 
 	private static final long serialVersionUID = 8467299017233591349L;
-
 	private static final Logger logger = LoggerFactory.getLogger(ViewCandidateView.class);
-
 	private static final String URL = "/candidate/view.xhtml";
 
 	private @Param(required = true, name = "candidate") String candidateId;
 	private Candidate candidate;
 	private boolean editable;
-	private List<File> files;
 	private @Inject JobCandidatureByCandidateLazyDataModel jobCandidatures;
+	private @Inject FilesByCandidateLazyDataModel files;
 	private List<Meeting> meetings;
 	private boolean bookmarkable;
 	private Bookmark bookmark;
-	
 	private boolean addRatingVisible;
 	private boolean editRatingVisible;
 	private Rating rating;
@@ -70,8 +66,7 @@ public class ViewCandidateView extends AbstractView {
 		logger.trace("Candidate {} init", this.candidateId);
 		findCandidate();
 		this.editable = editCandidatePermission.validate(candidate);
-		this.meetings = this.meetingService.findMeetingsByCandidate(this.candidate, Page.of(0,5));
-		this.files = new ArrayList<>(this.candidate.getFiles());
+		this.meetings = this.meetingService.findMeetingsByCandidate(this.candidate, Page.of(0, 5));
 		this.bookmark = this.buildBookmark();
 		this.bookmarkable = !this.sessionUser.getBookmarks().contains(this.bookmark);
 		this.ratings = this.ratingService.findRatingsByCandidate(candidate, Page.ALL_RESULTS);
@@ -87,6 +82,7 @@ public class ViewCandidateView extends AbstractView {
 		this.addRatingVisible = (this.rating == null);
 		this.editRatingVisible = !this.addRatingVisible;
 		this.jobCandidatures.setCandidate(candidate);
+		this.files.setCandidate(candidate);
 	}
 
 	private void findCandidate() {
@@ -150,8 +146,7 @@ public class ViewCandidateView extends AbstractView {
 	}
 
 	public void removeFile(final File file) {
-		this.candidate = this.candidateService.deleteFile(file);
-		this.files = new ArrayList<File>(candidate.getFiles());
+		this.candidateService.deleteFile(file);
 	}
 
 	public void uploadFile(final FileUploadEvent event) throws IOException {
@@ -162,8 +157,7 @@ public class ViewCandidateView extends AbstractView {
 		}
 		logger.debug("Upload candidate {} image action performed", this.candidate);
 		try (final InputStream inputStream = uploadedFile.getInputStream()) {
-			this.candidate = this.candidateService.addFile(candidate, inputStream, uploadedFile.getFileName());
-			this.files = new ArrayList<File>(candidate.getFiles());
+			this.candidateService.addFile(candidate, inputStream, uploadedFile.getFileName());
 		}
 	}
 
@@ -195,12 +189,12 @@ public class ViewCandidateView extends AbstractView {
 		return this.rating;
 	}
 
-	public List<File> getFiles() {
-		return this.files;
-	}
-
 	public JobCandidatureByCandidateLazyDataModel getJobCandidatures() {
 		return this.jobCandidatures;
+	}
+
+	public FilesByCandidateLazyDataModel getFiles() {
+		return this.files;
 	}
 
 	public List<Meeting> getMeetings() {

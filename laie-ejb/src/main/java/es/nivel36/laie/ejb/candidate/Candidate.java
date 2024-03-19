@@ -133,12 +133,6 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	@IndexedEmbedded(includeDepth = 1)
 	private Set<Tag> tags = new HashSet<>();
 
-	public void addFile(final File file) {
-		Objects.requireNonNull(file);
-		file.setCandidate(this);
-		this.files.add(file);
-	}
-
 	public void addMeeting(final Meeting meeting) {
 		Objects.requireNonNull(meeting);
 		this.meetings.add(meeting);
