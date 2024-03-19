@@ -19,11 +19,13 @@ public class CurriculumService {
 
 	private static final Logger logger = LoggerFactory.getLogger(CurriculumService.class);
 
-	@Inject
-	private CurriculumDao curriculumDao;
-
-	@Inject
-	private CurriculumExporter exporter;
+	private @Inject CurriculumDao curriculumDao;
+	private @Inject CurriculumExporter exporter;
+	
+	public void deleteCurriculum(Curriculum curriculum) {
+		Objects.requireNonNull(curriculum);
+		this.curriculumDao.delete(Curriculum.class, curriculum);
+	}
 
 	public void addCurriculum(Curriculum curriculum) {
 		Objects.requireNonNull(curriculum);

@@ -449,6 +449,23 @@
 			<div class="col-12 xl:col-4">
 				<p:card styleClass="card card-w-title">
 					<f:facet name="title">
+						<h5>#{i18n['curriculum.actions']}</h5>
+					</f:facet>
+					<p:commandButton action="#{curriculumView.delete}"
+						value="#{i18n['curriculum.delete']}" process="@this"
+						styleClass="ui-button-warning mr-2 mb-2">
+						<p:confirm message="#{i18n['curriculum.message.delete']}"
+							icon="pi pi-exclamation-triangle"/>
+					</p:commandButton>
+					<p:button outcome="/candidate/view.xhtml"
+						value="#{i18n['curriculum.back']}" process="@this"
+						styleClass="ui-button-secondary mr-2 mb-2">
+						<f:param name="candidate"
+							value="#{viewCandidateView.candidate.id}" />
+					</p:button>
+				</p:card>
+				<p:card styleClass="card card-w-title">
+					<f:facet name="title">
 						<h5>#{i18n['cv_template.templates']}</h5>
 					</f:facet>
 				</p:card>

@@ -12,6 +12,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.omnifaces.cdi.Param;
+import org.omnifaces.util.Faces;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.curriculum.Curriculum;
@@ -24,6 +25,7 @@ import es.nivel36.laie.ejb.curriculum.Skill;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
 import es.nivel36.laie.web.view.candidate.EditCandidatePermission;
+import es.nivel36.laie.web.view.candidate.ViewCandidateView;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.component.UIViewRoot;
 import jakarta.faces.view.ViewScoped;
@@ -37,33 +39,19 @@ public class CurriculumView extends AbstractView {
 	private static final long serialVersionUID = -4824952921251852587L;
 
 	private @Param Candidate candidate;
-
 	private Curriculum curriculum;
-
 	private List<Education> education;
-
 	private List<JobExperience> jobExperiences;
-
 	private List<Language> languages;
-
 	private List<String> skills;
-
 	private List<String> languageLevels;
-
 	private Integer editLanguageIndex;
-
 	private Integer editEducationIndex;
-
 	private Integer editJobExperienceIndex;
-
 	private boolean editSkills;
-
 	private List<Integer> years;
-
 	private List<Month> months;
-	
 	private transient @Inject CurriculumService curriculumService;
-	
 	private transient @Inject EditCandidatePermission editCandidatePermission;
 
 	@PostConstruct
@@ -108,8 +96,13 @@ public class CurriculumView extends AbstractView {
 		this.years = this.buildYearsCombo(50, 0);
 	}
 
+	public void delete() {
+		this.curriculumService.deleteCurriculum(curriculum);
+		Faces.redirect(ViewCandidateView.getUrl(candidate.getId()));
+	}
+
 	private void chekEditPermission() {
-		if(!editCandidatePermission.validate(candidate)) {
+		if (!editCandidatePermission.validate(candidate)) {
 			throw new SecurityException();
 		}
 	}
@@ -159,7 +152,7 @@ public class CurriculumView extends AbstractView {
 	public void editJobExperience(final int index) {
 		this.editJobExperienceIndex = Integer.valueOf(index);
 	}
-	
+
 	public void cancelEditJobExperience(final JobExperience jobExperience) {
 		this.editJobExperienceIndex = null;
 	}
@@ -201,7 +194,7 @@ public class CurriculumView extends AbstractView {
 	public void editEducation(final int index) {
 		this.editEducationIndex = Integer.valueOf(index);
 	}
-	
+
 	public void cancelEditEducation() {
 		this.editEducationIndex = null;
 	}
@@ -242,7 +235,7 @@ public class CurriculumView extends AbstractView {
 	public void editLanguage(final int index) {
 		this.editLanguageIndex = Integer.valueOf(index);
 	}
-	
+
 	public void cancelEditLanguage() {
 		this.editLanguageIndex = null;
 	}
@@ -284,7 +277,7 @@ public class CurriculumView extends AbstractView {
 	public void editSkill() {
 		this.editSkills = true;
 	}
-	
+
 	public void cancelEditSkills() {
 		this.editSkills = false;
 	}
@@ -372,11 +365,11 @@ public class CurriculumView extends AbstractView {
 		final ResourceBundle bundle = this.getResourceBundle(FILE_NAME);
 		return bundle.getString(message);
 	}
-	
+
 	////////////////////////////////////////////////////////////////////////////
 	// SET
 	////////////////////////////////////////////////////////////////////////////
-	
+
 	public void setCurriculumService(final CurriculumService curriculumService) {
 		Objects.requireNonNull(curriculumService);
 		this.curriculumService = curriculumService;
