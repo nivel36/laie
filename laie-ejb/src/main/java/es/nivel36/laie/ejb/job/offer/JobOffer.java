@@ -27,6 +27,7 @@ import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -77,7 +78,7 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	@Column(name = "OPEN_DATE", nullable = false)
 	private LocalDate openDate;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "OWNER_ID", nullable = false)
 	@NotNull
 	@IndexedEmbedded(includeDepth = 1)

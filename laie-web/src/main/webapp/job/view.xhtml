@@ -139,7 +139,7 @@
 										value="#{i18n['job_offer_state.'.concat(viewJobView.jobOffer.state.name)]}"
 										rendered="#{viewJobView.owner}"
 										action="#{viewJobView.showChangeStatus}"
-										styleClass="layout-right-panel-button" process="@this"
+										onclick="PrimeFaces.RomaConfigurator.showRightPanel();" process="@this"
 										update="panelParent" />
 								</h:form>
 								<h:panelGroup rendered="#{not viewJobView.owner}">

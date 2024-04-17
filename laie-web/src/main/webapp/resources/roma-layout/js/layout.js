@@ -227,6 +227,18 @@ PrimeFaces.widget.Roma = PrimeFaces.widget.BaseWidget.extend({
             $this._initrightPanel();
         });
     },
+    
+    showRightPanel: function() {
+		$this.rightPanel.toggleClass('layout-right-panel-active');
+		$this.rightPanelClick = true;
+		e.preventDefault();
+	},
+	
+	hideRightPanel: function() {
+		if (!$this.rightPanelClick && $this.rightPanel && $this.rightPanel.hasClass('layout-right-panel-active')) {
+        	$this.rightPanel.removeClass('layout-right-panel-active')
+        }
+	},
 
     hideTopBarSubMenu: function(item) {
         var submenu = item.children('ul');
