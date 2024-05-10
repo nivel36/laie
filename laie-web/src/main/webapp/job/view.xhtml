@@ -27,8 +27,7 @@
 					</g:input>
 					<p:textEditor value="#{viewJobView.comment}" />
 					<p:commandButton action="#{viewJobView.changeState}"
-						process="@form" update="@all" />
-				test
+						process="@form" update="@form" />
 				</h:form>
 			</h:panelGroup>
 		</h:panelGroup>
@@ -139,7 +138,7 @@
 										value="#{i18n['job_offer_state.'.concat(viewJobView.jobOffer.state.name)]}"
 										rendered="#{viewJobView.owner}"
 										action="#{viewJobView.showChangeStatus}"
-										onclick="PrimeFaces.RomaConfigurator.showRightPanel();" process="@this"
+										styleClass="layout-right-panel-button" process="@this"
 										update="panelParent" />
 								</h:form>
 								<h:panelGroup rendered="#{not viewJobView.owner}">

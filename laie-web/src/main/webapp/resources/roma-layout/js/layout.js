@@ -2,611 +2,603 @@
  * PrimeFaces Roma Layout
  */
 PrimeFaces.widget.Roma = PrimeFaces.widget.BaseWidget.extend({
-    
-    init: function(cfg) {
-        this._super(cfg);
-        this.wrapper = $(document.body).children('.layout-wrapper');
-        this.topbar = this.wrapper.find('.layout-topbar');
-        this.menuButton = this.topbar.find('.layout-menu-button');
-        this.menuContainer = this.wrapper.find('.layout-menu-container');
-        this.menu = this.jq;
-        this.menulinks = this.menu.find('a');
-        this.expandedMenuitems = this.expandedMenuitems||[];
 
-        this.topbarMenu = this.topbar.children('.topbar-menu');
-        this.topbarItems = this.topbarMenu.children('li');
-        this.topbarLinks = this.topbarItems.children('a');
+	init: function(cfg) {
+		this._super(cfg);
+		this.wrapper = $(document.body).children('.layout-wrapper');
+		this.topbar = this.wrapper.find('.layout-topbar');
+		this.menuButton = this.topbar.find('.layout-menu-button');
+		this.menuContainer = this.wrapper.find('.layout-menu-container');
+		this.menu = this.jq;
+		this.menulinks = this.menu.find('a');
+		this.expandedMenuitems = this.expandedMenuitems || [];
 
-        var isSlimMenu = this.wrapper.hasClass('layout-slim');
-        var isHorizontalMenu = this.wrapper.hasClass('layout-horizontal');
+		this.topbarMenu = this.topbar.children('.topbar-menu');
+		this.topbarItems = this.topbarMenu.children('li');
+		this.topbarLinks = this.topbarItems.children('a');
 
-        this.profileMenuClick = false;
-        this.topbarMenuClick = false;
-        this.rightPanelClick = false;
+		var isSlimMenu = this.wrapper.hasClass('layout-slim');
+		var isHorizontalMenu = this.wrapper.hasClass('layout-horizontal');
 
-        this.profileContainer = $('.layout-profile');
-        this.profileButton = this.profileContainer.children('.layout-profile-button');
-        this.profileMenu = this.profileContainer.children('.layout-profile-menu');
+		this.profileMenuClick = false;
+		this.topbarMenuClick = false;
+		this.rightPanelClick = false;
 
-        this.configButton = $('#layout-config-button');
-        this.configMenu = $('#layout-config');
-        this.configMenuClose = this.configMenu.find('> .layout-config-content > .layout-config-close');
+		this.profileContainer = $('.layout-profile');
+		this.profileButton = this.profileContainer.children('.layout-profile-button');
+		this.profileMenu = this.profileContainer.children('.layout-profile-menu');
 
-        if(!(isSlimMenu && this.isDesktop()) && !(isHorizontalMenu && this.isDesktop())) {
-            this.restoreMenuState();
-        }
+		this.configButton = $('#layout-config-button');
+		this.configMenu = $('#layout-config');
+		this.configMenuClose = this.configMenu.find('> .layout-config-content > .layout-config-close');
 
-        this._bindEvents();
-    },
+		if (!(isSlimMenu && this.isDesktop()) && !(isHorizontalMenu && this.isDesktop())) {
+			this.restoreMenuState();
+		}
 
-    _bindEvents: function() {
-        var $this = this;
-
-        $this.menuContainer.off('click.menu').on('click.menu', function() {
-            $this.menuClick = true;
-        });
-
-        this.menuButton.off('click.menu').on('click.menu', function(e) {
-            $this.menuClick = true;
-
-            if($this.isMobile()) {
-                $this.wrapper.toggleClass('layout-mobile-active');
-                $(document.body).toggleClass('blocked-scroll');
-            }
-            else {
-                if($this.isStaticMenu()) {
-                    $this.wrapper.toggleClass('layout-static-inactive');
-                    $this.saveStaticMenuState();
-                }
-                else {
-                    $this.wrapper.toggleClass('layout-overlay-active');
-                }               
-            }
-
-            e.preventDefault();
-        });
-
-        $this.profileButton.off('click.profile').on('click.profile', function (e) {
-            if (!$this.isHorizontalMenu() && !$this.isSlimMenu()) {
-                $this.profileContainer.toggleClass('layout-profile-active');
-                $this.profileMenu.slideToggle();
-            }
-            else {
-                $this.profileMenuClick = true;
-
-                if ($this.profileContainer.hasClass('layout-profile-active')) {
-                    $this.profileMenu.addClass('fadeOutUp');
-
-                    setTimeout(function () {
-                        $this.profileContainer.removeClass('layout-profile-active');
-                        $this.profileMenu.removeClass('fadeOutUp');
-                    }, 150);
-                }
-                else {
-                    $this.profileContainer.addClass('layout-profile-active');
-                    $this.profileMenu.addClass('fadeInDown');
-                }
-            }
-
-            e.preventDefault();
-        });
-
-        this.menulinks.off('click.menu').on('click.menu', function (e) {
-            var link = $(this),
-            item = link.parent('li'),
-            submenu = item.children('ul');
-
-            if (item.hasClass('active-menuitem')) {
-                if (submenu.length) {
-                    $this.removeMenuitem(item.attr('id'));
-                    
-                    if($this.isSlimMenu() || $this.isHorizontalMenu()) {
-                        item.removeClass('active-menuitem');
-                        submenu.slideUp();
-                    }
-                    else {
-                        submenu.slideUp(400, function() {
-                            item.removeClass('active-menuitem');
-                        });
-                    }
-                }
-
-                if(item.parent().is($this.jq)) {
-                    $this.menuActive = false;
-                }
-            }
-            else {
-                if($this.isSlimMenu() || $this.isHorizontalMenu()) {
-                    $this.deactivateItems(item.siblings(), false);
-
-                    if(submenu.length === 0) {
-                        $this.resetMenu();
-                    }
-                }
-                else {
-                    $this.deactivateItems(item.siblings(), true);
-                    $.cookie('roma_menu_scroll_state', link.attr('href') + ',' + $this.menuContainer.scrollTop(), { path: '/' });
-                }
-                
-                $this.activate(item);
-                
-                if(item.parent().is($this.jq)) {
-                    $this.menuActive = true;
-                }
-            }
-
-            if (submenu.length) {
-                e.preventDefault();
-            }
-        });
-
-        this.menu.children('li').off('mouseenter.menu').on('mouseenter.menu', function(e) {    
-            if($this.isHorizontalMenu() || $this.isSlimMenu()) {
-                var item = $(this);
-                
-                if(!item.hasClass('active-menuitem')) {
-                    $this.menu.find('.active-menuitem').removeClass('active-menuitem');
-                    $this.menu.find('ul:visible').slideUp();
-                    
-                    if($this.menuActive) {
-                        item.addClass('active-menuitem');
-                        item.children('ul').slideDown();
-                    }
-                }
-            }
-        });
-
-        this.topbarLinks.off('click.topbar').on('click.topbar', function (e) {
-            var link = $(this),
-                item = link.parent(),
-                submenu = link.next();
-
-            $this.topbarMenuClick = true;
-
-            item.siblings('.active-topmenuitem').removeClass('active-topmenuitem');
-
-            if ($this.isDesktop()) {
-                if (submenu.length) {
-                    if (item.hasClass('active-topmenuitem')) {
-                        $this.hideTopBarSubMenu(item);
-                    }
-                    else {
-                        item.addClass('active-topmenuitem');
-                        submenu.addClass('fadeInDown');
-                    }
-                }
-            }
-            else {
-                item.children('ul').removeClass('fadeInDown fadeOutUp');
-                item.toggleClass('active-topmenuitem');
-            }
-
-            if (link.attr('href') === '#') {
-                e.preventDefault();
-            }
-        });
-
-        this.bindConfigEvents();
-
-        $(document.body).off('click.layoutBody').on('click.layoutBody', function() {
-            if(($this.isHorizontalMenu() || $this.isSlimMenu()) && !$this.menuClick && $this.isDesktop()) {
-                $this.menu.find('.active-menuitem').removeClass('active-menuitem');
-                $this.menu.find('ul:visible').hide();
-                $this.menuActive = false;
-            }
-
-            if (!$this.topbarMenuClick) {
-                $this.hideTopBarSubMenu($this.topbarItems.filter('.active-topmenuitem'));
-            }
-
-            if (!$this.rightPanelClick && $this.rightPanel && $this.rightPanel.hasClass('layout-right-panel-active')) {
-                $this.rightPanel.removeClass('layout-right-panel-active')
-            }
-
-            if(!$this.menuClick) {
-                $this.wrapper.removeClass('layout-overlay-active layout-mobile-active');
-                $(document.body).removeClass('blocked-scroll');
-            }
-
-            if (!$this.profileMenuClick && ($this.isHorizontalMenu() || $this.isSlimMenu())) {
-                $this.profileContainer.removeClass('layout-profile-active');
-            }
-
-            if (!$this.configMenuClicked) {
-                $this.configMenu.removeClass('layout-config-active');
-            }
-
-            $this.menuClick = false;
-            $this.topbarMenuClick = false;
-            $this.rightPanelClick = false;
-            $this.profileMenuClick = false;
-            $this.configMenuClicked = false;
-        });
-
-        $(function() {
-            $this._initrightPanel();
-        });
-    },
-    
-    showRightPanel: function() {
-		$this.rightPanel.toggleClass('layout-right-panel-active');
-		$this.rightPanelClick = true;
-		e.preventDefault();
-	},
-	
-	hideRightPanel: function() {
-		if (!$this.rightPanelClick && $this.rightPanel && $this.rightPanel.hasClass('layout-right-panel-active')) {
-        	$this.rightPanel.removeClass('layout-right-panel-active')
-        }
+		this._bindEvents();
 	},
 
-    hideTopBarSubMenu: function(item) {
-        var submenu = item.children('ul');
-        submenu.addClass('fadeOutUp');
+	_bindEvents: function() {
+		var $this = this;
 
-        setTimeout(function () {
-            item.removeClass('active-topmenuitem'),
-                submenu.removeClass('fadeOutUp');
-        }, 150);
-    },
+		$this.menuContainer.off('click.menu').on('click.menu', function() {
+			$this.menuClick = true;
+		});
 
-    bindConfigEvents: function() {
-        var $this = this;
-        var changeConfigMenuState = function(e) {
-            this.toggleClass(this.configMenu, 'layout-config-active');
-            
-            this.configMenuClicked = true;
-            e.preventDefault();
-        };
-        
-        this.configButton.off('click.config').on('click.config', changeConfigMenuState.bind(this));
-        this.configMenuClose.off('click.config').on('click.config', changeConfigMenuState.bind(this));
-        
-        this.configMenu.off('click.configMenu').on('click.configMenu', function() {
-            $this.configMenuClicked = true;
-        });
-    },
+		this.menuButton.off('click.menu').on('click.menu', function(e) {
+			$this.menuClick = true;
 
-    resetMenu: function() {
-        this.menu.find('.active-menuitem').removeClass('active-menuitem');
-        this.menu.find('ul:visible').hide();
-        this.menuActive = false;
-    },
+			if ($this.isMobile()) {
+				$this.wrapper.toggleClass('layout-mobile-active');
+				$(document.body).toggleClass('blocked-scroll');
+			}
+			else {
+				if ($this.isStaticMenu()) {
+					$this.wrapper.toggleClass('layout-static-inactive');
+					$this.saveStaticMenuState();
+				}
+				else {
+					$this.wrapper.toggleClass('layout-overlay-active');
+				}
+			}
 
-    activate: function(item) {
-        var submenu = item.children('ul');
-        item.addClass('active-menuitem');
+			e.preventDefault();
+		});
 
-        if(submenu.length) {
-            if(this.isSlimMenu() || this.isHorizontalMenu())
-                submenu.slideDown();
-            else
-                submenu.slideDown();
-        }
-    },
+		$this.profileButton.off('click.profile').on('click.profile', function(e) {
+			if (!$this.isHorizontalMenu() && !$this.isSlimMenu()) {
+				$this.profileContainer.toggleClass('layout-profile-active');
+				$this.profileMenu.slideToggle();
+			}
+			else {
+				$this.profileMenuClick = true;
 
-    deactivate: function(item) {
-        var submenu = item.children('ul');
-        item.removeClass('active-menuitem');
+				if ($this.profileContainer.hasClass('layout-profile-active')) {
+					$this.profileMenu.addClass('fadeOutUp');
 
-        if(submenu.length) {
-            submenu.slideUp();
-        }
-    },
+					setTimeout(function() {
+						$this.profileContainer.removeClass('layout-profile-active');
+						$this.profileMenu.removeClass('fadeOutUp');
+					}, 150);
+				}
+				else {
+					$this.profileContainer.addClass('layout-profile-active');
+					$this.profileMenu.addClass('fadeInDown');
+				}
+			}
 
-    deactivateItems: function(items, animate) {
-        var $this = this;
+			e.preventDefault();
+		});
 
-        for(var i = 0; i < items.length; i++) {
-            var item = items.eq(i),
-            submenu = item.children('ul');
+		this.menulinks.off('click.menu').on('click.menu', function(e) {
+			var link = $(this),
+				item = link.parent('li'),
+				submenu = item.children('ul');
 
-            if(submenu.length) {
-                if(item.hasClass('active-menuitem')) {
-                    var activeSubItems = item.find('.active-menuitem');
-                    item.removeClass('active-menuitem');
+			if (item.hasClass('active-menuitem')) {
+				if (submenu.length) {
+					$this.removeMenuitem(item.attr('id'));
 
-                    if(animate) {
-                        submenu.slideUp('normal', function() {
-                            $(this).parent().find('.active-menuitem').each(function() {
-                                $this.deactivate($(this));
-                            });
-                        });
-                    }
-                    else {
-                        submenu.hide();
-                        item.find('.active-menuitem').each(function() {
-                            $this.deactivate($(this));
-                        });
-                    }
+					if ($this.isSlimMenu() || $this.isHorizontalMenu()) {
+						item.removeClass('active-menuitem');
+						submenu.slideUp();
+					}
+					else {
+						submenu.slideUp(400, function() {
+							item.removeClass('active-menuitem');
+						});
+					}
+				}
 
-                    $this.removeMenuitem(item.attr('id'));
-                    activeSubItems.each(function() {
-                        $this.removeMenuitem($(this).attr('id'));
-                    });
-                }
-                else {
-                    item.find('.active-menuitem').each(function() {
-                        var subItem = $(this);
-                        $this.deactivate(subItem);
-                        $this.removeMenuitem(subItem.attr('id'));
-                    });
-                }
-            }
-            else if(item.hasClass('active-menuitem')) {
-                $this.deactivate(item);
-                $this.removeMenuitem(item.attr('id'));
-            }
-        }
-    },
+				if (item.parent().is($this.jq)) {
+					$this.menuActive = false;
+				}
+			}
+			else {
+				if ($this.isSlimMenu() || $this.isHorizontalMenu()) {
+					$this.deactivateItems(item.siblings(), false);
 
-    saveStaticMenuState: function() {
-        if(this.wrapper.hasClass('layout-static-inactive'))
-            $.cookie('roma_static_menu_inactive', 'roma_static_menu_inactive', {path: '/'});
-        else
-            $.removeCookie('roma_static_menu_inactive', {path: '/'});
-    },
+					if (submenu.length === 0) {
+						$this.resetMenu();
+					}
+				}
+				else {
+					$this.deactivateItems(item.siblings(), true);
+					$.cookie('roma_menu_scroll_state', link.attr('href') + ',' + $this.menuContainer.scrollTop(), { path: '/' });
+				}
 
-    isMobile: function( ){
-        return $(window).width() <= 991;
-    },
-    
-    isStaticMenu: function() {
-        return this.wrapper.hasClass('layout-static') && this.isDesktop();
-    },
+				$this.activate(item);
 
-    isHorizontalMenu: function() {
-        return this.wrapper.hasClass('layout-horizontal') && this.isDesktop();
-    },
-    
-    isSlimMenu: function() {
-        return this.isDesktop() && this.wrapper.hasClass('layout-slim');
-    },
+				if (item.parent().is($this.jq)) {
+					$this.menuActive = true;
+				}
+			}
 
-    isDesktop: function() {
-        return window.innerWidth > 991;
-    },
+			if (submenu.length) {
+				e.preventDefault();
+			}
+		});
 
-    restoreMenuState: function() {
-        var isSlimMenu = this.wrapper.hasClass('layout-slim');
-        var $this = this;
+		this.menu.children('li').off('mouseenter.menu').on('mouseenter.menu', function(e) {
+			if ($this.isHorizontalMenu() || $this.isSlimMenu()) {
+				var item = $(this);
 
-        if (!isSlimMenu && this.isDesktop()) {
-            var link = $('a[href^="' + this.cfg.pathname + '"]');
-            if (link.length) {
-                link.addClass('active-route');
+				if (!item.hasClass('active-menuitem')) {
+					$this.menu.find('.active-menuitem').removeClass('active-menuitem');
+					$this.menu.find('ul:visible').slideUp();
 
-                var menuitem = link.closest('li');
-                menuitem.addClass('active-menuitem');
+					if ($this.menuActive) {
+						item.addClass('active-menuitem');
+						item.children('ul').slideDown();
+					}
+				}
+			}
+		});
 
-                setTimeout(function() {
-                    $this.restoreScrollState(menuitem);
-                }, 100)
-            }
-        }
+		this.topbarLinks.off('click.topbar').on('click.topbar', function(e) {
+			var link = $(this),
+				item = link.parent(),
+				submenu = link.next();
 
-        var staticMenuCookie = $.cookie('roma_static_menu_inactive');
-        if(staticMenuCookie) {
-            this.wrapper.addClass('layout-static-inactive layout-static-inactive-restore');
-        }
-    },
+			$this.topbarMenuClick = true;
 
-    restoreScrollState: function(menuitem) {
-        var scrollState = $.cookie('roma_menu_scroll_state');
-        if (scrollState) {
-            var state = scrollState.split(',');
-            if (state[0].startsWith(this.cfg.pathname) || this.isScrolledIntoView(menuitem, state[1])) {
-                this.menuContainer.scrollTop(parseInt(state[1], 10));
-            }
-            else {
-                this.scrollIntoView(menuitem.get(0));
-                $.removeCookie('roma_menu_scroll_state', { path: '/' });
-            }
-        }
-        else if (!this.isScrolledIntoView(menuitem, menuitem.scrollTop())){
-            this.scrollIntoView(menuitem.get(0));
-        }
-    },
+			item.siblings('.active-topmenuitem').removeClass('active-topmenuitem');
 
-    scrollIntoView: function(elem) {
-        if (document.documentElement.scrollIntoView) {
-            elem.scrollIntoView({ block: "nearest", inline: 'start' });
+			if ($this.isDesktop()) {
+				if (submenu.length) {
+					if (item.hasClass('active-topmenuitem')) {
+						$this.hideTopBarSubMenu(item);
+					}
+					else {
+						item.addClass('active-topmenuitem');
+						submenu.addClass('fadeInDown');
+					}
+				}
+			}
+			else {
+				item.children('ul').removeClass('fadeInDown fadeOutUp');
+				item.toggleClass('active-topmenuitem');
+			}
 
-            var container = $('.layout-menu-container');
-            var scrollTop = container.scrollTop();
-            if (scrollTop > 0) {
-                container.scrollTop(scrollTop + parseFloat(this.topbar.height()));
-            }
-        }
-    },
+			if (link.attr('href') === '#') {
+				e.preventDefault();
+			}
+		});
 
-    isScrolledIntoView: function(elem, scrollTop) {
-        var viewBottom = parseInt(scrollTop, 10) + this.menuContainer.height();
+		this.bindConfigEvents();
 
-        var elemTop = elem.position().top;
-        var elemBottom = elemTop + elem.height();
+		$(document.body).off('click.layoutBody').on('click.layoutBody', function() {
+			if (($this.isHorizontalMenu() || $this.isSlimMenu()) && !$this.menuClick && $this.isDesktop()) {
+				$this.menu.find('.active-menuitem').removeClass('active-menuitem');
+				$this.menu.find('ul:visible').hide();
+				$this.menuActive = false;
+			}
 
-        return ((elemBottom <= viewBottom) && (elemTop >= scrollTop));
-    },
+			if (!$this.topbarMenuClick) {
+				$this.hideTopBarSubMenu($this.topbarItems.filter('.active-topmenuitem'));
+			}
 
-    clearActiveItems: function() {
-        var activeItems = this.jq.find('li.active-menuitem'),
-        subContainers = activeItems.children('ul');
+			if (!$this.rightPanelClick && $this.rightPanel && $this.rightPanel.hasClass('layout-right-panel-active')) {
+				$this.rightPanel.removeClass('layout-right-panel-active')
+			}
 
-        activeItems.removeClass('active-menuitem');
-        if(subContainers && subContainers.length) {
-            subContainers.hide();
-        }
-    },
+			if (!$this.menuClick) {
+				$this.wrapper.removeClass('layout-overlay-active layout-mobile-active');
+				$(document.body).removeClass('blocked-scroll');
+			}
 
-    clearMenuState: function() {
-        $.removeCookie('roma_static_menu_inactive', { path: '/' });
-    },
+			if (!$this.profileMenuClick && ($this.isHorizontalMenu() || $this.isSlimMenu())) {
+				$this.profileContainer.removeClass('layout-profile-active');
+			}
 
-    clearLayoutState: function() {
-        this.clearMenuState();
-        this.clearActiveItems();
-    },
+			if (!$this.configMenuClicked) {
+				$this.configMenu.removeClass('layout-config-active');
+			}
 
-    _initrightPanel: function() {
-        var $this = this;
+			$this.menuClick = false;
+			$this.topbarMenuClick = false;
+			$this.rightPanelClick = false;
+			$this.profileMenuClick = false;
+			$this.configMenuClicked = false;
+		});
 
-        this.rightPanelButton = $('.layout-right-panel-button');
-        this.rightPanel = $('.layout-right-panel');
+		$(function() {
+			$this._initrightPanel();
+		});
+	},
 
-        this.rightPanelButton.off('click').on('click', function(e) {
-            $this.rightPanel.toggleClass('layout-right-panel-active');
-            $this.rightPanelClick = true;
-            e.preventDefault();
-        });
+	hideTopBarSubMenu: function(item) {
+		var submenu = item.children('ul');
+		submenu.addClass('fadeOutUp');
 
-        this.rightPanel.off('click').on('click', function (e) {
-            $this.rightPanelClick = true;
+		setTimeout(function() {
+			item.removeClass('active-topmenuitem'),
+				submenu.removeClass('fadeOutUp');
+		}, 150);
+	},
 
-            var target = e.target;
-            if (!(target.nodeName === "A" && target.getAttribute('href') !== '#')) {
-                e.preventDefault();
-            }
-        });
-    },
+	bindConfigEvents: function() {
+		var $this = this;
+		var changeConfigMenuState = function(e) {
+			this.toggleClass(this.configMenu, 'layout-config-active');
 
-    toggleClass: function(el, className) {
-        if (el.hasClass(className)) {
-            el.removeClass(className);
-        }
-        else {
-            el.addClass(className);
-        }
-    },
+			this.configMenuClicked = true;
+			e.preventDefault();
+		};
+
+		this.configButton.off('click.config').on('click.config', changeConfigMenuState.bind(this));
+		this.configMenuClose.off('click.config').on('click.config', changeConfigMenuState.bind(this));
+
+		this.configMenu.off('click.configMenu').on('click.configMenu', function() {
+			$this.configMenuClicked = true;
+		});
+	},
+
+	resetMenu: function() {
+		this.menu.find('.active-menuitem').removeClass('active-menuitem');
+		this.menu.find('ul:visible').hide();
+		this.menuActive = false;
+	},
+
+	activate: function(item) {
+		var submenu = item.children('ul');
+		item.addClass('active-menuitem');
+
+		if (submenu.length) {
+			if (this.isSlimMenu() || this.isHorizontalMenu())
+				submenu.slideDown();
+			else
+				submenu.slideDown();
+		}
+	},
+
+	deactivate: function(item) {
+		var submenu = item.children('ul');
+		item.removeClass('active-menuitem');
+
+		if (submenu.length) {
+			submenu.slideUp();
+		}
+	},
+
+	deactivateItems: function(items, animate) {
+		var $this = this;
+
+		for (var i = 0; i < items.length; i++) {
+			var item = items.eq(i),
+				submenu = item.children('ul');
+
+			if (submenu.length) {
+				if (item.hasClass('active-menuitem')) {
+					var activeSubItems = item.find('.active-menuitem');
+					item.removeClass('active-menuitem');
+
+					if (animate) {
+						submenu.slideUp('normal', function() {
+							$(this).parent().find('.active-menuitem').each(function() {
+								$this.deactivate($(this));
+							});
+						});
+					}
+					else {
+						submenu.hide();
+						item.find('.active-menuitem').each(function() {
+							$this.deactivate($(this));
+						});
+					}
+
+					$this.removeMenuitem(item.attr('id'));
+					activeSubItems.each(function() {
+						$this.removeMenuitem($(this).attr('id'));
+					});
+				}
+				else {
+					item.find('.active-menuitem').each(function() {
+						var subItem = $(this);
+						$this.deactivate(subItem);
+						$this.removeMenuitem(subItem.attr('id'));
+					});
+				}
+			}
+			else if (item.hasClass('active-menuitem')) {
+				$this.deactivate(item);
+				$this.removeMenuitem(item.attr('id'));
+			}
+		}
+	},
+
+	saveStaticMenuState: function() {
+		if (this.wrapper.hasClass('layout-static-inactive'))
+			$.cookie('roma_static_menu_inactive', 'roma_static_menu_inactive', { path: '/' });
+		else
+			$.removeCookie('roma_static_menu_inactive', { path: '/' });
+	},
+
+	isMobile: function() {
+		return $(window).width() <= 991;
+	},
+
+	isStaticMenu: function() {
+		return this.wrapper.hasClass('layout-static') && this.isDesktop();
+	},
+
+	isHorizontalMenu: function() {
+		return this.wrapper.hasClass('layout-horizontal') && this.isDesktop();
+	},
+
+	isSlimMenu: function() {
+		return this.isDesktop() && this.wrapper.hasClass('layout-slim');
+	},
+
+	isDesktop: function() {
+		return window.innerWidth > 991;
+	},
+
+	restoreMenuState: function() {
+		var isSlimMenu = this.wrapper.hasClass('layout-slim');
+		var $this = this;
+
+		if (!isSlimMenu && this.isDesktop()) {
+			var link = $('a[href^="' + this.cfg.pathname + '"]');
+			if (link.length) {
+				link.addClass('active-route');
+
+				var menuitem = link.closest('li');
+				menuitem.addClass('active-menuitem');
+
+				setTimeout(function() {
+					$this.restoreScrollState(menuitem);
+				}, 100)
+			}
+		}
+
+		var staticMenuCookie = $.cookie('roma_static_menu_inactive');
+		if (staticMenuCookie) {
+			this.wrapper.addClass('layout-static-inactive layout-static-inactive-restore');
+		}
+	},
+
+	restoreScrollState: function(menuitem) {
+		var scrollState = $.cookie('roma_menu_scroll_state');
+		if (scrollState) {
+			var state = scrollState.split(',');
+			if (state[0].startsWith(this.cfg.pathname) || this.isScrolledIntoView(menuitem, state[1])) {
+				this.menuContainer.scrollTop(parseInt(state[1], 10));
+			}
+			else {
+				this.scrollIntoView(menuitem.get(0));
+				$.removeCookie('roma_menu_scroll_state', { path: '/' });
+			}
+		}
+		else if (!this.isScrolledIntoView(menuitem, menuitem.scrollTop())) {
+			this.scrollIntoView(menuitem.get(0));
+		}
+	},
+
+	scrollIntoView: function(elem) {
+		if (document.documentElement.scrollIntoView) {
+			elem.scrollIntoView({ block: "nearest", inline: 'start' });
+
+			var container = $('.layout-menu-container');
+			var scrollTop = container.scrollTop();
+			if (scrollTop > 0) {
+				container.scrollTop(scrollTop + parseFloat(this.topbar.height()));
+			}
+		}
+	},
+
+	isScrolledIntoView: function(elem, scrollTop) {
+		var viewBottom = parseInt(scrollTop, 10) + this.menuContainer.height();
+
+		var elemTop = elem.position().top;
+		var elemBottom = elemTop + elem.height();
+
+		return ((elemBottom <= viewBottom) && (elemTop >= scrollTop));
+	},
+
+	clearActiveItems: function() {
+		var activeItems = this.jq.find('li.active-menuitem'),
+			subContainers = activeItems.children('ul');
+
+		activeItems.removeClass('active-menuitem');
+		if (subContainers && subContainers.length) {
+			subContainers.hide();
+		}
+	},
+
+	clearMenuState: function() {
+		$.removeCookie('roma_static_menu_inactive', { path: '/' });
+	},
+
+	clearLayoutState: function() {
+		this.clearMenuState();
+		this.clearActiveItems();
+	},
+
+	_initrightPanel: function() {
+		var $this = this;
+
+		this.rightPanel = $('.layout-right-panel');
+
+		$('.layout-right-panel-button').each(function() {
+			var $button = $(this);
+
+			$button.off('click').on('click', function(e) {
+				$this.rightPanel.toggleClass('layout-right-panel-active');
+				$this.rightPanelClick = true;
+				e.preventDefault();
+			});
+		});
+
+		this.rightPanel.off('click').on('click', function(e) {
+			$this.rightPanelClick = true;
+
+			var target = e.target;
+			if (!(target.nodeName === "A" && target.getAttribute('href') !== '#')) {
+				e.preventDefault();
+			}
+		});
+	},
+
+
+	toggleClass: function(el, className) {
+		if (el.hasClass(className)) {
+			el.removeClass(className);
+		}
+		else {
+			el.addClass(className);
+		}
+	},
 });
 
 PrimeFaces.RomaConfigurator = {
-    changeLayout: function(layoutTheme) {
-        var linkElement = $('link[href*="layout-"]');
-        var href = linkElement.attr('href');
-        var startIndexOf = href.indexOf('layout-') + 7;
-        var endIndexOf = href.indexOf('.css');
-        var currentColor = href.substring(startIndexOf, endIndexOf);
+	changeLayout: function(layoutTheme) {
+		var linkElement = $('link[href*="layout-"]');
+		var href = linkElement.attr('href');
+		var startIndexOf = href.indexOf('layout-') + 7;
+		var endIndexOf = href.indexOf('.css');
+		var currentColor = href.substring(startIndexOf, endIndexOf);
 
-        this.replaceLink(linkElement, href.replace(currentColor, layoutTheme));
-    },
+		this.replaceLink(linkElement, href.replace(currentColor, layoutTheme));
+	},
 
-    changeComponentsTheme: function(theme) {
-        var library = 'primefaces-roma';
-        var linkElement = $('link[href*="theme.css"]');
-        var href = linkElement.attr('href');
-        var index = href.indexOf(library) + 1;
-        var currentTheme = href.substring(index + library.length);
+	changeComponentsTheme: function(theme) {
+		var library = 'primefaces-roma';
+		var linkElement = $('link[href*="theme.css"]');
+		var href = linkElement.attr('href');
+		var index = href.indexOf(library) + 1;
+		var currentTheme = href.substring(index + library.length);
 
-        this.replaceLink(linkElement, href.replace(currentTheme, theme));
-        this.changeLayout(theme);
-    },
+		this.replaceLink(linkElement, href.replace(currentTheme, theme));
+		this.changeLayout(theme);
+	},
 
-    changeTopbarColor: function(topbarColorClass) {
-        var wrapper = $('.layout-wrapper'),
-        classes = wrapper.attr('class'),
-        startIndexOf = classes.indexOf('layout-topbar-'),
-        endIndexOf = classes.indexOf(' ', startIndexOf);
-        endIndexOf = endIndexOf === -1 ? classes.length : endIndexOf;
+	changeTopbarColor: function(topbarColorClass) {
+		var wrapper = $('.layout-wrapper'),
+			classes = wrapper.attr('class'),
+			startIndexOf = classes.indexOf('layout-topbar-'),
+			endIndexOf = classes.indexOf(' ', startIndexOf);
+		endIndexOf = endIndexOf === -1 ? classes.length : endIndexOf;
 
-        var currentTopbarColor = classes.substring(startIndexOf, endIndexOf);
+		var currentTopbarColor = classes.substring(startIndexOf, endIndexOf);
 
-        wrapper.removeClass(currentTopbarColor).addClass(topbarColorClass);
-    },
+		wrapper.removeClass(currentTopbarColor).addClass(topbarColorClass);
+	},
 
-    changeSectionTheme: function(theme, section) {
-        var wrapperElement = $('.layout-wrapper');
-     
-        var styleClass = wrapperElement.attr('class');
-        var tokens = styleClass.split(' ');
-        var sectionClass;
-        for (var i = 0; i < tokens.length; i++) {
-            if (tokens[i].indexOf(section + '-') > -1) {
-                sectionClass = tokens[i];
-                break;
-            }
-        }
+	changeSectionTheme: function(theme, section) {
+		var wrapperElement = $('.layout-wrapper');
 
-        wrapperElement.attr('class', styleClass.replace(sectionClass, section + '-' + theme));
-    },
+		var styleClass = wrapperElement.attr('class');
+		var tokens = styleClass.split(' ');
+		var sectionClass;
+		for (var i = 0; i < tokens.length; i++) {
+			if (tokens[i].indexOf(section + '-') > -1) {
+				sectionClass = tokens[i];
+				break;
+			}
+		}
 
-    beforeResourceChange: function() {
-        PrimeFaces.ajax.RESOURCE = null;    //prevent resource append
-    },
-    
-    replaceLink: function(linkElement, href) {
-        PrimeFaces.ajax.RESOURCE = 'javax.faces.Resource';
+		wrapperElement.attr('class', styleClass.replace(sectionClass, section + '-' + theme));
+	},
 
-        var isIE = this.isIE();
+	beforeResourceChange: function() {
+		PrimeFaces.ajax.RESOURCE = null;    //prevent resource append
+	},
 
-        if (isIE) {
-            linkElement.attr('href', href);
-        }
-        else {
-            var cloneLinkElement = linkElement.clone(false);
+	replaceLink: function(linkElement, href) {
+		PrimeFaces.ajax.RESOURCE = 'javax.faces.Resource';
 
-            cloneLinkElement.attr('href', href);
-            linkElement.after(cloneLinkElement);
-            
-            cloneLinkElement.off('load').on('load', function() {
-                linkElement.remove();
-            });
-        }
-    },
+		var isIE = this.isIE();
+
+		if (isIE) {
+			linkElement.attr('href', href);
+		}
+		else {
+			var cloneLinkElement = linkElement.clone(false);
+
+			cloneLinkElement.attr('href', href);
+			linkElement.after(cloneLinkElement);
+
+			cloneLinkElement.off('load').on('load', function() {
+				linkElement.remove();
+			});
+		}
+	},
 
 
-    changeMenuMode: function(menuMode) {
-        var wrapper = $(document.body).children('.layout-wrapper');
-        switch (menuMode) {
-            case 'layout-static layout-static-active':
-                wrapper.addClass('layout-static layout-static-active').removeClass('layout-overlay layout-slim layout-horizontal ');
-                this.clearLayoutState();
-            break;
+	changeMenuMode: function(menuMode) {
+		var wrapper = $(document.body).children('.layout-wrapper');
+		switch (menuMode) {
+			case 'layout-static layout-static-active':
+				wrapper.addClass('layout-static layout-static-active').removeClass('layout-overlay layout-slim layout-horizontal ');
+				this.clearLayoutState();
+				break;
 
-            case 'layout-overlay':
-                wrapper.addClass('layout-overlay').removeClass('layout-static layout-slim layout-horizontal layout-static-active');
-                this.clearLayoutState();
-            break;
+			case 'layout-overlay':
+				wrapper.addClass('layout-overlay').removeClass('layout-static layout-slim layout-horizontal layout-static-active');
+				this.clearLayoutState();
+				break;
 
-            case 'layout-horizontal':
-                wrapper.addClass('layout-horizontal').removeClass('layout-static layout-overlay  layout-slim  layout-static-active');
-                this.clearLayoutState();
-            break;
+			case 'layout-horizontal':
+				wrapper.addClass('layout-horizontal').removeClass('layout-static layout-overlay  layout-slim  layout-static-active');
+				this.clearLayoutState();
+				break;
 
-            case 'layout-slim':
-                wrapper.addClass('layout-slim').removeClass('layout-static layout-overlay layout-horizontal layout-static-active');
-                this.clearLayoutState();
-            break;
+			case 'layout-slim':
+				wrapper.addClass('layout-slim').removeClass('layout-static layout-overlay layout-horizontal layout-static-active');
+				this.clearLayoutState();
+				break;
 
-            default:
-                wrapper.addClass('layout-static').removeClass('layout-overlay layout-slim layout-horizontal ');
-                this.clearLayoutState();
-            break;
-        }
-    },
+			default:
+				wrapper.addClass('layout-static').removeClass('layout-overlay layout-slim layout-horizontal ');
+				this.clearLayoutState();
+				break;
+		}
+	},
 
-    changeMenuToRTL: function() {
-        $('.layout-wrapper').toggleClass('layout-rtl');
-    },
+	changeMenuToRTL: function() {
+		$('.layout-wrapper').toggleClass('layout-rtl');
+	},
 
-    clearLayoutState: function() {
-        var menu = PF('RomaMenuWidget');
+	clearLayoutState: function() {
+		var menu = PF('RomaMenuWidget');
 
-        if (menu) {
-            menu.clearLayoutState();
-        }
-    },
-    
-    isIE: function() {
-        return /(MSIE|Trident\/|Edge\/)/i.test(navigator.userAgent);
-    },
+		if (menu) {
+			menu.clearLayoutState();
+		}
+	},
 
-    updateInputStyle: function(value) {
-        if (value === 'filled')
-            $(document.body).addClass('ui-input-filled');
-        else
-            $(document.body).removeClass('ui-input-filled');
-    }
+	isIE: function() {
+		return /(MSIE|Trident\/|Edge\/)/i.test(navigator.userAgent);
+	},
+
+	updateInputStyle: function(value) {
+		if (value === 'filled')
+			$(document.body).addClass('ui-input-filled');
+		else
+			$(document.body).removeClass('ui-input-filled');
+	}
 };
 
 /*!
@@ -616,7 +608,7 @@ PrimeFaces.RomaConfigurator = {
  * Copyright 2006, 2014 Klaus Hartl
  * Released under the MIT license
  */
-(function (factory) {
+(function(factory) {
 	if (typeof define === 'function' && define.amd) {
 		// AMD (Register as an anonymous module)
 		define(['jquery'], factory);
@@ -627,7 +619,7 @@ PrimeFaces.RomaConfigurator = {
 		// Browser globals
 		factory(jQuery);
 	}
-}(function ($) {
+}(function($) {
 
 	var pluses = /\+/g;
 
@@ -655,7 +647,7 @@ PrimeFaces.RomaConfigurator = {
 			// If we can't parse the cookie, ignore it, it's unusable.
 			s = decodeURIComponent(s.replace(pluses, ' '));
 			return config.json ? JSON.parse(s) : s;
-		} catch(e) {}
+		} catch (e) { }
 	}
 
 	function read(s, converter) {
@@ -663,7 +655,7 @@ PrimeFaces.RomaConfigurator = {
 		return $.isFunction(converter) ? converter(value) : value;
 	}
 
-	var config = $.cookie = function (key, value, options) {
+	var config = $.cookie = function(key, value, options) {
 
 		// Write
 
@@ -678,9 +670,9 @@ PrimeFaces.RomaConfigurator = {
 			return (document.cookie = [
 				encode(key), '=', stringifyCookieValue(value),
 				options.expires ? '; expires=' + options.expires.toUTCString() : '', // use expires attribute, max-age is not supported by IE
-				options.path    ? '; path=' + options.path : '',
-				options.domain  ? '; domain=' + options.domain : '',
-				options.secure  ? '; secure' : ''
+				options.path ? '; path=' + options.path : '',
+				options.domain ? '; domain=' + options.domain : '',
+				options.secure ? '; secure' : ''
 			].join(''));
 		}
 
@@ -716,7 +708,7 @@ PrimeFaces.RomaConfigurator = {
 
 	config.defaults = {};
 
-	$.removeCookie = function (key, options) {
+	$.removeCookie = function(key, options) {
 		// Must not alter options, thus extending a fresh object...
 		$.cookie(key, '', $.extend({}, options, { expires: -1 }));
 		return !$.cookie(key);
@@ -725,310 +717,310 @@ PrimeFaces.RomaConfigurator = {
 }));
 
 if (PrimeFaces.widget.InputSwitch) {
-    PrimeFaces.widget.InputSwitch = PrimeFaces.widget.InputSwitch.extend({
+	PrimeFaces.widget.InputSwitch = PrimeFaces.widget.InputSwitch.extend({
 
-        init: function (cfg) {
-            this._super(cfg);
+		init: function(cfg) {
+			this._super(cfg);
 
-            if (this.input.prop('checked')) {
-                this.jq.addClass('ui-inputswitch-checked');
-            }
-        },
+			if (this.input.prop('checked')) {
+				this.jq.addClass('ui-inputswitch-checked');
+			}
+		},
 
-        check: function () {
-            var $this = this;
-           
-            this.input.prop('checked', true).trigger('change');
-            setTimeout(function(){ 
-                $this.jq.addClass('ui-inputswitch-checked');
-            },100);
-        },
+		check: function() {
+			var $this = this;
 
-        uncheck: function () {
-            var $this = this;
-            
-            this.input.prop('checked', false).trigger('change');
-            setTimeout(function(){ 
-                $this.jq.removeClass('ui-inputswitch-checked');
-            }, 100);
-        }
-    });
+			this.input.prop('checked', true).trigger('change');
+			setTimeout(function() {
+				$this.jq.addClass('ui-inputswitch-checked');
+			}, 100);
+		},
+
+		uncheck: function() {
+			var $this = this;
+
+			this.input.prop('checked', false).trigger('change');
+			setTimeout(function() {
+				$this.jq.removeClass('ui-inputswitch-checked');
+			}, 100);
+		}
+	});
 }
 
 PrimeFaces.widget.SelectManyCheckbox.prototype.bindEvents = function() {
-    this.outputs.filter(':not(.ui-state-disabled)').on('mouseover', function() {
-        $(this).addClass('ui-state-hover');
-    })
-    .on('mouseout', function() {
-        $(this).removeClass('ui-state-hover');
-    })
-    .on('click', function() {
-        var checkbox = $(this),
-        input = checkbox.prev().children(':checkbox');
+	this.outputs.filter(':not(.ui-state-disabled)').on('mouseover', function() {
+		$(this).addClass('ui-state-hover');
+	})
+		.on('mouseout', function() {
+			$(this).removeClass('ui-state-hover');
+		})
+		.on('click', function() {
+			var checkbox = $(this),
+				input = checkbox.prev().children(':checkbox');
 
-        input.trigger('click');
-        input.trigger('focus');
+			input.trigger('click');
+			input.trigger('focus');
 
-        if($.browser.msie && parseInt($.browser.version) < 9) {
-            input.trigger('change');
-        }
-    });
+			if ($.browser.msie && parseInt($.browser.version) < 9) {
+				input.trigger('change');
+			}
+		});
 
-    //delegate focus-blur-change states
-    this.enabledInputs.on('focus', function() {
-        var input = $(this),
-        checkbox = input.parent().next();
+	//delegate focus-blur-change states
+	this.enabledInputs.on('focus', function() {
+		var input = $(this),
+			checkbox = input.parent().next();
 
-        checkbox.addClass('ui-state-focus');
-    })
-    .on('blur', function() {
-        var input = $(this),
-        checkbox = input.parent().next();
+		checkbox.addClass('ui-state-focus');
+	})
+		.on('blur', function() {
+			var input = $(this),
+				checkbox = input.parent().next();
 
-        checkbox.removeClass('ui-state-focus');
-    })
-    .on('change', function(e) {
-        var input = $(this),
-        checkbox = input.parent().next(),
-        disabled = input.is(':disabled');
+			checkbox.removeClass('ui-state-focus');
+		})
+		.on('change', function(e) {
+			var input = $(this),
+				checkbox = input.parent().next(),
+				disabled = input.is(':disabled');
 
-        if(disabled) {
-            return;
-        }
+			if (disabled) {
+				return;
+			}
 
-        if(input.is(':checked')) {
-            checkbox.children('.ui-chkbox-icon').removeClass('ui-icon-blank').addClass('ui-icon-check');
+			if (input.is(':checked')) {
+				checkbox.children('.ui-chkbox-icon').removeClass('ui-icon-blank').addClass('ui-icon-check');
 
-            checkbox.addClass('ui-state-active');
-        }
-        else {
-            checkbox.removeClass('ui-state-active').children('.ui-chkbox-icon').addClass('ui-icon-blank').removeClass('ui-icon-check');
-        }
-    });
+				checkbox.addClass('ui-state-active');
+			}
+			else {
+				checkbox.removeClass('ui-state-active').children('.ui-chkbox-icon').addClass('ui-icon-blank').removeClass('ui-icon-check');
+			}
+		});
 }
 
 PrimeFaces.widget.SelectOneRadio = PrimeFaces.widget.BaseWidget.extend({
 
-    init: function(cfg) {
-        this._super(cfg);
+	init: function(cfg) {
+		this._super(cfg);
 
-        //custom layout
-        if(this.cfg.custom) {
-            this.originalInputs = this.jq.find(':radio');
-            this.inputs = $('input:radio[name="' + this.id + '"].ui-radio-clone');
-            this.outputs = this.inputs.parent().next('.ui-radiobutton-box');
-            this.labels = $();
+		//custom layout
+		if (this.cfg.custom) {
+			this.originalInputs = this.jq.find(':radio');
+			this.inputs = $('input:radio[name="' + this.id + '"].ui-radio-clone');
+			this.outputs = this.inputs.parent().next('.ui-radiobutton-box');
+			this.labels = $();
 
-            //labels
-            for(var i=0; i < this.outputs.length; i++) {
-                this.labels = this.labels.add('label[for="' + this.outputs.eq(i).parent().attr('id') + '"]');
-            }
+			//labels
+			for (var i = 0; i < this.outputs.length; i++) {
+				this.labels = this.labels.add('label[for="' + this.outputs.eq(i).parent().attr('id') + '"]');
+			}
 
-            //update radio state
-            for(var i = 0; i < this.inputs.length; i++) {
-                var input = this.inputs.eq(i),
-                itemindex = input.data('itemindex'),
-                original = this.originalInputs.eq(itemindex);
+			//update radio state
+			for (var i = 0; i < this.inputs.length; i++) {
+				var input = this.inputs.eq(i),
+					itemindex = input.data('itemindex'),
+					original = this.originalInputs.eq(itemindex);
 
-                input.val(original.val());
+				input.val(original.val());
 
-                if(original.is(':checked')) {
-                    input.prop('checked', true).parent().next().addClass('ui-state-active').children('.ui-radiobutton-icon')
-                            .addClass('ui-icon-bullet').removeClass('ui-icon-blank');
-                }
-            }
-            
-            //pfs metadata
-            this.originalInputs.data(PrimeFaces.CLIENT_ID_DATA, this.id);
-        }
-        //regular layout
-        else {
-            this.outputs = this.jq.find('.ui-radiobutton-box');
-            this.inputs = this.jq.find(':radio');
-            this.labels = this.jq.find('label');
-            
-            //pfs metadata
-            this.inputs.data(PrimeFaces.CLIENT_ID_DATA, this.id);
-        }
+				if (original.is(':checked')) {
+					input.prop('checked', true).parent().next().addClass('ui-state-active').children('.ui-radiobutton-icon')
+						.addClass('ui-icon-bullet').removeClass('ui-icon-blank');
+				}
+			}
 
-        this.enabledInputs = this.inputs.filter(':not(:disabled)');
-        this.checkedRadio = this.outputs.filter('.ui-state-active');
+			//pfs metadata
+			this.originalInputs.data(PrimeFaces.CLIENT_ID_DATA, this.id);
+		}
+		//regular layout
+		else {
+			this.outputs = this.jq.find('.ui-radiobutton-box');
+			this.inputs = this.jq.find(':radio');
+			this.labels = this.jq.find('label');
 
-        this.bindEvents();
-    },
+			//pfs metadata
+			this.inputs.data(PrimeFaces.CLIENT_ID_DATA, this.id);
+		}
 
-    bindEvents: function() {
-        var $this = this;
+		this.enabledInputs = this.inputs.filter(':not(:disabled)');
+		this.checkedRadio = this.outputs.filter('.ui-state-active');
 
-        this.outputs.filter(':not(.ui-state-disabled)').on('mouseover.selectOneRadio', function() {
-            $(this).addClass('ui-state-hover');
-        })
-        .on('mouseout.selectOneRadio', function() {
-            $(this).removeClass('ui-state-hover');
-        })
-        .on('click.selectOneRadio', function(e) {
-            var radio = $(this),
-            input = radio.prev().children(':radio');
+		this.bindEvents();
+	},
 
-            if(!radio.hasClass('ui-state-active')) {
-                $this.unselect($this.checkedRadio);
-                $this.select(radio);
-                $this.fireClickEvent(input, e);
-                input.trigger('change');
-            }
-            else {
-                $this.fireClickEvent(input, e);
-            }
+	bindEvents: function() {
+		var $this = this;
 
-            input.trigger('focus');
-        });
+		this.outputs.filter(':not(.ui-state-disabled)').on('mouseover.selectOneRadio', function() {
+			$(this).addClass('ui-state-hover');
+		})
+			.on('mouseout.selectOneRadio', function() {
+				$(this).removeClass('ui-state-hover');
+			})
+			.on('click.selectOneRadio', function(e) {
+				var radio = $(this),
+					input = radio.prev().children(':radio');
 
-        this.labels.filter(':not(.ui-state-disabled)').on('click.selectOneRadio', function(e) {
-            var target = $(PrimeFaces.escapeClientId($(this).attr('for'))),
-            radio = null;
+				if (!radio.hasClass('ui-state-active')) {
+					$this.unselect($this.checkedRadio);
+					$this.select(radio);
+					$this.fireClickEvent(input, e);
+					input.trigger('change');
+				}
+				else {
+					$this.fireClickEvent(input, e);
+				}
 
-            //checks if target is input or not(custom labels)
-            if(target.is(':input'))
-                radio = target.parent().next();
-            else
-                radio = target.children('.ui-radiobutton-box'); //custom layout
+				input.trigger('focus');
+			});
 
-            radio.trigger('click.selectOneRadio');
+		this.labels.filter(':not(.ui-state-disabled)').on('click.selectOneRadio', function(e) {
+			var target = $(PrimeFaces.escapeClientId($(this).attr('for'))),
+				radio = null;
 
-            e.preventDefault();
-        });
+			//checks if target is input or not(custom labels)
+			if (target.is(':input'))
+				radio = target.parent().next();
+			else
+				radio = target.children('.ui-radiobutton-box'); //custom layout
 
-        this.enabledInputs.on('focus.selectOneRadio', function() {
-            var input = $(this),
-            radio = input.parent().next();
+			radio.trigger('click.selectOneRadio');
 
-            radio.addClass('ui-state-focus');
-        })
-        .on('blur.selectOneRadio', function() {
-            var input = $(this),
-            radio = input.parent().next();
+			e.preventDefault();
+		});
 
-            radio.removeClass('ui-state-focus');
-        })
-        .on('keydown.selectOneRadio', function(e) {
-            var input = $(this),
-            currentRadio = input.parent().next(),
-            index = $this.enabledInputs.index(input),
-            size = $this.enabledInputs.length,
-            keyCode = $.ui.keyCode,
-            key = e.which;
+		this.enabledInputs.on('focus.selectOneRadio', function() {
+			var input = $(this),
+				radio = input.parent().next();
 
-            switch(key) {
-                case keyCode.UP:
-                case keyCode.LEFT:
-                    var prevRadioInput = (index === 0) ? $this.enabledInputs.eq((size - 1)) : $this.enabledInputs.eq(--index),
-                    prevRadio = prevRadioInput.parent().next();
+			radio.addClass('ui-state-focus');
+		})
+			.on('blur.selectOneRadio', function() {
+				var input = $(this),
+					radio = input.parent().next();
 
-                    input.blur();
-                    $this.unselect(currentRadio);
-                    $this.select(prevRadio);
-                    prevRadioInput.trigger('focus').trigger('change');
-                    e.preventDefault();
-                break;
+				radio.removeClass('ui-state-focus');
+			})
+			.on('keydown.selectOneRadio', function(e) {
+				var input = $(this),
+					currentRadio = input.parent().next(),
+					index = $this.enabledInputs.index(input),
+					size = $this.enabledInputs.length,
+					keyCode = $.ui.keyCode,
+					key = e.which;
 
-                case keyCode.DOWN:
-                case keyCode.RIGHT:
-                    var nextRadioInput = (index === (size - 1)) ? $this.enabledInputs.eq(0) : $this.enabledInputs.eq(++index),
-                    nextRadio = nextRadioInput.parent().next();
+				switch (key) {
+					case keyCode.UP:
+					case keyCode.LEFT:
+						var prevRadioInput = (index === 0) ? $this.enabledInputs.eq((size - 1)) : $this.enabledInputs.eq(--index),
+							prevRadio = prevRadioInput.parent().next();
 
-                    input.blur();
-                    $this.unselect(currentRadio);
-                    $this.select(nextRadio);
-                    nextRadioInput.trigger('focus').trigger('change');
-                    e.preventDefault();
-                break;
+						input.blur();
+						$this.unselect(currentRadio);
+						$this.select(prevRadio);
+						prevRadioInput.trigger('focus').trigger('change');
+						e.preventDefault();
+						break;
 
-                case keyCode.SPACE:
-                    if(!input.prop('checked')) {
-                        $this.select(currentRadio);
-                        input.trigger('focus').trigger('change');
-                    }
+					case keyCode.DOWN:
+					case keyCode.RIGHT:
+						var nextRadioInput = (index === (size - 1)) ? $this.enabledInputs.eq(0) : $this.enabledInputs.eq(++index),
+							nextRadio = nextRadioInput.parent().next();
 
-                    e.preventDefault();
-                break;
-            }
-        });
-    },
+						input.blur();
+						$this.unselect(currentRadio);
+						$this.select(nextRadio);
+						nextRadioInput.trigger('focus').trigger('change');
+						e.preventDefault();
+						break;
 
-    unselect: function(radio) {
-        var radioInput = radio.prev().children(':radio');
-        radioInput.prop('checked', false);
-        radio.removeClass('ui-state-active').children('.ui-radiobutton-icon').removeClass('ui-icon-bullet').addClass('ui-icon-blank');
-        
-        if (this.cfg.custom) {
-            var itemindex = radioInput.data('itemindex');
-            this.originalInputs.eq(itemindex).prop('checked', false);
-        }
-    },
+					case keyCode.SPACE:
+						if (!input.prop('checked')) {
+							$this.select(currentRadio);
+							input.trigger('focus').trigger('change');
+						}
 
-    select: function(radio) {
-        var radioInput = radio.prev().children(':radio');
-        this.checkedRadio = radio;
-        radio.addClass('ui-state-active').children('.ui-radiobutton-icon').addClass('ui-icon-bullet').removeClass('ui-icon-blank');
-        radioInput.prop('checked', true);
-        
-        if (this.cfg.custom) {
-            var itemindex = radioInput.data('itemindex');
-            this.originalInputs.eq(itemindex).prop('checked', true);
-        }
-    },
+						e.preventDefault();
+						break;
+				}
+			});
+	},
 
-    unbindEvents: function(input) {
-        if(input) {
-            input.off();
-            input.parent().nextAll('.ui-radiobutton-box').off();
-            this.labels.filter("label[for='" + input.attr('id') + "']").off();
-        }
-        else {
-            this.inputs.off();
-            this.labels.off();
-            this.outputs.off();
-        }
-    },
+	unselect: function(radio) {
+		var radioInput = radio.prev().children(':radio');
+		radioInput.prop('checked', false);
+		radio.removeClass('ui-state-active').children('.ui-radiobutton-icon').removeClass('ui-icon-bullet').addClass('ui-icon-blank');
 
-    disable: function(index) {
-        if(index == null) {
-            this.inputs.attr('disabled', 'disabled');
-            this.labels.addClass('ui-state-disabled');
-            this.outputs.addClass('ui-state-disabled');
-            this.unbindEvents();
-        }
-        else {
-            var input = this.inputs.eq(index),
-                label = this.labels.filter("label[for='" + input.attr('id') + "']");
-            input.attr('disabled', 'disabled').parent().nextAll('.ui-radiobutton-box').addClass('ui-state-disabled');
-            label.addClass('ui-state-disabled');
-            this.unbindEvents(input);
-        }
+		if (this.cfg.custom) {
+			var itemindex = radioInput.data('itemindex');
+			this.originalInputs.eq(itemindex).prop('checked', false);
+		}
+	},
 
-    },
+	select: function(radio) {
+		var radioInput = radio.prev().children(':radio');
+		this.checkedRadio = radio;
+		radio.addClass('ui-state-active').children('.ui-radiobutton-icon').addClass('ui-icon-bullet').removeClass('ui-icon-blank');
+		radioInput.prop('checked', true);
 
-    enable: function(index) {
-        if(index == null) {
-            this.inputs.removeAttr('disabled');
-            this.labels.removeClass('ui-state-disabled');
-            this.outputs.removeClass('ui-state-disabled');
-        }
-        else {
-            var input = this.inputs.eq(index),
-                label = this.labels.filter("label[for='" + input.attr('id') + "']");
-            input.removeAttr('disabled').parent().nextAll('.ui-radiobutton-box').removeClass('ui-state-disabled');
-            label.removeClass('ui-state-disabled');
-        }
-        this.bindEvents();
-    },
-    
-    fireClickEvent: function(input, event) {
-        var userOnClick = input.prop('onclick');
-        if (userOnClick) {
-            userOnClick.call(this, event);
-        }
-    }
+		if (this.cfg.custom) {
+			var itemindex = radioInput.data('itemindex');
+			this.originalInputs.eq(itemindex).prop('checked', true);
+		}
+	},
+
+	unbindEvents: function(input) {
+		if (input) {
+			input.off();
+			input.parent().nextAll('.ui-radiobutton-box').off();
+			this.labels.filter("label[for='" + input.attr('id') + "']").off();
+		}
+		else {
+			this.inputs.off();
+			this.labels.off();
+			this.outputs.off();
+		}
+	},
+
+	disable: function(index) {
+		if (index == null) {
+			this.inputs.attr('disabled', 'disabled');
+			this.labels.addClass('ui-state-disabled');
+			this.outputs.addClass('ui-state-disabled');
+			this.unbindEvents();
+		}
+		else {
+			var input = this.inputs.eq(index),
+				label = this.labels.filter("label[for='" + input.attr('id') + "']");
+			input.attr('disabled', 'disabled').parent().nextAll('.ui-radiobutton-box').addClass('ui-state-disabled');
+			label.addClass('ui-state-disabled');
+			this.unbindEvents(input);
+		}
+
+	},
+
+	enable: function(index) {
+		if (index == null) {
+			this.inputs.removeAttr('disabled');
+			this.labels.removeClass('ui-state-disabled');
+			this.outputs.removeClass('ui-state-disabled');
+		}
+		else {
+			var input = this.inputs.eq(index),
+				label = this.labels.filter("label[for='" + input.attr('id') + "']");
+			input.removeAttr('disabled').parent().nextAll('.ui-radiobutton-box').removeClass('ui-state-disabled');
+			label.removeClass('ui-state-disabled');
+		}
+		this.bindEvents();
+	},
+
+	fireClickEvent: function(input, event) {
+		var userOnClick = input.prop('onclick');
+		if (userOnClick) {
+			userOnClick.call(this, event);
+		}
+	}
 
 });
 
@@ -1038,209 +1030,209 @@ PrimeFaces.widget.SelectOneRadio = PrimeFaces.widget.BaseWidget.extend({
  */
 PrimeFaces.widget.SelectBooleanCheckbox = PrimeFaces.widget.BaseWidget.extend({
 
-    init: function(cfg) {
-        this._super(cfg);
+	init: function(cfg) {
+		this._super(cfg);
 
-        this.input = $(this.jqId + '_input');
-        this.box = this.jq.find('.ui-chkbox-box');
-        this.icon = this.box.children('.ui-chkbox-icon');
-        this.itemLabel = this.jq.find('.ui-chkbox-label');
-        this.disabled = this.input.is(':disabled');
+		this.input = $(this.jqId + '_input');
+		this.box = this.jq.find('.ui-chkbox-box');
+		this.icon = this.box.children('.ui-chkbox-icon');
+		this.itemLabel = this.jq.find('.ui-chkbox-label');
+		this.disabled = this.input.is(':disabled');
 
-        var $this = this;
+		var $this = this;
 
-        //bind events if not disabled
-        if(!this.disabled) {
-            this.box.on('mouseover.selectBooleanCheckbox', function() {
-                $this.box.addClass('ui-state-hover');
-            })
-            .on('mouseout.selectBooleanCheckbox', function() {
-                $this.box.removeClass('ui-state-hover');
-            })
-            .on('click.selectBooleanCheckbox', function() {
-                $this.input.trigger('click');
-                $this.input.trigger('focus');
-            });
+		//bind events if not disabled
+		if (!this.disabled) {
+			this.box.on('mouseover.selectBooleanCheckbox', function() {
+				$this.box.addClass('ui-state-hover');
+			})
+				.on('mouseout.selectBooleanCheckbox', function() {
+					$this.box.removeClass('ui-state-hover');
+				})
+				.on('click.selectBooleanCheckbox', function() {
+					$this.input.trigger('click');
+					$this.input.trigger('focus');
+				});
 
-            this.input.on('focus.selectBooleanCheckbox', function() {
-                $this.box.addClass('ui-state-focus');
-            })
-            .on('blur.selectBooleanCheckbox', function() {
-                $this.box.removeClass('ui-state-focus');
-            })
-            .on('change.selectBooleanCheckbox', function(e) {
-                if($this.isChecked())
-                    $this.box.addClass('ui-state-active').children('.ui-chkbox-icon').removeClass('ui-icon-blank').addClass('ui-icon-check');
-                else
-                    $this.box.removeClass('ui-state-active').children('.ui-chkbox-icon').addClass('ui-icon-blank').removeClass('ui-icon-check');
-            });
+			this.input.on('focus.selectBooleanCheckbox', function() {
+				$this.box.addClass('ui-state-focus');
+			})
+				.on('blur.selectBooleanCheckbox', function() {
+					$this.box.removeClass('ui-state-focus');
+				})
+				.on('change.selectBooleanCheckbox', function(e) {
+					if ($this.isChecked())
+						$this.box.addClass('ui-state-active').children('.ui-chkbox-icon').removeClass('ui-icon-blank').addClass('ui-icon-check');
+					else
+						$this.box.removeClass('ui-state-active').children('.ui-chkbox-icon').addClass('ui-icon-blank').removeClass('ui-icon-check');
+				});
 
-            //toggle state on label click
-            this.itemLabel.click(function() {
-                $this.toggle();
-                $this.input.trigger('focus');
-            });
-        }
+			//toggle state on label click
+			this.itemLabel.click(function() {
+				$this.toggle();
+				$this.input.trigger('focus');
+			});
+		}
 
-        //pfs metadata
-        this.input.data(PrimeFaces.CLIENT_ID_DATA, this.id);
-    },
+		//pfs metadata
+		this.input.data(PrimeFaces.CLIENT_ID_DATA, this.id);
+	},
 
-    toggle: function() {
-        if(this.isChecked())
-            this.uncheck();
-        else
-            this.check();
-    },
+	toggle: function() {
+		if (this.isChecked())
+			this.uncheck();
+		else
+			this.check();
+	},
 
-    isChecked: function() {
-        return this.input.prop('checked');
-    },
+	isChecked: function() {
+		return this.input.prop('checked');
+	},
 
-    check: function() {
-        if(!this.isChecked()) {
-            this.input.prop('checked', true).trigger('change');
-            this.input.attr('aria-checked', true);
-            this.box.addClass('ui-state-active').children('.ui-chkbox-icon').removeClass('ui-icon-blank').addClass('ui-icon-check');
-        }
-    },
+	check: function() {
+		if (!this.isChecked()) {
+			this.input.prop('checked', true).trigger('change');
+			this.input.attr('aria-checked', true);
+			this.box.addClass('ui-state-active').children('.ui-chkbox-icon').removeClass('ui-icon-blank').addClass('ui-icon-check');
+		}
+	},
 
-    uncheck: function() {
-        if(this.isChecked()) {
-            this.input.prop('checked', false).trigger('change');
-            this.input.attr('aria-checked', false);
-            this.box.removeClass('ui-state-active').children('.ui-chkbox-icon').addClass('ui-icon-blank').removeClass('ui-icon-check');
-        }
-    }
+	uncheck: function() {
+		if (this.isChecked()) {
+			this.input.prop('checked', false).trigger('change');
+			this.input.attr('aria-checked', false);
+			this.box.removeClass('ui-state-active').children('.ui-chkbox-icon').addClass('ui-icon-blank').removeClass('ui-icon-check');
+		}
+	}
 
 });
 
 /* Issue #924 is fixed for 5.3+ and 6.0. (compatibility with 5.3) */
-if(window['PrimeFaces'] && window['PrimeFaces'].widget.Dialog) {
-    PrimeFaces.widget.Dialog = PrimeFaces.widget.Dialog.extend({
+if (window['PrimeFaces'] && window['PrimeFaces'].widget.Dialog) {
+	PrimeFaces.widget.Dialog = PrimeFaces.widget.Dialog.extend({
 
-        enableModality: function() {
-            this._super();
-            $(document.body).children(this.jqId + '_modal').addClass('ui-dialog-mask');
-        },
+		enableModality: function() {
+			this._super();
+			$(document.body).children(this.jqId + '_modal').addClass('ui-dialog-mask');
+		},
 
-        syncWindowResize: function() {}
-    });
+		syncWindowResize: function() { }
+	});
 }
 
 if (PrimeFaces.widget.SelectOneMenu) {
-    PrimeFaces.widget.SelectOneMenu = PrimeFaces.widget.SelectOneMenu.extend({
-        init: function (cfg) {
-            this._super(cfg);
+	PrimeFaces.widget.SelectOneMenu = PrimeFaces.widget.SelectOneMenu.extend({
+		init: function(cfg) {
+			this._super(cfg);
 
-            var $this = this;
-            if (this.jq.parent().hasClass('ui-float-label')) {
-                this.m_panel = $(this.jqId + '_panel');
-                this.m_focusInput = $(this.jqId + '_focus');
+			var $this = this;
+			if (this.jq.parent().hasClass('ui-float-label')) {
+				this.m_panel = $(this.jqId + '_panel');
+				this.m_focusInput = $(this.jqId + '_focus');
 
-                this.m_panel.addClass('ui-input-overlay-panel');
-                this.jq.addClass('ui-inputwrapper');
+				this.m_panel.addClass('ui-input-overlay-panel');
+				this.jq.addClass('ui-inputwrapper');
 
-                if (this.input.val() != '') {
-                    this.jq.addClass('ui-inputwrapper-filled');
-                }
+				if (this.input.val() != '') {
+					this.jq.addClass('ui-inputwrapper-filled');
+				}
 
-                this.input.off('change').on('change', function () {
-                    $this.inputValueControl($(this));
-                });
+				this.input.off('change').on('change', function() {
+					$this.inputValueControl($(this));
+				});
 
-                this.m_focusInput.on('focus.ui-selectonemenu', function () {
-                    $this.jq.addClass('ui-inputwrapper-focus');
-                })
-                    .on('blur.ui-selectonemenu', function () {
-                        $this.jq.removeClass('ui-inputwrapper-focus');
-                    });
+				this.m_focusInput.on('focus.ui-selectonemenu', function() {
+					$this.jq.addClass('ui-inputwrapper-focus');
+				})
+					.on('blur.ui-selectonemenu', function() {
+						$this.jq.removeClass('ui-inputwrapper-focus');
+					});
 
-                if (this.cfg.editable) {
-                    this.label.on('input', function (e) {
-                        $this.inputValueControl($(this));
-                    }).on('focus', function () {
-                        $this.jq.addClass('ui-inputwrapper-focus');
-                    }).on('blur', function () {
-                        $this.jq.removeClass('ui-inputwrapper-focus');
-                        $this.inputValueControl($(this));
-                    });
-                }
-            }
-        },
+				if (this.cfg.editable) {
+					this.label.on('input', function(e) {
+						$this.inputValueControl($(this));
+					}).on('focus', function() {
+						$this.jq.addClass('ui-inputwrapper-focus');
+					}).on('blur', function() {
+						$this.jq.removeClass('ui-inputwrapper-focus');
+						$this.inputValueControl($(this));
+					});
+				}
+			}
+		},
 
-        inputValueControl: function (input) {
-            if (input.val() != '')
-                this.jq.addClass('ui-inputwrapper-filled');
-            else
-                this.jq.removeClass('ui-inputwrapper-filled');
-        }
-    });
+		inputValueControl: function(input) {
+			if (input.val() != '')
+				this.jq.addClass('ui-inputwrapper-filled');
+			else
+				this.jq.removeClass('ui-inputwrapper-filled');
+		}
+	});
 }
 
 if (PrimeFaces.widget.Chips) {
-    PrimeFaces.widget.Chips = PrimeFaces.widget.Chips.extend({
-        init: function (cfg) {
-            this._super(cfg);
+	PrimeFaces.widget.Chips = PrimeFaces.widget.Chips.extend({
+		init: function(cfg) {
+			this._super(cfg);
 
-            var $this = this;
-            if (this.jq.parent().hasClass('ui-float-label')) {
-                this.jq.addClass('ui-inputwrapper');
+			var $this = this;
+			if (this.jq.parent().hasClass('ui-float-label')) {
+				this.jq.addClass('ui-inputwrapper');
 
-                if ($this.jq.find('.ui-chips-token').length !== 0) {
-                    this.jq.addClass('ui-inputwrapper-filled');
-                }
+				if ($this.jq.find('.ui-chips-token').length !== 0) {
+					this.jq.addClass('ui-inputwrapper-filled');
+				}
 
-                this.input.on('focus.ui-chips', function () {
-                    $this.jq.addClass('ui-inputwrapper-focus');
-                }).on('input.ui-chips', function () {
-                    $this.inputValueControl();
-                }).on('blur.ui-chips', function () {
-                    $this.jq.removeClass('ui-inputwrapper-focus');
-                    $this.inputValueControl();
-                });
+				this.input.on('focus.ui-chips', function() {
+					$this.jq.addClass('ui-inputwrapper-focus');
+				}).on('input.ui-chips', function() {
+					$this.inputValueControl();
+				}).on('blur.ui-chips', function() {
+					$this.jq.removeClass('ui-inputwrapper-focus');
+					$this.inputValueControl();
+				});
 
-            }
-        },
+			}
+		},
 
-        inputValueControl: function () {
-            if (this.jq.find('.ui-chips-token').length !== 0 || this.input.val() != '')
-                this.jq.addClass('ui-inputwrapper-filled');
-            else
-                this.jq.removeClass('ui-inputwrapper-filled');
-        }
-    });
+		inputValueControl: function() {
+			if (this.jq.find('.ui-chips-token').length !== 0 || this.input.val() != '')
+				this.jq.addClass('ui-inputwrapper-filled');
+			else
+				this.jq.removeClass('ui-inputwrapper-filled');
+		}
+	});
 }
 
 if (PrimeFaces.widget.DatePicker) {
-    PrimeFaces.widget.DatePicker = PrimeFaces.widget.DatePicker.extend({
-        init: function (cfg) {
-            this._super(cfg);
+	PrimeFaces.widget.DatePicker = PrimeFaces.widget.DatePicker.extend({
+		init: function(cfg) {
+			this._super(cfg);
 
-            var $this = this;
-            if (this.jq.parent().hasClass('ui-float-label') && !this.cfg.inline) {
-                if (this.input.val() != '') {
-                    this.jq.addClass('ui-inputwrapper-filled');
-                }
+			var $this = this;
+			if (this.jq.parent().hasClass('ui-float-label') && !this.cfg.inline) {
+				if (this.input.val() != '') {
+					this.jq.addClass('ui-inputwrapper-filled');
+				}
 
-                this.jqEl.off('focus.ui-datepicker blur.ui-datepicker change.ui-datepicker')
-                    .on('focus.ui-datepicker', function () {
-                        $this.jq.addClass('ui-inputwrapper-focus');
-                    })
-                    .on('blur.ui-datepicker', function () {
-                        $this.jq.removeClass('ui-inputwrapper-focus');
-                    })
-                    .on('change.ui-datepicker', function () {
-                        $this.inputValueControl($(this));
-                    });
-            }
-        },
+				this.jqEl.off('focus.ui-datepicker blur.ui-datepicker change.ui-datepicker')
+					.on('focus.ui-datepicker', function() {
+						$this.jq.addClass('ui-inputwrapper-focus');
+					})
+					.on('blur.ui-datepicker', function() {
+						$this.jq.removeClass('ui-inputwrapper-focus');
+					})
+					.on('change.ui-datepicker', function() {
+						$this.inputValueControl($(this));
+					});
+			}
+		},
 
-        inputValueControl: function (input) {
-            if (input.val() != '')
-                this.jq.addClass('ui-inputwrapper-filled');
-            else
-                this.jq.removeClass('ui-inputwrapper-filled');
-        }
-    });
+		inputValueControl: function(input) {
+			if (input.val() != '')
+				this.jq.addClass('ui-inputwrapper-filled');
+			else
+				this.jq.removeClass('ui-inputwrapper-filled');
+		}
+	});
 }
