@@ -128,7 +128,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	@FullTextField(name = "_surname")
 	private String surname;
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
 	@JoinTable(name = "CANDIDATE_TAG", joinColumns = @JoinColumn(name = "CANDIDATE_ID"), inverseJoinColumns = @JoinColumn(name = "TAG_ID"))
 	@IndexedEmbedded(includeDepth = 1)
 	private Set<Tag> tags = new HashSet<>();

@@ -42,7 +42,7 @@ public class CandidateService {
 		Objects.requireNonNull(candidate);
 		final String email = candidate.getEmail();
 		if (this.candidateDao.checkDuplicateEmail(email)) {
-			throw new DuplicateEmailException();
+			throw new DuplicateEmailException("Email already exists: " + email);
 		}
 		logger.debug("Add candidate {}", candidate);
 		this.updateTags(candidate);
@@ -67,7 +67,7 @@ public class CandidateService {
 		}
 		candidate.setTags(normalizedTags);
 	}
-	
+
 	public Candidate updateCandidateRating(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
 		logger.debug("Update rating of candidate {}", candidate);
@@ -99,7 +99,7 @@ public class CandidateService {
 		Objects.requireNonNull(candidate);
 		Objects.requireNonNull(image);
 		logger.debug("Change image to user {}", candidate);
-		final PhysicalFile oldImage = candidate.getPicture();		
+		final PhysicalFile oldImage = candidate.getPicture();
 		final PhysicalFile newImage = this.fileService.uploadFile(image, true);
 		candidate.setPicture(newImage);
 		if (oldImage != null) {
@@ -138,21 +138,21 @@ public class CandidateService {
 		logger.debug("Find candidate data by id {}", candidateId);
 		return this.candidateDao.findAllData(candidateId);
 	}
-	
-	public List<File> findFiles(final Candidate candidate, final Page page) {
+
+	public List<File> findCandidateFiles(final Candidate candidate, final Page page) {
 		Objects.requireNonNull(candidate);
 		Objects.requireNonNull(page);
 		logger.debug("Find all files {} of candidate {}", candidate);
 		return this.fileDao.findFilesByCandidate(candidate, page);
 	}
-	
-	public long countFiles(final Candidate candidate) {
+
+	public long countCandidateFiles(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
 		logger.debug("Count all files {} of candidate {}", candidate);
 		return this.fileDao.countFilesByCandidate(candidate);
 	}
 
-	public void addFile(final Candidate candidate, final InputStream inputStream, String filename) {
+	public void addCandidateFile(final Candidate candidate, final InputStream inputStream, String filename) {
 		Objects.requireNonNull(inputStream);
 		Objects.requireNonNull(candidate);
 		Objects.requireNonNull(filename);
@@ -168,7 +168,7 @@ public class CandidateService {
 		this.updateCandidateEvent.fireAsync(candidate);
 	}
 
-	public void deleteFile(final File file) {
+	public void deleteCandidateFile(final File file) {
 		Objects.requireNonNull(file);
 		final Candidate candidate = file.getCandidate();
 		logger.debug("Remove file {} from candidate {}", file, candidate);

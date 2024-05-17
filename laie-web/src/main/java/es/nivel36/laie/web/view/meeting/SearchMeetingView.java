@@ -14,7 +14,6 @@ import org.primefaces.event.schedule.ScheduleEntryResizeEvent;
 import org.primefaces.event.schedule.ScheduleRangeEvent;
 import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.DefaultScheduleModel;
-import org.primefaces.model.LazyScheduleModel;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 

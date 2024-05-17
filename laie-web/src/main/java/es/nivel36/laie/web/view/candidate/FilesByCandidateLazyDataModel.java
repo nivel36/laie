@@ -26,13 +26,13 @@ public class FilesByCandidateLazyDataModel extends LazyDataModel<File> {
 
 	@Override
 	public int count(Map<String, FilterMeta> filterBy) {
-		return (int) this.candidateService.countFiles(candidate);
+		return (int) this.candidateService.countCandidateFiles(candidate);
 	}
 
 	@Override
 	public List<File> load(int first, int pageSize, Map<String, SortMeta> sortBy,
 			Map<String, FilterMeta> filterBy) {
-		return candidateService.findFiles(candidate, Page.of(first, pageSize));
+		return candidateService.findCandidateFiles(candidate, Page.of(first, pageSize));
 	}
 
 }

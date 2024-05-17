@@ -16,11 +16,10 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
-
 @Entity
-@Table(name = "ACCOUNT", indexes = {
-		@Index(name = "UX_ACCOUNT_USENAME", columnList = "USERNAME", unique = true) }, uniqueConstraints = {
-				@UniqueConstraint(name = "UQ_PERSON_USERNAME", columnNames = { "USERNAME" }) })
+@Table(name = "ACCOUNT", //
+		indexes = { @Index(name = "UX_ACCOUNT_USENAME", columnList = "USERNAME", unique = true) }, //
+		uniqueConstraints = { @UniqueConstraint(name = "UQ_PERSON_USERNAME", columnNames = { "USERNAME" }) })
 public class Account implements Serializable {
 
 	private static final Random RANDOM = new SecureRandom();

@@ -146,7 +146,7 @@ public class ViewCandidateView extends AbstractView {
 	}
 
 	public void removeFile(final File file) {
-		this.candidateService.deleteFile(file);
+		this.candidateService.deleteCandidateFile(file);
 	}
 
 	public void uploadFile(final FileUploadEvent event) throws IOException {
@@ -157,7 +157,7 @@ public class ViewCandidateView extends AbstractView {
 		}
 		logger.debug("Upload candidate {} image action performed", this.candidate);
 		try (final InputStream inputStream = uploadedFile.getInputStream()) {
-			this.candidateService.addFile(candidate, inputStream, uploadedFile.getFileName());
+			this.candidateService.addCandidateFile(candidate, inputStream, uploadedFile.getFileName());
 		}
 	}
 
