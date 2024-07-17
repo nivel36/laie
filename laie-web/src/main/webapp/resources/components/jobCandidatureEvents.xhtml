@@ -60,8 +60,10 @@
 							</p:column>
 
 							<p:column styleClass="button">
-								<p:commandButton icon="pi pi-eye"
-									onclick="$(PrimeFaces.escapeClientId('#{cc.clientId}:detail:#{event.id}')).css('display', 'block');$(PrimeFaces.escapeClientId('#{cc.clientId}:table')).css('display', 'none')" />
+								<h:form>
+									<p:commandButton icon="pi pi-eye"
+										onclick="$(PrimeFaces.escapeClientId('#{cc.clientId}:detail:#{event.id}')).css('display', 'block');$(PrimeFaces.escapeClientId('#{cc.clientId}:table')).css('display', 'none')" />
+								</h:form>
 							</p:column>
 						</p:dataTable>
 						<h:panelGroup id="children" styleClass="buttons">
