@@ -1236,3 +1236,20 @@ if (PrimeFaces.widget.DatePicker) {
 		}
 	});
 }
+
+
+function openModal(modalId) {
+    document.getElementById(modalId).style.display = "block";
+    document.body.classList.add("no-scroll");
+}
+
+function closeModal(modalId) {
+    document.getElementById(modalId).style.display = "none";
+    document.body.classList.remove("no-scroll");
+}
+
+function modalClick(event, modalId) {
+    if (event.target.id === modalId) {
+        closeModal(modalId);
+    }
+}

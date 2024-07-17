@@ -1,0 +1,29 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:composite="http://xmlns.jcp.org/jsf/composite" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:g="http://nivel.36/laie/ui" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <composite:interface>
+        <composite:attribute name="title" required="true"/>
+    </composite:interface>
+
+    <composite:implementation>
+        <div id="#{cc.clientId}" class="modal" onclick="modalClick(event, '#{cc.clientId}')">
+            <div class="modal-content">
+            <div class="ui-card-title">
+					<h5>#{cc.attrs.title}</h5>
+				</div>
+                <h:panelGroup id="#{cc.clientId}_sidebar" class="sidebar" layout="block">
+                    <composite:insertChildren/>
+                </h:panelGroup>
+            </div>
+        </div>
+    </composite:implementation>
+</ui:composition>

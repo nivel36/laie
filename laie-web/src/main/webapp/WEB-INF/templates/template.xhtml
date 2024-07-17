@@ -3,7 +3,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui" lang="en">
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:p="http://primefaces.org/ui" lang="es">
 
 <h:head>
 	<f:facet name="first">
@@ -31,6 +32,9 @@
 
 		<div class="layout-main">
 			<div class="layout-content">
+				<cc:sidePanel title="Panel Lateral Modal" id="sidePanel">
+					<ui:insert name="sidePanel" />
+				</cc:sidePanel>
 				<ui:insert name="content" />
 			</div>
 

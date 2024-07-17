@@ -16,7 +16,7 @@
 
 	<ui:param name="selectedMenu" value="offers" />
 
-	<ui:define name="panel-content">
+	<ui:define name="sidePanel">
 		<h:panelGroup id="panelParent">
 			<h:panelGroup id="panel" rendered="#{viewJobView.showChangeStatus}">
 				<h:form>
@@ -25,9 +25,8 @@
 						type="selectOneMenu">
 						<f:selectItems value="#{viewJobView.states}" />
 					</g:input>
-					<p:textEditor value="#{viewJobView.comment}" />
 					<p:commandButton action="#{viewJobView.changeState}"
-						process="@form" update="@form" />
+						process="@form" update="@form" value="Save"/>
 				</h:form>
 			</h:panelGroup>
 		</h:panelGroup>
@@ -133,13 +132,14 @@
 						</div>
 						<div class="text-container">
 							<div class="job-state">
-								<h:form>
+								<h:form>								
 									<p:commandButton
 										value="#{i18n['job_offer_state.'.concat(viewJobView.jobOffer.state.name)]}"
 										rendered="#{viewJobView.owner}"
 										action="#{viewJobView.showChangeStatus}"
-										styleClass="layout-right-panel-button" process="@this"
-										update="panelParent" />
+										process="@this"
+										oncomplete="openModal('sidePanel')"
+										update="sidePanel" />
 								</h:form>
 								<h:panelGroup rendered="#{not viewJobView.owner}">
 									<cc:jobOfferState value="#{viewJobView.jobOffer.state}" />
