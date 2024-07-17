@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
                       https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
 	version="6.0">
@@ -11,7 +12,7 @@
 			<url-pattern>/login.xhtml</url-pattern>
 			<url-pattern>/forgetPassword.xhtml</url-pattern>
 			<url-pattern>/jakarta.faces.resource/*</url-pattern>
-			<url-pattern>/resources/img/*</url-pattern>
+			<url-pattern>/resources/*</url-pattern>
 			<url-pattern>/public/*</url-pattern>
 		</web-resource-collection>
 	</security-constraint>
@@ -34,36 +35,36 @@
 	<security-role>
 		<role-name>laie.user</role-name>
 	</security-role>
-	
+
 	<listener>
 		<listener-class>com.sun.faces.config.ConfigureListener</listener-class>
 	</listener>
-	
+
 	<context-param>
 		<param-name>jakarta.faces.FACELETS_REFRESH_PERIOD</param-name>
 		<param-value>2</param-value>
 	</context-param>
-	
+
 	<context-param>
 		<param-name>jakarta.faces.CLIENT_WINDOW_MODE</param-name>
 		<param-value>none</param-value>
 	</context-param>
-	
+
 	<context-param>
 		<param-name>jakarta.faces.DEFAULT_SUFFIX</param-name>
 		<param-value>.xhtml</param-value>
 	</context-param>
-	
+
 	<context-param>
 		<param-name>jakarta.faces.FACELETS_LIBRARIES</param-name>
 		<param-value>/WEB-INF/primefaces-roma.taglib.xml</param-value>
 	</context-param>
-	
+
 	<context-param>
 		<param-name>jakarta.faces.FACELETS_LIBRARIES</param-name>
 		<param-value>/WEB-INF/laie.taglib.xml</param-value>
 	</context-param>
-	
+
 	<context-param>
 		<param-name>primefaces.THEME</param-name>
 		<param-value>roma</param-value>
@@ -73,7 +74,7 @@
 		<param-name>jakarta.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>
 		<param-value>true</param-value>
 	</context-param>
-	
+
 	<context-param>
 		<param-name>jakarta.faces.PROJECT_STAGE</param-name>
 		<param-value>Development</param-value>
@@ -96,8 +97,8 @@
 	</context-param>
 
 	<context-param>
- 		<param-name>jakarta.faces.ENABLE_WEBSOCKET_ENDPOINT</param-name>
- 		<param-value>true</param-value>
+		<param-name>jakarta.faces.ENABLE_WEBSOCKET_ENDPOINT</param-name>
+		<param-value>true</param-value>
 	</context-param>
 
 	<servlet>
