@@ -17,7 +17,7 @@
 		<dependency>
 			<groupId>es.nivel36</groupId>
 			<artifactId>nivel36-login-ejb</artifactId>
-			<version>0.9.10-SNAPSHOT</version>
+			<version>${project.version}</version>
 			<scope>provided</scope>
 		</dependency>
 
