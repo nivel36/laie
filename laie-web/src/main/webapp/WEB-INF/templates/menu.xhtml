@@ -3,6 +3,7 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets" 
                 xmlns:p="http://primefaces.org/ui"
+                xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
                 xmlns:po="http://primefaces.org/roma">
 
     <div class="layout-menu-container">
@@ -11,11 +12,12 @@
                 <ui:fragment rendered="#{guestPreferences.profileMode == 'inline' ? true : false}">
                     <div class="layout-profile">
                         <a class="layout-profile-button" href="#">
-                            <p:graphicImage name="images/avatar/avatar.png" library="roma-layout" />
-                            <div class="layout-profile-userinfo">
-                                <span class="layout-profile-name">Arlene Welch</span>
-                                <span class="layout-profile-role">Design Ops</span>
-                            </div>
+                             <cc:avatar name="#{sessionUser.get().fullName}" path="#{sessionUser.get().picture.path}"
+								styleClass="mt-1" />          
+                        <div class="layout-profile-userinfo">
+                            <span class="layout-profile-name">#{sessionUser.get().fullName}</span>
+                            <span class="layout-profile-role">#{i18n[sessionUser.get().role]}</span>
+                        </div>
                         </a>
                         <ul class="layout-profile-menu">
                             <li>

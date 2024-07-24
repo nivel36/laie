@@ -88,7 +88,7 @@ public class ConfigView extends AbstractView {
 
 	public void changeLanguage() {
 		String language = this.user.getLanguage();
-		final Locale newLocale = new Locale(language);
+		final Locale newLocale = Locale.of(language);
 		logger.debug("Changed locale to {} for user {} action performed", newLocale, this.user);
 		this.user.setLanguage(language);
 		try {

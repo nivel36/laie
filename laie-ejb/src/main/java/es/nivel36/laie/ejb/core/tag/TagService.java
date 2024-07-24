@@ -34,7 +34,7 @@ public class TagService {
 		return this.tagDao.search(searchText, page, sortOrder, searchFacets);
 	}
 
-	public final void setTagDao(TagDao tagDao) {
+	public void setTagDao(TagDao tagDao) {
 		this.tagDao = tagDao;
 	}
 }

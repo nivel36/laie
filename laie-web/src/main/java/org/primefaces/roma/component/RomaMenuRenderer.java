@@ -244,7 +244,7 @@ public class RomaMenuRenderer extends BaseMenuRenderer {
             else {
                 writer.writeAttribute("href", "#", null);
 
-                UIComponent form = ComponentTraversalUtils.closestForm(context, menu);
+                UIComponent form = ComponentTraversalUtils.closestForm(menu);
                 if(form == null) {
                     throw new FacesException("MenuItem must be inside a form element");
                 }
@@ -321,9 +321,8 @@ public class RomaMenuRenderer extends BaseMenuRenderer {
     @Override
     protected void encodeScript(FacesContext context, AbstractMenu abstractMenu) throws IOException {
         RomaMenu menu = (RomaMenu) abstractMenu;
-        String clientId = menu.getClientId(context);
         WidgetBuilder wb = getWidgetBuilder(context);
-        wb.init("Roma", menu.resolveWidgetVar(), clientId).finish();
+        wb.init("Roma", menu).finish();
     }
     
     protected String createAjaxRequest(FacesContext context, AjaxSource source, UIComponent form) {

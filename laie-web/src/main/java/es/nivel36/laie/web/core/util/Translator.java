@@ -13,7 +13,7 @@ public class Translator {
 
 	private static final String FILE_NAME = "es.nivel36.laie.i18n";
 	
-	private static final Locale SPANISH = new Locale("ES");
+	private static final Locale SPANISH = Locale.of("ES");
 
 	private Locale getLocale() {
 		final UIViewRoot uIViewRoot = FacesContext.getCurrentInstance().getViewRoot();
