@@ -157,28 +157,30 @@ public class ViewJobView extends AbstractView {
 	}
 
 	public void changeState() {
-		this.jobOfferService.changeState(jobOffer, JobOfferState.valueOf(newState), comment, this.sessionUser.get());
+		final JobOfferState valueOf = JobOfferState.valueOf(newState.toUpperCase());
+		final User user = this.sessionUser.get();
+		this.jobOffer = this.jobOfferService.changeState(jobOffer, valueOf, comment, user);
 	}
 
 	private void fillMenuModel() {
 		states = new ArrayList<>();
 		if (jobOffer.getState().equals(JobOfferState.OPENED)) {
-			states.add(new SelectItem(JobOfferState.CLOSED, this.translator.message("job_offer_state.close")));
-			states.add(new SelectItem(JobOfferState.FINISHED, this.translator.message("job_offer_state.finish")));
-			states.add(new SelectItem(JobOfferState.PAUSED, this.translator.message("job_offer_state.pause")));
+			states.add(new SelectItem(JobOfferState.CLOSED.getName(), this.translator.message("job_offer_state.close")));
+			states.add(new SelectItem(JobOfferState.FINISHED.getName(), this.translator.message("job_offer_state.finish")));
+			states.add(new SelectItem(JobOfferState.PAUSED.getName(), this.translator.message("job_offer_state.pause")));
 		} else if (jobOffer.getState().equals(JobOfferState.CLOSED)) {
-			states.add(new SelectItem(JobOfferState.OPENED, this.translator.message("job_offer_state.open")));
+			states.add(new SelectItem(JobOfferState.OPENED.getName(), this.translator.message("job_offer_state.open")));
 		} else if (jobOffer.getState().equals(JobOfferState.FINISHED)) {
-			states.add(new SelectItem(JobOfferState.OPENED, this.translator.message("job_offer_state.open")));
+			states.add(new SelectItem(JobOfferState.OPENED.getName(), this.translator.message("job_offer_state.open")));
 		} else if (jobOffer.getState().equals(JobOfferState.PAUSED)) {
-			states.add(new SelectItem(JobOfferState.OPENED, this.translator.message("job_offer_state.open")));
-			states.add(new SelectItem(JobOfferState.CLOSED, this.translator.message("job_offer_state.close")));
-			states.add(new SelectItem(JobOfferState.FINISHED, this.translator.message("job_offer_state.finish")));
+			states.add(new SelectItem(JobOfferState.OPENED.getName(), this.translator.message("job_offer_state.open")));
+			states.add(new SelectItem(JobOfferState.CLOSED.getName(), this.translator.message("job_offer_state.close")));
+			states.add(new SelectItem(JobOfferState.FINISHED.getName(), this.translator.message("job_offer_state.finish")));
 		} else if (jobOffer.getState().equals(JobOfferState.CREATED)) {
-			states.add(new SelectItem(JobOfferState.OPENED, this.translator.message("job_offer_state.open")));
-			states.add(new SelectItem(JobOfferState.CLOSED, this.translator.message("job_offer_state.close")));
-			states.add(new SelectItem(JobOfferState.FINISHED, this.translator.message("job_offer_state.finish")));
-			states.add(new SelectItem(JobOfferState.PAUSED, this.translator.message("job_offer_state.close")));
+			states.add(new SelectItem(JobOfferState.OPENED.getName(), this.translator.message("job_offer_state.open")));
+			states.add(new SelectItem(JobOfferState.CLOSED.getName(), this.translator.message("job_offer_state.close")));
+			states.add(new SelectItem(JobOfferState.FINISHED.getName(), this.translator.message("job_offer_state.finish")));
+			states.add(new SelectItem(JobOfferState.PAUSED.getName(), this.translator.message("job_offer_state.close")));
 		}
 	}
 	

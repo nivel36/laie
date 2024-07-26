@@ -20,13 +20,25 @@
 		<h:panelGroup id="panelParent">
 			<h:panelGroup id="panel" rendered="#{viewJobView.showChangeStatus}">
 				<h:form>
-					<g:input label="#{i18n['event.state']}"
-						value="#{viewJobView.newState}" required="true"
-						type="selectOneMenu">
-						<f:selectItems value="#{viewJobView.states}" />
-					</g:input>
-					<p:commandButton action="#{viewJobView.changeState}"
-						process="@form" update="@form" value="Save"/>
+					<div class="ui-fluid grid">
+						<div class="col-4">
+							<g:input label="#{i18n['event.state']}"
+								value="#{viewJobView.newState}" required="true"
+								type="selectOneMenu">
+								<f:selectItems value="#{viewJobView.states}" />
+							</g:input>
+						</div>
+						<div class="col-12">
+							<g:input type="textarea" value="#{viewJobView.comment}" />
+						</div>
+						<div class="col-4">
+							<p:commandButton action="#{viewJobView.changeState}"
+								process="@form"
+								update="changeStatusForm:changeStateButton openDate closeDate"
+								value="#{i18n['action.save']}"
+								oncomplete="closeModal('sidePanel')" />
+						</div>
+					</div>
 				</h:form>
 			</h:panelGroup>
 		</h:panelGroup>
@@ -132,14 +144,12 @@
 						</div>
 						<div class="text-container">
 							<div class="job-state">
-								<h:form>								
-									<p:commandButton
+								<h:form id="changeStatusForm">
+									<p:commandButton id="changeStateButton"
 										value="#{i18n['job_offer_state.'.concat(viewJobView.jobOffer.state.name)]}"
 										rendered="#{viewJobView.owner}"
-										action="#{viewJobView.showChangeStatus}"
-										process="@this"
-										oncomplete="openModal('sidePanel')"
-										update="sidePanel" />
+										action="#{viewJobView.showChangeStatus}" process="@this"
+										oncomplete="openModal('sidePanel')" update="sidePanel" />
 								</h:form>
 								<h:panelGroup rendered="#{not viewJobView.owner}">
 									<cc:jobOfferState value="#{viewJobView.jobOffer.state}" />
