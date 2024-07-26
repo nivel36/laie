@@ -31,9 +31,12 @@
 						<div class="col-12">
 							<g:input type="textarea" value="#{viewJobView.comment}" />
 						</div>
-						<div class="col-4">
+						<div class="flex justify-content-end">
+							<p:commandButton value="#{i18n['action.cancel']}"
+								oncomplete="closeModal('sidePanel')"
+								styleClass="ui-button-secondary mr-2 mb-2" />
 							<p:commandButton action="#{viewJobView.changeState}"
-								process="@form"
+								styleClass="ui-button-primary mb-2" process="@form"
 								update="changeStatusForm:changeStateButton openDate closeDate"
 								value="#{i18n['action.save']}"
 								oncomplete="closeModal('sidePanel')" />
