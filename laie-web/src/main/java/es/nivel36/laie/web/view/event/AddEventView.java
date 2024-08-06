@@ -63,7 +63,7 @@ public class AddEventView extends AbstractView {
 		states = new ArrayList<>();
 		JobCandidatureState currentState = jobCandidatureStateService.findByName(jobCandidature.getState().getName());
 		states.add(currentState);
-		states.addAll(currentState.getNextStates());
+		states.addAll(jobCandidatureStateService.findNextStates(currentState));
 	}
 
 	public void save() {

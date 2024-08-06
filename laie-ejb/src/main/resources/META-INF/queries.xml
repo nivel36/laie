@@ -289,8 +289,15 @@
 		<query><![CDATA[
 			SELECT j 
 			FROM JobCandidatureState j
-			LEFT JOIN FETCH j.nextStates 
 			WHERE j.name = :name
+		]]></query>
+	</named-query>
+	
+	<named-query name="JobCandidatureState.findNextStates">
+		<query><![CDATA[
+			SELECT t.destinationState 
+			FROM Transition t 
+			WHERE t.originState = :currentState 
 		]]></query>
 	</named-query>
 
