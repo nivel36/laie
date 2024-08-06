@@ -2,9 +2,9 @@ package es.nivel36.laie.ejb.job.candidature;
 
 public class StateEvent {
 	
-    private JobCandidatureState state;
+    private final  JobCandidatureState state;
     
-    private String eventType;
+    private final String eventType;
 
     public StateEvent(JobCandidatureState state, String eventType) {
         this.state = state;
