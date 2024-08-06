@@ -17,36 +17,39 @@ public class JobCandidatureStateService {
 	private static final Logger logger = LoggerFactory.getLogger(JobCandidatureStateService.class);
 
 	private @Inject JobCandidatureStateDao jobCandidatureStateDao;
-
 	private @Inject TransitionDao transitionDao;
-
 	private @Inject Event<StateEvent> stateEvent;
 
-	public void addJobCandidatureState(JobCandidatureState jobCandidatureState) {
+	public void addJobCandidatureState(final JobCandidatureState jobCandidatureState) {
 		Objects.requireNonNull(jobCandidatureState);
-		logger.debug("Add new client {}", jobCandidatureState);
+		logger.debug("Add new job candidature state {}", jobCandidatureState);
 		this.jobCandidatureStateDao.insert(jobCandidatureState);
 	}
 
 	public JobCandidatureState findInitialState() {
+		logger.debug("Find job candidature initial state");
 		return this.jobCandidatureStateDao.findInitialState();
 	}
 
 	public List<JobCandidatureState> findAll() {
+		logger.debug("Find all job candidature states");
 		return jobCandidatureStateDao.findAll(JobCandidatureState.class, Page.ALL_RESULTS);
 	}
 
-	public JobCandidatureState findByName(String name) {
+	public JobCandidatureState findByName(final String name) {
+		Objects.requireNonNull(name);
+		logger.debug("Find all job candidature states");
 		return jobCandidatureStateDao.findByName(name);
 	}
 
-	public Transition createTransition(JobCandidatureState originState, JobCandidatureState destinationState,
-			String event) {
+	public Transition createTransition(final JobCandidatureState originState,
+			final JobCandidatureState destinationState, final String event) {
 		Objects.requireNonNull(originState);
 		Objects.requireNonNull(destinationState);
 		Objects.requireNonNull(event);
 
-		Transition transition = new Transition();
+		logger.debug("Create transition {}", event);
+		final Transition transition = new Transition();
 		transition.setOriginState(originState);
 		transition.setDestinationState(destinationState);
 		transition.setEvent(event);
@@ -57,22 +60,28 @@ public class JobCandidatureStateService {
 
 	public List<JobCandidatureState> findNextStates(final JobCandidatureState state) {
 		Objects.requireNonNull(state);
+		logger.debug("Find next job candidature states of state {}", state);
 		return jobCandidatureStateDao.findNextStates(state);
 	}
 
-	public void transition(JobCandidatureState originState, JobCandidatureState destinationState) {
-		stateEvent.fire(new StateEvent(originState, "BEFORE_TRANSITION"));
+	public void transition(final JobCandidatureState originState, final JobCandidatureState destinationState) {
+		Objects.requireNonNull(originState);
+		Objects.requireNonNull(destinationState);
+		logger.debug("Transition betwen {} and {}", originState, destinationState);
+		final StateEvent eventBeforeTransition = new StateEvent(originState, "BEFORE_TRANSITION");
+		stateEvent.fire(eventBeforeTransition);
 
-		boolean validTransition = originState.getOriginTransitions().stream()
-				.anyMatch(t -> t.getDestinationState().equals(destinationState));
+		final boolean validTransition = this.jobCandidatureStateDao.findNextStates(originState).stream()
+				.anyMatch(s -> s.equals(destinationState));
 
 		if (!validTransition) {
 			throw new IllegalStateException("Invalid transition");
 		}
 
-		stateEvent.fire(new StateEvent(destinationState, "AFTER_TRANSITION"));
+		final StateEvent eventAfterTransition = new StateEvent(destinationState, "AFTER_TRANSITION");
+		stateEvent.fire(eventAfterTransition);
 	}
-	
+
 	public void setJobCandidatureStateDao(final JobCandidatureStateDao jobCandidatureStateDao) {
 		Objects.requireNonNull(jobCandidatureStateDao);
 		this.jobCandidatureStateDao = jobCandidatureStateDao;
