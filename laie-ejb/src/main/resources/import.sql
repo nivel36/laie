@@ -1,25 +1,26 @@
-insert into JOB_CANDIDATURE_STATE( ID, VERSION, NAME, FIRST, APPROVED, DECLINED, COLOR, BACKGROUND_COLOR ) values ( 1, 0, 'not_contacted', true, false, false, '#FFFFFF', '#0288D1');
-insert into JOB_CANDIDATURE_STATE( ID, VERSION, NAME, FIRST, APPROVED, DECLINED, COLOR, BACKGROUND_COLOR ) values ( 2, 0, 'applied', false, false, false, '#FFFFFF', '#0288D1');
-insert into JOB_CANDIDATURE_STATE( ID, VERSION, NAME, FIRST, APPROVED, DECLINED, COLOR, BACKGROUND_COLOR ) values ( 3, 0, 'under_review', false, false, false, '#FFFFFF', '#0288D1');
-insert into JOB_CANDIDATURE_STATE( ID, VERSION, NAME, FIRST, APPROVED, DECLINED, COLOR, BACKGROUND_COLOR ) values ( 4, 0, 'interview', false, false, true, '#FFFFFF', '#0288D1');
-insert into JOB_CANDIDATURE_STATE( ID, VERSION, NAME, FIRST, APPROVED, DECLINED, COLOR, BACKGROUND_COLOR ) values ( 5, 0, 'offer', false, false, false, '#FFFFFF', '#0288D1');
-insert into JOB_CANDIDATURE_STATE( ID, VERSION, NAME, FIRST, APPROVED, DECLINED, COLOR, BACKGROUND_COLOR ) values ( 6, 0, 'hired', false, false, false, '#FFFFFF', '#0288D1');
-insert into JOB_CANDIDATURE_STATE( ID, VERSION, NAME, FIRST, APPROVED, DECLINED, COLOR, BACKGROUND_COLOR ) values ( 7, 0, 'rejected', false, true, false, '#FFFFFF', '#0288D1');
+insert into JOB_OFFER_PROCESS( ID, VERSION, NAME ) values ( 1, 0, 'Proceso simple com entreista');
 
-ALTER SEQUENCE JOB_CANDIDATURE_STATE_SEQ RESTART WITH 8;
+ALTER SEQUENCE JOB_OFFER_PROCESS_SEQ RESTART WITH 2;
 
-insert into TRANSITION( ID, VERSION, EVENT, ORIGIN_STATE_ID, DESTINATION_STATE_ID ) values ( 1, 0, 'contact', 1, 2 );
-insert into TRANSITION( ID, VERSION, EVENT, ORIGIN_STATE_ID, DESTINATION_STATE_ID ) values ( 2, 0, 'review', 2, 3 );
-insert into TRANSITION( ID, VERSION, EVENT, ORIGIN_STATE_ID, DESTINATION_STATE_ID ) values ( 3, 0, 'selectForInterview', 3, 4 );
-insert into TRANSITION( ID, VERSION, EVENT, ORIGIN_STATE_ID, DESTINATION_STATE_ID ) values ( 4, 0, 'makeOffer', 4, 5 );
-insert into TRANSITION( ID, VERSION, EVENT, ORIGIN_STATE_ID, DESTINATION_STATE_ID ) values ( 5, 0, 'acceptOffer', 5, 6 );
-insert into TRANSITION( ID, VERSION, EVENT, ORIGIN_STATE_ID, DESTINATION_STATE_ID ) values ( 6, 0, 'reject', 1, 7 );
-insert into TRANSITION( ID, VERSION, EVENT, ORIGIN_STATE_ID, DESTINATION_STATE_ID ) values ( 7, 0, 'reject', 2, 7 );
-insert into TRANSITION( ID, VERSION, EVENT, ORIGIN_STATE_ID, DESTINATION_STATE_ID ) values ( 8, 0, 'reject', 3, 7 );
-insert into TRANSITION( ID, VERSION, EVENT, ORIGIN_STATE_ID, DESTINATION_STATE_ID ) values ( 9, 0, 'reject', 4, 7 );
-insert into TRANSITION( ID, VERSION, EVENT, ORIGIN_STATE_ID, DESTINATION_STATE_ID ) values ( 10, 0, 'reject', 5, 7 );
+insert into JOB_CANDIDATURE_STATE( ID, VERSION, NAME, FIRST, APPROVED, DECLINED, COLOR, BACKGROUND_COLOR, JOB_OFFER_PROCESS_ID ) values ( 1, 0, 'No contactado', true, false, false, '#FFFFFF', '#0288D1', 1);
+insert into JOB_CANDIDATURE_STATE( ID, VERSION, NAME, FIRST, APPROVED, DECLINED, COLOR, BACKGROUND_COLOR, JOB_OFFER_PROCESS_ID ) values ( 2, 0, 'Contactado', false, false, false, '#FFFFFF', '#0288D1', 1);
+insert into JOB_CANDIDATURE_STATE( ID, VERSION, NAME, FIRST, APPROVED, DECLINED, COLOR, BACKGROUND_COLOR, JOB_OFFER_PROCESS_ID ) values ( 3, 0, 'Entrevistado', false, false, true, '#FFFFFF', '#0288D1', 1);
+insert into JOB_CANDIDATURE_STATE( ID, VERSION, NAME, FIRST, APPROVED, DECLINED, COLOR, BACKGROUND_COLOR, JOB_OFFER_PROCESS_ID ) values ( 4, 0, 'Oferta', false, false, false, '#FFFFFF', '#0288D1', 1);
+insert into JOB_CANDIDATURE_STATE( ID, VERSION, NAME, FIRST, APPROVED, DECLINED, COLOR, BACKGROUND_COLOR, JOB_OFFER_PROCESS_ID ) values ( 5, 0, 'Contratado', false, false, false, '#FFFFFF', '#0288D1', 1);
+insert into JOB_CANDIDATURE_STATE( ID, VERSION, NAME, FIRST, APPROVED, DECLINED, COLOR, BACKGROUND_COLOR, JOB_OFFER_PROCESS_ID ) values ( 6, 0, 'Rechazado', false, true, false, '#FFFFFF', '#0288D1', 1);
 
-ALTER SEQUENCE TRANSITION_SEQ RESTART WITH 11;
+ALTER SEQUENCE JOB_CANDIDATURE_STATE_SEQ RESTART WITH 7;
+
+insert into TRANSITION( ID, VERSION, EVENT, ORIGIN_STATE_ID, DESTINATION_STATE_ID ) values ( 1, 0, 'Contactar', 1, 2 );
+insert into TRANSITION( ID, VERSION, EVENT, ORIGIN_STATE_ID, DESTINATION_STATE_ID ) values ( 3, 0, 'Seleccionar para entrevista', 2, 3 );
+insert into TRANSITION( ID, VERSION, EVENT, ORIGIN_STATE_ID, DESTINATION_STATE_ID ) values ( 4, 0, 'Hacer oferta', 3, 4 );
+insert into TRANSITION( ID, VERSION, EVENT, ORIGIN_STATE_ID, DESTINATION_STATE_ID ) values ( 5, 0, 'Aceptar oferta', 4, 5 );
+insert into TRANSITION( ID, VERSION, EVENT, ORIGIN_STATE_ID, DESTINATION_STATE_ID ) values ( 6, 0, 'Rechazar', 1, 6 );
+insert into TRANSITION( ID, VERSION, EVENT, ORIGIN_STATE_ID, DESTINATION_STATE_ID ) values ( 7, 0, 'Rechazar', 2, 6 );
+insert into TRANSITION( ID, VERSION, EVENT, ORIGIN_STATE_ID, DESTINATION_STATE_ID ) values ( 8, 0, 'Rechazar', 3, 6 );
+insert into TRANSITION( ID, VERSION, EVENT, ORIGIN_STATE_ID, DESTINATION_STATE_ID ) values ( 9, 0, 'Rechazar', 4, 6 );
+
+ALTER SEQUENCE TRANSITION_SEQ RESTART WITH 10;
 
 insert into ORIGIN( ID, VERSION, CODE ) values ( 1, 0, 'origin.infojobs');
 insert into ORIGIN( ID, VERSION, CODE ) values ( 2, 0, 'origin.linkedin');
@@ -98,8 +99,8 @@ insert into CURRICULUM_TEMPLATE (ID, VERSION, TITLE, CSS, DESCRIPTION, SCREENSHO
 insert into CURRICULUM_TEMPLATE (ID, VERSION, TITLE, CSS, DESCRIPTION, SCREENSHOOT) values (4, 0, 'cv_template.corp_anon', '@page{margin:0pt;} body{font-family:sans-serif}h1{font-size:1.6em;margin-bottom:0}.data{border-top:1px solid grey;padding:1em 0 1em 0}.contact .label{font-weight:700;width:180px;display:inline-block;margin-bottom:.3em}.education,.jobExperience{padding-bottom:2em}.education .from-to-date,.jobExperience .from-to-date{float:left;width:180px;margin-top:-1.5em}.education .degree,.jobExperience .jobPosition{margin-left:180px;font-weight:700;font-size:1.2em;padding-bottom:.2em}.education .school,.jobExperience .companyName{margin-left:180px;font-size:1.1em;padding-bottom:.2em}.education .description,.jobExperience .description{margin-left:180px}.language .name{width:180px;margin-bottom:.3em;display:inline-block}.skill{display:inline-block;margin:0 1em .2em 0}.user-image{float:right; margin-top: -3em; border-left:20px solid white; z-index:10}.user-image .picture{object-fit: cover;image-orientation: from-image;width: 98px;border:1px solid black;}.contact {display: none;}' , 'cv_template.corp_anon.description', null);
 ALTER SEQUENCE CURRICULUM_TEMPLATE_SEQ RESTART WITH 5;
 
-insert into JOB_OFFER(ID, VERSION, STATE, CITY, REGION, CLIENT_ID, CLOSE_DATE, DESCRIPTION, MAX_SALARY, MIN_SALARY, OPEN_DATE, OWNER_ID, PLACES, PUBLISHED, TITLE) values(1, 0, 'OPENED', 'Barcelona', 'Barcelona', 1, (TO_DATE('17/12/2025', 'DD/MM/YYYY')), '<p>Se necesita un arquitecto de software</p>', 85000, 50000, (TO_DATE('17/12/2021', 'DD/MM/YYYY')), 1, 1, false, 'Arquitecto de software'); 
-insert into JOB_OFFER(ID, VERSION, STATE, CITY, REGION, CLIENT_ID, CLOSE_DATE, DESCRIPTION, MAX_SALARY, MIN_SALARY, OPEN_DATE, OWNER_ID, PLACES, PUBLISHED, TITLE) values(2, 0, 'CREATED', 'Barcelona', 'Barcelona', 1, (TO_DATE('17/12/2025', 'DD/MM/YYYY')), '<p>Se necesita un arquitecto java</p>', 85000, 50000, (TO_DATE('17/02/2022', 'DD/MM/YYYY')), 1, 1, false, 'Arquitecto java');
+insert into JOB_OFFER(ID, VERSION, STATE, CITY, REGION, CLIENT_ID, CLOSE_DATE, DESCRIPTION, MAX_SALARY, MIN_SALARY, OPEN_DATE, OWNER_ID, PLACES, PUBLISHED, TITLE, JOB_OFFER_PROCESS_ID) values(1, 0, 'OPENED', 'Barcelona', 'Barcelona', 1, (TO_DATE('17/12/2025', 'DD/MM/YYYY')), '<p>Se necesita un arquitecto de software</p>', 85000, 50000, (TO_DATE('17/12/2021', 'DD/MM/YYYY')), 1, 1, false, 'Arquitecto de software', 1); 
+insert into JOB_OFFER(ID, VERSION, STATE, CITY, REGION, CLIENT_ID, CLOSE_DATE, DESCRIPTION, MAX_SALARY, MIN_SALARY, OPEN_DATE, OWNER_ID, PLACES, PUBLISHED, TITLE, JOB_OFFER_PROCESS_ID) values(2, 0, 'CREATED', 'Barcelona', 'Barcelona', 1, (TO_DATE('17/12/2025', 'DD/MM/YYYY')), '<p>Se necesita un arquitecto java</p>', 85000, 50000, (TO_DATE('17/02/2022', 'DD/MM/YYYY')), 1, 1, false, 'Arquitecto java', 1);
 ALTER SEQUENCE JOB_OFFER_SEQ RESTART WITH 3;
 
 insert into JOB_OFFER_EVENT(ID, VERSION, DATE, JOB_OFFER_ID, STATE, TYPE, USER_ID) values (1, 1, (TO_TIMESTAMP('17/12/2021 20:12:24', 'DD/MM/YYYY HH24:MI:SS')), 2, 'CREATED', 'MANUAL_EVENT', 1);

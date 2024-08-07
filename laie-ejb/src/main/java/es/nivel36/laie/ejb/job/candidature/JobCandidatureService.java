@@ -23,15 +23,10 @@ public class JobCandidatureService {
 	private static final Logger logger = LoggerFactory.getLogger(JobCandidatureService.class);
 
 	private @Inject @JobCandidatureCompletedEvent Event<JobCandidature> completedEvent;
-
 	private @Inject @JobCandidatureCreatedEvent Event<JobCandidature> createdEvent;
-
 	private @Inject @JobCandidatureStateChangedEvent Event<JobCandidature> stateChangedEvent;
-
 	private @Inject JobCandidatureDao jobCandidatureDao;
-
 	private @Inject JobCandidatureStateService jobCandidatureStateService;
-
 	private @Inject JobCandidatureEventDao jobCandidatureEventDao;
 
 	public void addJobCandidature(final JobOffer jobOffer, final Candidate candidate) {

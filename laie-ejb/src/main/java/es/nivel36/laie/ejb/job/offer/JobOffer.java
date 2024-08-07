@@ -67,6 +67,11 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	@OneToMany(mappedBy = "jobOffer", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<JobOfferEvent> jobOfferEvents = new HashSet<>();
 
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "JOB_OFFER_PROCESS_ID", nullable = false)
+	private JobOfferProcess jobOfferProcess;
+
 	@Column(name = "MAX_SALARY", scale = 0, precision = 6)
 	private Integer maxSalary;
 
@@ -99,7 +104,7 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "STATE")
 	private JobOfferState state;
-
+	
 	@NotNull
 	@Column(name = "TITLE", nullable = false)
 	@FullTextField(name = "_title")
@@ -154,6 +159,10 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 
 	public Set<JobOfferEvent> getJobOfferEvents() {
 		return jobOfferEvents;
+	}
+
+	public JobOfferProcess getJobOfferProcess() {
+		return jobOfferProcess;
 	}
 
 	public Integer getMaxSalary() {
@@ -245,6 +254,10 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 
 	public void setJobOfferEvents(Set<JobOfferEvent> jobOfferEvents) {
 		this.jobOfferEvents = jobOfferEvents;
+	}
+
+	public void setJobOfferProcess(JobOfferProcess jobOfferProcess) {
+		this.jobOfferProcess = jobOfferProcess;
 	}
 
 	public void setMaxSalary(final Integer maxSalary) {

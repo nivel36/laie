@@ -77,12 +77,21 @@ public class JobCandidature extends AbstractEntity {
 		return this.candidate;
 	}
 
+	public Set<JobCandidatureEvent> getJobCandidatureEvents() {
+		return jobCandidatureEvents;
+	}
+
+
 	public Set<Meeting> getJobMeetings() {
 		return this.meetings;
 	}
 
 	public JobOffer getJobOffer() {
 		return this.jobOffer;
+	}
+
+	public Set<Meeting> getMeetings() {
+		return meetings;
 	}
 
 	public JobCandidatureState getState() {
@@ -95,11 +104,8 @@ public class JobCandidature extends AbstractEntity {
 	}
 
 	public boolean hasState(final JobCandidatureState state) {
-		if (state == null) {
-			return this.state == null;
-		} else {
-			return this.state.equals(state);
-		}
+		Objects.requireNonNull(state);
+		return state.equals(this.state);
 	}
 
 	public boolean isApproved() {
@@ -113,12 +119,20 @@ public class JobCandidature extends AbstractEntity {
 		this.candidate = candidate;
 	}
 
+	public void setJobCandidatureEvents(Set<JobCandidatureEvent> jobCandidatureEvents) {
+		this.jobCandidatureEvents = jobCandidatureEvents;
+	}
+
 	public void setJobMeetings(final Set<Meeting> meetings) {
 		this.meetings = meetings;
 	}
 
 	public void setJobOffer(final JobOffer jobOffer) {
 		this.jobOffer = jobOffer;
+	}
+
+	public void setMeetings(Set<Meeting> meetings) {
+		this.meetings = meetings;
 	}
 
 	public void setState(final JobCandidatureState state) {

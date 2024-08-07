@@ -10,19 +10,23 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.KeywordFie
 
 import es.nivel36.laie.ejb.core.EventState;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
+import es.nivel36.laie.ejb.job.offer.JobOfferProcess;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "JOB_CANDIDATURE_STATE")
 public class JobCandidatureState  extends AbstractEntity implements EventState {
 
 	private static final long serialVersionUID = -1530029544557152044L;
-	
+
 	@Column(name = "APPROVED")
 	private boolean approved;
 
@@ -41,6 +45,11 @@ public class JobCandidatureState  extends AbstractEntity implements EventState {
 	@Column(name = "FIRST")
 	private boolean first;
 
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "JOB_OFFER_PROCESS_ID", nullable = false)
+	private JobOfferProcess jobOfferProcess;
+
 	@OneToMany(mappedBy = "state", fetch = FetchType.LAZY)
 	private Set<JobCandidature> jobCandidatures = new HashSet<>();
 
@@ -51,22 +60,19 @@ public class JobCandidatureState  extends AbstractEntity implements EventState {
 
 	@OneToMany(mappedBy = "originState", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Transition> originTransitions = new HashSet<>();
-	
+
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
 		}
-		if (!super.equals(obj)) {
-			return false;
-		}
-		if (this.getClass() != obj.getClass()) {
+		if (!super.equals(obj) || (this.getClass() != obj.getClass())) {
 			return false;
 		}
 		final JobCandidatureState other = (JobCandidatureState) obj;
 		return Objects.equals(this.name, other.name);
 	}
-	
+
 	public String getBackgroundColor() {
 		return backgroundColor;
 	}
@@ -77,6 +83,10 @@ public class JobCandidatureState  extends AbstractEntity implements EventState {
 
 	public Set<Transition> getDestinationTransitions() {
 		return destinationTransitions;
+	}
+
+	public JobOfferProcess getJobOfferProcess() {
+		return jobOfferProcess;
 	}
 
 	public Set<JobCandidature> getJobCandidatures() {
@@ -135,6 +145,10 @@ public class JobCandidatureState  extends AbstractEntity implements EventState {
 
 	public void setFirst(final boolean first) {
 		this.first = first;
+	}
+
+	public void setJobOfferProcess(JobOfferProcess jobOfferProcess) {
+		this.jobOfferProcess = jobOfferProcess;
 	}
 
 	public void setJobCandidatures(Set<JobCandidature> jobCandidatures) {
