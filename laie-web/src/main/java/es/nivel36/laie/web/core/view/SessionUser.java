@@ -28,21 +28,14 @@ import jakarta.inject.Named;
 public class SessionUser implements Serializable {
 
 	private static final long serialVersionUID = 6994840904536694158L;
-
 	private static final Logger logger = LoggerFactory.getLogger(SessionUser.class);
 
 	private Locale locale;
-
 	private List<User> team;
-
 	private User user;
-
 	private List<Bookmark> bookmarks;
-
 	private transient @Inject BookmarkService bookmarkService;
-
 	private transient @Inject UserService userService;
-
 	private transient @Inject LoginService loginService;
 
 	public void load(final String username, final String role) {

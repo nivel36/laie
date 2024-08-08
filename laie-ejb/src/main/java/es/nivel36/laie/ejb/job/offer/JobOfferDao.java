@@ -104,4 +104,9 @@ public class JobOfferDao extends AbstractDao {
 		final String[] searchFields = new String[] { "_title", "client._name" };
 		return searchFacade.search(JobOffer.class, page, sortField, searchFacets, searchText, searchFields);
 	}
+
+	public List<JobOfferProcess> findJobOfferProcess() {
+		final String namedQuery = "JobOffer.findJobOfferProcess";
+		return this.findByQuery(JobOfferProcess.class, namedQuery, null, Page.ALL_RESULTS);
+	}
 }

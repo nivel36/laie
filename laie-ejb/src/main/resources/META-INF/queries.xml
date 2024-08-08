@@ -150,7 +150,7 @@
 			AND d.language = :language
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="File.findByCandidate">
 		<query><![CDATA[
 			SELECT f 
@@ -158,7 +158,7 @@
 			WHERE f.candidate = :candidate
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="File.countByCandidate">
 		<query><![CDATA[
 			SELECT count(f) 
@@ -166,7 +166,7 @@
 			WHERE f.candidate = :candidate
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="File.delete">
 		<query><![CDATA[
 			DELETE FROM File f WHERE f = :file
@@ -292,7 +292,7 @@
 			WHERE j.name = :name
 		]]></query>
 	</named-query>
-	
+
 	<named-query name="JobCandidatureState.findNextStates">
 		<query><![CDATA[
 			SELECT t.destinationState 
@@ -351,6 +351,13 @@
 		]]></query>
 	</named-query>
 
+	<named-query name="JobOffer.findJobOfferProcess">
+		<query><![CDATA[
+			SELECT j
+			FROM JobOfferProcess j 
+		]]></query>
+	</named-query>
+
 	<named-query name="JobOffer.findByClient">
 		<query><![CDATA[
 			SELECT j 
@@ -385,6 +392,15 @@
 			SELECT COUNT(j) 
 			FROM JobOfferEvent j 
 			WHERE j.jobOffer = :jobOffer
+		]]></query>
+	</named-query>
+
+	<named-query
+		name="JobOfferProcess.findJobOfferProcessByName">
+		<query><![CDATA[
+			SELECT j 
+			FROM JobOfferProcess j 
+			WHERE j.name = :name
 		]]></query>
 	</named-query>
 

@@ -76,6 +76,12 @@
 										value="#{editJobView.jobOffer.closeDate}" type="calendar"
 										styleClass="col" />
 								</div>
+								<g:input type="selectOneMenu"
+									label="#{i18n['job.type_selection_process']}"
+									value="#{editJobView.jobOffer.jobOfferProcess}">
+									<f:selectItems value="#{jobProcesses.list}" var="jobProcess"
+										itemValue="#{jobProcess}" itemLabel="#{jobProcess.name}" />
+								</g:input>
 								<cc:autocomplete id="owner" label="#{i18n['job.owner']}"
 									value="#{editJobView.jobOffer.owner}"
 									completeMethod="#{editJobView.queryOwner}">

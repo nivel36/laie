@@ -31,23 +31,14 @@ public abstract class AbstractCandidateView extends AbstractView {
 	private static final long serialVersionUID = 6785796173827142302L;
 
 	protected @Param(name = "candidate") String candidateId;
-
 	protected Candidate candidate;
-
 	protected PhysicalFile candidateImage;
-
 	protected boolean imageChanged;
-	
 	protected Integer rating;
-	
 	protected transient List<String> tags;
-	
 	protected transient @Inject CandidateService candidateService;
-
 	protected transient @Inject PhysicalFileService fileService;
-	
 	protected transient @Inject TagService tagService;
-
 	protected transient @Inject UserService userService;
 
 	protected String candidateUrl() {

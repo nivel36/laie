@@ -1,4 +1,4 @@
-insert into JOB_OFFER_PROCESS( ID, VERSION, NAME ) values ( 1, 0, 'Proceso simple com entreista');
+insert into JOB_OFFER_PROCESS( ID, VERSION, NAME ) values ( 1, 0, 'Proceso simple con entrevista');
 
 ALTER SEQUENCE JOB_OFFER_PROCESS_SEQ RESTART WITH 2;
 

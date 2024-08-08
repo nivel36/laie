@@ -34,15 +34,11 @@ public class JobOfferService {
 	private static final Logger logger = LoggerFactory.getLogger(JobOffer.class);
 
 	private @Inject JobCandidatureDao jobCandidatureDao;
-
 	private @Inject JobOfferDao jobOfferDao;
-
+	private @Inject JobOfferProcessDao jobOfferProcessDao;
 	private @Inject @Update @JobOfferCompletedEvent Event<JobOffer> completedEvent;
-
 	private @Inject @Update Event<JobOffer> updateEvent;
-
 	private @Inject @Create @JobOfferCreatedEvent Event<JobOffer> createdEvent;
-
 	private @Inject @Update @JobOfferStateChangedEvent Event<JobOffer> stateChangedEvent;
 
 	public void addJobOffer(final JobOffer jobOffer) {
@@ -56,6 +52,11 @@ public class JobOfferService {
 		if (this.openDateHasCome(jobOffer)) {
 			this.changeState(jobOffer, JobOfferState.OPENED, null, owner);
 		}
+	}
+	
+	public JobOfferProcess findJobOfferProcessByName(String name) {
+		Objects.requireNonNull(name);
+		return this.jobOfferProcessDao.findJobOfferProcessByName(name);
 	}
 
 	public JobOffer updateJobOffer(final JobOffer jobOffer) {
@@ -108,6 +109,10 @@ public class JobOfferService {
 		Objects.requireNonNull(user);
 		logger.debug("Find all job offers of the owner or recruiter {}", user);
 		return this.jobOfferDao.countJobOffersByOwnerOrRecruiter(user);
+	}
+	
+	public List<JobOfferProcess> findJobOfferProcess(){
+		return this.jobOfferDao.findJobOfferProcess();
 	}
 
 	public List<JobOfferState> findJobOfferStates() {

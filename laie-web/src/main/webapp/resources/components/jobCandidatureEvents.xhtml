@@ -45,7 +45,7 @@
 
 							<p:column headerText="#{i18n['event.state']}">
 								<h:outputText
-									value="#{i18n['job_candidature_state.'.concat(event.state)]}" />
+									value="#{event.state}" />
 							</p:column>
 
 							<p:column headerText="#{i18n['event.type']}">
@@ -84,7 +84,7 @@
 									<f:param name="user" value="#{event.user.id}" />
 								</cc:outputLink>
 								<cc:outputText label="#{i18n['event.state']}"
-									value="#{i18n['job_candidature_state.'.concat(event.state)]}" />
+									value="#{event.state}" />
 								<cc:outputText label="#{i18n['event.type']}"
 									value="#{i18n['job_candidature_event.'.concat(event.type)]}" />
 								<cc:outputText label="#{i18n['event.date']}"
