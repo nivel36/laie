@@ -26,6 +26,7 @@ import es.nivel36.laie.ejb.user.User;
 import jakarta.ejb.Stateless;
 import jakarta.enterprise.event.Event;
 import jakarta.enterprise.event.Observes;
+import jakarta.enterprise.event.ObservesAsync;
 import jakarta.inject.Inject;
 
 @Stateless
@@ -53,7 +54,7 @@ public class JobOfferService {
 			this.changeState(jobOffer, JobOfferState.OPENED, null, owner);
 		}
 	}
-	
+
 	public JobOfferProcess findJobOfferProcessByName(String name) {
 		Objects.requireNonNull(name);
 		return this.jobOfferProcessDao.findJobOfferProcessByName(name);
@@ -104,14 +105,14 @@ public class JobOfferService {
 		logger.debug("Find all job offers of the owner or recruiter {}", user);
 		return this.jobOfferDao.findJobOffersByOwnerOrRecruiter(user, page);
 	}
-	
+
 	public long countJobOffersByOwnerOrRecruiter(User user) {
 		Objects.requireNonNull(user);
 		logger.debug("Find all job offers of the owner or recruiter {}", user);
 		return this.jobOfferDao.countJobOffersByOwnerOrRecruiter(user);
 	}
-	
-	public List<JobOfferProcess> findJobOfferProcess(){
+
+	public List<JobOfferProcess> findJobOfferProcess() {
 		return this.jobOfferDao.findJobOfferProcess();
 	}
 
@@ -127,7 +128,8 @@ public class JobOfferService {
 		return jobOffer.getPlaces() == numberofAprrovedSubmissions;
 	}
 
-	public void onJobSubmissionCompleted(@Observes @JobSubmissionCompletedEvent final JobSubmission jobSubmission) {
+	public void onJobSubmissionCompleted(
+			@ObservesAsync @JobSubmissionCompletedEvent final JobSubmission jobSubmission) {
 		Objects.requireNonNull(jobSubmission, "Job jobSubmission can't be null");
 		final JobOffer jobOffer = jobSubmission.getJobOffer();
 		if (this.isCompleted(jobOffer)) {
@@ -172,7 +174,7 @@ public class JobOfferService {
 		Objects.requireNonNull(jobOffer);
 		return jobOfferDao.countJobOfferEventsByJobOffer(jobOffer);
 	}
-	
+
 	public long countJobOffersByClient(final Client client) {
 		Objects.requireNonNull(client);
 		return jobOfferDao.countJobOffersByClient(client);
@@ -183,7 +185,7 @@ public class JobOfferService {
 		Objects.requireNonNull(page);
 		return jobOfferDao.findJobOfferEventsByJobOffer(jobOffer, page);
 	}
-	
+
 	public List<User> findRecruitersByJobOffer(final JobOffer jobOffer, final Page page) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(page);

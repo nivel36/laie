@@ -32,17 +32,11 @@ public class AddEventView extends AbstractView {
 	private static final Logger logger = LoggerFactory.getLogger(AddEventView.class);
 
 	private static final long serialVersionUID = 1204346979477586986L;
-
 	private JobSubmissionEvent event;
-
 	private @Param JobSubmission jobSubmission;
-
 	private transient @Inject JobSubmissionStateService jobSubmissionStateService;
-
 	private transient @Inject JobSubmissionService jobSubmissionService;
-
 	private List<JobSubmissionState> states;
-
 	private List<JobSubmissionEventType> types;
 
 	@PostConstruct
