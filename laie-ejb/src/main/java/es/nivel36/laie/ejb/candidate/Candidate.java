@@ -20,8 +20,8 @@ import es.nivel36.laie.ejb.core.model.Ownerable;
 import es.nivel36.laie.ejb.core.subject.Subject;
 import es.nivel36.laie.ejb.core.tag.Tag;
 import es.nivel36.laie.ejb.curriculum.Curriculum;
-import es.nivel36.laie.ejb.job.candidature.JobCandidature;
 import es.nivel36.laie.ejb.job.meeting.Meeting;
+import es.nivel36.laie.ejb.job.submission.JobSubmission;
 import es.nivel36.laie.ejb.user.User;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -75,7 +75,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	private String infojobsProfileUrl;
 
 	@OneToMany(mappedBy = "candidate", cascade = CascadeType.REMOVE, orphanRemoval = true)
-	private Set<JobCandidature> jobCandidatures = new HashSet<>();
+	private Set<JobSubmission> jobSubmissions = new HashSet<>();
 
 	@NotNull
 	@FullTextField(name = "_jobProfile")
@@ -198,8 +198,8 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 		return this.infojobsProfileUrl;
 	}
 
-	public Set<JobCandidature> getJobCandidatures() {
-		return this.jobCandidatures;
+	public Set<JobSubmission> getJobSubmissions() {
+		return this.jobSubmissions;
 	}
 
 	public String getJobProfile() {
@@ -304,12 +304,12 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 		this.infojobsProfileUrl = infojobsProfileUrl;
 	}
 
-	public void setJobCandidature(final Set<JobCandidature> jobCandidatures) {
-		this.jobCandidatures = jobCandidatures;
+	public void setJobSubmission(final Set<JobSubmission> jobSubmissions) {
+		this.jobSubmissions = jobSubmissions;
 	}
 
-	public void setJobCandidatures(Set<JobCandidature> jobCandidatures) {
-		this.jobCandidatures = jobCandidatures;
+	public void setJobSubmissions(Set<JobSubmission> jobSubmissions) {
+		this.jobSubmissions = jobSubmissions;
 	}
 
 	public void setJobProfile(final String jobProfile) {

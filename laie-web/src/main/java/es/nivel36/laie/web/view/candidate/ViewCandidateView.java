@@ -24,7 +24,7 @@ import es.nivel36.laie.ejb.job.meeting.Meeting;
 import es.nivel36.laie.ejb.job.meeting.MeetingService;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
-import es.nivel36.laie.web.view.job.JobCandidatureByCandidateLazyDataModel;
+import es.nivel36.laie.web.view.job.JobSubmissionByCandidateLazyDataModel;
 import es.nivel36.laie.web.view.meeting.AddMeetingView;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
@@ -42,7 +42,7 @@ public class ViewCandidateView extends AbstractView {
 	private @Param(required = true, name = "candidate") String candidateId;
 	private Candidate candidate;
 	private boolean editable;
-	private @Inject JobCandidatureByCandidateLazyDataModel jobCandidatures;
+	private @Inject JobSubmissionByCandidateLazyDataModel jobSubmissions;
 	private @Inject FilesByCandidateLazyDataModel files;
 	private List<Meeting> meetings;
 	private boolean bookmarkable;
@@ -81,7 +81,7 @@ public class ViewCandidateView extends AbstractView {
 		}
 		this.addRatingVisible = (this.rating == null);
 		this.editRatingVisible = !this.addRatingVisible;
-		this.jobCandidatures.setCandidate(candidate);
+		this.jobSubmissions.setCandidate(candidate);
 		this.files.setCandidate(candidate);
 	}
 
@@ -189,8 +189,8 @@ public class ViewCandidateView extends AbstractView {
 		return this.rating;
 	}
 
-	public JobCandidatureByCandidateLazyDataModel getJobCandidatures() {
-		return this.jobCandidatures;
+	public JobSubmissionByCandidateLazyDataModel getJobSubmissions() {
+		return this.jobSubmissions;
 	}
 
 	public FilesByCandidateLazyDataModel getFiles() {

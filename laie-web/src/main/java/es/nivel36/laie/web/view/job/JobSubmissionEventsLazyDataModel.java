@@ -9,34 +9,34 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortMeta;
 
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.job.candidature.JobCandidatureEvent;
-import es.nivel36.laie.ejb.job.candidature.JobCandidatureService;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
+import es.nivel36.laie.ejb.job.submission.JobSubmissionEvent;
+import es.nivel36.laie.ejb.job.submission.JobSubmissionService;
 import jakarta.inject.Inject;
 
-public class JobCandidatureEventsLazyDataModel extends LazyDataModel<JobCandidatureEvent> {
+public class JobSubmissionEventsLazyDataModel extends LazyDataModel<JobSubmissionEvent> {
 
 	private static final long serialVersionUID = -833385360783160691L;
 
 	private JobOffer jobOffer;
 
-	private @Inject JobCandidatureService jobCandidatureService;
+	private @Inject JobSubmissionService jobSubmissionService;
 
 	@Override
 	public int count(Map<String, FilterMeta> filterBy) {
 		if (jobOffer == null) {
 			throw new IllegalStateException();
 		}
-		return (int) jobCandidatureService.countJobCandidatureEvents(jobOffer);
+		return (int) jobSubmissionService.countJobSubmissionEvents(jobOffer);
 	}
 
 	@Override
-	public List<JobCandidatureEvent> load(int first, int pageSize, Map<String, SortMeta> sortBy,
+	public List<JobSubmissionEvent> load(int first, int pageSize, Map<String, SortMeta> sortBy,
 			Map<String, FilterMeta> filterBy) {
 		if (jobOffer == null) {
 			throw new IllegalStateException();
 		}
-		return jobCandidatureService.findJobCandidatureEvents(jobOffer, Page.of(first, pageSize));
+		return jobSubmissionService.findJobSubmissionEvents(jobOffer, Page.of(first, pageSize));
 	}
 
 	public void setJobOffer(JobOffer jobOffer) {
@@ -44,9 +44,9 @@ public class JobCandidatureEventsLazyDataModel extends LazyDataModel<JobCandidat
 		this.jobOffer = jobOffer;
 	}
 
-	public void setJobCandidatureService(JobCandidatureService jobCandidatureService) {
-		Objects.requireNonNull(jobCandidatureService);
-		this.jobCandidatureService = jobCandidatureService;
+	public void setJobSubmissionService(JobSubmissionService jobSubmissionService) {
+		Objects.requireNonNull(jobSubmissionService);
+		this.jobSubmissionService = jobSubmissionService;
 	}
 
 }

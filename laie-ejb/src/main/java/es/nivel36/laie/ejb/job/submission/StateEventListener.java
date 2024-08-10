@@ -1,4 +1,4 @@
-package es.nivel36.laie.ejb.job.candidature;
+package es.nivel36.laie.ejb.job.submission;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

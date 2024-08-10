@@ -5,7 +5,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
-import es.nivel36.laie.ejb.job.candidature.JobCandidatureState;
+import es.nivel36.laie.ejb.job.submission.JobSubmissionState;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -20,7 +20,7 @@ public class JobOfferProcess extends AbstractEntity {
 	private String name;
 
 	@OneToMany(mappedBy = "jobOfferProcess", cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<JobCandidatureState> states = new HashSet<>();
+	private Set<JobSubmissionState> states = new HashSet<>();
 
 	@Override
 	public boolean equals(Object obj) {
@@ -38,7 +38,7 @@ public class JobOfferProcess extends AbstractEntity {
 		return name;
 	}
 
-	public Set<JobCandidatureState> getStates() {
+	public Set<JobSubmissionState> getStates() {
 		return states;
 	}
 
@@ -54,7 +54,7 @@ public class JobOfferProcess extends AbstractEntity {
 		this.name = name;
 	}
 
-	public void setStates(Set<JobCandidatureState> states) {
+	public void setStates(Set<JobSubmissionState> states) {
 		this.states = states;
 	}
 

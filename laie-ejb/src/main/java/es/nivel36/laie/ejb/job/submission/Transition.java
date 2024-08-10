@@ -1,4 +1,4 @@
-package es.nivel36.laie.ejb.job.candidature;
+package es.nivel36.laie.ejb.job.submission;
 
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
 import jakarta.persistence.Column;
@@ -20,11 +20,11 @@ public class Transition extends AbstractEntity {
 
 	@ManyToOne
 	@JoinColumn(name = "origin_state_id", nullable = false)
-	private JobCandidatureState originState;
+	private JobSubmissionState originState;
 
 	@ManyToOne
 	@JoinColumn(name = "destination_state_id", nullable = false)
-	private JobCandidatureState destinationState;
+	private JobSubmissionState destinationState;
 
 	public String getEvent() {
 		return event;
@@ -34,19 +34,19 @@ public class Transition extends AbstractEntity {
 		this.event = event;
 	}
 
-	public JobCandidatureState getOriginState() {
+	public JobSubmissionState getOriginState() {
 		return originState;
 	}
 
-	public void setOriginState(JobCandidatureState originState) {
+	public void setOriginState(JobSubmissionState originState) {
 		this.originState = originState;
 	}
 
-	public JobCandidatureState getDestinationState() {
+	public JobSubmissionState getDestinationState() {
 		return destinationState;
 	}
 
-	public void setDestinationState(JobCandidatureState destinationState) {
+	public void setDestinationState(JobSubmissionState destinationState) {
 		this.destinationState = destinationState;
 	}
 }

@@ -16,68 +16,68 @@
 		<composite:attribute name="showJobOffer" default="true" />
 		<composite:attribute name="styleClass" required="false" default="" />
 		<composite:attribute name="title" required="false"
-			default="#{i18n['job_candidature.job_candidatures']}" />
+			default="#{i18n['job_jobSubmission.job_jobSubmissions']}" />
 		<composite:attribute name="rows" required="false" default="10" />
 	</composite:interface>
 
 	<composite:implementation>
 		<div id="#{cc.clientId}"
-			class="ui-card card card-w-title jobCandidatures #{cc.attrs.styleClass}">
+			class="ui-card card card-w-title jobSubmissions #{cc.attrs.styleClass}">
 			<div class="ui-card-body">
 				<div class="ui-card-title">
 					<h5>#{cc.attrs.title}</h5>
 				</div>
 				<div class="ui-card-content">
-					<p:dataTable var="jobCandidature" value="#{cc.attrs.value}"
-						emptyMessage="#{i18n['job_candidature.no_job_candidatures_found']}"
+					<p:dataTable var="jobSubmission" value="#{cc.attrs.value}"
+						emptyMessage="#{i18n['job_jobSubmission.no_job_jobSubmissions_found']}"
 						reflow="true" paginator="true" paginatorPosition="bottom"
 						rows="#{cc.attrs.rows}" sortBy="#{jobOffer.title}"
 						sortOrder="ascending" styleClass="ui-datatable-borderless">
 
-						<p:column headerText="#{i18n['job_candidature.job_offer']}"
+						<p:column headerText="#{i18n['job_jobSubmission.job_offer']}"
 							rendered="#{cc.attrs.showJobOffer}">
-							<h:link value="#{jobCandidature.jobOffer.title}"
+							<h:link value="#{jobSubmission.jobOffer.title}"
 								outcome="/job/view.xhtml">
-								<f:param name="jobOffer" value="#{jobCandidature.jobOffer.id}" />
+								<f:param name="jobOffer" value="#{jobSubmission.jobOffer.id}" />
 							</h:link>
 						</p:column>
-						<p:column headerText="#{i18n['job_candidature.city']}"
+						<p:column headerText="#{i18n['job_jobSubmission.city']}"
 							rendered="#{cc.attrs.showJobOffer}">
-					#{jobCandidature.jobOffer.address.city} <h:outputText value="("
-								rendered="#{not empty jobCandidature.jobOffer.address.region}" /> #{jobCandidature.jobOffer.address.region}<h:outputText
+					#{jobSubmission.jobOffer.address.city} <h:outputText value="("
+								rendered="#{not empty jobSubmission.jobOffer.address.region}" /> #{jobSubmission.jobOffer.address.region}<h:outputText
 								value=")"
-								rendered="#{not empty jobCandidature.jobOffer.address.region}" />
+								rendered="#{not empty jobSubmission.jobOffer.address.region}" />
 						</p:column>
-						<p:column headerText="#{i18n['job_candidature.client']}"
+						<p:column headerText="#{i18n['job_jobSubmission.client']}"
 							rendered="#{cc.attrs.showJobOffer}">
-							<h:link value="#{jobCandidature.jobOffer.client.name}"
+							<h:link value="#{jobSubmission.jobOffer.client.name}"
 								outcome="/client/view.xhtml">
 								<f:param name="client"
-									value="#{jobCandidature.jobOffer.client.id}" />
+									value="#{jobSubmission.jobOffer.client.id}" />
 							</h:link>
 						</p:column>
-						<p:column headerText="#{i18n['job_candidature.candidate']}"
+						<p:column headerText="#{i18n['job_jobSubmission.candidate']}"
 							rendered="#{cc.attrs.showCandidate}" styleClass="align-center">
 
 							<h:link outcome="/candidate/view.xhtml">
-								<cc:avatar name="#{jobCandidature.candidate.fullName}"
-									path="#{jobCandidature.candidate.picture.path}"
+								<cc:avatar name="#{jobSubmission.candidate.fullName}"
+									path="#{jobSubmission.candidate.picture.path}"
 									styleClass="small mr-2" />
 								<h:outputText styleClass="link"
-									value="#{jobCandidature.candidate.fullName}" />
-								<f:param name="candidate" value="#{jobCandidature.candidate.id}" />
+									value="#{jobSubmission.candidate.fullName}" />
+								<f:param name="candidate" value="#{jobSubmission.candidate.id}" />
 							</h:link>
 						</p:column>
 						<p:column headerText="#{i18n['candidate.rating']}"
 							rendered="#{cc.attrs.showCandidate}">
-							<p:rating value="#{jobCandidature.candidate.rating}"
+							<p:rating value="#{jobSubmission.candidate.rating}"
 								cancel="false" readonly="true" />
 						</p:column>
 						<p:column
-							headerText="#{i18n['job_candidature.job_candidature_state']}">
+							headerText="#{i18n['job_jobSubmission.job_jobSubmission_state']}">
 							<p:link outcome="/event/add.xhtml">
-								<f:param name="jobCandidature" value="#{jobCandidature.id}" />
-								<div class="tag">#{jobCandidature.state.name}</div>
+								<f:param name="jobSubmission" value="#{jobSubmission.id}" />
+								<div class="tag">#{jobSubmission.state.name}</div>
 							</p:link>
 						</p:column>
 					</p:dataTable>

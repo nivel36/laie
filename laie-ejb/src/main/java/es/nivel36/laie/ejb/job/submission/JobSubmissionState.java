@@ -1,4 +1,4 @@
-package es.nivel36.laie.ejb.job.candidature;
+package es.nivel36.laie.ejb.job.submission;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -22,8 +22,8 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "JOB_CANDIDATURE_STATE")
-public class JobCandidatureState  extends AbstractEntity implements EventState {
+@Table(name = "JOB_SUBMISSION_STATE")
+public class JobSubmissionState  extends AbstractEntity implements EventState {
 
 	private static final long serialVersionUID = -1530029544557152044L;
 
@@ -51,7 +51,7 @@ public class JobCandidatureState  extends AbstractEntity implements EventState {
 	private JobOfferProcess jobOfferProcess;
 
 	@OneToMany(mappedBy = "state", fetch = FetchType.LAZY)
-	private Set<JobCandidature> jobCandidatures = new HashSet<>();
+	private Set<JobSubmission> jobSubmissions = new HashSet<>();
 
 	@FullTextField(name = "_name")
 	@KeywordField(name = "name", aggregable = Aggregable.YES)
@@ -69,7 +69,7 @@ public class JobCandidatureState  extends AbstractEntity implements EventState {
 		if (!super.equals(obj) || (this.getClass() != obj.getClass())) {
 			return false;
 		}
-		final JobCandidatureState other = (JobCandidatureState) obj;
+		final JobSubmissionState other = (JobSubmissionState) obj;
 		return Objects.equals(this.name, other.name);
 	}
 
@@ -89,8 +89,8 @@ public class JobCandidatureState  extends AbstractEntity implements EventState {
 		return jobOfferProcess;
 	}
 
-	public Set<JobCandidature> getJobCandidatures() {
-		return jobCandidatures;
+	public Set<JobSubmission> getJobSubmissions() {
+		return jobSubmissions;
 	}
 
 	@Override
@@ -151,8 +151,8 @@ public class JobCandidatureState  extends AbstractEntity implements EventState {
 		this.jobOfferProcess = jobOfferProcess;
 	}
 
-	public void setJobCandidatures(Set<JobCandidature> jobCandidatures) {
-		this.jobCandidatures = jobCandidatures;
+	public void setJobSubmissions(Set<JobSubmission> jobSubmissions) {
+		this.jobSubmissions = jobSubmissions;
 	}
 
 	public void setName(final String name) {

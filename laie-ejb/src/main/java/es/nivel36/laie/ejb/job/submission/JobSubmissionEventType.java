@@ -1,8 +1,8 @@
-package es.nivel36.laie.ejb.job.candidature;
+package es.nivel36.laie.ejb.job.submission;
 
 import es.nivel36.laie.ejb.core.EventType;
 
-public enum JobCandidatureEventType implements EventType {
+public enum JobSubmissionEventType implements EventType {
 
 	EMAIL("email"), //
 	MEETING("meeting"), //
@@ -13,7 +13,7 @@ public enum JobCandidatureEventType implements EventType {
 
 	private String name;
 
-	JobCandidatureEventType(final String name) {
+	JobSubmissionEventType(final String name) {
 		this.name = name;
 	}
 

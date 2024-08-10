@@ -59,7 +59,7 @@
 		<query><![CDATA[
 			SELECT c 
 			FROM Candidate c
-			LEFT JOIN c.jobCandidatures jc
+			LEFT JOIN c.jobSubmissions jc
 			WHERE jc.jobOffer = :jobOffer
 		]]></query>
 	</named-query>
@@ -190,26 +190,26 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="JobCandidatureEvent.findAllByJobOffer">
+	<named-query name="JobSubmissionEvent.findAllByJobOffer">
 		<query><![CDATA[
 			SELECT j 
-			FROM JobCandidatureEvent j 
-			WHERE j.jobCandidature.jobOffer = :jobOffer
+			FROM JobSubmissionEvent j 
+			WHERE j.jobSubmission.jobOffer = :jobOffer
 		]]></query>
 	</named-query>
 
-	<named-query name="JobCandidatureEvent.countAllByJobOffer">
+	<named-query name="JobSubmissionEvent.countAllByJobOffer">
 		<query><![CDATA[
 			SELECT COUNT(j) 
-			FROM JobCandidatureEvent j 
-			WHERE j.jobCandidature.jobOffer = :jobOffer
+			FROM JobSubmissionEvent j 
+			WHERE j.jobSubmission.jobOffer = :jobOffer
 		]]></query>
 	</named-query>
 
-	<named-query name="JobCandidature.findApprovedByJobOffer">
+	<named-query name="JobSubmission.findApprovedByJobOffer">
 		<query><![CDATA[
 			SELECT j 
-			FROM JobCandidature j 
+			FROM JobSubmission j 
 			LEFT JOIN FETCH j.candidate
 			LEFT JOIN FETCH j.jobOffer
 			WHERE j.jobOffer = :jobOffer
@@ -218,10 +218,10 @@
 	</named-query>
 
 	<named-query
-		name="JobCandidature.findByJobOfferAndCandidate">
+		name="JobSubmission.findByJobOfferAndCandidate">
 		<query><![CDATA[
 			SELECT j 
-			FROM JobCandidature j 
+			FROM JobSubmission j 
 			LEFT JOIN FETCH j.candidate
 			LEFT JOIN FETCH j.jobOffer
 			WHERE j.jobOffer = :jobOffer
@@ -229,10 +229,10 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="JobCandidature.findByCandidate">
+	<named-query name="JobSubmission.findByCandidate">
 		<query><![CDATA[
 			SELECT j 
-			FROM JobCandidature j 
+			FROM JobSubmission j 
 			LEFT JOIN FETCH j.candidate
 			LEFT JOIN FETCH j.jobOffer
 			LEFT JOIN FETCH j.jobOffer.client
@@ -241,59 +241,59 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="JobCandidature.countByCandidate">
+	<named-query name="JobSubmission.countByCandidate">
 		<query><![CDATA[
 			SELECT COUNT(j)
-			FROM JobCandidature j 
+			FROM JobSubmission j 
 			WHERE j.candidate = :candidate 
 		]]></query>
 	</named-query>
 
-	<named-query name="JobCandidature.findByJobOffer">
+	<named-query name="JobSubmission.findByJobOffer">
 		<query><![CDATA[
 			SELECT j 
-			FROM JobCandidature j 
+			FROM JobSubmission j 
 			LEFT JOIN FETCH j.candidate
 			LEFT JOIN FETCH j.jobOffer
 			WHERE j.jobOffer = :jobOffer
 		]]></query>
 	</named-query>
 
-	<named-query name="JobCandidature.countByJobOffer">
+	<named-query name="JobSubmission.countByJobOffer">
 		<query><![CDATA[
 			SELECT COUNT(j) 
-			FROM JobCandidature j 
+			FROM JobSubmission j 
 			WHERE j.jobOffer = :jobOffer
 		]]></query>
 	</named-query>
 
-	<named-query name="JobCandidature.findByUser">
+	<named-query name="JobSubmission.findByUser">
 		<query><![CDATA[
 			SELECT j 
-			FROM JobCandidature j 
+			FROM JobSubmission j 
 			WHERE :user MEMBER OF j.jobOffer.recruiters
 			OR j.jobOffer.owner = :user 
 		]]></query>
 	</named-query>
 
 	<named-query
-		name="JobCandidatureState.findFirstJobCandidatureState">
+		name="JobSubmissionState.findFirstJobSubmissionState">
 		<query><![CDATA[
 			SELECT j 
-			FROM JobCandidatureState j 
+			FROM JobSubmissionState j 
 			WHERE j.first = true
 		]]></query>
 	</named-query>
 
-	<named-query name="JobCandidatureState.findByName">
+	<named-query name="JobSubmissionState.findByName">
 		<query><![CDATA[
 			SELECT j 
-			FROM JobCandidatureState j
+			FROM JobSubmissionState j
 			WHERE j.name = :name
 		]]></query>
 	</named-query>
 
-	<named-query name="JobCandidatureState.findNextStates">
+	<named-query name="JobSubmissionState.findNextStates">
 		<query><![CDATA[
 			SELECT t.destinationState 
 			FROM Transition t 
@@ -346,7 +346,7 @@
 		<query><![CDATA[
 			SELECT j
 			FROM JobOffer j
-			INNER JOIN j.jobCandidatures jc 
+			INNER JOIN j.jobSubmissions jc 
 			WHERE jc.candidate = :candidate
 		]]></query>
 	</named-query>

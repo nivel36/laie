@@ -5,7 +5,7 @@
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:ui="http://java.sun.com/jsf/facelets" template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
-		#{i18n['job_candidature.job_candidature_states']}
+		#{i18n['job_jobSubmission.job_jobSubmission_states']}
 	</ui:define>
 
 	<ui:param name="selectedMenu" value="maintenances" />
@@ -14,7 +14,7 @@
 		<p:breadCrumb>
 			<p:menuitem value="#{i18n['menu.index']}" outcome="/index.xhtml" />
 			<p:menuitem value="#{i18n['maintenance.maintenances']}" outcome="/settings.xhtml" />
-			<p:menuitem value="#{i18n['job_candidature.job_candidature_states']}" disabled="true" />
+			<p:menuitem value="#{i18n['job_jobSubmission.job_jobSubmission_states']}" disabled="true" />
 		</p:breadCrumb>
 	</ui:define>
 
@@ -23,9 +23,9 @@
 			<div class="col-12 xl:col-4">
 				<div class="card">
 					<div class="grid">
-						<ui:repeat var="jobCandidatureState" value="#{jobCandidatureStatesMaintenanceView.states}">
+						<ui:repeat var="jobSubmissionState" value="#{jobSubmissionStatesMaintenanceView.states}">
 							<div class="col-12">
-								<div class="tag #{jobCandidatureState.name}">#{i18n[jobCandidatureState.name]}</div>
+								<div class="tag #{jobSubmissionState.name}">#{i18n[jobSubmissionState.name]}</div>
 							</div>
 						</ui:repeat>
 					</div>

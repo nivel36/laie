@@ -5,7 +5,7 @@ import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.web.core.view.SessionUser;
 import jakarta.inject.Inject;
 
-public class AddCandidatureToJobOfferPermission extends AbstractJobOfferPermission {
+public class AddSubmissionToJobOfferPermission extends AbstractJobOfferPermission {
 
 	private @Inject SessionUser sessionUser;
 

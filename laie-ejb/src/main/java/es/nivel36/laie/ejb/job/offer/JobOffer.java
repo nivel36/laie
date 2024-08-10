@@ -19,7 +19,7 @@ import es.nivel36.laie.ejb.core.action.Auditable;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
 import es.nivel36.laie.ejb.core.model.Address;
 import es.nivel36.laie.ejb.core.model.Ownerable;
-import es.nivel36.laie.ejb.job.candidature.JobCandidature;
+import es.nivel36.laie.ejb.job.submission.JobSubmission;
 import es.nivel36.laie.ejb.user.User;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -62,7 +62,7 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	private String description;
 
 	@OneToMany(mappedBy = "jobOffer", cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<JobCandidature> jobCandidatures = new HashSet<>();
+	private Set<JobSubmission> jobSubmissions = new HashSet<>();
 
 	@OneToMany(mappedBy = "jobOffer", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<JobOfferEvent> jobOfferEvents = new HashSet<>();
@@ -153,8 +153,8 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 		return this.title;
 	}
 
-	public Set<JobCandidature> getJobCandidatures() {
-		return this.jobCandidatures;
+	public Set<JobSubmission> getJobSubmissions() {
+		return this.jobSubmissions;
 	}
 
 	public Set<JobOfferEvent> getJobOfferEvents() {
@@ -198,13 +198,13 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 		return this.title;
 	}
 
-	public boolean hasCandidatureOf(final Candidate candidate) {
+	public boolean hasSubmissionOf(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
-		if (this.jobCandidatures.isEmpty()) {
+		if (this.jobSubmissions.isEmpty()) {
 			return false;
 		}
-		for (final JobCandidature jobCandidature : this.jobCandidatures) {
-			if (jobCandidature.getCandidate().equals(candidate)) {
+		for (final JobSubmission jobSubmission : this.jobSubmissions) {
+			if (jobSubmission.getCandidate().equals(candidate)) {
 				return true;
 			}
 		}
@@ -248,8 +248,8 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 		this.description = description;
 	}
 
-	public void setJobCandidatures(final Set<JobCandidature> jobCandidatures) {
-		this.jobCandidatures = jobCandidatures;
+	public void setJobSubmissions(final Set<JobSubmission> jobSubmissions) {
+		this.jobSubmissions = jobSubmissions;
 	}
 
 	public void setJobOfferEvents(Set<JobOfferEvent> jobOfferEvents) {

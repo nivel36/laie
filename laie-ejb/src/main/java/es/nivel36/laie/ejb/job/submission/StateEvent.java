@@ -1,17 +1,17 @@
-package es.nivel36.laie.ejb.job.candidature;
+package es.nivel36.laie.ejb.job.submission;
 
 public class StateEvent {
 	
-    private final  JobCandidatureState state;
+    private final  JobSubmissionState state;
     
     private final String eventType;
 
-    public StateEvent(JobCandidatureState state, String eventType) {
+    public StateEvent(JobSubmissionState state, String eventType) {
         this.state = state;
         this.eventType = eventType;
     }
 
-    public JobCandidatureState getState() {
+    public JobSubmissionState getState() {
         return state;
     }
 

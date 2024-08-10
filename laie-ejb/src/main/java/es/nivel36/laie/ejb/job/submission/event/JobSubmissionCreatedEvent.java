@@ -1,4 +1,4 @@
-package es.nivel36.laie.ejb.job.candidature.event;
+package es.nivel36.laie.ejb.job.submission.event;
 
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;
@@ -16,7 +16,6 @@ import jakarta.inject.Qualifier;
 @Target({ TYPE, METHOD, PARAMETER, FIELD })
 @Retention(RUNTIME)
 @Documented
-public @interface JobCandidatureCompletedEvent {
-
+public @interface JobSubmissionCreatedEvent {
 
 }

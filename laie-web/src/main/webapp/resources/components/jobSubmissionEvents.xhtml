@@ -36,10 +36,10 @@
 							styleClass="ui-datatable-borderless">
 
 							<p:column headerText="#{i18n['event.candidate']}">
-								<h:link value="#{event.jobCandidature.candidate.fullName}"
+								<h:link value="#{event.jobSubmission.candidate.fullName}"
 									outcome="/candidate/view.xhtml">
 									<f:param name="candidate"
-										value="#{event.jobCandidature.candidate.id}" />
+										value="#{event.jobSubmission.candidate.id}" />
 								</h:link>
 							</p:column>
 
@@ -50,7 +50,7 @@
 
 							<p:column headerText="#{i18n['event.type']}">
 								<h:outputText
-									value="#{i18n['job_candidature_event.'.concat(event.type)]}" />
+									value="#{i18n['job_jobSubmission_event.'.concat(event.type)]}" />
 							</p:column>
 
 							<p:column headerText="#{i18n['event.date']}">
@@ -74,10 +74,10 @@
 						<ui:repeat var="event" value="#{cc.attrs.value}">
 							<div id="#{cc.clientId}:detail:#{event.id}" style="display: none">
 								<cc:outputLink label="#{i18n['event.candidate']}"
-									value="#{event.jobCandidature.candidate.fullName}"
+									value="#{event.jobSubmission.candidate.fullName}"
 									outcome="/candidate/view">
 									<f:param name="candidate"
-										value="#{event.jobCandidature.candidate.id}" />
+										value="#{event.jobSubmission.candidate.id}" />
 								</cc:outputLink>
 								<cc:outputLink label="#{i18n['event.user']}"
 									value="#{event.user.fullName}" outcome="/user/view">
@@ -86,7 +86,7 @@
 								<cc:outputText label="#{i18n['event.state']}"
 									value="#{event.state}" />
 								<cc:outputText label="#{i18n['event.type']}"
-									value="#{i18n['job_candidature_event.'.concat(event.type)]}" />
+									value="#{i18n['job_jobSubmission_event.'.concat(event.type)]}" />
 								<cc:outputText label="#{i18n['event.date']}"
 									value="#{event.date}">
 									<f:convertDateTime type="localDate"

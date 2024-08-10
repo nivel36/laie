@@ -37,7 +37,7 @@ public class ViewJobView extends AbstractView {
 	private boolean bookmarkable;
 	private boolean owner;
 	private boolean recruiter;
-	private boolean addCandidature;
+	private boolean addSubmission;
 	private Bookmark bookmark;
 
 	// Pestaña de cambio de estados
@@ -46,9 +46,9 @@ public class ViewJobView extends AbstractView {
 	private String comment;
 	private List<SelectItem> states;
 
-	private @Inject JobOfferCandidaturesLazyDataModel jobCandidatures;
+	private @Inject JobOfferSubmissionsLazyDataModel jobSubmissions;
 	private @Inject JobOfferEventsLazyDataModel jobOfferEvents;
-	private @Inject JobCandidatureEventsLazyDataModel jobCandidatureEvents;
+	private @Inject JobSubmissionEventsLazyDataModel jobSubmissionEvents;
 	private @Inject JobOfferService jobOfferService;
 
 	@PostConstruct
@@ -64,11 +64,11 @@ public class ViewJobView extends AbstractView {
 		this.recruiter = jobOffer.getRecruiters().contains(user);
 		final boolean userCanEdit = this.owner || sessionUser.isAdmin() || this.sessionUser.isManagerOf(owner);
 		this.editable = jobOffer.isOpen() && userCanEdit;
-		this.addCandidature = jobOffer.isOpen() && (this.recruiter || userCanEdit);
+		this.addSubmission = jobOffer.isOpen() && (this.recruiter || userCanEdit);
 
-		this.jobCandidatures.setJobOffer(jobOffer);
+		this.jobSubmissions.setJobOffer(jobOffer);
 		this.jobOfferEvents.setJobOffer(jobOffer);
-		this.jobCandidatureEvents.setJobOffer(jobOffer);
+		this.jobSubmissionEvents.setJobOffer(jobOffer);
 
 		fillMenuModel();
 	}
@@ -97,8 +97,8 @@ public class ViewJobView extends AbstractView {
 		return bookmarkable;
 	}
 
-	public JobOfferCandidaturesLazyDataModel getJobCandidatures() {
-		return this.jobCandidatures;
+	public JobOfferSubmissionsLazyDataModel getJobSubmissions() {
+		return this.jobSubmissions;
 	}
 
 	private Bookmark buildBookmark() {
@@ -122,16 +122,16 @@ public class ViewJobView extends AbstractView {
 		return jobOfferEvents;
 	}
 
-	public JobCandidatureEventsLazyDataModel getJobCandidatureEvents() {
-		return jobCandidatureEvents;
+	public JobSubmissionEventsLazyDataModel getJobSubmissionEvents() {
+		return jobSubmissionEvents;
 	}
 
 	public boolean isOwner() {
 		return owner;
 	}
 
-	public boolean isAddCandidature() {
-		return this.addCandidature;
+	public boolean isAddSubmission() {
+		return this.addSubmission;
 	}
 
 	public JobOffer getJobOffer() {
@@ -204,9 +204,9 @@ public class ViewJobView extends AbstractView {
 		this.comment = comment;
 	}
 
-	public void setJobCandidatureEvents(JobCandidatureEventsLazyDataModel jobCandidatureEvents) {
-		Objects.requireNonNull(jobCandidatureEvents);
-		this.jobCandidatureEvents = jobCandidatureEvents;
+	public void setJobSubmissionEvents(JobSubmissionEventsLazyDataModel jobSubmissionEvents) {
+		Objects.requireNonNull(jobSubmissionEvents);
+		this.jobSubmissionEvents = jobSubmissionEvents;
 	}
 
 	public void setJobOfferEvents(JobOfferEventsLazyDataModel jobOfferEvents) {

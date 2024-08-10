@@ -13,11 +13,11 @@
 	<ui:define name="content">
 		<div class="grid">
 			<div class="col-12 xl:col-8">
-				<h:link value="#{event.jobCandidature.candidate.fullName}" outcome="/candidate/view.xhtml">
-					<f:param name="candidate" value="#{event.jobCandidature.candidate.id}" />
+				<h:link value="#{event.jobSubmission.candidate.fullName}" outcome="/candidate/view.xhtml">
+					<f:param name="candidate" value="#{event.jobSubmission.candidate.id}" />
 				</h:link>
 
-				<h:outputText value="#{i18n['job_candidature_state.'.concat(event.state)]}" />
+				<h:outputText value="#{i18n['job_jobSubmission_state.'.concat(event.state)]}" />
 
 				<h:outputText value="#{event.date}">
 					<f:convertDateTime type="localDate" pattern="dd/MM/yyyy HH:mm:ss" />
@@ -27,7 +27,7 @@
 					<f:param name="user" value="#{event.user.id}" />
 				</h:link>
 
-				<h:outputText value="#{i18n['job_candidature_event.'.concat(event.type)]}" />
+				<h:outputText value="#{i18n['job_jobSubmission_event.'.concat(event.type)]}" />
 
 				<h:outputText value="#{event.notes}" />
 

@@ -88,16 +88,16 @@
 					</h:form>
 				</div>
 				<h:form>
-					<cc:jobCandidatures value="#{viewJobView.jobCandidatures}"
+					<cc:jobSubmissions value="#{viewJobView.jobSubmissions}"
 						showJobOffer="false" rows="5">
 						<p:button outcome="/job/selectCandidates.xhtml" process="@this"
-							rendered="#{viewJobView.addCandidature}" icon="pi pi-plus"
+							rendered="#{viewJobView.addSubmission}" icon="pi pi-plus"
 							styleClass="ui-button-success ui-button-outlined">
 							<f:param name="jobOffer" value="#{viewJobView.jobOffer.id}" />
 						</p:button>
-					</cc:jobCandidatures>
+					</cc:jobSubmissions>
 				</h:form>
-				<cc:jobCandidatureEvents value="#{viewJobView.jobCandidatureEvents}"
+				<cc:jobSubmissionEvents value="#{viewJobView.jobSubmissionEvents}"
 					rows="5" />
 				<cc:jobOfferEvents value="#{viewJobView.jobOfferEvents}" rows="5" />
 			</div>

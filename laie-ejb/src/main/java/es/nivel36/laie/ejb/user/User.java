@@ -19,9 +19,9 @@ import es.nivel36.laie.ejb.core.bookmark.Bookmark;
 import es.nivel36.laie.ejb.core.file.PhysicalFile;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
 import es.nivel36.laie.ejb.core.subject.Subject;
-import es.nivel36.laie.ejb.job.candidature.JobCandidatureEvent;
 import es.nivel36.laie.ejb.job.meeting.Meeting;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
+import es.nivel36.laie.ejb.job.submission.JobSubmissionEvent;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -65,7 +65,7 @@ public class User extends AbstractEntity implements Subject {
 	private String email;
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = false)
-	private Set<JobCandidatureEvent> jobCandidatureEvents = new HashSet<>();
+	private Set<JobSubmissionEvent> jobSubmissionEvents = new HashSet<>();
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "owner", orphanRemoval = true)
 	private Set<JobOffer> jobOffers = new HashSet<>();
@@ -169,8 +169,8 @@ public class User extends AbstractEntity implements Subject {
 		return new StringBuilder(this.name).append(" ").append(this.surname).toString();
 	}
 
-	public Set<JobCandidatureEvent> getJobCandidatureEvents() {
-		return jobCandidatureEvents;
+	public Set<JobSubmissionEvent> getJobSubmissionEvents() {
+		return jobSubmissionEvents;
 	}
 
 	public Set<JobOffer> getJobOffers() {
@@ -265,8 +265,8 @@ public class User extends AbstractEntity implements Subject {
 		this.email = email;
 	}
 
-	public void setJobCandidatureEvents(Set<JobCandidatureEvent> jobCandidatureEvents) {
-		this.jobCandidatureEvents = jobCandidatureEvents;
+	public void setJobSubmissionEvents(Set<JobSubmissionEvent> jobSubmissionEvents) {
+		this.jobSubmissionEvents = jobSubmissionEvents;
 	}
 
 	public void setJobOffers(Set<JobOffer> jobOffers) {

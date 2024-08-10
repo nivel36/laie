@@ -1,4 +1,4 @@
-package es.nivel36.laie.ejb.job.candidature;
+package es.nivel36.laie.ejb.job.submission;
 
 import static es.nivel36.laie.ejb.core.util.Parameters.map;
 
@@ -10,31 +10,31 @@ import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.util.Parameters;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 
-public class JobCandidatureEventDao extends AbstractDao {
+public class JobSubmissionEventDao extends AbstractDao {
 
-	public void addJobCandidatureEvent(final JobCandidatureEvent jobCandidatureEvent) {
-		Objects.requireNonNull(jobCandidatureEvent);
-		this.em.persist(jobCandidatureEvent);
+	public void addJobSubmissionEvent(final JobSubmissionEvent jobSubmissionEvent) {
+		Objects.requireNonNull(jobSubmissionEvent);
+		this.em.persist(jobSubmissionEvent);
 	}
 
-	public JobCandidatureEvent findJobCandidatureEventById(final long id) {
+	public JobSubmissionEvent findJobSubmissionEventById(final long id) {
 		if (id <= 0) {
 			throw new IllegalArgumentException();
 		}
-		return this.em.find(JobCandidatureEvent.class, id);
+		return this.em.find(JobSubmissionEvent.class, id);
 	}
 
-	public List<JobCandidatureEvent> findAll(JobOffer jobOffer, Page page) {
+	public List<JobSubmissionEvent> findAll(JobOffer jobOffer, Page page) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(page);
-		final String namedQuery = "JobCandidatureEvent.findAllByJobOffer";
+		final String namedQuery = "JobSubmissionEvent.findAllByJobOffer";
 		final Parameters parameters = map("jobOffer", jobOffer);
-		return this.findByQuery(JobCandidatureEvent.class, namedQuery, parameters, page);
+		return this.findByQuery(JobSubmissionEvent.class, namedQuery, parameters, page);
 	}
 	
 	public long countAll(JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer);
-		final String namedQuery = "JobCandidatureEvent.countAllByJobOffer";
+		final String namedQuery = "JobSubmissionEvent.countAllByJobOffer";
 		final Parameters parameters = map("jobOffer", jobOffer);
 		return this.findByQuery(Long.class, namedQuery, parameters);
 	}

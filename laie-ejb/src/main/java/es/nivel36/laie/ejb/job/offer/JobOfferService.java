@@ -16,12 +16,12 @@ import es.nivel36.laie.ejb.core.action.Create;
 import es.nivel36.laie.ejb.core.action.Update;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.SortField;
-import es.nivel36.laie.ejb.job.candidature.JobCandidature;
-import es.nivel36.laie.ejb.job.candidature.JobCandidatureDao;
-import es.nivel36.laie.ejb.job.candidature.event.JobCandidatureCompletedEvent;
 import es.nivel36.laie.ejb.job.offer.event.JobOfferCompletedEvent;
 import es.nivel36.laie.ejb.job.offer.event.JobOfferCreatedEvent;
 import es.nivel36.laie.ejb.job.offer.event.JobOfferStateChangedEvent;
+import es.nivel36.laie.ejb.job.submission.JobSubmission;
+import es.nivel36.laie.ejb.job.submission.JobSubmissionDao;
+import es.nivel36.laie.ejb.job.submission.event.JobSubmissionCompletedEvent;
 import es.nivel36.laie.ejb.user.User;
 import jakarta.ejb.Stateless;
 import jakarta.enterprise.event.Event;
@@ -33,7 +33,7 @@ public class JobOfferService {
 
 	private static final Logger logger = LoggerFactory.getLogger(JobOffer.class);
 
-	private @Inject JobCandidatureDao jobCandidatureDao;
+	private @Inject JobSubmissionDao jobSubmissionDao;
 	private @Inject JobOfferDao jobOfferDao;
 	private @Inject JobOfferProcessDao jobOfferProcessDao;
 	private @Inject @Update @JobOfferCompletedEvent Event<JobOffer> completedEvent;
@@ -121,15 +121,15 @@ public class JobOfferService {
 	}
 
 	private boolean isCompleted(final JobOffer jobOffer) {
-		final List<JobCandidature> jobCandidatures = this.jobCandidatureDao.findApprovedJobCanditures(jobOffer,
+		final List<JobSubmission> jobSubmissions = this.jobSubmissionDao.findApprovedJobCanditures(jobOffer,
 				Page.ALL_RESULTS);
-		final int numberofAprrovedCandidatures = jobCandidatures.size();
-		return jobOffer.getPlaces() == numberofAprrovedCandidatures;
+		final int numberofAprrovedSubmissions = jobSubmissions.size();
+		return jobOffer.getPlaces() == numberofAprrovedSubmissions;
 	}
 
-	public void onJobCandidatureCompleted(@Observes @JobCandidatureCompletedEvent final JobCandidature jobCandidature) {
-		Objects.requireNonNull(jobCandidature, "Job candidature can't be null");
-		final JobOffer jobOffer = jobCandidature.getJobOffer();
+	public void onJobSubmissionCompleted(@Observes @JobSubmissionCompletedEvent final JobSubmission jobSubmission) {
+		Objects.requireNonNull(jobSubmission, "Job jobSubmission can't be null");
+		final JobOffer jobOffer = jobSubmission.getJobOffer();
 		if (this.isCompleted(jobOffer)) {
 			this.changeState(jobOffer, JobOfferState.CLOSED, null, null);
 		}
@@ -215,9 +215,9 @@ public class JobOfferService {
 		this.stateChangedEvent = stateChangedEvent;
 	}
 
-	public void setJobCandidatureDao(final JobCandidatureDao jobCandidatureDao) {
-		Objects.requireNonNull(jobCandidatureDao);
-		this.jobCandidatureDao = jobCandidatureDao;
+	public void setJobSubmissionDao(final JobSubmissionDao jobSubmissionDao) {
+		Objects.requireNonNull(jobSubmissionDao);
+		this.jobSubmissionDao = jobSubmissionDao;
 	}
 
 	public void setJobOfferDao(final JobOfferDao jobOfferDao) {

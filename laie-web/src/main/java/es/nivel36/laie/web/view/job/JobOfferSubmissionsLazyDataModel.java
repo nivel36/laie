@@ -9,16 +9,16 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortMeta;
 
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.job.candidature.JobCandidature;
-import es.nivel36.laie.ejb.job.candidature.JobCandidatureService;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
+import es.nivel36.laie.ejb.job.submission.JobSubmission;
+import es.nivel36.laie.ejb.job.submission.JobSubmissionService;
 import jakarta.inject.Inject;
 
-public class JobOfferCandidaturesLazyDataModel extends LazyDataModel<JobCandidature> {
+public class JobOfferSubmissionsLazyDataModel extends LazyDataModel<JobSubmission> {
 	
 	private static final long serialVersionUID = -4040506548394973503L;
 
-	private transient @Inject JobCandidatureService service;
+	private transient @Inject JobSubmissionService service;
 	
 	private JobOffer jobOffer;
 
@@ -29,13 +29,13 @@ public class JobOfferCandidaturesLazyDataModel extends LazyDataModel<JobCandidat
 	}
 
 	@Override
-	public List<JobCandidature> load(int first, int pageSize, Map<String, SortMeta> sortBy,
+	public List<JobSubmission> load(int first, int pageSize, Map<String, SortMeta> sortBy,
 			Map<String, FilterMeta> filterBy) {
 		Objects.requireNonNull(jobOffer);
-		return service.findJobCandidaturesByJobOffer(jobOffer, Page.of(first, pageSize));
+		return service.findJobSubmissionsByJobOffer(jobOffer, Page.of(first, pageSize));
 	}
 
-	public void setService(JobCandidatureService service) {
+	public void setService(JobSubmissionService service) {
 		Objects.requireNonNull(service);
 		this.service = service;
 	}

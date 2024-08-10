@@ -12,10 +12,10 @@ import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.job.candidature.JobCandidature;
-import es.nivel36.laie.ejb.job.candidature.JobCandidatureService;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 import es.nivel36.laie.ejb.job.offer.JobOfferService;
+import es.nivel36.laie.ejb.job.submission.JobSubmission;
+import es.nivel36.laie.ejb.job.submission.JobSubmissionService;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
@@ -47,27 +47,27 @@ public class SelectCandidatesView extends AbstractView {
 
 	private List<Candidate> selectedCandidates;
 
-	private transient @Inject JobCandidatureService jobCandidatureService;
+	private transient @Inject JobSubmissionService jobSubmissionService;
 
 	@PostConstruct
 	public void init() {
 		logger.trace("Select Candidates for jobOffer {} init", this.jobOfferId);
-		findJobOfferCandidatures();
+		findJobOfferSubmissions();
 		final User user = sessionUser.get();
 		if (!(this.sessionUser.isAdmin() || this.jobOffer.getOwner().equals(user)
 				|| this.jobOffer.getRecruiters().contains(user))) {
 			throw new SecurityException();
 		}
-		final List<JobCandidature> jobCandidatures = this.jobCandidatureService.findJobCandidaturesByJobOffer(jobOffer,
+		final List<JobSubmission> jobSubmissions = this.jobSubmissionService.findJobSubmissionsByJobOffer(jobOffer,
 				Page.ALL_RESULTS);
-		for (final JobCandidature jobCandidature : jobCandidatures) {
-			final Candidate candidate = jobCandidature.getCandidate();
+		for (final JobSubmission jobSubmission : jobSubmissions) {
+			final Candidate candidate = jobSubmission.getCandidate();
 			this.alredySelectedCandidates.put(candidate.getId(), candidate);
 		}
 		this.search();
 	}
 
-	private void findJobOfferCandidatures() {
+	private void findJobOfferSubmissions() {
 		try {
 			final Long id = Long.parseLong(jobOfferId);
 			this.jobOffer = this.jobOfferService.findJobOfferById(id);
@@ -88,7 +88,7 @@ public class SelectCandidatesView extends AbstractView {
 	}
 
 	public void select() {
-		this.jobCandidatureService.addJobCandidatures(jobOffer, this.selectedCandidates);
+		this.jobSubmissionService.addJobSubmissions(jobOffer, this.selectedCandidates);
 		Faces.redirect(ViewJobView.getUrl(this.jobOffer.getId()));
 	}
 
@@ -124,8 +124,8 @@ public class SelectCandidatesView extends AbstractView {
 		this.selectedCandidates = selectedCandidates;
 	}
 
-	public void setJobCandidatureService(final JobCandidatureService jobCandidatureService) {
-		Objects.requireNonNull(jobCandidatureService);
-		this.jobCandidatureService = jobCandidatureService;
+	public void setJobSubmissionService(final JobSubmissionService jobSubmissionService) {
+		Objects.requireNonNull(jobSubmissionService);
+		this.jobSubmissionService = jobSubmissionService;
 	}
 }

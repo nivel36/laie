@@ -1,4 +1,4 @@
-package es.nivel36.laie.ejb.job.candidature;
+package es.nivel36.laie.ejb.job.submission;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -18,9 +18,9 @@ import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "JOB_CANDIDATURE", uniqueConstraints = {
+@Table(name = "JOB_SUBMISSION", uniqueConstraints = {
 		@UniqueConstraint(columnNames = { "JOB_OFFER_ID", "CANDIDATE_ID" }) })
-public class JobCandidature extends AbstractEntity {
+public class JobSubmission extends AbstractEntity {
 
 	private static final long serialVersionUID = 7312289648009726566L;
 
@@ -29,8 +29,8 @@ public class JobCandidature extends AbstractEntity {
 	@JoinColumn(name = "CANDIDATE_ID", nullable = false)
 	private Candidate candidate;
 
-	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "jobCandidature", orphanRemoval = true)
-	private Set<JobCandidatureEvent> jobCandidatureEvents = new HashSet<>();
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "jobSubmission", orphanRemoval = true)
+	private Set<JobSubmissionEvent> jobSubmissionEvents = new HashSet<>();
 
 	@NotNull
 	@ManyToOne
@@ -42,20 +42,20 @@ public class JobCandidature extends AbstractEntity {
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "JOB_CANDIDATURE_STATE_ID", nullable = false)
-	private JobCandidatureState state;
+	@JoinColumn(name = "JOB_SUBMISSION_STATE_ID", nullable = false)
+	private JobSubmissionState state;
 
-	public JobCandidature() {
+	public JobSubmission() {
 	}
 
-	public JobCandidature(final Candidate candidate, final JobOffer jobOffer) {
+	public JobSubmission(final Candidate candidate, final JobOffer jobOffer) {
 		this.candidate = candidate;
 		this.jobOffer = jobOffer;
 	}
 
-	public void addJobCandidatureEvent(final JobCandidatureEvent jobCandidatureEvent) {
-		Objects.requireNonNull(jobCandidatureEvent);
-		this.jobCandidatureEvents.add(jobCandidatureEvent);
+	public void addJobSubmissionEvent(final JobSubmissionEvent jobSubmissionEvent) {
+		Objects.requireNonNull(jobSubmissionEvent);
+		this.jobSubmissionEvents.add(jobSubmissionEvent);
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class JobCandidature extends AbstractEntity {
 		if (this.getClass() != obj.getClass()) {
 			return false;
 		}
-		final JobCandidature other = (JobCandidature) obj;
+		final JobSubmission other = (JobSubmission) obj;
 		return Objects.equals(this.candidate, other.candidate) && Objects.equals(this.jobOffer, other.jobOffer);
 	}
 
@@ -77,8 +77,8 @@ public class JobCandidature extends AbstractEntity {
 		return this.candidate;
 	}
 
-	public Set<JobCandidatureEvent> getJobCandidatureEvents() {
-		return jobCandidatureEvents;
+	public Set<JobSubmissionEvent> getJobSubmissionEvents() {
+		return jobSubmissionEvents;
 	}
 
 
@@ -94,7 +94,7 @@ public class JobCandidature extends AbstractEntity {
 		return meetings;
 	}
 
-	public JobCandidatureState getState() {
+	public JobSubmissionState getState() {
 		return this.state;
 	}
 
@@ -103,7 +103,7 @@ public class JobCandidature extends AbstractEntity {
 		return Objects.hash(this.candidate, this.jobOffer);
 	}
 
-	public boolean hasState(final JobCandidatureState state) {
+	public boolean hasState(final JobSubmissionState state) {
 		Objects.requireNonNull(state);
 		return state.equals(this.state);
 	}
@@ -119,8 +119,8 @@ public class JobCandidature extends AbstractEntity {
 		this.candidate = candidate;
 	}
 
-	public void setJobCandidatureEvents(Set<JobCandidatureEvent> jobCandidatureEvents) {
-		this.jobCandidatureEvents = jobCandidatureEvents;
+	public void setJobSubmissionEvents(Set<JobSubmissionEvent> jobSubmissionEvents) {
+		this.jobSubmissionEvents = jobSubmissionEvents;
 	}
 
 	public void setJobMeetings(final Set<Meeting> meetings) {
@@ -135,7 +135,7 @@ public class JobCandidature extends AbstractEntity {
 		this.meetings = meetings;
 	}
 
-	public void setState(final JobCandidatureState state) {
+	public void setState(final JobSubmissionState state) {
 		this.state = state;
 	}
 

@@ -11,12 +11,12 @@ import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.job.candidature.JobCandidature;
-import es.nivel36.laie.ejb.job.candidature.JobCandidatureEvent;
-import es.nivel36.laie.ejb.job.candidature.JobCandidatureEventType;
-import es.nivel36.laie.ejb.job.candidature.JobCandidatureService;
-import es.nivel36.laie.ejb.job.candidature.JobCandidatureState;
-import es.nivel36.laie.ejb.job.candidature.JobCandidatureStateService;
+import es.nivel36.laie.ejb.job.submission.JobSubmission;
+import es.nivel36.laie.ejb.job.submission.JobSubmissionEvent;
+import es.nivel36.laie.ejb.job.submission.JobSubmissionEventType;
+import es.nivel36.laie.ejb.job.submission.JobSubmissionService;
+import es.nivel36.laie.ejb.job.submission.JobSubmissionState;
+import es.nivel36.laie.ejb.job.submission.JobSubmissionStateService;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
 import es.nivel36.laie.web.view.job.ViewJobView;
@@ -33,71 +33,71 @@ public class AddEventView extends AbstractView {
 
 	private static final long serialVersionUID = 1204346979477586986L;
 
-	private JobCandidatureEvent event;
+	private JobSubmissionEvent event;
 
-	private @Param JobCandidature jobCandidature;
+	private @Param JobSubmission jobSubmission;
 
-	private transient @Inject JobCandidatureStateService jobCandidatureStateService;
+	private transient @Inject JobSubmissionStateService jobSubmissionStateService;
 
-	private transient @Inject JobCandidatureService jobCandidatureService;
+	private transient @Inject JobSubmissionService jobSubmissionService;
 
-	private List<JobCandidatureState> states;
+	private List<JobSubmissionState> states;
 
-	private List<JobCandidatureEventType> types;
+	private List<JobSubmissionEventType> types;
 
 	@PostConstruct
 	public void init() {
 		logger.debug("AddEventView init");
-		if (jobCandidature == null) {
+		if (jobSubmission == null) {
 			throw new IllegalPageStateException();
 		}
-		event = new JobCandidatureEvent();
-		event.setJobCandidature(jobCandidature);
+		event = new JobSubmissionEvent();
+		event.setJobSubmission(jobSubmission);
 		event.setUser(this.sessionUser.get());
 		event.setDate(LocalDateTime.now());
-		types = Arrays.asList(JobCandidatureEventType.values());
+		types = Arrays.asList(JobSubmissionEventType.values());
 		initComboStates();
 	}
 
 	private void initComboStates() {
 		states = new ArrayList<>();
-		JobCandidatureState currentState = jobCandidatureStateService.findByName(jobCandidature.getState().getName());
+		JobSubmissionState currentState = jobSubmissionStateService.findByName(jobSubmission.getState().getName());
 		states.add(currentState);
-		states.addAll(jobCandidatureStateService.findNextStates(currentState));
+		states.addAll(jobSubmissionStateService.findNextStates(currentState));
 	}
 
 	public void save() {
-		this.jobCandidatureService.addJobCandidatureEvent(event);
-		Faces.redirect(ViewJobView.getUrl(jobCandidature.getJobOffer().getId()));
+		this.jobSubmissionService.addJobSubmissionEvent(event);
+		Faces.redirect(ViewJobView.getUrl(jobSubmission.getJobOffer().getId()));
 	}
 
-	public JobCandidatureEvent getEvent() {
+	public JobSubmissionEvent getEvent() {
 		return event;
 	}
 
-	public JobCandidature getJobCandidature() {
-		return jobCandidature;
+	public JobSubmission getJobSubmission() {
+		return jobSubmission;
 	}
 
-	public List<JobCandidatureState> getStates() {
+	public List<JobSubmissionState> getStates() {
 		return states;
 	}
 
-	public List<JobCandidatureEventType> getTypes() {
+	public List<JobSubmissionEventType> getTypes() {
 		return types;
 	}
 
-	public void setEvent(JobCandidatureEvent event) {
+	public void setEvent(JobSubmissionEvent event) {
 		this.event = event;
 	}
 
-	public void setJobCandidatureService(JobCandidatureService jobCandidatureService) {
-		Objects.requireNonNull(jobCandidatureService);
-		this.jobCandidatureService = jobCandidatureService;
+	public void setJobSubmissionService(JobSubmissionService jobSubmissionService) {
+		Objects.requireNonNull(jobSubmissionService);
+		this.jobSubmissionService = jobSubmissionService;
 	}
 
-	public void setJobCandidatureStateService(JobCandidatureStateService jobCandidatureStateService) {
-		Objects.requireNonNull(jobCandidatureStateService);
-		this.jobCandidatureStateService = jobCandidatureStateService;
+	public void setJobSubmissionStateService(JobSubmissionStateService jobSubmissionStateService) {
+		Objects.requireNonNull(jobSubmissionStateService);
+		this.jobSubmissionStateService = jobSubmissionStateService;
 	}
 }

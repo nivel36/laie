@@ -1,4 +1,4 @@
-package es.nivel36.laie.ejb.job.candidature;
+package es.nivel36.laie.ejb.job.submission;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -22,8 +22,8 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Indexed
-@Table(name = "JOB_CANDIDATURE_EVENT")
-public class JobCandidatureEvent extends AbstractEntity implements Event {
+@Table(name = "JOB_SUBMISSION_EVENT")
+public class JobSubmissionEvent extends AbstractEntity implements Event {
 
 	private static final long serialVersionUID = -5724212902774335888L;
 
@@ -32,37 +32,37 @@ public class JobCandidatureEvent extends AbstractEntity implements Event {
 	private LocalDateTime date;
 
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "JOB_CANDIDATURE_ID")
-	private JobCandidature jobCandidature;
+	@JoinColumn(name = "JOB_SUBMISSION_ID")
+	private JobSubmission jobSubmission;
 
 	@Column(name = "NOTES", columnDefinition = "TEXT")
 	private String notes;
 
 	@ManyToOne
-	@JoinColumn(name = "JOB_CANDIDATURE_STATE_ID")
-	private JobCandidatureState state;
+	@JoinColumn(name = "JOB_SUBMISSION_STATE_ID")
+	private JobSubmissionState state;
 
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	@Column(name = "TYPE", nullable = false, length = 16)
-	private JobCandidatureEventType type;
+	private JobSubmissionEventType type;
 
 	@ManyToOne
 	@IndexedEmbedded(includeDepth = 1)
 	@JoinColumn(name = "USER_ID")
 	private User user;
 
-	public JobCandidatureEvent() {
+	public JobSubmissionEvent() {
 	}
 
-	public JobCandidatureEvent(final User user, final JobCandidature jobCandidature) {
+	public JobSubmissionEvent(final User user, final JobSubmission jobSubmission) {
 		Objects.requireNonNull(user);
-		Objects.requireNonNull(jobCandidature);
+		Objects.requireNonNull(jobSubmission);
 		this.user = user;
 		this.date = LocalDateTime.now();
-		this.jobCandidature = jobCandidature;
-		this.state = jobCandidature.getState();
-		this.setType(JobCandidatureEventType.OTHER);
+		this.jobSubmission = jobSubmission;
+		this.state = jobSubmission.getState();
+		this.setType(JobSubmissionEventType.OTHER);
 	}
 
 	@Override
@@ -76,28 +76,28 @@ public class JobCandidatureEvent extends AbstractEntity implements Event {
 		if (this.getClass() != obj.getClass()) {
 			return false;
 		}
-		final JobCandidatureEvent other = (JobCandidatureEvent) obj;
+		final JobSubmissionEvent other = (JobSubmissionEvent) obj;
 		return Objects.equals(this.date, other.date) && Objects.equals(this.type, other.type)
-				&& Objects.equals(this.user, other.user) && Objects.equals(this.jobCandidature, other.jobCandidature);
+				&& Objects.equals(this.user, other.user) && Objects.equals(this.jobSubmission, other.jobSubmission);
 	}
 
 	public LocalDateTime getDate() {
 		return this.date;
 	}
 
-	public JobCandidature getJobCandidature() {
-		return this.jobCandidature;
+	public JobSubmission getJobSubmission() {
+		return this.jobSubmission;
 	}
 
 	public String getNotes() {
 		return this.notes;
 	}
 
-	public JobCandidatureState getState() {
+	public JobSubmissionState getState() {
 		return this.state;
 	}
 
-	public JobCandidatureEventType getType() {
+	public JobSubmissionEventType getType() {
 		return this.type;
 	}
 
@@ -107,26 +107,26 @@ public class JobCandidatureEvent extends AbstractEntity implements Event {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.date, this.type, this.user, this.jobCandidature);
+		return Objects.hash(this.date, this.type, this.user, this.jobSubmission);
 	}
 
 	public void setDate(final LocalDateTime date) {
 		this.date = date;
 	}
 
-	public void setJobCandidature(final JobCandidature jobCandidature) {
-		this.jobCandidature = jobCandidature;
+	public void setJobSubmission(final JobSubmission jobSubmission) {
+		this.jobSubmission = jobSubmission;
 	}
 
 	public void setNotes(final String notes) {
 		this.notes = notes;
 	}
 
-	public void setState(final JobCandidatureState state) {
+	public void setState(final JobSubmissionState state) {
 		this.state = state;
 	}
 
-	public void setType(final JobCandidatureEventType type) {
+	public void setType(final JobSubmissionEventType type) {
 		this.type = type;
 	}
 
