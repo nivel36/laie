@@ -16,9 +16,9 @@ import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
 /**
- * This singleton class is responsible for automatically closing job offers.
- * The closing process is scheduled to run daily at midnight and also triggers
- * when a job submission is completed to check if the job offer should be closed.
+ * This singleton class is responsible for automatically closing job offers. The
+ * closing process is scheduled to run daily at midnight and also triggers when
+ * a job submission is completed to check if the job offer should be closed.
  */
 @Singleton
 @Startup
@@ -28,7 +28,7 @@ public class JobOfferClosingObserver {
 
 	private @Inject JobOfferService jobOfferService;
 	private @Inject JobSubmissionService jobSubmissionService;
-	
+
 	/**
 	 * Schedules a task to run every day at midnight to close job offers that meet
 	 * the criteria for closure.
@@ -38,12 +38,12 @@ public class JobOfferClosingObserver {
 		logger.debug("Starting the job offer closing process");
 		final List<JobOffer> jobOffers = jobOfferService.findJobOffersToClose();
 		for (final JobOffer offer : jobOffers) {
-			closeJobOffer(offer);
+			this.closeJobOffer(offer);
 		}
 	}
 
 	private void closeJobOffer(final JobOffer offer) {
-		jobOfferService.changeState(offer, JobOfferState.CLOSED, null, null);
+		this.jobOfferService.changeState(offer, JobOfferState.CLOSED, null, null);
 	}
 
 	/**
@@ -58,13 +58,41 @@ public class JobOfferClosingObserver {
 		logger.debug("Handling the completion of the job submission {}", jobSubmission);
 		final JobOffer jobOffer = jobSubmission.getJobOffer();
 		if (this.isCompleted(jobOffer)) {
-			closeJobOffer(jobOffer);
+			this.closeJobOffer(jobOffer);
 		}
 	}
 
 	private boolean isCompleted(final JobOffer jobOffer) {
-	    int availablePlaces = jobOffer.getPlaces();
-	    long approvedSubmissionsCount = jobSubmissionService.countApprovedJobCanditures(jobOffer);
-	    return availablePlaces == approvedSubmissionsCount;
+		int availablePlaces = jobOffer.getPlaces();
+		long approvedSubmissionsCount = jobSubmissionService.countApprovedJobCanditures(jobOffer);
+		return availablePlaces == approvedSubmissionsCount;
+	}
+
+	/**
+	 * Sets the <tt>JobOfferService</tt>. This method should be used for setting or
+	 * changing the <tt>JobOfferService</tt> instance, primarily in testing
+	 * scenarios.
+	 * 
+	 * @param jobOfferService with the <tt>JobOfferService</tt> to be set. Cannot be
+	 *                        null.
+	 * @throws NullPointerException if jobOfferService is null.
+	 */
+	public void setJobOfferService(final JobOfferService jobOfferService) {
+		Objects.requireNonNull(jobOfferService, "JobOfferService cannot be null");
+		this.jobOfferService = jobOfferService;
+	}
+
+	/**
+	 * Sets the <tt>JobSubmissionService</tt>. This method should be used for
+	 * setting or changing the <tt>JobSubmissionService</tt> instance, primarily in
+	 * testing scenarios.
+	 * 
+	 * @param jobSubmissionService with the <tt>JobSubmissionService</tt> to be set.
+	 *                             Cannot be null.
+	 * @throws NullPointerException if jobSubmissionService is null.
+	 */
+	public void setJobSubmissionService(final JobSubmissionService jobSubmissionService) {
+		Objects.requireNonNull(jobSubmissionService, "JobSubmissionService cannot be null");
+		this.jobSubmissionService = jobSubmissionService;
 	}
 }

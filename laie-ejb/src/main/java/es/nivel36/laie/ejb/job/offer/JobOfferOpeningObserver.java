@@ -63,4 +63,17 @@ public class JobOfferOpeningObserver {
 		final LocalDate now = LocalDate.now();
 		return !now.isBefore(dateOpened);
 	}
+
+	/**
+	 * Sets the <tt>JobOfferService</tt>. This method should be used for setting or changing
+	 * the <tt>JobOfferService</tt> instance, primarily in testing scenarios.
+	 * 
+	 * @param jobOfferService with the <tt>JobOfferService</tt> to be set. Cannot be
+	 *                        null.
+	 * @throws NullPointerException if jobOfferService is null.
+	 */
+	public void setJobOfferService(final JobOfferService jobOfferService) {
+		Objects.requireNonNull(jobOfferService, "JobOfferService cannot be null");
+		this.jobOfferService = jobOfferService;
+	}
 }
