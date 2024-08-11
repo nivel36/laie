@@ -19,14 +19,9 @@ import es.nivel36.laie.ejb.core.model.SortField;
 import es.nivel36.laie.ejb.job.offer.event.JobOfferCompletedEvent;
 import es.nivel36.laie.ejb.job.offer.event.JobOfferCreatedEvent;
 import es.nivel36.laie.ejb.job.offer.event.JobOfferStateChangedEvent;
-import es.nivel36.laie.ejb.job.submission.JobSubmission;
-import es.nivel36.laie.ejb.job.submission.JobSubmissionDao;
-import es.nivel36.laie.ejb.job.submission.event.JobSubmissionCompletedEvent;
 import es.nivel36.laie.ejb.user.User;
 import jakarta.ejb.Stateless;
 import jakarta.enterprise.event.Event;
-import jakarta.enterprise.event.Observes;
-import jakarta.enterprise.event.ObservesAsync;
 import jakarta.inject.Inject;
 
 @Stateless
@@ -34,25 +29,24 @@ public class JobOfferService {
 
 	private static final Logger logger = LoggerFactory.getLogger(JobOffer.class);
 
-	private @Inject JobSubmissionDao jobSubmissionDao;
 	private @Inject JobOfferDao jobOfferDao;
 	private @Inject JobOfferProcessDao jobOfferProcessDao;
 	private @Inject @Update @JobOfferCompletedEvent Event<JobOffer> completedEvent;
-	private @Inject @Update Event<JobOffer> updateEvent;
 	private @Inject @Create @JobOfferCreatedEvent Event<JobOffer> createdEvent;
 	private @Inject @Update @JobOfferStateChangedEvent Event<JobOffer> stateChangedEvent;
+	private @Inject @Update Event<JobOffer> updateEvent;
 
 	public void addJobOffer(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer);
+		logger.debug("Adding job offer {}", jobOffer);
 		jobOffer.setState(JobOfferState.CREATED);
 		this.jobOfferDao.insert(jobOffer);
+		
 		final User owner = jobOffer.getOwner();
 		final JobOfferEvent newEvent = builJobOfferEvent(jobOffer, JobOfferState.CREATED, null, owner);
 		jobOfferDao.addJobOfferEvent(newEvent);
+		
 		this.createdEvent.fireAsync(jobOffer);
-		if (this.openDateHasCome(jobOffer)) {
-			this.changeState(jobOffer, JobOfferState.OPENED, null, owner);
-		}
 	}
 
 	public JobOfferProcess findJobOfferProcessByName(String name) {
@@ -65,12 +59,6 @@ public class JobOfferService {
 		final JobOffer updatedJobOffer = jobOfferDao.update(jobOffer);
 		this.updateEvent.fireAsync(jobOffer);
 		return updatedJobOffer;
-	}
-
-	private boolean openDateHasCome(final JobOffer jobOffer) {
-		final LocalDate dateOpened = jobOffer.getOpenDate();
-		final LocalDate now = LocalDate.now();
-		return !now.isBefore(dateOpened);
 	}
 
 	public JobOffer findJobOfferById(final Long id) {
@@ -121,22 +109,6 @@ public class JobOfferService {
 		return Arrays.asList(JobOfferState.values());
 	}
 
-	private boolean isCompleted(final JobOffer jobOffer) {
-		final List<JobSubmission> jobSubmissions = this.jobSubmissionDao.findApprovedJobCanditures(jobOffer,
-				Page.ALL_RESULTS);
-		final int numberofAprrovedSubmissions = jobSubmissions.size();
-		return jobOffer.getPlaces() == numberofAprrovedSubmissions;
-	}
-
-	public void onJobSubmissionCompleted(
-			@ObservesAsync @JobSubmissionCompletedEvent final JobSubmission jobSubmission) {
-		Objects.requireNonNull(jobSubmission, "Job jobSubmission can't be null");
-		final JobOffer jobOffer = jobSubmission.getJobOffer();
-		if (this.isCompleted(jobOffer)) {
-			this.changeState(jobOffer, JobOfferState.CLOSED, null, null);
-		}
-	}
-
 	public JobOffer changeState(final JobOffer jobOffer, final JobOfferState newState, final String notes,
 			final User user) {
 		Objects.requireNonNull(jobOffer);
@@ -168,6 +140,14 @@ public class JobOfferService {
 		newStateEvent.setUser(user);
 		newStateEvent.setType(user == null ? JobOfferEventType.AUTOMATIC_EVENT : JobOfferEventType.MANUAL_EVENT);
 		return newStateEvent;
+	}
+	
+	public List<JobOffer> findJobOffersToClose(){
+		return jobOfferDao.findJobOffersToClose();
+	}
+	
+	public List<JobOffer> findJobOffersToOpen(){
+		return jobOfferDao.findJobOffersToOpen();
 	}
 
 	public long countJobOfferEventsByJobOffer(final JobOffer jobOffer) {
@@ -215,11 +195,6 @@ public class JobOfferService {
 	public void setStateChangedEvent(final Event<JobOffer> stateChangedEvent) {
 		Objects.requireNonNull(stateChangedEvent);
 		this.stateChangedEvent = stateChangedEvent;
-	}
-
-	public void setJobSubmissionDao(final JobSubmissionDao jobSubmissionDao) {
-		Objects.requireNonNull(jobSubmissionDao);
-		this.jobSubmissionDao = jobSubmissionDao;
 	}
 
 	public void setJobOfferDao(final JobOfferDao jobOfferDao) {

@@ -206,11 +206,10 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="JobSubmission.findApprovedByJobOffer">
+	<named-query name="JobSubmission.countApprovedByJobOffer">
 		<query><![CDATA[
-			SELECT j 
+			SELECT COUNT(j) 
 			FROM JobSubmission j 
-			LEFT JOIN FETCH j.candidate
 			LEFT JOIN FETCH j.jobOffer
 			WHERE j.jobOffer = :jobOffer
 			AND j.state.approved = TRUE
@@ -317,6 +316,23 @@
 			LEFT JOIN FETCH j.client
 			LEFT JOIN FETCH j.owner
 			WHERE j.id = :id			
+		]]></query>
+	</named-query>
+	
+	<named-query name="JobOffer.findJobOffersToOpen">
+		<query><![CDATA[
+			SELECT j 
+			FROM JobOffer j 
+			WHERE j.openDate <= CURRENT_DATE
+			AND j.state = :state		
+		]]></query>
+	</named-query>
+	
+	<named-query name="JobOffer.findJobOffersToClose">
+		<query><![CDATA[
+			SELECT j 
+			FROM JobOffer j 
+			WHERE j.closeDate > CURRENT_DATE
 		]]></query>
 	</named-query>
 

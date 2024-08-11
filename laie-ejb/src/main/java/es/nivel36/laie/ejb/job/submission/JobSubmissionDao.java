@@ -28,12 +28,11 @@ public class JobSubmissionDao extends AbstractDao {
 		return em.find(JobSubmission.class, jobSubmissionId);
 	}
 
-	public List<JobSubmission> findApprovedJobCanditures(final JobOffer jobOffer, final Page page) {
+	public long countApprovedJobCanditures(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer);
-		Objects.requireNonNull(page);
-		final String namedQuery = "JobSubmission.findApprovedByJobOffer";
+		final String namedQuery = "JobSubmission.countApprovedByJobOffer";
 		final Parameters parameters = map("jobOffer", jobOffer);
-		return this.findByQuery(JobSubmission.class, namedQuery, parameters, page);
+		return this.findByQuery(Long.class, namedQuery, parameters);
 	}
 
 	public JobSubmission findByJobOfferAndCandidate(final JobOffer jobOffer, final Candidate candidate) {

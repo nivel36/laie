@@ -109,4 +109,15 @@ public class JobOfferDao extends AbstractDao {
 		final String namedQuery = "JobOffer.findJobOfferProcess";
 		return this.findByQuery(JobOfferProcess.class, namedQuery, null, Page.ALL_RESULTS);
 	}
+	
+	public List<JobOffer> findJobOffersToOpen(){
+		final String namedQuery = "JobOffer.findJobOffersToOpen";
+		final Parameters parameters = map("state", JobOfferState.CREATED);
+		return this.findByQuery(JobOffer.class, namedQuery, parameters, Page.ALL_RESULTS);
+	}
+	
+	public List<JobOffer> findJobOffersToClose(){
+		final String namedQuery = "JobOffer.findJobOffersToClose";
+		return this.findByQuery(JobOffer.class, namedQuery, null, Page.ALL_RESULTS);
+	}
 }

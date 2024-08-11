@@ -113,6 +113,12 @@ public class JobSubmissionService {
 		return this.jobSubmissionDao.countJobOffersJobCanditures(jobOffer);
 	}
 	
+	public long countApprovedJobCanditures(final JobOffer jobOffer) {
+		Objects.requireNonNull(jobOffer);
+		logger.debug("Count approved jobSubmission of the job jobSubmission {}", jobOffer);
+		return this.jobSubmissionDao.countApprovedJobCanditures(jobOffer);
+	}
+	
 	public List<JobSubmissionEvent> findJobSubmissionEvents(JobOffer jobOffer, Page page) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(page);
