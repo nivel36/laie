@@ -47,7 +47,7 @@ public class CandidateService {
 		logger.debug("Add candidate {}", candidate);
 		this.updateTags(candidate);
 		this.candidateDao.insert(candidate);
-		this.createCandidateEvent.fireAsync(candidate);
+		this.createCandidateEvent.fire(candidate);
 	}
 
 	private void updateTags(final Candidate candidate) {
@@ -91,7 +91,7 @@ public class CandidateService {
 
 	private Candidate updateAndFireEvent(final Candidate candidate) {
 		final Candidate updatedCandidate = this.candidateDao.update(candidate);
-		this.updateCandidateEvent.fireAsync(updatedCandidate);
+		this.updateCandidateEvent.fire(updatedCandidate);
 		return updatedCandidate;
 	}
 
@@ -165,7 +165,7 @@ public class CandidateService {
 		file.setPhysicalFile(physicalFile);
 		file.setCandidate(candidate);
 		this.fileDao.insert(file);
-		this.updateCandidateEvent.fireAsync(candidate);
+		this.updateCandidateEvent.fire(candidate);
 	}
 
 	public void deleteCandidateFile(final File file) {
@@ -174,7 +174,7 @@ public class CandidateService {
 		logger.debug("Remove file {} from candidate {}", file, candidate);
 		this.fileService.removeFile(file.getPhysicalFile());
 		this.fileDao.deleteFile(file);
-		this.updateCandidateEvent.fireAsync(candidate);
+		this.updateCandidateEvent.fire(candidate);
 	}
 
 	public SearchResult<Candidate> search(final String searchText, final Page page) {

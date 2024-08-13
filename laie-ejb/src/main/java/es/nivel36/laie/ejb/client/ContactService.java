@@ -25,14 +25,14 @@ public class ContactService {
 	public void addContact(final Contact contact) {
 		logger.debug("Add contact {}", contact);
 		contactDao.insert(contact);
-		this.updateClientEvent.fireAsync(contact.getClient());
+		this.updateClientEvent.fire(contact.getClient());
 	}
 
 	public Contact updateContact(final Contact contact) {
 		Objects.requireNonNull(contact);
 		logger.debug("Update contact {}", contact);
 		final Contact updatedContact = this.contactDao.update(contact);
-		this.updateClientEvent.fireAsync(contact.getClient());
+		this.updateClientEvent.fire(contact.getClient());
 		return updatedContact;
 	}
 
@@ -40,7 +40,7 @@ public class ContactService {
 		Objects.requireNonNull(contact);
 		logger.debug("Delete contact {}", contact);
 		this.contactDao.deleteContactByIdAndClientId(contact, contact.getClient());
-		this.updateClientEvent.fireAsync(contact.getClient());
+		this.updateClientEvent.fire(contact.getClient());
 	}
 
 	public Contact findContactByEmail(final String email) {

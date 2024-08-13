@@ -45,7 +45,7 @@
 						</p:column>
 
 						<p:column headerText="#{i18n['event.user']}" priority="4">
-							<h:link value="#{event.user.fullName}" outcome="/user/view.xhtml">
+							<h:link value="#{event.user.fullName}" outcome="/user/view.xhtml" rendered="#{not empty event.user}">
 								<f:param name="user" value="#{event.user.id}" />
 							</h:link>
 						</p:column>

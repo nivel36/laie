@@ -46,7 +46,7 @@ public class JobOfferService {
 		final JobOfferEvent newEvent = builJobOfferEvent(jobOffer, JobOfferState.CREATED, null, owner);
 		jobOfferDao.addJobOfferEvent(newEvent);
 		
-		this.createdEvent.fireAsync(jobOffer);
+		this.createdEvent.fire(jobOffer);
 	}
 
 	public JobOfferProcess findJobOfferProcessByName(String name) {
@@ -57,7 +57,7 @@ public class JobOfferService {
 	public JobOffer updateJobOffer(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer);
 		final JobOffer updatedJobOffer = jobOfferDao.update(jobOffer);
-		this.updateEvent.fireAsync(jobOffer);
+		this.updateEvent.fire(jobOffer);
 		return updatedJobOffer;
 	}
 
@@ -122,10 +122,10 @@ public class JobOfferService {
 		if (newState.isOpenState()) {
 			jobOffer.setCloseDate(null);
 		}
-		this.stateChangedEvent.fireAsync(jobOffer);
+		this.stateChangedEvent.fire(jobOffer);
 		final JobOffer updatedJobOffer = jobOfferDao.update(jobOffer);
 		if (newState.isCloseState()) {
-			this.completedEvent.fireAsync(jobOffer);
+			this.completedEvent.fire(jobOffer);
 		}
 		return updatedJobOffer;
 	}

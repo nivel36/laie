@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import es.nivel36.laie.ejb.job.offer.event.JobOfferCreatedEvent;
 import jakarta.ejb.Schedule;
 import jakarta.ejb.Startup;
-import jakarta.enterprise.event.ObservesAsync;
+import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
@@ -50,7 +50,7 @@ public class JobOfferOpeningObserver {
 	 * 
 	 * @param jobOffer with the <tt>JobOffer</tt> that has been created.
 	 */
-	public void handleCreatedJobOffer(final @ObservesAsync @JobOfferCreatedEvent JobOffer jobOffer) {
+	public void handleCreatedJobOffer(final @Observes @JobOfferCreatedEvent JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer, "JobOffer cannot be null");
 		logger.debug("Handling the creation of the new job offer {}", jobOffer);
 		if (hasOpenDateArrived(jobOffer)) {

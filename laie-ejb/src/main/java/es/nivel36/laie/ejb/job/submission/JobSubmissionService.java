@@ -39,7 +39,7 @@ public class JobSubmissionService {
 		final JobSubmissionState firstState = this.jobSubmissionStateService.findInitialState();
 		final JobSubmission jobSubmission = new JobSubmission(candidate, jobOffer);
 		jobSubmission.setState(firstState);
-		createdEvent.fireAsync(jobSubmission);
+		createdEvent.fire(jobSubmission);
 		this.jobSubmissionDao.insert(jobSubmission);
 	}
 
@@ -50,10 +50,10 @@ public class JobSubmissionService {
 			logger.trace("State of {} has changed from {} to {}", jobSubmission, jobSubmission.getState(),
 					event.getState());
 			jobSubmission.setState(event.getState());
-			stateChangedEvent.fireAsync(jobSubmission);
+			stateChangedEvent.fire(jobSubmission);
 			if (event.getState().isApproved()) {
 				logger.trace("Job jobSubmission is approved");
-				completedEvent.fireAsync(jobSubmission);
+				completedEvent.fire(jobSubmission);
 			}
 		}
 		this.jobSubmissionDao.update(jobSubmission);

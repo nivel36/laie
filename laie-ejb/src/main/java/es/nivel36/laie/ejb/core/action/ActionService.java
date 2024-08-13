@@ -13,7 +13,7 @@ import es.nivel36.laie.ejb.user.UserService;
 import jakarta.annotation.Resource;
 import jakarta.ejb.SessionContext;
 import jakarta.ejb.Stateless;
-import jakarta.enterprise.event.ObservesAsync;
+import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
 
 @Stateless
@@ -27,19 +27,19 @@ public class ActionService {
 
 	private @Inject UserService userService;
 
-	public void createAction(@Create @ObservesAsync final Auditable auditedEntity) {
+	public void createAction(@Create @Observes final Auditable auditedEntity) {
 		Objects.requireNonNull(auditedEntity);
 		logger.debug("Create action class {} with id {}", auditedEntity.getEntityName(), auditedEntity.getId());
 		this.saveData(ActionType.CREATE, auditedEntity);
 	}
 
-	public void updateAction(@Update @ObservesAsync final Auditable auditedEntity) {
+	public void updateAction(@Update @Observes final Auditable auditedEntity) {
 		Objects.requireNonNull(auditedEntity);
 		logger.debug("Update action class {} with id {}", auditedEntity.getEntityName(), auditedEntity.getId());
 		this.saveData(ActionType.UPDATE, auditedEntity);
 	}
 
-	public void deleteAction(@Delete @ObservesAsync final Auditable auditedEntity) {
+	public void deleteAction(@Delete @Observes final Auditable auditedEntity) {
 		Objects.requireNonNull(auditedEntity);
 		logger.debug("Delete action class {} with id {}", auditedEntity.getEntityName(), auditedEntity.getId());
 		this.saveData(ActionType.DELETE, auditedEntity);

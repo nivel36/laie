@@ -33,7 +33,7 @@ public class ClientService {
 			throw new DuplicateCifException();
 		}
 		this.clientDao.insert(client);
-		this.createClientEvent.fireAsync(client);
+		this.createClientEvent.fire(client);
 	}
 
 	public Client updateClient(final Client client) throws DuplicateCifException {
@@ -46,7 +46,7 @@ public class ClientService {
 			}
 		}
 		final Client updatedClient = clientDao.update(client);
-		this.updateClientEvent.fireAsync(updatedClient);
+		this.updateClientEvent.fire(updatedClient);
 		return updatedClient;
 	}
 

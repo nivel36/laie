@@ -11,7 +11,7 @@ import es.nivel36.laie.ejb.job.submission.JobSubmissionService;
 import es.nivel36.laie.ejb.job.submission.event.JobSubmissionCompletedEvent;
 import jakarta.ejb.Schedule;
 import jakarta.ejb.Startup;
-import jakarta.enterprise.event.ObservesAsync;
+import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
@@ -52,8 +52,7 @@ public class JobOfferClosingObserver {
 	 * 
 	 * @param jobSubmission with the <tt>JobSubmission</tt> that has been completed.
 	 */
-	public void handleJobSubmissionCompleted(
-			@ObservesAsync @JobSubmissionCompletedEvent final JobSubmission jobSubmission) {
+	public void handleJobSubmissionCompleted(@Observes @JobSubmissionCompletedEvent final JobSubmission jobSubmission) {
 		Objects.requireNonNull(jobSubmission, "JobSubmission cannot be null");
 		logger.debug("Handling the completion of the job submission {}", jobSubmission);
 		final JobOffer jobOffer = jobSubmission.getJobOffer();

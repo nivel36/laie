@@ -69,7 +69,7 @@ public class JobSubmissionStateService {
 		Objects.requireNonNull(destinationState);
 		logger.debug("Transition betwen {} and {}", originState, destinationState);
 		final StateEvent eventBeforeTransition = new StateEvent(originState, "BEFORE_TRANSITION");
-		stateEvent.fireAsync(eventBeforeTransition);
+		stateEvent.fire(eventBeforeTransition);
 
 		final boolean validTransition = this.jobSubmissionStateDao.findNextStates(originState).stream()
 				.anyMatch(s -> s.equals(destinationState));
@@ -79,7 +79,7 @@ public class JobSubmissionStateService {
 		}
 
 		final StateEvent eventAfterTransition = new StateEvent(destinationState, "AFTER_TRANSITION");
-		stateEvent.fireAsync(eventAfterTransition);
+		stateEvent.fire(eventAfterTransition);
 	}
 
 	public void setJobSubmissionStateDao(final JobSubmissionStateDao jobSubmissionStateDao) {
