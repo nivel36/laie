@@ -210,7 +210,7 @@
 		<query><![CDATA[
 			SELECT COUNT(j) 
 			FROM JobSubmission j 
-			LEFT JOIN FETCH j.jobOffer
+			LEFT JOIN j.jobOffer
 			WHERE j.jobOffer = :jobOffer
 			AND j.state.approved = TRUE
 		]]></query>

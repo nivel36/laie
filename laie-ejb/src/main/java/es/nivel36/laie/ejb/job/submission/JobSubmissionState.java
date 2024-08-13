@@ -26,7 +26,7 @@ import jakarta.validation.constraints.NotNull;
 public class JobSubmissionState  extends AbstractEntity implements EventState {
 
 	private static final long serialVersionUID = -1530029544557152044L;
-
+	
 	@Column(name = "APPROVED")
 	private boolean approved;
 
@@ -39,7 +39,7 @@ public class JobSubmissionState  extends AbstractEntity implements EventState {
 	@Column(name = "DECLINED")
 	private boolean declined;
 
-    @OneToMany(mappedBy = "destinationState", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "destinationState", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Transition> destinationTransitions = new HashSet<>();
 
 	@Column(name = "FIRST")
@@ -50,7 +50,7 @@ public class JobSubmissionState  extends AbstractEntity implements EventState {
 	@JoinColumn(name = "JOB_OFFER_PROCESS_ID", nullable = false)
 	private JobOfferProcess jobOfferProcess;
 
-	@OneToMany(mappedBy = "state", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "state", fetch = FetchType.LAZY)
 	private Set<JobSubmission> jobSubmissions = new HashSet<>();
 
 	@FullTextField(name = "_name")
@@ -60,6 +60,9 @@ public class JobSubmissionState  extends AbstractEntity implements EventState {
 
 	@OneToMany(mappedBy = "originState", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Transition> originTransitions = new HashSet<>();
+
+	@Column(name = "PROGRESS")
+	private int progress;
 
 	@Override
 	public boolean equals(final Object obj) {
@@ -100,6 +103,10 @@ public class JobSubmissionState  extends AbstractEntity implements EventState {
 
 	public Set<Transition> getOriginTransitions() {
 		return originTransitions;
+	}
+
+	public int getProgress() {
+		return progress;
 	}
 
 	@Override
@@ -161,6 +168,10 @@ public class JobSubmissionState  extends AbstractEntity implements EventState {
 
 	public void setOriginTransitions(Set<Transition> originTransitions) {
 		this.originTransitions = originTransitions;
+	}
+
+	public void setProgress(int progress) {
+		this.progress = progress;
 	}
 
 	@Override

@@ -17,7 +17,7 @@
 					<f:param name="candidate" value="#{event.jobSubmission.candidate.id}" />
 				</h:link>
 
-				<h:outputText value="#{i18n['job_jobSubmission_state.'.concat(event.state)]}" />
+				<h:outputText value="#{i18n['job_submission_state.'.concat(event.state)]}" />
 
 				<h:outputText value="#{event.date}">
 					<f:convertDateTime type="localDate" pattern="dd/MM/yyyy HH:mm:ss" />
@@ -27,7 +27,7 @@
 					<f:param name="user" value="#{event.user.id}" />
 				</h:link>
 
-				<h:outputText value="#{i18n['job_jobSubmission_event.'.concat(event.type)]}" />
+				<h:outputText value="#{i18n['job_submission_event.'.concat(event.type)]}" />
 
 				<h:outputText value="#{event.notes}" />
 

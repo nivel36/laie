@@ -68,21 +68,21 @@
 				</div>
 				<p:card styleClass="card card-w-title nopad">
 					<p:tabView>
-						<p:tab title="#{i18n['candidate.job_jobSubmissions']}">
+						<p:tab title="#{i18n['candidate.job_submissions']}">
 							<p:dataTable var="jobSubmission"
 								value="#{viewCandidateView.jobSubmissions}"
-								emptyMessage="#{i18n['job_jobSubmission.no_job_jobSubmissions_found']}"
+								emptyMessage="#{i18n['job_submission.no_job_submissions_found']}"
 								reflow="true" paginator="true" paginatorPosition="bottom"
 								rows="5" sortBy="#{jobOffer.title}" sortOrder="ascending"
 								styleClass="ui-datatable-borderless">
 
-								<p:column headerText="#{i18n['job_jobSubmission.job_offer']}">
+								<p:column headerText="#{i18n['job_submission.job_offer']}">
 									<h:link value="#{jobSubmission.jobOffer.title}"
 										outcome="/job/view.xhtml">
 										<f:param name="jobOffer" value="#{jobSubmission.jobOffer.id}" />
 									</h:link>
 								</p:column>
-								<p:column headerText="#{i18n['job_jobSubmission.city']}">
+								<p:column headerText="#{i18n['job_submission.city']}">
 									<h:outputText value="#{jobSubmission.jobOffer.address.city}" />
 									<h:outputText value="("
 										rendered="#{not empty jobSubmission.jobOffer.address.region}" />
@@ -90,7 +90,7 @@
 									<h:outputText value=")"
 										rendered="#{not empty jobSubmission.jobOffer.address.region}" />
 								</p:column>
-								<p:column headerText="#{i18n['job_jobSubmission.client']}">
+								<p:column headerText="#{i18n['job_submission.client']}">
 									<h:link value="#{jobSubmission.jobOffer.client.name}"
 										outcome="/client/view.xhtml">
 										<f:param name="client"
@@ -103,12 +103,13 @@
 										styleClass="small" />
 								</p:column>
 
-								<p:column
-									headerText="#{job_jobSubmission.job_jobSubmission_state}">
+								<p:column headerText="#{i18n['job_submission.state']}">
 									<p:link outcome="/event/add.xhtml">
 										<f:param name="jobSubmission" value="#{jobSubmission.id}" />
 										<div class="tag">#{jobSubmission.state.name}</div>
 									</p:link>
+									<p:progressBar value="#{jobSubmission.state.progress}"
+										style="height: 0.5rem;" styleClass="mt-2" />
 								</p:column>
 							</p:dataTable>
 						</p:tab>
@@ -214,7 +215,7 @@
 								paginatorPosition="bottom" reflow="true" rows="5"
 								rowKey="#{file.id}" rowStyleClass="file"
 								styleClass="ui-datatable-headerless ui-datatable-borderless">
-								
+
 								<p:column styleClass="nopad-left">
 									<h:commandLink action="#{viewCandidateView.openFile(file)}">
 										<i class="pi pi-file mr-2" style="font-size: 2rem" />

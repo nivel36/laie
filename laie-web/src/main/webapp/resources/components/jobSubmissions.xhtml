@@ -16,7 +16,7 @@
 		<composite:attribute name="showJobOffer" default="true" />
 		<composite:attribute name="styleClass" required="false" default="" />
 		<composite:attribute name="title" required="false"
-			default="#{i18n['job_jobSubmission.job_jobSubmissions']}" />
+			default="#{i18n['job_submission.job_submissions']}" />
 		<composite:attribute name="rows" required="false" default="10" />
 	</composite:interface>
 
@@ -29,26 +29,26 @@
 				</div>
 				<div class="ui-card-content">
 					<p:dataTable var="jobSubmission" value="#{cc.attrs.value}"
-						emptyMessage="#{i18n['job_jobSubmission.no_job_jobSubmissions_found']}"
+						emptyMessage="#{i18n['job_submission.no_job_submissions_found']}"
 						reflow="true" paginator="true" paginatorPosition="bottom"
 						rows="#{cc.attrs.rows}" sortBy="#{jobOffer.title}"
 						sortOrder="ascending" styleClass="ui-datatable-borderless">
 
-						<p:column headerText="#{i18n['job_jobSubmission.job_offer']}"
+						<p:column headerText="#{i18n['job_submission.job_offer']}"
 							rendered="#{cc.attrs.showJobOffer}">
 							<h:link value="#{jobSubmission.jobOffer.title}"
 								outcome="/job/view.xhtml">
 								<f:param name="jobOffer" value="#{jobSubmission.jobOffer.id}" />
 							</h:link>
 						</p:column>
-						<p:column headerText="#{i18n['job_jobSubmission.city']}"
+						<p:column headerText="#{i18n['job_submission.city']}"
 							rendered="#{cc.attrs.showJobOffer}">
 					#{jobSubmission.jobOffer.address.city} <h:outputText value="("
 								rendered="#{not empty jobSubmission.jobOffer.address.region}" /> #{jobSubmission.jobOffer.address.region}<h:outputText
 								value=")"
 								rendered="#{not empty jobSubmission.jobOffer.address.region}" />
 						</p:column>
-						<p:column headerText="#{i18n['job_jobSubmission.client']}"
+						<p:column headerText="#{i18n['job_submission.client']}"
 							rendered="#{cc.attrs.showJobOffer}">
 							<h:link value="#{jobSubmission.jobOffer.client.name}"
 								outcome="/client/view.xhtml">
@@ -56,7 +56,7 @@
 									value="#{jobSubmission.jobOffer.client.id}" />
 							</h:link>
 						</p:column>
-						<p:column headerText="#{i18n['job_jobSubmission.candidate']}"
+						<p:column headerText="#{i18n['job_submission.job_submission']}"
 							rendered="#{cc.attrs.showCandidate}" styleClass="align-center">
 
 							<h:link outcome="/candidate/view.xhtml">
@@ -74,11 +74,14 @@
 								cancel="false" readonly="true" />
 						</p:column>
 						<p:column
-							headerText="#{i18n['job_jobSubmission.job_jobSubmission_state']}">
+							headerText="#{i18n['job_submission.state']}">
+
 							<p:link outcome="/event/add.xhtml">
 								<f:param name="jobSubmission" value="#{jobSubmission.id}" />
 								<div class="tag">#{jobSubmission.state.name}</div>
 							</p:link>
+							<p:progressBar value="#{jobSubmission.state.progress}"
+								style="height: 0.5rem;" styleClass="mt-2" />
 						</p:column>
 					</p:dataTable>
 					<div class="card-header-buttons">

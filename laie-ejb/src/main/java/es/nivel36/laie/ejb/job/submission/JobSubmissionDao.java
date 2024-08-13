@@ -22,9 +22,9 @@ public class JobSubmissionDao extends AbstractDao {
 	}
 
 	public JobSubmission findJobSubmission(final long jobSubmissionId) {
-		if (jobSubmissionId <= 0) {
-			throw new IllegalStateException();
-		}
+//		if (jobSubmissionId <= 0) {
+//			throw new IllegalStateException();
+//		}
 		return em.find(JobSubmission.class, jobSubmissionId);
 	}
 
