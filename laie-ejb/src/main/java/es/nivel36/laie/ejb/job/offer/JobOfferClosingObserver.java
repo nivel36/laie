@@ -7,7 +7,6 @@ import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.job.offer.event.JobOfferCompletedEvent;
 import es.nivel36.laie.ejb.job.submission.JobSubmission;
 import es.nivel36.laie.ejb.job.submission.JobSubmissionService;
 import es.nivel36.laie.ejb.job.submission.event.JobSubmissionCompletedEvent;
@@ -62,8 +61,13 @@ public class JobOfferClosingObserver {
         logger.debug("Handling the completion of the job submission {}", jobSubmission);
         final JobOffer jobOffer = jobSubmission.getJobOffer();
         if (this.isCompleted(jobOffer)) {
-            this.closeJobOffer(jobOffer);
+            this.finishJobOffer(jobOffer);
         }
+    }
+    
+    private void finishJobOffer(final JobOffer offer) {
+        offer.setCompletionDate(LocalDate.now());
+        this.jobOfferService.changeState(offer, JobOfferState.FINISHED, null, null);
     }
 
     private boolean isCompleted(final JobOffer jobOffer) {

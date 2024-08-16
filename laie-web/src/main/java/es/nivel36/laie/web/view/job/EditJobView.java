@@ -52,7 +52,7 @@ public class EditJobView extends AbstractJobView {
 		logger.debug("Save job offer action performed");
 		if (canAddJobOfferToClient()) {
 			jobOffer.setRecruiters(recruiters);
-			this.jobOfferService.updateJobOffer(jobOffer);
+			this.jobOfferService.updateJobOfferData(jobOffer);
 			Faces.redirect(ViewJobView.getUrl(this.jobOffer.getId()));
 		} else {
 			this.addErrorToField("jobOfferForm:client", "job.error.no_permissions");
@@ -68,7 +68,7 @@ public class EditJobView extends AbstractJobView {
 
 	public void next() {
 		jobOffer.setRecruiters(recruiters);
-		this.jobOffer = this.jobOfferService.updateJobOffer(jobOffer);
+		this.jobOffer = this.jobOfferService.updateJobOfferData(jobOffer);
 		Faces.redirect("/job/editDetails.xhtml?jobOffer=" + this.jobOffer.getId());
 	}
 }

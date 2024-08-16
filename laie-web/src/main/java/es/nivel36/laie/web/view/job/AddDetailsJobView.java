@@ -28,7 +28,7 @@ public class AddDetailsJobView extends AbstractJobView {
 
 	public void save() {
 		logger.debug("Save job offer action performed");
-		this.jobOfferService.updateJobOffer(jobOffer);
+		this.jobOfferService.updateJobOfferData(jobOffer);
 		Faces.redirect(ViewJobView.getUrl(this.jobOffer.getId()));
 	}
 }
