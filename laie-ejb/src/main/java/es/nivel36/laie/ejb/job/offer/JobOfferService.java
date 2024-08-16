@@ -40,6 +40,7 @@ public class JobOfferService {
 		Objects.requireNonNull(jobOffer);
 		logger.debug("Adding job offer {}", jobOffer);
 		jobOffer.setState(JobOfferState.CREATED);
+		jobOffer.setCreationDate(LocalDate.now());
 		this.jobOfferDao.insert(jobOffer);
 		
 		final User owner = jobOffer.getOwner();
@@ -118,6 +119,7 @@ public class JobOfferService {
 		jobOffer.setState(newState);
 		if (newState.isCloseState()) {
 			jobOffer.setCloseDate(LocalDate.now());
+			jobOffer.setCompletionDate(LocalDate.now());
 		}
 		if (newState.isOpenState()) {
 			jobOffer.setCloseDate(null);

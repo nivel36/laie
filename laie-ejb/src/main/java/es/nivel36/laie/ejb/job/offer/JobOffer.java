@@ -56,7 +56,7 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	@GenericField(sortable = Sortable.YES)
 	@Column(name = "CLOSE_DATE")
 	private LocalDate closeDate;
-
+	
 	@FullTextField
 	@Column(name = "DESCRIPTION", columnDefinition = "TEXT")
 	private String description;
@@ -83,6 +83,15 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	@Column(name = "OPEN_DATE", nullable = false)
 	private LocalDate openDate;
 
+	@NotNull
+	@GenericField(sortable = Sortable.YES)
+	@Column(name = "CREATION_DATE", nullable = false)
+	private LocalDate creationDate;
+
+	@GenericField(sortable = Sortable.YES)
+	@Column(name = "COMPLETION_DATE")
+	private LocalDate completionDate;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "OWNER_ID", nullable = false)
 	@NotNull
@@ -90,8 +99,8 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	private User owner;
 
 	@NotNull
-	@Column(name = "PLACES", scale = 0, precision = 1)
-	private Integer places = 1;
+	@Column(name = "POSITIONS", scale = 0, precision = 1)
+	private Integer positions = 1;
 
 	@Column(name = "PUBLISHED")
 	private boolean published;
@@ -124,7 +133,7 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 		}
 		final JobOffer other = (JobOffer) obj;
 		return Objects.equals(this.openDate, other.openDate) && Objects.equals(this.title, other.title)
-				&& Objects.equals(this.places, other.places);
+				&& Objects.equals(this.positions, other.positions);
 	}
 
 	public Address getAddress() {
@@ -177,13 +186,21 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 		return this.openDate;
 	}
 
+	public LocalDate getCreationDate() {
+		return this.creationDate;
+	}
+
+	public LocalDate getCompletionDate() {
+		return this.completionDate;
+	}
+
 	@Override
 	public User getOwner() {
 		return this.owner;
 	}
 
-	public Integer getPlaces() {
-		return this.places;
+	public Integer getPositions() {
+		return this.positions;
 	}
 
 	public Set<User> getRecruiters() {
@@ -213,7 +230,7 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 
 	@Override
 	public int hashCode() {
-		return 31 * Objects.hash(this.openDate, this.title, this.places);
+		return 31 * Objects.hash(this.openDate, this.title, this.positions);
 	}
 
 	public boolean hasState(final JobOfferState state) {
@@ -244,6 +261,14 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 		this.closeDate = closeDate;
 	}
 
+	public void setCreationDate(final LocalDate creationDate) {
+		this.creationDate = creationDate;
+	}
+
+	public void setCompletionDate(final LocalDate completionDate) {
+		this.completionDate = completionDate;
+	}
+
 	public void setDescription(final String description) {
 		this.description = description;
 	}
@@ -252,11 +277,11 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 		this.jobSubmissions = jobSubmissions;
 	}
 
-	public void setJobOfferEvents(Set<JobOfferEvent> jobOfferEvents) {
+	public void setJobOfferEvents(final Set<JobOfferEvent> jobOfferEvents) {
 		this.jobOfferEvents = jobOfferEvents;
 	}
 
-	public void setJobOfferProcess(JobOfferProcess jobOfferProcess) {
+	public void setJobOfferProcess(final JobOfferProcess jobOfferProcess) {
 		this.jobOfferProcess = jobOfferProcess;
 	}
 
@@ -277,8 +302,8 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 		this.owner = owner;
 	}
 
-	public void setPlaces(final Integer places) {
-		this.places = places;
+	public void setPositions(final Integer positions) {
+		this.positions = positions;
 	}
 
 	public void setPublished(final boolean published) {
