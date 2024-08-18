@@ -1,6 +1,6 @@
 package es.nivel36.laie.ejb.statistics;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import jakarta.ejb.Stateless;
 import jakarta.persistence.TypedQuery;
@@ -9,22 +9,15 @@ import jakarta.persistence.TypedQuery;
 public class CandidateStaticsService extends AbstractStaticsService {
 
 	public long countCandidates() {
-		final LocalDate startDate = this.getEndDate();
-		final LocalDate endDate = LocalDate.now();
-		final String sql = "SELECT COUNT(j) FROM JobOffer j WHERE j.openDate <= :endDate AND (j.completionDate IS NULL OR j.completionDate > :startDate)";
+		final String sql = "SELECT COUNT(c) FROM Candidate c";
 		final TypedQuery<Long> query = em.createQuery(sql, Long.class);
-		query.setParameter("startDate", startDate);
-		query.setParameter("endDate", endDate);
 		return query.getSingleResult();
 	}
 
 	public double getCandidatesPercentageChange() {
-		final LocalDate startDate = this.getStartDate();
-		final LocalDate endDate = this.getEndDate();
-
-		final String sql = "SELECT COUNT(j) FROM JobOffer j WHERE j.openDate <= :endDate AND (j.completionDate IS NULL OR j.completionDate > :startDate)";
+		final LocalDateTime endDate = this.getEndDate().atStartOfDay();
+		final String sql = "SELECT COUNT(a) FROM Action a WHERE a.type = 'CREATE' AND a.entityName = 'CANDIDATE' and a.date < :endDate";
 		final TypedQuery<Long> query = em.createQuery(sql, Long.class);
-		query.setParameter("startDate", startDate);
 		query.setParameter("endDate", endDate);
 		long lastMonth = query.getSingleResult();
 

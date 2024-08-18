@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.job.meeting.Meeting;
 import es.nivel36.laie.ejb.job.meeting.MeetingService;
+import es.nivel36.laie.ejb.statistics.CandidateStaticsService;
+import es.nivel36.laie.ejb.statistics.CommunicationStaticsService;
 import es.nivel36.laie.ejb.statistics.JobOfferStatisticsService;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.web.core.view.AbstractView;
@@ -24,56 +26,73 @@ import jakarta.inject.Named;
 @ViewScoped
 public class IndexView extends AbstractView {
 
-	private static final Logger logger = LoggerFactory.getLogger(IndexView.class);
 	private static final long serialVersionUID = 469723251635970418L;
+	private static final Logger logger = LoggerFactory.getLogger(IndexView.class);
 	public static final String URL = "/index.xhtml";
 
 	private @Inject ActionsByUserLazyDataModel actions;
 	private @Inject CandidateLazyDataModel candidates;
 	private @Inject JobOfferLazyDataModel jobOffers;
-	private transient @Inject MeetingService meetingService;
+	private transient @Inject CandidateStaticsService candidateStaticsService;
+	private transient @Inject CommunicationStaticsService communicationStaticsService;
 	private transient @Inject JobOfferStatisticsService jobOfferStatisticsService;
-
+	private transient @Inject MeetingService meetingService;
+	
 	private List<Meeting> meetings;
 	
 	private long activeJobOffers;
 	private double activeJobOfferPercentageChange;
+	
 	private long closedJobOffers;
 	private double closedJobOfferPercentageChange;
+	
+	private long numberOfCandidates;
+	private double numberOfCandidatesPercentageChange;
+	
+	private long numberOfCommunications;
+	private double numberOfCommunicationsPercentageChange;
 	
 	@PostConstruct
 	public void init() {
 		logger.trace("Index init");
 		final User user = this.sessionUser.get();
 		this.meetings = this.meetingService.findPlannedMeetings(user, Page.FIRST_TEN_RESULTS);
-		this.activeJobOffers = jobOfferStatisticsService.countActiveJobOffers();
-		this.activeJobOfferPercentageChange = jobOfferStatisticsService.getActiveJobOfferPercentageChange();
-		this.closedJobOffers = jobOfferStatisticsService.countClosedJobOffers();
-		this.closedJobOfferPercentageChange = jobOfferStatisticsService.getClosedJobOfferPercentageChange();
+		
+		this.activeJobOffers = this.jobOfferStatisticsService.countActiveJobOffers();
+		this.activeJobOfferPercentageChange = this.jobOfferStatisticsService.getActiveJobOfferPercentageChange();
+		
+		this.closedJobOffers = this.jobOfferStatisticsService.countClosedJobOffers();
+		this.closedJobOfferPercentageChange = this.jobOfferStatisticsService.getClosedJobOfferPercentageChange();
+		
+		this.numberOfCandidates = this.candidateStaticsService.countCandidates();
+		this.numberOfCandidatesPercentageChange = this.candidateStaticsService.getCandidatesPercentageChange();
+		
+		this.numberOfCommunications = this.communicationStaticsService.countMessages();
+		this.numberOfCommunicationsPercentageChange = this.communicationStaticsService.getMessagesPercentageChange();
 	}
 	
-	public long getClosedJobOffers() {
-		return closedJobOffers;
+	public ActionsByUserLazyDataModel getActions() {
+		return actions;
+	}
+	
+	public double getActiveJobOfferPercentageChange() {
+		return activeJobOfferPercentageChange;
+	}
+
+	public long getActiveJobOffers() {
+		return activeJobOffers;
+	}
+
+	public CandidateLazyDataModel getCandidates() {
+		return this.candidates;
 	}
 
 	public double getClosedJobOfferPercentageChange() {
 		return closedJobOfferPercentageChange;
 	}
 
-	public double getActiveJobOfferPercentageChange() {
-		return activeJobOfferPercentageChange;
-	}
-	
-	public long getActiveJobOffers() {
-		return activeJobOffers;
-	}
-
-	public ActionsByUserLazyDataModel getActions() {
-		return actions;
-	}
-
-	public CandidateLazyDataModel getCandidates() {
-		return this.candidates;
+	public long getClosedJobOffers() {
+		return closedJobOffers;
 	}
 
 	public JobOfferLazyDataModel getJobOffers() {
@@ -84,9 +103,39 @@ public class IndexView extends AbstractView {
 		return this.meetings;
 	}
 	
+	public long getNumberOfCandidates() {
+		return numberOfCandidates;
+	}
+
+	public double getNumberOfCandidatesPercentageChange() {
+		return numberOfCandidatesPercentageChange;
+	}
+	
+	public long getNumberOfCommunications() {
+		return numberOfCommunications;
+	}
+
+	public double getNumberOfCommunicationsPercentageChange() {
+		return numberOfCommunicationsPercentageChange;
+	}
+
+	public void setCandidateStaticsService(final CandidateStaticsService candidateStaticsService) {
+		Objects.requireNonNull(candidateStaticsService);
+		this.candidateStaticsService = candidateStaticsService;
+	}
+	
+	public void setCommunicationStaticsService(final CommunicationStaticsService communicationStaticsService) {
+		Objects.requireNonNull(communicationStaticsService);
+		this.communicationStaticsService = communicationStaticsService;
+	}
+
+	public void setJobOfferStatisticsService(final JobOfferStatisticsService jobOfferStatisticsService) {
+		Objects.requireNonNull(jobOfferStatisticsService);
+		this.jobOfferStatisticsService = jobOfferStatisticsService;
+	}
+	
 	public void setMeetingService(final MeetingService meetingService) {
 		Objects.requireNonNull(meetingService);
 		this.meetingService = meetingService;
 	}
-	
 }
