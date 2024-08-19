@@ -20,15 +20,10 @@ public abstract class AbstractView implements Serializable {
 	private static final long serialVersionUID = -75092582490831905L;
 	
 	protected transient @Inject ApplicationView applicationView;
-
 	protected transient @Inject ExternalContext externalContext;
-
 	protected transient @Inject FacesContext facesContext;
-
 	protected transient @Inject Flash flash;
-
 	protected transient @Inject SessionUser sessionUser;
-
 	protected transient @Inject Translator translator;
 	
 	protected void addErrorToField(final String componentId, final String message) {

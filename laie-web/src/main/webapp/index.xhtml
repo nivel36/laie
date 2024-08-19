@@ -18,58 +18,8 @@
 
 	<ui:define name="content">
 		<div class="grid">
-			<div class="col-12 md:col-6 lg:col-3">
-				<div class="overview-box card">
-					<div class="overview-box-value">#{indexView.activeJobOffers}</div>
-					<div class="overview-box-title">#{i18n['statistics.job_offers']}</div>
-
-					<p:graphicImage name="images/index/graph-tasks.svg"
-						library="roma-layout" />
-					<div class="overview-box-status">
-						#{indexView.activeJobOfferPercentageChange}% <i
-							class="pi #{indexView.activeJobOfferPercentageChange >= 0 ? 'pi-arrow-circle-up' : 'pi-arrow-circle-down'}" />
-					</div>
-				</div>
-			</div>
-			<div class="col-12 md:col-6 lg:col-3">
-				<div class="overview-box card">
-					<div class="overview-box-value">#{indexView.numberOfCandidates}</div>
-					<div class="overview-box-title">#{i18n['statistics.candidates']}</div>
-
-					<p:graphicImage name="images/index/graph-purchases.svg"
-						library="roma-layout" />
-					<div class="overview-box-status">
-							#{indexView.numberOfCandidatesPercentageChange}% <i
-							class="pi #{indexView.activeJobOfferPercentageChange >= 0 ? 'pi-arrow-circle-up' : 'pi-arrow-circle-down'}" />
-					</div>
-				</div>
-			</div>
-			<div class="col-12 md:col-6 lg:col-3">
-				<div class="overview-box card">
-					<div class="overview-box-value">#{indexView.closedJobOffers}</div>
-					<div class="overview-box-title">#{i18n['statistics.closed_job_offers']}</div>
-
-					<p:graphicImage name="images/index/graph-issues.svg"
-						library="roma-layout" />
-					<div class="overview-box-status">
-							#{indexView.closedJobOfferPercentageChange}% <i
-							class="pi #{indexView.activeJobOfferPercentageChange >= 0 ? 'pi-arrow-circle-up' : 'pi-arrow-circle-down'}" />
-					</div>
-				</div>
-			</div>
-			<div class="col-12 md:col-6 lg:col-3">
-				<div class="overview-box card">
-					<div class="overview-box-value">#{indexView.numberOfCommunications}</div>
-					<div class="overview-box-title">#{i18n['statistics.messages']}</div>
-
-					<p:graphicImage name="images/index/graph-messages.svg"
-						library="roma-layout" />
-					<div class="overview-box-status">
-						#{indexView.closedJobOfferPercentageChange}% <i
-							class="pi #{indexView.numberOfCommunicationsPercentageChange >= 0 ? 'pi-arrow-circle-up' : 'pi-arrow-circle-down'}" />
-					</div>
-				</div>
-			</div>
+			<ui:include src="./statistics.xhtml" />
+			
 			<div class="col-12 xl:col-8">
 				<h:form>
 					<cc:jobOffers value="#{indexView.jobOffers}" rows="5"
