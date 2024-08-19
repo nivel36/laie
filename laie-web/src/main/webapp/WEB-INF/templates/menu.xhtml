@@ -57,6 +57,8 @@
 						containerStyleClass="#{selectedMenu eq 'reports' ? 'active-menuitem' : 'menuitem' }" outcome="/report/search.xhtml" />
 					<p:menuitem id="om_users" value="#{i18n['menu.users']}" icon="pi pi-user"
 						containerStyleClass="#{selectedMenu eq 'users' ? 'active-menuitem' : 'menuitem' }" outcome="/user/search.xhtml" />
+					<p:menuitem id="om_config" rendered="#{sessionUser.admin}" value="#{i18n['menu.settings']}" icon="pi pi-cog"
+						containerStyleClass="#{selectedMenu eq 'config' ? 'active-menuitem' : 'menuitem' }" outcome="/settings.xhtml" />
 				</po:menu>
 			</h:form>
 		</div>
