@@ -26,19 +26,20 @@
 
 	<ui:define name="content">
 		<div class="grid">
-			<div class="col-12 xl:col-6">
+		<div class="col-12 xl:col-6">
 				<p:card styleClass="card card-w-title">
 					<f:facet name="title">
-						<h5>#{i18n['maintenance.job_submissions']}</h5>
+						<h5>#{i18n['maintenance.statistics']}</h5>
 					</f:facet>
 					<ul>
-						<li><h:link outcome="/settings/jobSubmissionStates.xhtml"
-								value="#{i18n['job_submission.job_submission_states']}"
+						<li><h:link outcome="/settings/statistics.xhtml"
+								value="#{i18n['settings.statistics']}"
 								styleClass="link" /></li>
-						<li><h:link outcome="/settings/jobOfferStates.xhtml"
-								value="#{i18n['job.job_offer_states']}" styleClass="link" /></li>
 					</ul>
 				</p:card>
+			</div>
+			<div class="col-12 xl:col-6">
+	
 			</div>
 			<div class="col-12 xl:col-6">
 				<p:card styleClass="card card-w-title">
