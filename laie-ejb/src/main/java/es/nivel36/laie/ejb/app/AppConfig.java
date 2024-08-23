@@ -1,19 +1,21 @@
 package es.nivel36.laie.ejb.app;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class AppConfig extends AbstractEntity{
 	
 	private static final long serialVersionUID = -959664391460126029L;
 
-	private boolean showAppStatistics;
+	private boolean showAppStatistics = true;
 	
-	private List<StatisticPanel> statisticsPanels = new ArrayList<>();
+	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "AppConfigId")
+	private List<StatisticPanel> statisticsPanels;
 
 	public boolean isShowAppStatistics() {
 		return showAppStatistics;

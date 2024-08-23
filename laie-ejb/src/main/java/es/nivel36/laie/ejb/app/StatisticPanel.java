@@ -8,6 +8,8 @@ import jakarta.validation.constraints.NotNull;
 
 public class StatisticPanel extends AbstractEntity {
 
+	private static final long serialVersionUID = -185584297387973385L;
+
 	@Column(name = "POSITION", nullable = false)
 	private int position;
 
