@@ -25,15 +25,15 @@
 		<maven.build.timestamp.format>dd-MM-yyyy HH:mm</maven.build.timestamp.format>
 		<laie.version>${project.version}</laie.version>
 
-		<primefaces.version>14.0.2</primefaces.version>
+		<primefaces.version>14.0.5</primefaces.version>
 		<poi.version>5.3.0</poi.version>
-		<omnifaces.version>4.4.1</omnifaces.version>
+		<omnifaces.version>4.6.1</omnifaces.version>
 		<commons-fileupload.version>1.5</commons-fileupload.version>
 		<owasp-java-html-sanitizer.version>20240325.1</owasp-java-html-sanitizer.version>
 		<html2pdf.version>5.0.4</html2pdf.version>
 
 		<version.mockito>5.12.0</version.mockito>
-		<version.server.bom>33.0.0.Beta1</version.server.bom>
+		<version.server.bom>33.0.2.Final</version.server.bom>
 		<version.junit.bom>5.10.3</version.junit.bom>
 		<version.sl4f-simple>2.0.13</version.sl4f-simple>
 
