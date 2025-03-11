@@ -14,7 +14,7 @@ public class AppConfig extends AbstractEntity{
 
 	private boolean showAppStatistics = true;
 	
-	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "AppConfigId")
+	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "appConfig")
 	private List<StatisticPanel> statisticsPanels;
 
 	public boolean isShowAppStatistics() {
