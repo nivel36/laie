@@ -83,6 +83,13 @@
 						<ui:insert />
 					</p:selectBooleanCheckbox>
 				</c:when>
+				
+				<c:when test="#{type eq 'booleanButton'}">
+					<p:selectBooleanButton id="#{id}" value="#{value}" required="#{required}" styleClass="input input-booleanButton #{inputStyleClass}" onLabel="#{i18n['action.confirm.yes']}" offLabel="#{i18n['action.confirm.no']}"
+                                onIcon="pi pi-check" offIcon="pi pi-times">
+						<ui:insert />
+					</p:selectBooleanButton>
+				</c:when>
 
 				<c:when test="#{type eq 'number'}">
 					<p:spinner id="#{id}" value="#{value}" required="#{required}" styleClass="input input-number #{inputStyleClass}" min="#{not empty min ? min : 0}"

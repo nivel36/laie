@@ -1,70 +1,83 @@
 package es.nivel36.laie.ejb.statistics;
 
 import java.time.LocalDate;
+import java.time.Period;
 
+import es.nivel36.laie.ejb.user.User;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.TypedQuery;
 
 @Stateless
 public class JobOfferStatisticsService extends AbstractStaticsService {
 
-	public long countActiveJobOffers() {
-		final LocalDate startDate = this.getEndDate();
-		final LocalDate endDate = LocalDate.now();
-		final String sql = "SELECT COUNT(j) FROM JobOffer j WHERE j.openDate <= :endDate AND (j.completionDate IS NULL OR j.completionDate > :startDate)";
+	public long countActiveJobOffers(final LocalDate start, final LocalDate end) {
+		final String sql = "SELECT COUNT(j) FROM JobOffer j WHERE j.openDate <= :end AND (j.completionDate IS NULL OR j.completionDate > :start)";
 		final TypedQuery<Long> query = em.createQuery(sql, Long.class);
-		query.setParameter("startDate", startDate);
-		query.setParameter("endDate", endDate);
+		query.setParameter("start", start);
+		query.setParameter("end", end);
 		return query.getSingleResult();
 	}
 
-	public double getActiveJobOfferPercentageChange() {
-		final LocalDate startDate = this.getStartDate();
-		final LocalDate endDate = this.getEndDate();
+	public double getActiveJobOfferPercentageChange(final LocalDate start, final LocalDate end) {
+		final LocalDate startDate = start.minus(Period.between(start, end));
 
-		final String sql = "SELECT COUNT(j) FROM JobOffer j WHERE j.openDate <= :endDate AND (j.completionDate IS NULL OR j.completionDate > :startDate)";
-		final TypedQuery<Long> query = em.createQuery(sql, Long.class);
-		query.setParameter("startDate", startDate);
-		query.setParameter("endDate", endDate);
-		long lastMonth = query.getSingleResult();
+		long lastMonth = this.countActiveJobOffers(startDate, start);
+		long today = this.countActiveJobOffers(start, end);
 
-		long today = this.countActiveJobOffers();
-
-		if (lastMonth == 0) {
-			return today > 0 ? 100 : 0;
-		}
-
-		double percentageChange = ((double) (today - lastMonth) * 100) / lastMonth;
-		return Math.round(percentageChange * 100.0) / 100.0;
+		return calculatePercentageChange(lastMonth, today);
 	}
-	
-	public long countClosedJobOffers() {
-		final LocalDate startDate = this.getEndDate();
-		final LocalDate endDate = LocalDate.now();
-		final String sql = "SELECT COUNT(j) FROM JobOffer j WHERE j.completionDate <= :endDate AND j.completionDate > :startDate";
+
+	public long countClosedJobOffers(final LocalDate start, final LocalDate end) {
+		final String sql = "SELECT COUNT(j) FROM JobOffer j WHERE j.completionDate <= :end AND j.completionDate > :start";
 		final TypedQuery<Long> query = em.createQuery(sql, Long.class);
-		query.setParameter("startDate", startDate);
-		query.setParameter("endDate", endDate);
+		query.setParameter("start", start);
+		query.setParameter("end", end);
 		return query.getSingleResult();
 	}
 
-	public double getClosedJobOfferPercentageChange() {
-		final LocalDate startDate = this.getStartDate();
-		final LocalDate endDate = this.getEndDate();
-		
-		final String sql = "SELECT COUNT(j) FROM JobOffer j WHERE j.completionDate <= :endDate AND j.completionDate > :startDate";
+	public double getClosedJobOfferPercentageChange(final LocalDate start, final LocalDate end) {
+		final LocalDate startDate = start.minus(Period.between(start, end));
+
+		long lastMonth = this.countClosedJobOffers(startDate, start);
+		long today = this.countClosedJobOffers(start, end);
+
+		return calculatePercentageChange(lastMonth, today);
+	}
+
+	public long countUsersActiveJobOffers(final User user, final LocalDate start, final LocalDate end) {
+
+		final String sql = "SELECT COUNT(j) FROM JobOffer j WHERE j.openDate <= :end AND (j.completionDate IS NULL OR j.completionDate > :start and j.owner = :user)";
 		final TypedQuery<Long> query = em.createQuery(sql, Long.class);
-		query.setParameter("startDate", startDate);
-		query.setParameter("endDate", endDate);
-		long lastMonth = query.getSingleResult();
+		query.setParameter("start", start);
+		query.setParameter("end", end);
+		query.setParameter("user", user);
+		return query.getSingleResult();
+	}
 
-		long today = this.countClosedJobOffers();
+	public double getUsersActiveJobOfferPercentageChange(final User user, final LocalDate start, final LocalDate end) {
+		final LocalDate startDate = start.minus(Period.between(start, end));
 
-		if (lastMonth == 0) {
-			return today > 0 ? 100 : 0;
-		}
+		long lastMonth = this.countActiveJobOffers(startDate, start);
+		long today = this.countActiveJobOffers(start, end);
 
-		double percentageChange = ((double) (today - lastMonth) * 100) / lastMonth;
-		return Math.round(percentageChange * 100.0) / 100.0;
+		return calculatePercentageChange(lastMonth, today);
+	}
+
+	public long countUsersClosedJobOffers(final User user, final LocalDate start, final LocalDate end) {
+		final String sql = "SELECT COUNT(j) FROM JobOffer j WHERE j.completionDate <= :end AND j.completionDate > :start AND j.owner = :user";
+		final TypedQuery<Long> query = em.createQuery(sql, Long.class);
+		query.setParameter("start", start);
+		query.setParameter("end", end);
+		query.setParameter("user", user);
+		return query.getSingleResult();
+	}
+
+	public double getUsersClosedJobOfferPercentageChange(final User user, final LocalDate start, final LocalDate end) {
+		final LocalDate startDate = start.minus(Period.between(start, end));
+
+		long lastMonth = this.countClosedJobOffers(startDate, start);
+		long today = this.countClosedJobOffers(start, end);
+
+		return calculatePercentageChange(lastMonth, today);
 	}
 }

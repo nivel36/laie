@@ -1,34 +1,52 @@
 package es.nivel36.laie.ejb.statistics;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 
+import es.nivel36.laie.ejb.user.User;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.TypedQuery;
 
 @Stateless
 public class CandidateStaticsService extends AbstractStaticsService {
 
-	public long countCandidates() {
-		final String sql = "SELECT COUNT(c) FROM Candidate c";
+	public long countCandidates(final LocalDate start, final LocalDate end) {
+		final LocalDateTime startDate = start.atStartOfDay();
+		final LocalDateTime endDate = end.atStartOfDay();
+		final String sql = "SELECT COUNT(a) FROM Action a WHERE a.type = 'CREATE' AND a.entityName = 'CANDIDATE' AND a.date <= :endDate AND a.date > :startDate";
 		final TypedQuery<Long> query = em.createQuery(sql, Long.class);
+		query.setParameter("endDate", endDate);
+		query.setParameter("startDate", startDate);
 		return query.getSingleResult();
 	}
 
-	public double getCandidatesPercentageChange() {
-		final LocalDateTime endDate = this.getEndDate().atStartOfDay();
-		final String sql = "SELECT COUNT(a) FROM Action a WHERE a.type = 'CREATE' AND a.entityName = 'CANDIDATE' and a.date < :endDate";
-		final TypedQuery<Long> query = em.createQuery(sql, Long.class);
-		query.setParameter("endDate", endDate);
-		long lastMonth = query.getSingleResult();
+	public double getCandidatesPercentageChange(final LocalDate start, final LocalDate end) {
+		final LocalDate startDate = start.minus(Period.between(start, end));
+		
+		long lastMonth = this.countCandidates(startDate, start);
+		long today = this.countCandidates(start, end);
 
-		long today = this.countCandidates();
-
-		if (lastMonth == 0) {
-			return today > 0 ? 100 : 0;
-		}
-
-		double percentageChange = ((double) (today - lastMonth) * 100) / lastMonth;
-		return Math.round(percentageChange * 100.0) / 100.0;
+		return calculatePercentageChange(lastMonth, today);
 	}
 
+	public long countUsersCandidates(final User user, final LocalDate start, final LocalDate end) {
+		final LocalDateTime startDate = start.atStartOfDay();
+		final LocalDateTime endDate = end.atStartOfDay();
+		final String sql = "SELECT COUNT(a) FROM Action a WHERE a.type = 'CREATE' AND a.entityName = 'CANDIDATE' AND a.date <= :endDate AND a.date > :startDate AND a.user = :user";
+		final TypedQuery<Long> query = em.createQuery(sql, Long.class);
+		query.setParameter("endDate", endDate);
+		query.setParameter("startDate", startDate);
+		query.setParameter("user", user);
+		return query.getSingleResult();
+	}
+
+	public double getUsersCandidatesPercentageChange(final User user, final LocalDate start, final LocalDate end) {
+		final LocalDate startDate = start.minus(Period.between(start, end));
+
+		long lastMonth = this.countCandidates(startDate, start);
+		long today = this.countCandidates(start, end);
+
+		return calculatePercentageChange(lastMonth, today);
+	}
 }

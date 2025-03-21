@@ -7,18 +7,12 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
+@Table(name = "STATISTIC_PANEL")
 public class StatisticPanel extends AbstractEntity {
-
-	public AppConfig getAppConfig() {
-		return appConfig;
-	}
-
-	public void setAppConfig(AppConfig appConfig) {
-		this.appConfig = appConfig;
-	}
 
 	private static final long serialVersionUID = -185584297387973385L;
 
@@ -34,10 +28,18 @@ public class StatisticPanel extends AbstractEntity {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "PERIODICITY", nullable = false)
 	private StatisticsPeriodicity periodicity;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "APP_CONFIG_ID")
 	private AppConfig appConfig;
+
+	public AppConfig getAppConfig() {
+		return appConfig;
+	}
+
+	public void setAppConfig(AppConfig appConfig) {
+		this.appConfig = appConfig;
+	}
 
 	public int getPosition() {
 		return position;

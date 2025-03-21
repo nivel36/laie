@@ -24,6 +24,194 @@
 						<f:facet name="title">
 							<h5>#{i18n['settings.statistics']}</h5>
 						</f:facet>
+						<p:divider />
+						<div class="ui-fluid grid">
+							<div class="col-12 md:col-4">
+								<h5>#{i18n['settings.statistics.show_statistics']}</h5>
+							</div>
+							<div class="col-12 md:col-8">
+
+								<g:input id="show_app_statistics"
+									label="#{i18n['settings.statistics.show_app_statistics']}"
+									value="#{statisticsSettingsView.showAppStatistics}"
+									type="booleanButton" />
+								<g:input id="show_user_statistics"
+									label="#{i18n['settings.statistics.show_user_statistics']}"
+									value="#{statisticsSettingsView.showUserStatistics}"
+									type="booleanButton" />
+							</div>
+						</div>
+
+						<p:divider />
+						<div class="ui-fluid grid">
+							<div class="col-12 md:col-4">
+								<h5>#{i18n['settings.statistics.app_statistics_panels']}</h5>
+							</div>
+							<div class="col-12 md:col-8">
+								<div class="formgrid grid">
+									<g:input type="selectOneMenu"
+										label="#{i18n['settings.statistics.panel.first']}"
+										value="#{statisticsSettingsView.appFirstPanel}"
+										styleClass="col">
+										<f:selectItems value="#{panels.list}" var="panel"
+											itemValue="#{panel}"
+											itemLabel="#{i18n['settings.statistics.type.'.concat(panel)]}" />
+									</g:input>
+									<g:input type="selectOneMenu"
+										label="#{i18n['settings.statistics.periodicity']}"
+										value="#{statisticsSettingsView.appFirstPanelPeriodicity}"
+										styleClass="col">
+										<f:selectItems value="#{periodicities.list}" var="periodicity"
+											itemValue="#{periodicity}"
+											itemLabel="#{i18n['settings.statistics.periodicity.'.concat(periodicity)]}" />
+									</g:input>
+								</div>
+								<div class="formgrid grid">
+									<g:input type="selectOneMenu"
+										label="#{i18n['settings.statistics.panel.second']}"
+										value="#{statisticsSettingsView.appSecondPanel}"
+										styleClass="col">
+										<f:selectItems value="#{panels.list}" var="panel"
+											itemValue="#{panel}"
+											itemLabel="#{i18n['settings.statistics.type.'.concat(panel)]}" />
+									</g:input>
+									<g:input type="selectOneMenu"
+										label="#{i18n['settings.statistics.periodicity']}"
+										value="#{statisticsSettingsView.appSecondPanelPeriodicity}"
+										styleClass="col">
+										<f:selectItems value="#{periodicities.list}" var="periodicity"
+											itemValue="#{periodicity}"
+											itemLabel="#{i18n['settings.statistics.periodicity.'.concat(periodicity)]}" />
+									</g:input>
+								</div>
+								<div class="formgrid grid">
+									<g:input type="selectOneMenu"
+										label="#{i18n['settings.statistics.panel.third']}"
+										value="#{statisticsSettingsView.appThirdPanel}"
+										styleClass="col">
+										<f:selectItems value="#{panels.list}" var="panel"
+											itemValue="#{panel}"
+											itemLabel="#{i18n['settings.statistics.type.'.concat(panel)]}" />
+									</g:input>
+									<g:input type="selectOneMenu"
+										label="#{i18n['settings.statistics.periodicity']}"
+										value="#{statisticsSettingsView.appThirdPanelPeriodicity}"
+										styleClass="col">
+										<f:selectItems value="#{periodicities.list}" var="periodicity"
+											itemValue="#{periodicity}"
+											itemLabel="#{i18n['settings.statistics.periodicity.'.concat(periodicity)]}" />
+									</g:input>
+								</div>
+								<div class="formgrid grid">
+									<g:input type="selectOneMenu"
+										label="#{i18n['settings.statistics.panel.fourth']}"
+										value="#{statisticsSettingsView.appFourthPanel}"
+										styleClass="col">
+										<f:selectItems value="#{panels.list}" var="panel"
+											itemValue="#{panel}"
+											itemLabel="#{i18n['settings.statistics.type.'.concat(panel)]}" />
+									</g:input>
+									<g:input type="selectOneMenu"
+										label="#{i18n['settings.statistics.periodicity']}"
+										value="#{statisticsSettingsView.appFourthPanelPeriodicity}"
+										styleClass="col">
+										<f:selectItems value="#{periodicities.list}" var="periodicity"
+											itemValue="#{periodicity}"
+											itemLabel="#{i18n['settings.statistics.periodicity.'.concat(periodicity)]}" />
+									</g:input>
+								</div>
+							</div>
+						</div>
+						<p:divider />
+						<div class="ui-fluid grid">
+							<div class="col-12 md:col-4">
+								<h5>#{i18n['settings.statistics.user_statistics_panels']}</h5>
+							</div>
+							<div class="col-12 md:col-8">
+								<div class="formgrid grid">
+									<g:input type="selectOneMenu"
+										label="#{i18n['settings.statistics.panel.first']}"
+										value="#{statisticsSettingsView.userFirstPanel}"
+										styleClass="col">
+										<f:selectItems value="#{panels.list}" var="panel"
+											itemValue="#{panel}"
+											itemLabel="#{i18n['settings.statistics.type.'.concat(panel)]}" />
+									</g:input>
+									<g:input type="selectOneMenu"
+										label="#{i18n['settings.statistics.periodicity']}"
+										value="#{statisticsSettingsView.userFirstPanelPeriodicity}"
+										styleClass="col">
+										<f:selectItems value="#{periodicities.list}" var="periodicity"
+											itemValue="#{periodicity}"
+											itemLabel="#{i18n['settings.statistics.periodicity.'.concat(periodicity)]}" />
+									</g:input>
+								</div>
+								<div class="formgrid grid">
+									<g:input type="selectOneMenu"
+										label="#{i18n['settings.statistics.panel.second']}"
+										value="#{statisticsSettingsView.userSecondPanel}"
+										styleClass="col">
+										<f:selectItems value="#{panels.list}" var="panel"
+											itemValue="#{panel}"
+											itemLabel="#{i18n['settings.statistics.type.'.concat(panel)]}" />
+									</g:input>
+									<g:input type="selectOneMenu"
+										label="#{i18n['settings.statistics.periodicity']}"
+										value="#{statisticsSettingsView.userSecondPanelPeriodicity}"
+										styleClass="col">
+										<f:selectItems value="#{periodicities.list}" var="periodicity"
+											itemValue="#{periodicity}"
+											itemLabel="#{i18n['settings.statistics.periodicity.'.concat(periodicity)]}" />
+									</g:input>
+								</div>
+								<div class="formgrid grid">
+									<g:input type="selectOneMenu"
+										label="#{i18n['settings.statistics.panel.third']}"
+										value="#{statisticsSettingsView.userThirdPanel}"
+										styleClass="col">
+										<f:selectItems value="#{panels.list}" var="panel"
+											itemValue="#{panel}"
+											itemLabel="#{i18n['settings.statistics.type.'.concat(panel)]}" />
+									</g:input>
+									<g:input type="selectOneMenu"
+										label="#{i18n['settings.statistics.periodicity']}"
+										value="#{statisticsSettingsView.userThirdPanelPeriodicity}"
+										styleClass="col">
+										<f:selectItems value="#{periodicities.list}" var="periodicity"
+											itemValue="#{periodicity}"
+											itemLabel="#{i18n['settings.statistics.periodicity.'.concat(periodicity)]}" />
+									</g:input>
+								</div>
+								<div class="formgrid grid">
+									<g:input type="selectOneMenu"
+										label="#{i18n['settings.statistics.panel.fourth']}"
+										value="#{statisticsSettingsView.userFourthPanel}"
+										styleClass="col">
+										<f:selectItems value="#{panels.list}" var="panel"
+											itemValue="#{panel}"
+											itemLabel="#{i18n['settings.statistics.type.'.concat(panel)]}" />
+									</g:input>
+									<g:input type="selectOneMenu"
+										label="#{i18n['settings.statistics.periodicity']}"
+										value="#{statisticsSettingsView.userFourthPanelPeriodicity}"
+										styleClass="col">
+										<f:selectItems value="#{periodicities.list}" var="periodicity"
+											itemValue="#{periodicity}"
+											itemLabel="#{i18n['settings.statistics.periodicity.'.concat(periodicity)]}" />
+									</g:input>
+								</div>
+							</div>
+						</div>
+						<f:facet name="footer">
+							<div class="flex justify-content-end">
+								<p:button value="#{i18n['action.cancel']}"
+									outcome="/settings.xhtml"
+									styleClass="ui-button-secondary mr-2 mb-2" />
+								<p:commandButton value="#{i18n['action.save']}"
+									action="#{statisticsSettingsView.save}" update="@form"
+									styleClass="ui-button-primary mr-2 mb-2" />
+							</div>
+						</f:facet>
 					</p:card>
 				</div>
 			</div>

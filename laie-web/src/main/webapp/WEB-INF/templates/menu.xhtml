@@ -1,64 +1,70 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
-                xmlns:h="http://java.sun.com/jsf/html" 
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:ui="http://java.sun.com/jsf/facelets" 
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
-                xmlns:po="http://primefaces.org/roma">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:po="http://primefaces.org/roma">
 
-    <div class="layout-menu-container">
-        <div class="menu-scroll-content">
-            <h:form id="menuform">
-                <ui:fragment rendered="#{guestPreferences.profileMode == 'inline' ? true : false}">
-                    <div class="layout-profile">
-                        <a class="layout-profile-button" href="#">
-                             <cc:avatar name="#{sessionUser.get().fullName}" path="#{sessionUser.get().picture.path}"
-								styleClass="mt-1" />          
-                        <div class="layout-profile-userinfo">
-                            <span class="layout-profile-name">#{sessionUser.get().fullName}</span>
-                            <span class="layout-profile-role">#{i18n[sessionUser.get().role]}</span>
-                        </div>
-                        </a>
-                        <ul class="layout-profile-menu">
-                            <li>
-                                <a href="#">
-                                    <i class="pi pi-user"/><span>Profile</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="pi pi-cog"/><span>Settings</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="pi pi-envelope"/><span>Messages</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="pi pi-bell"/><span>Notifications</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </ui:fragment>
-                
+	<div class="layout-menu-container">
+		<div class="menu-scroll-content">
+			<h:form id="menuform">
+				<ui:fragment
+					rendered="#{guestPreferences.profileMode == 'inline' ? true : false}">
+					<div class="layout-profile">
+						<a class="layout-profile-button" href="#"> <cc:avatar
+								name="#{sessionUser.get().fullName}"
+								path="#{sessionUser.get().picture.path}" styleClass="mt-1" />
+							<div class="layout-profile-userinfo">
+								<span class="layout-profile-name">#{sessionUser.get().fullName}</span>
+								<span class="layout-profile-role">#{i18n[sessionUser.get().role]}</span>
+							</div>
+						</a>
+						<ul class="layout-profile-menu">
+							<li><a href="#"> <i class="pi pi-user" /><span>Profile</span>
+							</a></li>
+							<li><a href="#"> <i class="pi pi-cog" /><span>Settings</span>
+							</a></li>
+							<li><a href="#"> <i class="pi pi-envelope" /><span>Messages</span>
+							</a></li>
+							<li><a href="#"> <i class="pi pi-bell" /><span>Notifications</span>
+							</a></li>
+						</ul>
+					</div>
+				</ui:fragment>
+
 				<po:menu widgetVar="RomaMenuWidget">
-					<p:menuitem id="om_index" value="#{i18n['menu.index']}" icon="pi pi-home"
-						containerStyleClass="#{selectedMenu eq 'index' ? 'active-menuitem' : 'menuitem' }" outcome="/index.xhtml" />
-					<p:menuitem id="om_candidates" value="#{i18n['menu.candidates']}" icon="pi pi-users"
-						containerStyleClass="#{selectedMenu eq 'candidates' ? 'active-menuitem' : 'menuitem' }" outcome="/candidate/search.xhtml" />
-					<p:menuitem id="om_offers" value="#{i18n['menu.offers']}" icon="pi pi-compass"
-						containerStyleClass="#{selectedMenu eq 'offers' ? 'active-menuitem' : 'menuitem' }" outcome="/job/search.xhtml" />
-					<p:menuitem id="om_clients" value="#{i18n['menu.clients']}" icon="pi pi-briefcase"
-						containerStyleClass="#{selectedMenu eq 'clients' ? 'active-menuitem' : 'menuitem' }" outcome="/client/search.xhtml)" />
-					<p:menuitem id="om_reports" value="#{i18n['menu.reports']}" icon="pi pi-chart-bar"
-						containerStyleClass="#{selectedMenu eq 'reports' ? 'active-menuitem' : 'menuitem' }" outcome="/report/search.xhtml" />
-					<p:menuitem id="om_users" value="#{i18n['menu.users']}" icon="pi pi-user"
-						containerStyleClass="#{selectedMenu eq 'users' ? 'active-menuitem' : 'menuitem' }" outcome="/user/search.xhtml" />
-					<p:menuitem id="om_config" rendered="#{sessionUser.admin}" value="#{i18n['menu.settings']}" icon="pi pi-cog"
-						containerStyleClass="#{selectedMenu eq 'config' ? 'active-menuitem' : 'menuitem' }" outcome="/settings.xhtml" />
+					<p:menuitem id="om_index" value="#{i18n['menu.index']}"
+						icon="pi pi-home"
+						containerStyleClass="#{selectedMenu eq 'index' ? 'active-menuitem' : 'menuitem' }"
+						outcome="/index.xhtml" />
+					<p:menuitem id="om_candidates" value="#{i18n['menu.candidates']}"
+						icon="pi pi-users"
+						containerStyleClass="#{selectedMenu eq 'candidates' ? 'active-menuitem' : 'menuitem' }"
+						outcome="/candidate/search.xhtml" />
+					<p:menuitem id="om_offers" value="#{i18n['menu.offers']}"
+						icon="pi pi-compass"
+						containerStyleClass="#{selectedMenu eq 'offers' ? 'active-menuitem' : 'menuitem' }"
+						outcome="/job/search.xhtml" />
+					<p:menuitem id="om_clients" value="#{i18n['menu.clients']}"
+						icon="pi pi-briefcase"
+						containerStyleClass="#{selectedMenu eq 'clients' ? 'active-menuitem' : 'menuitem' }"
+						outcome="/client/search.xhtml)" />
+					<p:menuitem id="om_reports" value="#{i18n['menu.reports']}"
+						icon="pi pi-chart-bar"
+						containerStyleClass="#{selectedMenu eq 'reports' ? 'active-menuitem' : 'menuitem' }"
+						outcome="/report/search.xhtml" />
+					<p:menuitem id="om_users" value="#{i18n['menu.users']}"
+						icon="pi pi-user"
+						containerStyleClass="#{selectedMenu eq 'users' ? 'active-menuitem' : 'menuitem' }"
+						outcome="/user/search.xhtml" />
+					<p:submenu id="om_config" rendered="#{sessionUser.admin}"
+						label="#{i18n['menu.settings']}" icon="pi pi-cog"
+						containerStyleClass="#{selectedMenu eq 'config' ? 'active-menuitem' : 'menuitem' }">
+						<p:menuitem id="om_statistics" rendered="#{sessionUser.admin}"
+							value="#{i18n['settings.statistics']}" icon="pi pi-chart-line"
+							outcome="/settings/statistics.xhtml" />
+					</p:submenu>
 				</po:menu>
 			</h:form>
 		</div>

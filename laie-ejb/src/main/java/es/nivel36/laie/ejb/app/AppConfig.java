@@ -4,18 +4,36 @@ import java.util.List;
 
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderBy;
+import jakarta.persistence.Table;
 
 @Entity
-public class AppConfig extends AbstractEntity{
-	
+@Table(name = "APP_CONFIG")
+public class AppConfig extends AbstractEntity {
+
 	private static final long serialVersionUID = -959664391460126029L;
 
-	private boolean showAppStatistics = true;
-	
-	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "appConfig")
+	@Column(name = "SHOW_APP_STATISTICS", nullable = false)
+	private boolean showAppStatistics;
+
+	@Column(name = "SHOW_USER_STATISTICS", nullable = false)
+	private boolean showUserStatistics;
+
+	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "appConfig", fetch = FetchType.EAGER)
+	@OrderBy("position ASC")
 	private List<StatisticPanel> statisticsPanels;
+
+	public boolean isShowUserStatistics() {
+		return showUserStatistics;
+	}
+
+	public void setShowUserStatistics(boolean showUserStatistics) {
+		this.showUserStatistics = showUserStatistics;
+	}
 
 	public boolean isShowAppStatistics() {
 		return showAppStatistics;

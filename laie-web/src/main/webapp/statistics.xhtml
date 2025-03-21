@@ -6,56 +6,51 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:po="http://primefaces.org/roma">
 
-	<div class="col-12 md:col-6 lg:col-3">
-		<div class="overview-box card">
-			<div class="overview-box-value">#{statisticsViewPart.activeJobOffers}</div>
-			<div class="overview-box-title">#{i18n['statistics.job_offers']}</div>
-
-			<p:graphicImage name="images/index/graph-tasks.svg"
-				library="roma-layout" />
-			<div class="overview-box-status">
-				#{statisticsViewPart.activeJobOfferPercentageChange}% <i
-					class="pi #{statisticsViewPart.activeJobOfferPercentageChange >= 0 ? 'pi-arrow-circle-up' : 'pi-arrow-circle-down'}" />
-			</div>
+	<h:panelGroup layout="block"
+		rendered="#{statisticsViewPart.showAppStatistics}">
+		<div class="col-12 md:col-6 lg:col-3">
+			<cc:statisticsPanel value="#{statisticsViewPart.getPanelValue(1)}"
+				title="#{i18n['settings.statistics.type.'.concat(statisticsViewPart.getPanelTitle(1))]}"
+				percentageChange="#{statisticsViewPart.getPanelPercentageChange(1)}" />
 		</div>
-	</div>
-	<div class="col-12 md:col-6 lg:col-3">
-		<div class="overview-box card">
-			<div class="overview-box-value">#{statisticsViewPart.numberOfCandidates}</div>
-			<div class="overview-box-title">#{i18n['statistics.candidates']}</div>
-
-			<p:graphicImage name="images/index/graph-purchases.svg"
-				library="roma-layout" />
-			<div class="overview-box-status">
-				#{statisticsViewPart.numberOfCandidatesPercentageChange}% <i
-					class="pi #{statisticsViewPart.activeJobOfferPercentageChange >= 0 ? 'pi-arrow-circle-up' : 'pi-arrow-circle-down'}" />
-			</div>
+		<div class="col-12 md:col-6 lg:col-3">
+			<cc:statisticsPanel value="#{statisticsViewPart.getPanelValue(2)}"
+				title="#{i18n['settings.statistics.type.'.concat(statisticsViewPart.getPanelTitle(2))]}"
+				percentageChange="#{statisticsViewPart.getPanelPercentageChange(2)}" />
 		</div>
-	</div>
-	<div class="col-12 md:col-6 lg:col-3">
-		<div class="overview-box card">
-			<div class="overview-box-value">#{statisticsViewPart.closedJobOffers}</div>
-			<div class="overview-box-title">#{i18n['statistics.closed_job_offers']}</div>
-
-			<p:graphicImage name="images/index/graph-issues.svg"
-				library="roma-layout" />
-			<div class="overview-box-status">
-				#{statisticsViewPart.closedJobOfferPercentageChange}% <i
-					class="pi #{statisticsViewPart.activeJobOfferPercentageChange >= 0 ? 'pi-arrow-circle-up' : 'pi-arrow-circle-down'}" />
-			</div>
+		<div class="col-12 md:col-6 lg:col-3">
+			<cc:statisticsPanel value="#{statisticsViewPart.getPanelValue(3)}"
+				title="#{i18n['settings.statistics.type.'.concat(statisticsViewPart.getPanelTitle(3))]}"
+				percentageChange="#{statisticsViewPart.getPanelPercentageChange(3)}" />
 		</div>
-	</div>
-	<div class="col-12 md:col-6 lg:col-3">
-		<div class="overview-box card">
-			<div class="overview-box-value">#{statisticsViewPart.numberOfCommunications}</div>
-			<div class="overview-box-title">#{i18n['statistics.messages']}</div>
-
-			<p:graphicImage name="images/index/graph-messages.svg"
-				library="roma-layout" />
-			<div class="overview-box-status">
-				#{statisticsViewPart.closedJobOfferPercentageChange}% <i
-					class="pi #{statisticsViewPart.numberOfCommunicationsPercentageChange >= 0 ? 'pi-arrow-circle-up' : 'pi-arrow-circle-down'}" />
-			</div>
+		<div class="col-12 md:col-6 lg:col-3">
+			<cc:statisticsPanel value="#{statisticsViewPart.getPanelValue(4)}"
+				title="#{i18n['settings.statistics.type.'.concat(statisticsViewPart.getPanelTitle(4))]}"
+				percentageChange="#{statisticsViewPart.getPanelPercentageChange(4)}" />
 		</div>
-	</div>
+	</h:panelGroup>
+
+	<h:panelGroup layout="block"
+		rendered="#{statisticsViewPart.showUserStatistics}">
+		<div class="col-12 md:col-6 lg:col-3">
+			<cc:statisticsPanel value="#{statisticsViewPart.getPanelValue(5)}"
+				title="#{i18n['settings.statistics.type.'.concat(statisticsViewPart.getPanelTitle(5))]}"
+				percentageChange="#{statisticsViewPart.getPanelPercentageChange(5)}" />
+		</div>
+		<div class="col-12 md:col-6 lg:col-3">
+			<cc:statisticsPanel value="#{statisticsViewPart.getPanelValue(6)}"
+				title="#{i18n['settings.statistics.type.'.concat(statisticsViewPart.getPanelTitle(6))]}"
+				percentageChange="#{statisticsViewPart.getPanelPercentageChange(6)}" />
+		</div>
+		<div class="col-12 md:col-6 lg:col-3">
+			<cc:statisticsPanel value="#{statisticsViewPart.getPanelValue(7)}"
+				title="#{i18n['settings.statistics.type.'.concat(statisticsViewPart.getPanelTitle(7))]}"
+				percentageChange="#{statisticsViewPart.getPanelPercentageChange(7)}" />
+		</div>
+		<div class="col-12 md:col-6 lg:col-3">
+			<cc:statisticsPanel value="#{statisticsViewPart.getPanelValue(8)}"
+				title="#{i18n['settings.statistics.type.'.concat(statisticsViewPart.getPanelTitle(8))]}"
+				percentageChange="#{statisticsViewPart.getPanelPercentageChange(8)}" />
+		</div>
+	</h:panelGroup>
 </ui:composition>
