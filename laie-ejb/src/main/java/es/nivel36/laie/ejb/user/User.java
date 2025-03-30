@@ -13,6 +13,7 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.KeywordField;
 
+import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.candidate.Rating;
 import es.nivel36.laie.ejb.client.Client;
 import es.nivel36.laie.ejb.core.bookmark.Bookmark;
@@ -47,104 +48,95 @@ public class User extends AbstractEntity implements Subject {
 	private static final long serialVersionUID = -3719561601581901723L;
 
 	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "PERSON_BOOKMARK", joinColumns = @JoinColumn(name = "PERSON_ID"), inverseJoinColumns = @JoinColumn(name = "BOOKMARK_ID"))
-	private Set<Bookmark> bookmarks = new HashSet<>();
+    @JoinTable(name = "PERSON_BOOKMARK",
+               joinColumns = @JoinColumn(name = "PERSON_ID"),
+               inverseJoinColumns = @JoinColumn(name = "BOOKMARK_ID"))
+    private Set<Bookmark> bookmarks = new HashSet<>();
 
-	@OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
-	private Set<Client> candidates = new HashSet<>();
+    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
+    private Set<Candidate> candidates = new HashSet<>();
 
-	@OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
-	private Set<Client> clients = new HashSet<>();
+    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
+    private Set<Client> clients = new HashSet<>();
 
-	@GenericField(sortable = Sortable.YES)
-	@Column(name = "DATE_OF_JOIN")
-	private LocalDate dateOfJoin;
+    @GenericField(sortable = Sortable.YES)
+    @Column(name = "DATE_OF_JOIN")
+    private LocalDate dateOfJoin;
 
-	@FullTextField(name = "_email")
-	@Column(name = "EMAIL", length = 128, nullable = false)
-	private String email;
+    @FullTextField(name = "_email")
+    @Column(name = "EMAIL", length = 128, nullable = false)
+    private String email;
 
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = false)
-	private Set<JobSubmissionEvent> jobSubmissionEvents = new HashSet<>();
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = false)
+    private Set<JobSubmissionEvent> jobSubmissionEvents = new HashSet<>();
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "owner", orphanRemoval = true)
-	private Set<JobOffer> jobOffers = new HashSet<>();
-	
-	@Column(name = "LANGUAGE", nullable = false)
-	private String language;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "owner", orphanRemoval = true)
+    private Set<JobOffer> jobOffers = new HashSet<>();
 
-	@GenericField(sortable = Sortable.YES)
-	@Column(name = "LAST_CONNECTION")
-	private LocalDateTime lastConnection;
+    @Column(name = "LANGUAGE", nullable = false)
+    private String language;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "MANAGER_ID")
-	@IndexedEmbedded(includeDepth = 1)
-	private User manager;
+    @GenericField(sortable = Sortable.YES)
+    @Column(name = "LAST_CONNECTION")
+    private LocalDateTime lastConnection;
 
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "PERSON_MEETING", joinColumns = @JoinColumn(name = "PERSON_ID"), inverseJoinColumns = @JoinColumn(name = "MEETING_ID"))
-	private Set<Meeting> meetings = new HashSet<>();
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "MANAGER_ID")
+    @IndexedEmbedded(includeDepth = 1)
+    private User manager;
 
-	@Column(name = "NAME", nullable = false, length = 128)
-	@FullTextField(name = "_name")
-	@KeywordField(sortable = Sortable.YES)
-	private String name;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "PERSON_MEETING",
+               joinColumns = @JoinColumn(name = "PERSON_ID"),
+               inverseJoinColumns = @JoinColumn(name = "MEETING_ID"))
+    private Set<Meeting> meetings = new HashSet<>();
 
-	@Column(name = "PHONE_NUMBER", length = 12)
-	private String phoneNumber;
+    @Column(name = "NAME", nullable = false, length = 128)
+    @FullTextField(name = "_name")
+    @KeywordField(sortable = Sortable.YES)
+    private String name;
 
-	@ManyToOne
-	@JoinColumn(name = "PICTURE_ID")
-	private PhysicalFile picture;
+    @Column(name = "PHONE_NUMBER", length = 12)
+    private String phoneNumber;
 
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-	private Set<Rating> ratings = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "PICTURE_ID")
+    private PhysicalFile picture;
 
-	@ManyToMany
-	@JoinTable(name = "JOB_PERSON", joinColumns = @JoinColumn(name = "JOB_ID"), inverseJoinColumns = @JoinColumn(name = "PERSON_ID"))
-	private Set<JobOffer> recruiterOfJobOffers = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Set<Rating> ratings = new HashSet<>();
 
-	@Enumerated(EnumType.STRING)
-	@Column(name = "ROLE", nullable = false, length = 16)
-	private Role role;
+    @ManyToMany
+    @JoinTable(name = "JOB_PERSON",
+               joinColumns = @JoinColumn(name = "PERSON_ID"),
+               inverseJoinColumns = @JoinColumn(name = "JOB_ID"))
+    private Set<JobOffer> recruiterOfJobOffers = new HashSet<>();
 
-	@Column(name = "ROWS_PER_PAGE", nullable = false, scale = 0, precision = 3)
-	private Integer rowsPerPage = 10;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "ROLE", nullable = false, length = 16)
+    private Role role;
 
-	@Column(name = "SURNAME", nullable = false, length = 128)
-	@FullTextField(name = "_surname")
-	@KeywordField(sortable = Sortable.YES)
-	private String surname;
+    @Column(name = "ROWS_PER_PAGE", nullable = false, scale = 0, precision = 3)
+    private Integer rowsPerPage = 10;
 
-	@OneToMany(mappedBy = "manager", fetch = FetchType.LAZY)
-	private Set<User> team = new HashSet<>();
+    @Column(name = "SURNAME", nullable = false, length = 128)
+    @FullTextField(name = "_surname")
+    @KeywordField(sortable = Sortable.YES)
+    private String surname;
+
+    @OneToMany(mappedBy = "manager", fetch = FetchType.LAZY)
+    private Set<User> team = new HashSet<>();
 
 	public void addMeeting(final Meeting meeting) {
 		Objects.requireNonNull(meeting);
 		this.meetings.add(meeting);
 	}
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (obj == null) {
-			return false;
-		}
-		if (this == obj) {
-			return true;
-		}
-		if (this.getClass() != obj.getClass()) {
-			return false;
-		}
-		final User other = (User) obj;
-		return Objects.equals(other.email, this.email);
-	}
-
 	public Set<Bookmark> getBookmarks() {
 		return bookmarks;
 	}
 
-	public Set<Client> getCandidates() {
+	public Set<Candidate> getCandidates() {
 		return candidates;
 	}
 
@@ -231,11 +223,6 @@ public class User extends AbstractEntity implements Subject {
 		return team;
 	}
 
-	@Override
-	public int hashCode() {
-		return 31 * Objects.hash(this.email);
-	}
-
 	public boolean isManaged() {
 		return this.manager != null;
 	}
@@ -245,15 +232,15 @@ public class User extends AbstractEntity implements Subject {
 		this.meetings.remove(meeting);
 	}
 
-	public void setBookmarks(Set<Bookmark> bookmarks) {
+	public void setBookmarks(final Set<Bookmark> bookmarks) {
 		this.bookmarks = bookmarks;
 	}
 
-	public void setCandidates(Set<Client> candidates) {
+	public void setCandidates(final Set<Candidate> candidates) {
 		this.candidates = candidates;
 	}
 
-	public void setClients(Set<Client> clients) {
+	public void setClients(final Set<Client> clients) {
 		this.clients = clients;
 	}
 
@@ -265,11 +252,11 @@ public class User extends AbstractEntity implements Subject {
 		this.email = email;
 	}
 
-	public void setJobSubmissionEvents(Set<JobSubmissionEvent> jobSubmissionEvents) {
+	public void setJobSubmissionEvents(final Set<JobSubmissionEvent> jobSubmissionEvents) {
 		this.jobSubmissionEvents = jobSubmissionEvents;
 	}
 
-	public void setJobOffers(Set<JobOffer> jobOffers) {
+	public void setJobOffers(final Set<JobOffer> jobOffers) {
 		this.jobOffers = jobOffers;
 	}
 
@@ -285,7 +272,7 @@ public class User extends AbstractEntity implements Subject {
 		this.manager = manager;
 	}
 
-	public void setMeetings(Set<Meeting> meetings) {
+	public void setMeetings(final Set<Meeting> meetings) {
 		this.meetings = meetings;
 	}
 
@@ -301,15 +288,15 @@ public class User extends AbstractEntity implements Subject {
 		this.picture = picture;
 	}
 
-	public void setRatings(Set<Rating> ratings) {
+	public void setRatings(final Set<Rating> ratings) {
 		this.ratings = ratings;
 	}
 
-	public void setRecruiterOfJobOffers(Set<JobOffer> recruiterOfJobOffers) {
+	public void setRecruiterOfJobOffers(final Set<JobOffer> recruiterOfJobOffers) {
 		this.recruiterOfJobOffers = recruiterOfJobOffers;
 	}
 
-	public void setRole(Role role) {
+	public void setRole(final Role role) {
 		this.role = role;
 	}
 
@@ -321,8 +308,28 @@ public class User extends AbstractEntity implements Subject {
 		this.surname = surname;
 	}
 
-	public void setTeam(Set<User> team) {
+	public void setTeam(final Set<User> team) {
 		this.team = team;
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (this == obj) {
+			return true;
+		}
+		if (this.getClass() != obj.getClass()) {
+			return false;
+		}
+		final User other = (User) obj;
+		return Objects.equals(other.email, this.email);
+	}
+
+	@Override
+	public int hashCode() {
+		return 31 * Objects.hash(this.email);
 	}
 
 	@Override

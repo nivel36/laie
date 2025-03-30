@@ -13,17 +13,17 @@ import jakarta.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "PERSON_CLOSURE", uniqueConstraints = {
-		@UniqueConstraint(name = "UQ_PERSON_CLOSURE_ANTECESSOR_ID_DESCENDANT_ID_PATH_LENGTH", columnNames = {
-				"ANTECESSOR_ID", "DESCENDANT_ID", "PATH_LENGTH" }) }, //
+		@UniqueConstraint(name = "UQ_PERSON_CLOSURE_ANCESTOR_ID_DESCENDANT_ID_PATH_LENGTH", columnNames = {
+				"ANCESTOR_ID", "DESCENDANT_ID", "PATH_LENGTH" }) }, //
 		indexes = {
-				@Index(name = "UX_PERSON_CLOSURE_ANTECESSOR_ID_DESCENDANT_ID_PATH_LENGTH", columnList = "ANTECESSOR_ID, DESCENDANT_ID, PATH_LENGTH", unique = true) })
+				@Index(name = "UX_PERSON_CLOSURE_ANCESTOR_ID_DESCENDANT_ID_PATH_LENGTH", columnList = "ANCESTOR_ID, DESCENDANT_ID, PATH_LENGTH", unique = true) })
 public class UserClosure extends AbstractEntity {
 
 	private static final long serialVersionUID = 6018390713882649369L;
 
 	@ManyToOne
-	@JoinColumn(name = "ANTECESSOR_ID", nullable = false)
-	private User antecessor;
+	@JoinColumn(name = "ANCESTOR_ID", nullable = false)
+	private User ancestor;
 
 	@ManyToOne
 	@JoinColumn(name = "DESCENDANT_ID", nullable = false)
@@ -36,14 +36,14 @@ public class UserClosure extends AbstractEntity {
 
 	}
 
-	public UserClosure(final User antecessor, final User descendant, final Integer pathLength) {
-		this.antecessor = antecessor;
-		this.descendant = descendant;
-		this.pathLength = pathLength;
+	public UserClosure(final User ancestor, final User descendant, final Integer pathLength) {
+		this.ancestor = Objects.requireNonNull(ancestor);
+		this.descendant = Objects.requireNonNull(descendant);
+		this.pathLength = Objects.requireNonNull(pathLength);
 	}
 
-	public User getAntecessor() {
-		return this.antecessor;
+	public User getAncestor() {
+		return this.ancestor;
 	}
 
 	public User getDescendant() {
@@ -54,8 +54,8 @@ public class UserClosure extends AbstractEntity {
 		return this.pathLength;
 	}
 
-	public void setAntecessor(final User antecessor) {
-		this.antecessor = antecessor;
+	public void setAncestor(final User ancestor) {
+		this.ancestor = ancestor;
 	}
 
 	public void setDescendant(final User descendant) {
@@ -68,7 +68,7 @@ public class UserClosure extends AbstractEntity {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.antecessor, this.descendant, this.pathLength);
+		return Objects.hash(this.ancestor, this.descendant, this.pathLength);
 	}
 
 	@Override
@@ -83,13 +83,13 @@ public class UserClosure extends AbstractEntity {
 			return false;
 		}
 		final UserClosure other = (UserClosure) obj;
-		return Objects.equals(other.antecessor, this.antecessor) && Objects.equals(other.descendant, this.descendant)
+		return Objects.equals(other.ancestor, this.ancestor) && Objects.equals(other.descendant, this.descendant)
 				&& Objects.equals(other.pathLength, this.pathLength);
 	}
 
 	@Override
 	public String toString() {
-		return "UserClosure [antecessor=" + antecessor + ", descendant=" + descendant + ", pathLength=" + pathLength
+		return "UserClosure [ancestor=" + ancestor + ", descendant=" + descendant + ", pathLength=" + pathLength
 				+ "]";
 	}
 }

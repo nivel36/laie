@@ -1,7 +1,5 @@
 package es.nivel36.laie.ejb.user;
 
-import static es.nivel36.laie.ejb.core.util.Parameters.map;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -13,16 +11,15 @@ import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.SearchFacade;
 import es.nivel36.laie.ejb.core.model.SortField;
-import es.nivel36.laie.ejb.core.util.Parameters;
 import jakarta.inject.Inject;
 import jakarta.persistence.NoResultException;
+import jakarta.persistence.TypedQuery;
 
 public class UserDao extends AbstractDao {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserDao.class);
 
-	@Inject
-	private SearchFacade searchFacade;
+	private @Inject SearchFacade searchFacade;
 
 	public void insert(final User user) {
 		Objects.requireNonNull(user);
@@ -45,35 +42,67 @@ public class UserDao extends AbstractDao {
 
 	public List<User> findSubordinateUsers(final User user) {
 		Objects.requireNonNull(user);
-		final String namedQuery = "User.findSubordinateUsers";
-		Parameters parameters = map("user", user);
-		return this.findByQuery(User.class, namedQuery, parameters, Page.ALL_RESULTS);
+		final String jpql = """
+					SELECT u
+					FROM UserClosure uc
+					JOIN uc.descendant u
+					WHERE uc.ancestor = :user
+					AND uc.pathLength > 0
+				""";
+		final TypedQuery<User> query = this.em.createQuery(jpql, User.class);
+		query.setParameter("user", user);
+		return query.getResultList();
 	}
 
 	public User findUserByEmail(final String email) {
 		Objects.requireNonNull(email);
 		try {
-			final String namedQuery = "User.findByEmail";
-			final Parameters parameters = map("email", email);
-			return this.findByQuery(User.class, namedQuery, parameters);
+			final String jpql = """
+						SELECT u
+						FROM User u
+						LEFT JOIN FETCH u.bookmarks
+						WHERE u.email = :email
+					""";
+			final TypedQuery<User> query = this.em.createQuery(jpql, User.class);
+			query.setParameter("email", email);
+			return query.getSingleResult();
 		} catch (final NoResultException e) {
 			return null;
 		}
 	}
 
 	public User findAllUserData(final long userId) {
-		Objects.requireNonNull(userId);
-		final String namedQuery = "User.findAllData";
-		final Parameters parameters = map("userId", userId);
-		return this.findByQuery(User.class, namedQuery, parameters);
+		if (userId <= 0) {
+			throw new IllegalStateException(
+					"User ID must be greater than zero. Received: " + userId);
+		}
+		final String jpql = """
+					SELECT u
+					FROM User u
+					LEFT JOIN FETCH u.manager
+					LEFT JOIN FETCH u.team
+					LEFT JOIN FETCH u.picture
+					WHERE u.id = :userId
+				""";
+		final TypedQuery<User> query = this.em.createQuery(jpql, User.class);
+		query.setParameter("userId", userId);
+		return query.getSingleResult();
 	}
 
 	public boolean isSubordinateUser(final User user, final User subordinate) {
 		Objects.requireNonNull(user);
 		Objects.requireNonNull(subordinate);
-		final String namedQuery = "User.isSubordinateUser";
-		final Parameters parameters = map("manager", user).and("subordinate", subordinate);
-		return this.findByQuery(Boolean.class, namedQuery, parameters);
+		final String jpql = """
+					SELECT CASE WHEN (COUNT(u) > 0) THEN TRUE ELSE FALSE END
+					FROM UserClosure uc
+					JOIN uc.descendant u
+					WHERE uc.ancestor = :manager
+					AND u = :subordinate
+				""";
+		final TypedQuery<Boolean> query = this.em.createQuery(jpql, Boolean.class);
+		query.setParameter("manager", user);
+		query.setParameter("subordinate", subordinate);
+		return query.getSingleResult();
 	}
 
 	public SearchResult<User> search(final String searchText, final Page page, final SortField sortField,
@@ -86,14 +115,20 @@ public class UserDao extends AbstractDao {
 	// USER CLOSURES
 	///////////////////////////////////////////////////////////////////////////
 
-	private List<UserClosure> findAntecessorsUserClosures(final User user) {
-		return this.findByQuery(UserClosure.class, "UserClosure.findAntecessorsUserClosures", map("user", user),
-				Page.ALL_RESULTS);
+	private List<UserClosure> findAncestorsUserClosures(final User user) {
+		final String jpql = """
+					SELECT uc
+					FROM UserClosure uc
+					WHERE uc.descendant = :user
+				""";
+		final TypedQuery<UserClosure> query = this.em.createQuery(jpql, UserClosure.class);
+		query.setParameter("user", user);
+		return query.getResultList();
 	}
 
 	private void deleteUserClosures(final User user) {
 		logger.trace("Delete user closures for user {}", user.getEmail());
-		final List<UserClosure> userClosures = this.findAntecessorsUserClosures(user);
+		final List<UserClosure> userClosures = this.findAncestorsUserClosures(user);
 		for (final UserClosure userClosure : userClosures) {
 			this.delete(UserClosure.class, userClosure);
 		}
@@ -131,17 +166,17 @@ public class UserDao extends AbstractDao {
 
 	private void insertUserClosures(final User user) {
 		logger.trace("Insert user closures for user {}", user.getEmail());
-		final List<UserClosure> userClosures = this.findAntecessorsUserClosures(user.getManager());
+		final List<UserClosure> userClosures = this.findAncestorsUserClosures(user.getManager());
 		for (final UserClosure userClosure : userClosures) {
-			this.insertUserClosure(userClosure.getAntecessor(), user, userClosure.getPathLength() + 1);
+			this.insertUserClosure(userClosure.getAncestor(), user, userClosure.getPathLength() + 1);
 		}
 		this.insertUserClosure(user, user, 0);
 	}
 
-	private void insertUserClosure(final User antecessor, final User descendant, final int pathLength) {
-		logger.trace("Insert in user closure table. Antecessor {}, descendant {}, pathLength {}", antecessor,
+	private void insertUserClosure(final User ancestor, final User descendant, final int pathLength) {
+		logger.trace("Insert in user closure table. Ancestor {}, descendant {}, pathLength {}", ancestor,
 				descendant, pathLength);
-		final UserClosure newUserClosure = new UserClosure(antecessor, descendant, pathLength);
+		final UserClosure newUserClosure = new UserClosure(ancestor, descendant, pathLength);
 		this.em.persist(newUserClosure);
 	}
 }

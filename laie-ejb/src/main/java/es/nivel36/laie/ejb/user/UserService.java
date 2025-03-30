@@ -21,7 +21,6 @@ public class UserService {
 	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
 	private @Inject PhysicalFileService fileService;
-
 	private @Inject UserDao userDao;
 
 	public void addUser(final User user) throws DuplicateEmailException, BadManagerException {
@@ -32,29 +31,21 @@ public class UserService {
 			throw new DuplicateEmailException();
 		}
 
-		this.userDao.insert(user);
 		if (user.getManager() != null) {
-			this.addUsersManager(user);
+			this.validateUserManager(user);
 		}
+		this.userDao.insert(user);
 	}
 
-	private void checkDuplicateEmail(final String newEmail, final String oldEmail) throws DuplicateEmailException {
-		if (!newEmail.equals(oldEmail)) {
-			if (this.userDao.checkDuplicateEmail(newEmail)) {
-				throw new DuplicateEmailException();
-			}
-		}
-	}
-
-	private void addUsersManager(final User user) throws BadManagerException {
+	private void validateUserManager(final User user) throws BadManagerException {
 		final User manager = user.getManager();
 		if (user.equals(manager)) {
-			logger.warn("The user {} can't be his/her manager", user);
-			throw new BadManagerException("User can't be his/her manager");
+			logger.warn("User {} cannot be their own manager", user);
+			throw new BadManagerException("User cannot be their own manager");
 		}
 		if (this.userDao.isSubordinateUser(user, manager)) {
-			logger.warn("The user {} is the manager of {}", user, manager);
-			throw new BadManagerException("User is the manager of his/her new manager");
+			logger.warn("The user {} is already managing {}", user, manager);
+			throw new BadManagerException("The user is already managing the new manager");
 		}
 	}
 
@@ -80,9 +71,17 @@ public class UserService {
 
 		return this.userDao.update(user);
 	}
+	
+	private void checkDuplicateEmail(final String newEmail, final String oldEmail) throws DuplicateEmailException {
+		if (!newEmail.equals(oldEmail)) {
+			if (this.userDao.checkDuplicateEmail(newEmail)) {
+				throw new DuplicateEmailException();
+			}
+		}
+	}
 
 	private boolean pictureHasChanged(final PhysicalFile picture, final PhysicalFile pictureInDatabase) {
-		if ((picture == null) != (pictureInDatabase == null)) {
+		if (picture == null != (pictureInDatabase == null)) {
 			return true;
 		}
 		if (picture == null && pictureInDatabase == null) {
@@ -101,27 +100,28 @@ public class UserService {
 		}
 
 		// No changes
-		if ((newManager == null && oldManager == null) || newManager.equals(oldManager)) {
+		if (newManager == null && oldManager == null || newManager.equals(oldManager)) {
 			logger.debug("Manager not changed");
 			return;
 		}
 
 		// Updating manager
 		logger.debug("Change manager from {} to {} of user {}", oldManager, newManager, user);
+
 		if (user.equals(newManager)) {
-			logger.warn("The user {} can't be his/her manager", user);
-			throw new BadManagerException("User can't be his/her manager");
+			logger.warn("User {} cannot be their own manager", user);
+			throw new BadManagerException("User cannot be their own manager");
 		}
 		if (this.userDao.isSubordinateUser(user, newManager)) {
-			logger.warn("The user {} is the manager of {}", user, newManager);
-			throw new BadManagerException("User is the manager of his new manager");
+			logger.warn("The user {} is already managing {}", user, newManager);
+			throw new BadManagerException("The user is already managing the new manager");
 		}
 	}
 
 	public User changeUsersImage(final User user, final InputStream image) {
 		Objects.requireNonNull(user);
 		Objects.requireNonNull(image);
-		logger.debug("Change image to user {}", user);
+		logger.debug("Updating image for user {}", user);
 		final PhysicalFile newImage = this.fileService.uploadFile(image, true);
 		final PhysicalFile oldImage = user.getPicture();
 		user.setPicture(newImage);
@@ -145,10 +145,12 @@ public class UserService {
 		return this.userDao.findUserByEmail(email);
 	}
 
-	public User findAllUserData(Long id) {
-		Objects.requireNonNull(id);
-		logger.debug("Find all user data by user id {}", id);
-		return this.userDao.findAllUserData(id);
+	public User findAllUserData(final long userId) {
+		if (userId <= 0) {
+			throw new IllegalStateException("User ID must be greater than zero. Received: " + userId);
+		}
+		logger.debug("Find all user data by user id {}", userId);
+		return this.userDao.findAllUserData(userId);
 	}
 
 	public List<User> findSubordinateUsers(final User user) {
@@ -160,7 +162,7 @@ public class UserService {
 	public boolean isSubordinateUser(final User user, final User manager) {
 		Objects.requireNonNull(user);
 		Objects.requireNonNull(manager);
-		logger.debug("Find is user {} is subordinate of {}", user, manager);
+		logger.debug("Checking if user {} is subordinate of {}", user, manager);
 		return this.userDao.isSubordinateUser(user, manager);
 	}
 
@@ -175,7 +177,10 @@ public class UserService {
 	}
 
 	public void setUserDao(final UserDao userDao) {
-		Objects.requireNonNull(userDao);
-		this.userDao = userDao;
+		this.userDao = Objects.requireNonNull(userDao);
+	}
+
+	public void setFileService(final PhysicalFileService fileService) {
+		this.fileService = Objects.requireNonNull(fileService);
 	}
 }
