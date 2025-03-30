@@ -18,5 +18,4 @@ import jakarta.inject.Qualifier;
 @Documented
 public @interface JobOfferCompletedEvent {
 
-
 }

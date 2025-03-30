@@ -72,10 +72,10 @@
 					</p:textEditor>
 				</c:when>
 
-				<c:when test="#{type eq 'inputSwitch'}">
-					<p:inputSwitch id="#{id}" value="#{value}" required="#{required}" styleClass="input input-switch #{inputStyleClass}">
+				<c:when test="#{type eq 'toggleSwitch'}">
+					<p:toggleSwitch  id="#{id}" value="#{value}" required="#{required}" styleClass="input toggle-switch #{inputStyleClass}">
 						<ui:insert />
-					</p:inputSwitch>
+					</p:toggleSwitch>
 				</c:when>
 
 				<c:when test="#{type eq 'checkbox'}">

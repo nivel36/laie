@@ -37,6 +37,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Indexed
@@ -59,12 +60,13 @@ public class User extends AbstractEntity implements Subject {
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
     private Set<Client> clients = new HashSet<>();
 
-    @GenericField(sortable = Sortable.YES)
     @Column(name = "DATE_OF_JOIN")
+    @GenericField(sortable = Sortable.YES)
     private LocalDate dateOfJoin;
 
-    @FullTextField(name = "_email")
+    @NotNull
     @Column(name = "EMAIL", length = 128, nullable = false)
+    @FullTextField(name = "_email")
     private String email;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = false)
@@ -73,6 +75,7 @@ public class User extends AbstractEntity implements Subject {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "owner", orphanRemoval = true)
     private Set<JobOffer> jobOffers = new HashSet<>();
 
+    @NotNull
     @Column(name = "LANGUAGE", nullable = false)
     private String language;
 
@@ -91,6 +94,7 @@ public class User extends AbstractEntity implements Subject {
                inverseJoinColumns = @JoinColumn(name = "MEETING_ID"))
     private Set<Meeting> meetings = new HashSet<>();
 
+    @NotNull
     @Column(name = "NAME", nullable = false, length = 128)
     @FullTextField(name = "_name")
     @KeywordField(sortable = Sortable.YES)
@@ -116,9 +120,11 @@ public class User extends AbstractEntity implements Subject {
     @Column(name = "ROLE", nullable = false, length = 16)
     private Role role;
 
-    @Column(name = "ROWS_PER_PAGE", nullable = false, scale = 0, precision = 3)
+    @NotNull
+    @Column(name = "ROWS_PER_PAGE", nullable = false)
     private Integer rowsPerPage = 10;
 
+    @NotNull
     @Column(name = "SURNAME", nullable = false, length = 128)
     @FullTextField(name = "_surname")
     @KeywordField(sortable = Sortable.YES)

@@ -59,7 +59,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 
 	@Email
 	@NotNull
-	@Column(name = "EMAIL")
+	@Column(name = "EMAIL", nullable = false)
 	@FullTextField(name = "_email")
 	private String email;
 
@@ -77,8 +77,8 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	private Set<JobSubmission> jobSubmissions = new HashSet<>();
 
 	@NotNull
-	@FullTextField(name = "_jobProfile")
 	@Column(name = "JOB_PROFILE", nullable = false, columnDefinition = "TEXT")
+	@FullTextField(name = "_jobProfile")
 	private String jobProfile;
 
 	@Column(name = "LINKEDIN_PROFILE_URL", columnDefinition = "TEXT")
@@ -94,11 +94,11 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	private String name;
 
 	@ManyToOne
-	@JoinColumn(name = "CANDIDATE_ID")
+	@JoinColumn(name = "ORIGIN_ID")
 	private Origin origin;
 
 	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "OWNER_ID", nullable = false)
 	private User owner;
 

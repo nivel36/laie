@@ -18,8 +18,7 @@ import jakarta.persistence.NoResultException;
 
 public class CandidateDao extends AbstractDao {
 
-	@Inject
-	private SearchFacade searchFacade;
+	private @Inject SearchFacade searchFacade;
 
 	public boolean checkDuplicateEmail(final String email) {
 		Objects.requireNonNull(email);
