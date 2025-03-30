@@ -31,7 +31,7 @@ public class ContactDao extends AbstractDao {
 	public int deleteContactByIdAndClientId(final Contact contact, final Client client) {
 		Objects.requireNonNull(client);
 		final String namedQuery = "Contact.deleteByIdAndClientId";
-		Query query = this.em.createNamedQuery(namedQuery);
+		final Query query = this.em.createNamedQuery(namedQuery);
 		query.setParameter("client", client);
 		query.setParameter("contact", contact);
 		return query.executeUpdate();

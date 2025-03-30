@@ -10,11 +10,11 @@ public enum JobOfferState implements EventState {
 	OPENED("opened", true, false), //
 	PAUSED("paused", false, false);
 
-	private boolean closeState;
+	private final boolean closeState;
 
-	private String name;
+	private final String name;
 
-	private boolean openState;
+	private final boolean openState;
 
 	JobOfferState(final String name) {
 		this(name, false, false);

@@ -10,9 +10,9 @@ import jakarta.inject.Inject;
 
 @FacesConverter(managed = true, forClass = JobSubmissionState.class)
 public class JobSubmissionStateConverter implements Converter<JobSubmissionState> {
-	
+
 	private @Inject JobSubmissionStateService jobSubmissionStateService;
-	
+
 	@Override
 	public JobSubmissionState getAsObject(FacesContext context, UIComponent component, String value) {
 		return jobSubmissionStateService.findByName(value);

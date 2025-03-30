@@ -20,7 +20,7 @@ public class InputUsers extends UIInput implements NamingContainer {
 	private void addValueToList(final User user) {
 		Object value = this.input.getValue();
 		if (value == null) {
-			value = new ArrayList<Object>();
+			value = new ArrayList<>();
 		}
 		((List<Object>) value).add(user);
 	}

@@ -18,14 +18,14 @@ import jakarta.inject.Inject;
 public abstract class AbstractView implements Serializable {
 
 	private static final long serialVersionUID = -75092582490831905L;
-	
+
 	protected transient @Inject ApplicationView applicationView;
 	protected transient @Inject ExternalContext externalContext;
 	protected transient @Inject FacesContext facesContext;
 	protected transient @Inject Flash flash;
 	protected transient @Inject SessionUser sessionUser;
 	protected transient @Inject Translator translator;
-	
+
 	protected void addErrorToField(final String componentId, final String message) {
 		final UIComponent component = getUIComponent(componentId);
 		this.addMessage(component, FacesMessage.SEVERITY_ERROR, message, message, null);
@@ -79,7 +79,7 @@ public abstract class AbstractView implements Serializable {
 			this.addInfoMessage("warning.max_results_reached", maxResults);
 		}
 	}
-	
+
 	protected boolean flashContainsKey(final String key) {
 		return this.flash.containsKey(key);
 	}

@@ -42,8 +42,8 @@ public class JobSubmissionStateService {
 		return jobSubmissionStateDao.findByName(name);
 	}
 
-	public Transition createTransition(final JobSubmissionState originState,
-			final JobSubmissionState destinationState, final String event) {
+	public Transition createTransition(final JobSubmissionState originState, final JobSubmissionState destinationState,
+			final String event) {
 		Objects.requireNonNull(originState);
 		Objects.requireNonNull(destinationState);
 		Objects.requireNonNull(event);

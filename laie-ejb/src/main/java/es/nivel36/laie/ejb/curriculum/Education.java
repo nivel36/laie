@@ -76,7 +76,7 @@ public class Education extends AbstractEntity implements Comparable<Education> {
 		if (this == obj) {
 			return true;
 		}
-		if ((obj == null) || (this.getClass() != obj.getClass())) {
+		if (obj == null || this.getClass() != obj.getClass()) {
 			return false;
 		}
 		final Education other = (Education) obj;
@@ -119,7 +119,7 @@ public class Education extends AbstractEntity implements Comparable<Education> {
 		return this.stillStudying;
 	}
 
-	public void setCurriculum(Curriculum curriculum) {
+	public void setCurriculum(final Curriculum curriculum) {
 		this.curriculum = curriculum;
 	}
 

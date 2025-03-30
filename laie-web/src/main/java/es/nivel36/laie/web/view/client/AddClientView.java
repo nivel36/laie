@@ -20,7 +20,7 @@ public class AddClientView extends AbstractClientView {
 	private static final long serialVersionUID = -5675968370983284897L;
 
 	private static final Logger logger = LoggerFactory.getLogger(AddClientView.class);
-	
+
 	private transient @Inject AddClientPermission addClientPermission;
 
 	@PostConstruct

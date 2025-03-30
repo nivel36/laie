@@ -1,5 +1,7 @@
 package es.nivel36.laie.ejb.core.model;
 
+import java.util.Objects;
+
 import es.nivel36.laie.ejb.user.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.FetchType;
@@ -45,21 +47,13 @@ public class AbstractRecordEntity extends AbstractEntity {
 			return false;
 		}
 		final AbstractRecordEntity other = (AbstractRecordEntity) obj;
-		if (this.entityClass == null) {
-			if (other.entityClass != null) {
-				return false;
-			}
-		} else if (!this.entityClass.equals(other.entityClass)) {
+		if (!Objects.equals(this.entityClass, other.entityClass)) {
 			return false;
 		}
 		if (this.entityId != other.entityId) {
 			return false;
 		}
-		if (this.user == null) {
-			if (other.user != null) {
-				return false;
-			}
-		} else if (!this.user.equals(other.user)) {
+		if (!Objects.equals(this.user, other.user)) {
 			return false;
 		}
 		return true;
@@ -85,9 +79,9 @@ public class AbstractRecordEntity extends AbstractEntity {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = (prime * result) + (this.entityClass == null ? 0 : this.entityClass.hashCode());
-		result = (prime * result) + (int) this.entityId;
-		result = (prime * result) + (this.user == null ? 0 : this.user.hashCode());
+		result = prime * result + (this.entityClass == null ? 0 : this.entityClass.hashCode());
+		result = prime * result + (int) this.entityId;
+		result = prime * result + (this.user == null ? 0 : this.user.hashCode());
 		return result;
 	}
 

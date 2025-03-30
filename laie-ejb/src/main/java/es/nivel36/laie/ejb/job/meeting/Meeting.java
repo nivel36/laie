@@ -75,10 +75,7 @@ public class Meeting extends AbstractEntity implements Ownerable {
 		if (this == obj) {
 			return true;
 		}
-		if (!super.equals(obj)) {
-			return false;
-		}
-		if (this.getClass() != obj.getClass()) {
+		if (!super.equals(obj) || (this.getClass() != obj.getClass())) {
 			return false;
 		}
 		final Meeting other = (Meeting) obj;
@@ -137,7 +134,7 @@ public class Meeting extends AbstractEntity implements Ownerable {
 		this.datePlanned = datePlanned;
 	}
 
-	public void setDuration(Duration duration) {
+	public void setDuration(final Duration duration) {
 		this.duration = duration;
 	}
 

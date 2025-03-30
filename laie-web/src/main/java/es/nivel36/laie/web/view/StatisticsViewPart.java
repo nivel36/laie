@@ -26,7 +26,7 @@ import jakarta.inject.Named;
 public class StatisticsViewPart implements Serializable {
 
 	private static final long serialVersionUID = -8256521859429642145L;
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(StatisticsViewPart.class);
 
 	private transient @Inject CandidateStaticsService candidateStaticsService;
@@ -69,17 +69,17 @@ public class StatisticsViewPart implements Serializable {
 			}
 		}
 	}
-	
-	
+
+
 	public String getPanelTitle(int number) {
 		return title[number-1];
 	}
-	
-	
+
+
 	public long getPanelValue(int number) {
 		return panel[number-1];
 	}
-	
+
 	public double getPanelPercentageChange(int number) {
 		return panelPercentageChange[number-1];
 	}
@@ -121,7 +121,7 @@ public class StatisticsViewPart implements Serializable {
 		}
 		throw new IllegalArgumentException("Panel type not found");
 	}
-	
+
 	public double getPanelPercentage(StatisticPanel panel) {
 		StatisticsPeriodicity period = panel.getPeriodicity();
 		LocalDate end = LocalDate.now();

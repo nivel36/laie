@@ -27,10 +27,10 @@ public class JobSubmissionEventDao extends AbstractDao {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(page);
 		final String jpql = """
-			SELECT j
-			FROM JobSubmissionEvent j
-			WHERE j.jobSubmission.jobOffer = :jobOffer
-		""";
+					SELECT j
+					FROM JobSubmissionEvent j
+					WHERE j.jobSubmission.jobOffer = :jobOffer
+				""";
 		final TypedQuery<JobSubmissionEvent> query = this.em.createQuery(jpql, JobSubmissionEvent.class);
 		query.setParameter("jobOffer", jobOffer);
 		paginate(page, query);
@@ -40,10 +40,10 @@ public class JobSubmissionEventDao extends AbstractDao {
 	public long countAll(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer);
 		final String jpql = """
-			SELECT COUNT(j)
-			FROM JobSubmissionEvent j
-			WHERE j.jobSubmission.jobOffer = :jobOffer
-		""";
+					SELECT COUNT(j)
+					FROM JobSubmissionEvent j
+					WHERE j.jobSubmission.jobOffer = :jobOffer
+				""";
 		final TypedQuery<Long> query = this.em.createQuery(jpql, Long.class);
 		query.setParameter("jobOffer", jobOffer);
 		return query.getSingleResult();

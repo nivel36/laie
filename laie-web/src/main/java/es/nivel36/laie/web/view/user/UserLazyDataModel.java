@@ -13,7 +13,7 @@ import jakarta.inject.Inject;
 public class UserLazyDataModel extends AbstractLazyDataModel<User> {
 
 	private static final long serialVersionUID = 6698863542667375365L;
-	
+
 	@Inject
 	private transient UserService userService;
 
@@ -26,5 +26,5 @@ public class UserLazyDataModel extends AbstractLazyDataModel<User> {
 	@Override
 	protected User find(Long id) {
 		return userService.findUserById(id);
-	}	
+	}
 }

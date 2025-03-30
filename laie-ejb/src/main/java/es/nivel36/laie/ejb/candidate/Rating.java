@@ -15,7 +15,8 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "RATING", uniqueConstraints = {
-		@UniqueConstraint(name = "UQ_RATING_CANDIDATE_RATING_USER", columnNames = { "CANDIDATE_ID", "RATING", "USER_ID" }) })
+		@UniqueConstraint(name = "UQ_RATING_CANDIDATE_RATING_USER", columnNames = { "CANDIDATE_ID", "SCORE",
+				"USER_ID" }) })
 public class Rating extends AbstractEntity {
 
 	private static final long serialVersionUID = -923213871691949551L;
@@ -25,17 +26,26 @@ public class Rating extends AbstractEntity {
 	@JoinColumn(name = "CANDIDATE_ID", nullable = false)
 	private Candidate candidate;
 
+	@NotNull
+	@Column(name = "SCORE", nullable = false)
+	private int score;
+
+	@NotNull
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "USER_ID", nullable = false)
+	private User user;
+
 	@Column(name = "COMMENT", columnDefinition = "TEXT")
 	private String comment;
 
-	@NotNull
-	@Column(name = "RATING", scale = 0, precision = 1)
-	private Integer rating;
+	public Rating() {
+	}
 
-	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "USER_ID", nullable = false)
-	private User user;
+	public Rating(final User user, final Candidate candidate, final int score) {
+		this.user = Objects.requireNonNull(user);
+		this.candidate = Objects.requireNonNull(candidate);
+		this.score = Objects.requireNonNull(score);
+	}
 
 	public Candidate getCandidate() {
 		return candidate;
@@ -45,40 +55,40 @@ public class Rating extends AbstractEntity {
 		return comment;
 	}
 
-	public Integer getRating() {
-		return rating;
+	public int getScore() {
+		return score;
 	}
 
 	public User getUser() {
 		return user;
 	}
 
-	public void setCandidate(Candidate candidate) {
+	public void setCandidate(final Candidate candidate) {
 		this.candidate = candidate;
 	}
 
-	public void setComment(String comment) {
+	public void setComment(final String comment) {
 		this.comment = comment;
 	}
 
-	public void setRating(Integer rating) {
-		this.rating = rating;
+	public void setScore(final int score) {
+		this.score = score;
 	}
 
-	public void setUser(User user) {
+	public void setUser(final User user) {
 		this.user = user;
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	public boolean equals(final Object obj) {
+		if (this == obj) {
 			return true;
-		if (!super.equals(obj))
+		}
+		if (!super.equals(obj) || getClass() != obj.getClass()) {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Rating other = (Rating) obj;
-		return Objects.equals(candidate, other.candidate) && Objects.equals(rating, other.rating)
+		}
+		final Rating other = (Rating) obj;
+		return Objects.equals(candidate, other.candidate) && Objects.equals(score, other.score)
 				&& Objects.equals(user, other.user);
 	}
 
@@ -86,12 +96,12 @@ public class Rating extends AbstractEntity {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(candidate, rating, user);
+		result = prime * result + Objects.hash(candidate, score, user);
 		return result;
 	}
 
 	@Override
 	public String toString() {
-		return user + ", candidate=" + candidate + ", rating=" + rating;
+		return user + ", candidate=" + candidate + ", score=" + score;
 	}
 }

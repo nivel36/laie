@@ -12,7 +12,7 @@ import jakarta.faces.context.FacesContext;
 public class Translator {
 
 	private static final String FILE_NAME = "es.nivel36.laie.i18n";
-	
+
 	private static final Locale SPANISH = Locale.of("ES");
 
 	private Locale getLocale() {

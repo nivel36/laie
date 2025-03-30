@@ -25,12 +25,12 @@ public abstract class AbstractDao {
 
 	protected @PersistenceContext(unitName = "laie") EntityManager em;
 
-	public <E extends Identifiable> void insert(E entity) {
+	public <E extends Identifiable> void insert(final E entity) {
 		Objects.requireNonNull(entity);
 		this.em.persist(entity);
 	}
 
-	public <E extends Identifiable> E update(E entity) {
+	public <E extends Identifiable> E update(final E entity) {
 		Objects.requireNonNull(entity);
 		return this.em.merge(entity);
 	}
@@ -66,7 +66,7 @@ public abstract class AbstractDao {
 		logger.debug("Find entity of class {} with id", type, id);
 		return em.find(type, id);
 	}
-	
+
 	public <E> List<E> findAll(final Class<E> type, final Page page) {
 		Objects.requireNonNull(type);
 		logger.debug("Find all entities of class {}", type);

@@ -16,10 +16,7 @@ public class EditCandidatePermission implements CandidatePermission {
 			return true;
 		}
 		final User owner = candidate.getOwner();
-		if (owner.equals(user)) {
-			return true;
-		}
-		if (sessionUser.isManagerOf(owner)) {
+		if (owner.equals(user) || sessionUser.isManagerOf(owner)) {
 			return true;
 		}
 		return false;

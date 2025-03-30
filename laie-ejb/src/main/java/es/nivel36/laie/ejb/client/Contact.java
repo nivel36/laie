@@ -81,12 +81,12 @@ public class Contact extends AbstractEntity implements Subject, Auditable {
 
 	@Override
 	public boolean equals(final Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (!super.equals(obj))
+		}
+		if (!super.equals(obj) || (getClass() != obj.getClass())) {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		}
 		final Contact other = (Contact) obj;
 		return Objects.equals(email, other.email);
 	}
@@ -95,10 +95,12 @@ public class Contact extends AbstractEntity implements Subject, Auditable {
 		return this.client;
 	}
 
+	@Override
 	public String getEmail() {
 		return this.email;
 	}
 
+	@Override
 	public String getFullName() {
 		if (this.name == null) {
 			return null;
@@ -114,6 +116,7 @@ public class Contact extends AbstractEntity implements Subject, Auditable {
 		return meetings;
 	}
 
+	@Override
 	public String getName() {
 		return this.name;
 	}
@@ -126,6 +129,7 @@ public class Contact extends AbstractEntity implements Subject, Auditable {
 		return this.position;
 	}
 
+	@Override
 	public String getSurname() {
 		return this.surname;
 	}
@@ -133,7 +137,7 @@ public class Contact extends AbstractEntity implements Subject, Auditable {
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = prime * Objects.hash(email);
+		final int result = prime * Objects.hash(email);
 		return result;
 	}
 
@@ -149,7 +153,7 @@ public class Contact extends AbstractEntity implements Subject, Auditable {
 		this.language = language;
 	}
 
-	public void setMeetings(Set<Meeting> meetings) {
+	public void setMeetings(final Set<Meeting> meetings) {
 		this.meetings = meetings;
 	}
 

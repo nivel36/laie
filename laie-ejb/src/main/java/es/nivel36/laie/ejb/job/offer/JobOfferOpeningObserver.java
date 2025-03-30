@@ -47,7 +47,7 @@ public class JobOfferOpeningObserver {
 	/**
 	 * Handles newly created job offers to check if they should be opened
 	 * immediately based on their open date.
-	 * 
+	 *
 	 * @param jobOffer with the <tt>JobOffer</tt> that has been created.
 	 */
 	public void handleCreatedJobOffer(final @Observes @JobOfferCreatedEvent JobOffer jobOffer) {
@@ -65,9 +65,10 @@ public class JobOfferOpeningObserver {
 	}
 
 	/**
-	 * Sets the <tt>JobOfferService</tt>. This method should be used for setting or changing
-	 * the <tt>JobOfferService</tt> instance, primarily in testing scenarios.
-	 * 
+	 * Sets the <tt>JobOfferService</tt>. This method should be used for setting or
+	 * changing the <tt>JobOfferService</tt> instance, primarily in testing
+	 * scenarios.
+	 *
 	 * @param jobOfferService with the <tt>JobOfferService</tt> to be set. Cannot be
 	 *                        null.
 	 * @throws NullPointerException if jobOfferService is null.

@@ -8,7 +8,7 @@ import jakarta.faces.convert.FacesConverter;
 
 @FacesConverter(managed = true, forClass = Tag.class)
 public class TagConverter implements Converter<Tag> {
-	
+
 	@Override
 	public Tag getAsObject(FacesContext context, UIComponent component, String value) {
 		if(value == null) {

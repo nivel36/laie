@@ -48,10 +48,7 @@ public class Parameters implements Map<String, Object> {
 		if (this == obj) {
 			return true;
 		}
-		if (obj == null) {
-			return false;
-		}
-		if (this.getClass() != obj.getClass()) {
+		if ((obj == null) || (this.getClass() != obj.getClass())) {
 			return false;
 		}
 		final Parameters other = (Parameters) obj;

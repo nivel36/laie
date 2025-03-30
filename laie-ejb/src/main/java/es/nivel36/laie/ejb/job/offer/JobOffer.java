@@ -56,7 +56,7 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	@GenericField(sortable = Sortable.YES)
 	@Column(name = "CLOSE_DATE")
 	private LocalDate closeDate;
-	
+
 	@FullTextField
 	@Column(name = "DESCRIPTION", columnDefinition = "TEXT")
 	private String description;
@@ -113,7 +113,7 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "STATE")
 	private JobOfferState state;
-	
+
 	@NotNull
 	@Column(name = "TITLE", nullable = false)
 	@FullTextField(name = "_title")
@@ -125,10 +125,7 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 		if (this == obj) {
 			return true;
 		}
-		if (obj == null) {
-			return false;
-		}
-		if (this.getClass() != obj.getClass()) {
+		if ((obj == null) || (this.getClass() != obj.getClass())) {
 			return false;
 		}
 		final JobOffer other = (JobOffer) obj;
@@ -236,9 +233,8 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	public boolean hasState(final JobOfferState state) {
 		if (this.state == null) {
 			return state == null;
-		} else {
-			return this.state.equals(state);
 		}
+		return this.state.equals(state);
 	}
 
 	public boolean isOpen() {
@@ -311,7 +307,7 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	}
 
 	public void setRecruiters(final List<User> users) {
-		if ((users == null) || users.isEmpty()) {
+		if (users == null || users.isEmpty()) {
 			return;
 		}
 		this.recruiters = new HashSet<>(users);

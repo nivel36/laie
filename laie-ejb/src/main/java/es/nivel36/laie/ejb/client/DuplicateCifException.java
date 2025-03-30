@@ -7,20 +7,20 @@ public class DuplicateCifException extends Exception {
 	public DuplicateCifException() {
 	}
 
-	public DuplicateCifException(String message) {
+	public DuplicateCifException(final String message) {
 		super(message);
 	}
 
-	public DuplicateCifException(Throwable cause) {
+	public DuplicateCifException(final Throwable cause) {
 		super(cause);
 	}
 
-	public DuplicateCifException(String message, Throwable cause) {
+	public DuplicateCifException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 
-	public DuplicateCifException(String message, Throwable cause, boolean enableSuppression,
-			boolean writableStackTrace) {
+	public DuplicateCifException(final String message, final Throwable cause, final boolean enableSuppression,
+			final boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
 	}
 

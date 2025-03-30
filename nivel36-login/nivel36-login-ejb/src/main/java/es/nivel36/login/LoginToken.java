@@ -57,12 +57,12 @@ public class LoginToken implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (!super.equals(obj))
+		}
+		if (!super.equals(obj) || (getClass() != obj.getClass())) {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		}
 		LoginToken other = (LoginToken) obj;
 		return tokenHash.equals(other.tokenHash);
 	}

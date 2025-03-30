@@ -11,13 +11,13 @@ public class StateEventListener {
 
 	private static final Logger logger = LoggerFactory.getLogger(StateEventListener.class);
 
-	public void onBeforeTransition(@Observes StateEvent event) {
+	public void onBeforeTransition(@Observes final StateEvent event) {
 		if ("BEFORE_TRANSITION".equals(event.getEventType())) {
 			logger.debug("Event fired before transition: State ID {}", event.getState());
 		}
 	}
 
-	public void onAfterTransition(@Observes StateEvent event) {
+	public void onAfterTransition(@Observes final StateEvent event) {
 		if ("AFTER_TRANSITION".equals(event.getEventType())) {
 			logger.debug("Event fired after transition: State ID {}", event.getState());
 		}

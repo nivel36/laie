@@ -16,7 +16,7 @@ public class SearchFacade {
 
 	protected @Inject EntityManager em;
 
-	public <T extends Identifiable> List<T> search(final Class<T> type, final Page page, SortField sortField,
+	public <T extends Identifiable> List<T> search(final Class<T> type, final Page page, final SortField sortField,
 			final String searchText, final String... fields) {
 
 		final SearchSession searchSession = Search.session(this.em);
@@ -44,8 +44,8 @@ public class SearchFacade {
 		return result.hits();
 	}
 
-	public <T extends Identifiable> SearchResult<T> search(Class<T> type, Page page, SortField sortField,
-			String[] searchFacets, String searchText, String... fields) {
+	public <T extends Identifiable> SearchResult<T> search(final Class<T> type, final Page page,
+			final SortField sortField, final String[] searchFacets, final String searchText, final String... fields) {
 		final SearchSession searchSession = Search.session(this.em);
 		final SearchScope<T> scope = searchSession.scope(type);
 

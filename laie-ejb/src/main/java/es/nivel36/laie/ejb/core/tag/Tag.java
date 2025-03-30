@@ -52,7 +52,7 @@ public class Tag extends AbstractEntity {
 		if (this == obj) {
 			return true;
 		}
-		if (!super.equals(obj) || (this.getClass() != obj.getClass())) {
+		if (!super.equals(obj) || this.getClass() != obj.getClass()) {
 			return false;
 		}
 		final Tag other = (Tag) obj;
@@ -72,7 +72,7 @@ public class Tag extends AbstractEntity {
 		return Objects.hash(this.label);
 	}
 
-	public void setCandidates(Set<Candidate> candidates) {
+	public void setCandidates(final Set<Candidate> candidates) {
 		this.candidates = candidates;
 	}
 

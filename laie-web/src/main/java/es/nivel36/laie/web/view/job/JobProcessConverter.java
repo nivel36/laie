@@ -13,7 +13,7 @@ import jakarta.inject.Inject;
 @FacesConverter(managed = true, forClass = JobOfferProcess.class)
 public class JobProcessConverter implements Converter<JobOfferProcess> {
 
-	private @Inject JobOfferService jobOfferService;	
+	private @Inject JobOfferService jobOfferService;
 
 	@Override
 	public JobOfferProcess getAsObject(FacesContext context, UIComponent component, String value) {
@@ -26,7 +26,7 @@ public class JobProcessConverter implements Converter<JobOfferProcess> {
 		Objects.requireNonNull(value);
 		return value.getName();
 	}
-	
+
 	public void setJobOfferService(final JobOfferService jobOfferService) {
 		Objects.requireNonNull(jobOfferService);
 		this.jobOfferService = jobOfferService;

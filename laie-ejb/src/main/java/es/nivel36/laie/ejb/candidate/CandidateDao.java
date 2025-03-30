@@ -34,7 +34,7 @@ public class CandidateDao extends AbstractDao {
 		return this.findByQuery(Candidate.class, namedQuery, parameters, page);
 	}
 
-	public Candidate findCandidateByEmail(String email) {
+	public Candidate findCandidateByEmail(final String email) {
 		Objects.requireNonNull(email);
 		try {
 			final String namedQuery = "Candidate.findByEmail";
@@ -61,7 +61,7 @@ public class CandidateDao extends AbstractDao {
 		return searchFacade.search(Candidate.class, page, sortField, searchFacets, searchText, searchFields);
 	}
 
-	public Candidate findAllData(Long candidateId) {
+	public Candidate findAllData(final Long candidateId) {
 		final String namedQuery = "Candidate.findAllData";
 		final Parameters parameters = map("candidateId", candidateId);
 		return this.findByQuery(Candidate.class, namedQuery, parameters);

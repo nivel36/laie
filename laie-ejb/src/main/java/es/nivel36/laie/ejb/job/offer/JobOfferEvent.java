@@ -24,7 +24,7 @@ public class JobOfferEvent extends AbstractEntity implements Event {
 	private static final long serialVersionUID = 3586854275179907036L;
 
 	@NotNull
-	@Column(name="DATE")
+	@Column(name = "DATE")
 	private LocalDateTime date;
 
 	@NotNull
@@ -32,17 +32,17 @@ public class JobOfferEvent extends AbstractEntity implements Event {
 	@JoinColumn(name = "JOB_OFFER_ID", nullable = false)
 	private JobOffer jobOffer;
 
-	@Column(name="NOTES")
+	@Column(name = "NOTES")
 	private String notes;
 
 	@NotNull
 	@Enumerated(EnumType.STRING)
-	@Column(name="STATE")
+	@Column(name = "STATE")
 	private JobOfferState state;
 
 	@NotNull
 	@Enumerated(EnumType.STRING)
-	@Column(name="TYPE")
+	@Column(name = "TYPE")
 	private JobOfferEventType type;
 
 	@ManyToOne
@@ -78,40 +78,42 @@ public class JobOfferEvent extends AbstractEntity implements Event {
 		return user;
 	}
 
-	public void setDate(LocalDateTime date) {
+	public void setDate(final LocalDateTime date) {
 		this.date = date;
 	}
 
-	public void setJobOffer(JobOffer jobOffer) {
+	public void setJobOffer(final JobOffer jobOffer) {
 		this.jobOffer = jobOffer;
 	}
 
-	public void setNotes(String notes) {
+	public void setNotes(final String notes) {
 		this.notes = notes;
 	}
 
-	public void setState(JobOfferState state) {
+	public void setState(final JobOfferState state) {
 		this.state = state;
 	}
 
-	public void setType(JobOfferEventType type) {
+	public void setType(final JobOfferEventType type) {
 		this.type = type;
 	}
 
-	public void setUser(User user) {
+	public void setUser(final User user) {
 		this.user = user;
 	}
-	
+
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	public boolean equals(final Object obj) {
+		if (this == obj) {
 			return true;
-		if ((obj == null) || (getClass() != obj.getClass()))
+		}
+		if (obj == null || getClass() != obj.getClass()) {
 			return false;
-		JobOfferEvent other = (JobOfferEvent) obj;
+		}
+		final JobOfferEvent other = (JobOfferEvent) obj;
 		return Objects.equals(date, other.date) && Objects.equals(jobOffer, other.jobOffer) && state == other.state;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(date, jobOffer, state);

@@ -16,12 +16,12 @@ public class JobOfferStateService {
 
 	@PostConstruct
 	public void init() {
-		nextStates = new HashMap<>(	Map.of(
-				JobOfferState.OPENED, List.of(JobOfferState.CLOSED, JobOfferState.FINISHED, JobOfferState.PAUSED), 
-				JobOfferState.CREATED, List.of(JobOfferState.CLOSED, JobOfferState.FINISHED, JobOfferState.PAUSED, JobOfferState.OPENED),
-				JobOfferState.CLOSED,List.of(JobOfferState.OPENED), 
-				JobOfferState.FINISHED,List.of(JobOfferState.OPENED), 
-				JobOfferState.PAUSED, List.of(JobOfferState.CLOSED, JobOfferState.FINISHED, JobOfferState.OPENED)));
+		nextStates = new HashMap<>(Map.of(JobOfferState.OPENED,
+				List.of(JobOfferState.CLOSED, JobOfferState.FINISHED, JobOfferState.PAUSED), JobOfferState.CREATED,
+				List.of(JobOfferState.CLOSED, JobOfferState.FINISHED, JobOfferState.PAUSED, JobOfferState.OPENED),
+				JobOfferState.CLOSED, List.of(JobOfferState.OPENED), JobOfferState.FINISHED,
+				List.of(JobOfferState.OPENED), JobOfferState.PAUSED,
+				List.of(JobOfferState.CLOSED, JobOfferState.FINISHED, JobOfferState.OPENED)));
 	}
 
 	public List<JobOfferState> findNextStates(final JobOfferState jobOfferState) {

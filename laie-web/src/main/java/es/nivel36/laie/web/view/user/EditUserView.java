@@ -18,9 +18,9 @@ public class EditUserView extends AbstractUserView {
 	private static final long serialVersionUID = -2231097614606592609L;
 
 	private static final Logger logger = LoggerFactory.getLogger(EditUserView.class);
-	
+
 	public static final String URL = "/user/edit.xhtml";
-	
+
 	@PostConstruct
 	public void init() {
 		if (user == null) {
@@ -36,7 +36,7 @@ public class EditUserView extends AbstractUserView {
 			throw new SecurityException();
 		}
 	}
-	
+
 	public static String getUrl(long userId) {
 		return URL + "?user=" + userId;
 	}

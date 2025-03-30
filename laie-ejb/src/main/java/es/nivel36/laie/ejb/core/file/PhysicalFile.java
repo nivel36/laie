@@ -68,7 +68,7 @@ public class PhysicalFile extends AbstractEntity {
 	public String getRelativePath() {
 		return this.relativePath;
 	}
-	
+
 	public String getPath() {
 		return this.relativePath;
 	}
@@ -85,7 +85,7 @@ public class PhysicalFile extends AbstractEntity {
 		this.absolutePath = absolutePath;
 	}
 
-	public void setBucket(String bucket) {
+	public void setBucket(final String bucket) {
 		this.bucket = bucket;
 	}
 
@@ -97,7 +97,7 @@ public class PhysicalFile extends AbstractEntity {
 		this.created = created;
 	}
 
-	public void setFiles(Set<File> files) {
+	public void setFiles(final Set<File> files) {
 		this.files = files;
 	}
 
@@ -121,7 +121,7 @@ public class PhysicalFile extends AbstractEntity {
 		if (this == obj) {
 			return true;
 		}
-		if (!super.equals(obj) || (this.getClass() != obj.getClass())) {
+		if (!super.equals(obj) || this.getClass() != obj.getClass()) {
 			return false;
 		}
 		final PhysicalFile other = (PhysicalFile) obj;

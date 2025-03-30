@@ -40,7 +40,7 @@ public class DocumentTemplateService {
 		this.deleteDocumentTemplate(template, false);
 	}
 
-	public void deleteDocumentTemplate(final DocumentTemplate template, boolean allLanguages) {
+	public void deleteDocumentTemplate(final DocumentTemplate template, final boolean allLanguages) {
 		Objects.requireNonNull(template);
 		if (allLanguages) {
 			logger.debug("All document templates will be deleted");

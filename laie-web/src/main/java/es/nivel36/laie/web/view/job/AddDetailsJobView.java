@@ -14,7 +14,7 @@ import jakarta.inject.Named;
 public class AddDetailsJobView extends AbstractJobView {
 
 	private static final long serialVersionUID = -7323264602495428654L;
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(AddDetailsJobView.class);
 
 	@PostConstruct

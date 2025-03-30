@@ -18,13 +18,13 @@ class Sha256DigestedFileWriter implements DigestedFileWriter {
 	public Sha256DigestedFileWriter() {
 		try {
 			digest = MessageDigest.getInstance("SHA-256");
-		} catch (NoSuchAlgorithmException e) {
+		} catch (final NoSuchAlgorithmException e) {
 			throw new IllegalStateException(e);
 		}
 	}
 
 	@Override
-	public String write(Path path, InputStream inputStream) {
+	public String write(final Path path, final InputStream inputStream) {
 		try (DigestInputStream digestInputStream = new DigestInputStream(inputStream, digest)) {
 			final Path parent = path.getParent();
 			if (!Files.exists(parent)) {

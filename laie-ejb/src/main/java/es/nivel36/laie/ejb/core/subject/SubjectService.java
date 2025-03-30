@@ -23,7 +23,7 @@ public class SubjectService {
 
 	private @Inject ContactDao contactDao;
 
-	public Subject findByEmail(String email) {
+	public Subject findByEmail(final String email) {
 		final User user = userDao.findUserByEmail(email);
 		if (user != null) {
 			return user;
@@ -41,7 +41,7 @@ public class SubjectService {
 		return null;
 	}
 
-	public List<Subject> search(String query) {
+	public List<Subject> search(final String query) {
 		Objects.requireNonNull(query);
 		return subjectDao.searchSubject(query);
 	}

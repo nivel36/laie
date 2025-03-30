@@ -21,7 +21,7 @@ public class JobOfferDao extends AbstractDao {
 
 	private @Inject SearchFacade searchFacade;
 
-	public void addJobOfferEvent(JobOfferEvent jobOfferEvent) {
+	public void addJobOfferEvent(final JobOfferEvent jobOfferEvent) {
 		Objects.requireNonNull(jobOfferEvent);
 		em.persist(jobOfferEvent);
 	}
@@ -90,7 +90,7 @@ public class JobOfferDao extends AbstractDao {
 		final Parameters parameters = map("jobOffer", jobOffer);
 		return this.findByQuery(JobOfferEvent.class, namedQuery, parameters, page);
 	}
-	
+
 	public List<User> findRecruitersByJobOffer(final JobOffer jobOffer, final Page page) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(page);
@@ -109,14 +109,14 @@ public class JobOfferDao extends AbstractDao {
 		final String namedQuery = "JobOffer.findJobOfferProcess";
 		return this.findByQuery(JobOfferProcess.class, namedQuery, null, Page.ALL_RESULTS);
 	}
-	
-	public List<JobOffer> findJobOffersToOpen(){
+
+	public List<JobOffer> findJobOffersToOpen() {
 		final String namedQuery = "JobOffer.findJobOffersToOpen";
 		final Parameters parameters = map("state", JobOfferState.CREATED);
 		return this.findByQuery(JobOffer.class, namedQuery, parameters, Page.ALL_RESULTS);
 	}
-	
-	public List<JobOffer> findJobOffersToClose(){
+
+	public List<JobOffer> findJobOffersToClose() {
 		final String namedQuery = "JobOffer.findJobOffersToClose";
 		return this.findByQuery(JobOffer.class, namedQuery, null, Page.ALL_RESULTS);
 	}

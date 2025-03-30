@@ -37,7 +37,7 @@ public class Language extends AbstractEntity implements Comparable<Language> {
 	private String name;
 
 	@Override
-	public int compareTo(Language language) {
+	public int compareTo(final Language language) {
 		if (this.level.equals(language.level)) {
 			return this.name.compareTo(language.name);
 		}
@@ -67,7 +67,7 @@ public class Language extends AbstractEntity implements Comparable<Language> {
 		if (this == obj) {
 			return true;
 		}
-		if ((obj == null) || (this.getClass() != obj.getClass())) {
+		if (obj == null || this.getClass() != obj.getClass()) {
 			return false;
 		}
 		final Language other = (Language) obj;
@@ -91,7 +91,7 @@ public class Language extends AbstractEntity implements Comparable<Language> {
 		return Objects.hash(this.name, this.level);
 	}
 
-	public void setCurriculum(Curriculum curriculum) {
+	public void setCurriculum(final Curriculum curriculum) {
 		this.curriculum = curriculum;
 	}
 

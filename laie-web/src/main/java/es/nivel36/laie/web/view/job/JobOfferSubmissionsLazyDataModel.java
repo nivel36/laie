@@ -15,11 +15,11 @@ import es.nivel36.laie.ejb.job.submission.JobSubmissionService;
 import jakarta.inject.Inject;
 
 public class JobOfferSubmissionsLazyDataModel extends LazyDataModel<JobSubmission> {
-	
+
 	private static final long serialVersionUID = -4040506548394973503L;
 
 	private transient @Inject JobSubmissionService service;
-	
+
 	private JobOffer jobOffer;
 
 	@Override

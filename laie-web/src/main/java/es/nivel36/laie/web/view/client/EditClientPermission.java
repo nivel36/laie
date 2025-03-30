@@ -9,16 +9,14 @@ public class EditClientPermission implements ClientPermission {
 
 	private @Inject SessionUser sessionUser;
 
+	@Override
 	public boolean validate(final Client client) {
 		final User user = sessionUser.get();
 		if (sessionUser.isAdmin()) {
 			return true;
 		}
 		final User owner = client.getOwner();
-		if (owner.equals(user)) {
-			return true;
-		}
-		if (sessionUser.isManagerOf(owner)) {
+		if (owner.equals(user) || sessionUser.isManagerOf(owner)) {
 			return true;
 		}
 		return false;

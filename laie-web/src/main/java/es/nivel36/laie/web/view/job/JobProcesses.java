@@ -13,7 +13,7 @@ import jakarta.inject.Named;
 @Named
 @ApplicationScoped
 public class JobProcesses {
-	
+
 	private transient @Inject JobOfferService jobOfferService;
 	private List<JobOfferProcess> listOfJobOfferProcess;
 
@@ -21,7 +21,7 @@ public class JobProcesses {
 	public void init() {
 		this.listOfJobOfferProcess = this.jobOfferService.findJobOfferProcess();
 	}
-	
+
 	public List<JobOfferProcess> getList() {
 		return this.listOfJobOfferProcess;
 	}

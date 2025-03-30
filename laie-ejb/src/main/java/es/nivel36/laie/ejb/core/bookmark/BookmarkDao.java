@@ -8,7 +8,6 @@ import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.util.Parameters;
 import jakarta.persistence.NoResultException;
 
-
 public class BookmarkDao extends AbstractDao {
 
 	public Bookmark findBookmarkByUrl(final String url) {

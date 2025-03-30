@@ -43,7 +43,7 @@ public class AddRatingView extends AbstractView {
 		this.ratingService.addRating(rating);
 		Faces.redirect(ViewCandidateView.getUrl(candidate.getId()));
 	}
-	
+
 	public Candidate getCandidate() {
 		return candidate;
 	}
@@ -61,7 +61,6 @@ public class AddRatingView extends AbstractView {
 	}
 
 	public void setRatingService(final RatingService ratingService) {
-		Objects.requireNonNull(ratingService);
-		this.ratingService = ratingService;
+		this.ratingService = Objects.requireNonNull(ratingService);
 	}
 }

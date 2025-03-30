@@ -17,9 +17,9 @@ import jakarta.validation.constraints.NotNull;
 public class File extends AbstractEntity {
 
 	private static final long serialVersionUID = -2983690237456593632L;
-	
+
 	@ManyToOne
-	@JoinColumn(name= "CANDIDATE_ID", nullable = false )
+	@JoinColumn(name = "CANDIDATE_ID", nullable = false)
 	private Candidate candidate;
 
 	@NotNull
@@ -37,16 +37,16 @@ public class File extends AbstractEntity {
 	private PhysicalFile physicalFile;
 
 	private boolean publicAccess;
-	
+
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	public boolean equals(final Object obj) {
+		if (this == obj) {
 			return true;
-		if (!super.equals(obj))
+		}
+		if (!super.equals(obj) || (getClass() != obj.getClass())) {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		File other = (File) obj;
+		}
+		final File other = (File) obj;
 		return Objects.equals(created, other.created) && Objects.equals(name, other.name)
 				&& publicAccess == other.publicAccess;
 	}
@@ -87,7 +87,7 @@ public class File extends AbstractEntity {
 		return this.publicAccess;
 	}
 
-	public void setCandidate(Candidate candidate) {
+	public void setCandidate(final Candidate candidate) {
 		this.candidate = candidate;
 	}
 

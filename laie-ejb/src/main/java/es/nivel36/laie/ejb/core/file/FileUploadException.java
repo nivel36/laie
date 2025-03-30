@@ -7,19 +7,20 @@ public class FileUploadException extends RuntimeException {
 	public FileUploadException() {
 	}
 
-	public FileUploadException(String message) {
+	public FileUploadException(final String message) {
 		super(message);
 	}
 
-	public FileUploadException(Throwable cause) {
+	public FileUploadException(final Throwable cause) {
 		super(cause);
 	}
 
-	public FileUploadException(String message, Throwable cause) {
+	public FileUploadException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 
-	public FileUploadException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+	public FileUploadException(final String message, final Throwable cause, final boolean enableSuppression,
+			final boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
 	}
 

@@ -10,9 +10,8 @@ import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.util.Parameters;
 
-
 public class DocumentTemplateDao extends AbstractDao {
-	
+
 	public DocumentTemplate findDocumentTemplateByNameAndLanguage(final String name, final Language language) {
 		Objects.requireNonNull(name);
 		Objects.requireNonNull(language);
@@ -21,11 +20,11 @@ public class DocumentTemplateDao extends AbstractDao {
 		final Parameters parameters = map("name", name).and("language", code);
 		return this.findByQuery(DocumentTemplate.class, namedQuery, parameters);
 	}
-	
+
 	public List<DocumentTemplate> findDocumentTemplateByName(final String name) {
 		Objects.requireNonNull(name);
 		final String namedQuery = "DocumentTemplate.findByName";
 		final Parameters parameters = map("name", name);
-		return this.findByQuery(DocumentTemplate.class, namedQuery, parameters, Page.ALL_RESULTS );
+		return this.findByQuery(DocumentTemplate.class, namedQuery, parameters, Page.ALL_RESULTS);
 	}
 }

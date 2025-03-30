@@ -44,28 +44,28 @@ public class ViewClientView extends AbstractView {
 	private @Param(required = true, name = "client") String clientId;
 
 	private transient @Inject ClientService clientService;
-	
+
 	private @Inject JobOfferByClientLazyDataModel jobOffers;
-	
+
 	private @Inject ContactLazyDataModel contacts;
 
 	private transient @Inject EditClientPermission editClientPermission;
-	
+
 	private int columns;
-	
+
 	public int getColumns() {
 		return columns;
 	}
-	
+
 	public void updateColumns() {
 	    FacesContext context = FacesContext.getCurrentInstance();
 	    Map<String, String> params = context.getExternalContext().getRequestParameterMap();
 	    String columnsParam = params.get("columns");
 	    int columns = Integer.parseInt(columnsParam);
-	    
+
 	    // Asumiendo que tienes una propiedad `columns` para manejar esto
 	    this.columns = columns;
-	    
+
 	    // Actualiza el modelo de datos si es necesario
 	}
 
@@ -78,15 +78,15 @@ public class ViewClientView extends AbstractView {
 		this.addJobOffer = editable;
 		this.bookmark = this.buildBookmark();
 		this.bookmarkable = !this.sessionUser.hasBookamrk(bookmark);
-		
+
 		this.jobOffers.setClient(client);
 		this.contacts.setClient(client);
 	}
-	
+
 	private void findClient() {
 		try {
 			final Long id = Long.parseLong(clientId);
-			this.client = this.clientService.findAllClientData(id);
+			this.client = this.clientService.findClientById(id.longValue());
 			if (this.client == null) {
 				throw new IllegalPageStateException();
 			}
@@ -159,7 +159,7 @@ public class ViewClientView extends AbstractView {
 		Objects.requireNonNull(clientService);
 		this.clientService = clientService;
 	}
-	
+
 	public void setEditClientPermission (final EditClientPermission editClientPermission) {
 		Objects.requireNonNull(editClientPermission);
 		this.editClientPermission = editClientPermission;

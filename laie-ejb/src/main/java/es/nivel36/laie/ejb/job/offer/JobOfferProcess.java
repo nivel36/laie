@@ -23,14 +23,14 @@ public class JobOfferProcess extends AbstractEntity {
 	private Set<JobSubmissionState> states = new HashSet<>();
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
 		}
-		if (!super.equals(obj) || (getClass() != obj.getClass())) {
+		if (!super.equals(obj) || getClass() != obj.getClass()) {
 			return false;
 		}
-		JobOfferProcess other = (JobOfferProcess) obj;
+		final JobOfferProcess other = (JobOfferProcess) obj;
 		return Objects.equals(name, other.name);
 	}
 
@@ -50,11 +50,11 @@ public class JobOfferProcess extends AbstractEntity {
 		return result;
 	}
 
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 
-	public void setStates(Set<JobSubmissionState> states) {
+	public void setStates(final Set<JobSubmissionState> states) {
 		this.states = states;
 	}
 

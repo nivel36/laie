@@ -152,13 +152,13 @@ public class CandidateService {
 		return this.fileDao.countFilesByCandidate(candidate);
 	}
 
-	public void addCandidateFile(final Candidate candidate, final InputStream inputStream, String filename) {
+	public void addCandidateFile(final Candidate candidate, final InputStream inputStream, final String filename) {
 		Objects.requireNonNull(inputStream);
 		Objects.requireNonNull(candidate);
 		Objects.requireNonNull(filename);
 		logger.debug("Add file {} to candidate {}", filename, candidate);
 		final PhysicalFile physicalFile = fileService.uploadFile(inputStream, false);
-		File file = new File();
+		final File file = new File();
 		file.setCreated(LocalDateTime.now());
 		file.setName(filename);
 		file.setPublicAccess(false);

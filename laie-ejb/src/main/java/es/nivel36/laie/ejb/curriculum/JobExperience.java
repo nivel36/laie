@@ -30,32 +30,32 @@ public class JobExperience extends AbstractEntity implements Comparable<JobExper
 
 	@FullTextField
 	@NotNull
-	@Column(name="COMPANY_NAME", nullable = false, length = 128)
+	@Column(name = "COMPANY_NAME", nullable = false, length = 128)
 	private String companyName;
 
 	@FullTextField
 	@Lob
-	@Column(name="DESCRIPTION", columnDefinition = "TEXT")
+	@Column(name = "DESCRIPTION", columnDefinition = "TEXT")
 	private String description;
 
-	@Column(name="END_MONTH", scale = 0, precision = 2)
+	@Column(name = "END_MONTH", scale = 0, precision = 2)
 	private Integer endMonth;
 
-	@Column(name="END_YEAR", scale = 0, precision = 4)
+	@Column(name = "END_YEAR", scale = 0, precision = 4)
 	private Integer endYear;
 
 	@NotNull
 	@FullTextField
-	@Column(name="JOB_POSITION", nullable = false)
+	@Column(name = "JOB_POSITION", nullable = false)
 	private String jobPosition;
 
-	@Column(name="START_MONTH", scale = 0, precision = 2)
+	@Column(name = "START_MONTH", scale = 0, precision = 2)
 	private Integer startMonth;
 
-	@Column(name="START_YEAR", scale = 0, precision = 4)
+	@Column(name = "START_YEAR", scale = 0, precision = 4)
 	private Integer startYear;
 
-	@Column(name="STILL_WORKING")
+	@Column(name = "STILL_WORKING")
 	private boolean stillWorking;
 
 	@Override
@@ -90,7 +90,7 @@ public class JobExperience extends AbstractEntity implements Comparable<JobExper
 		if (this == obj) {
 			return true;
 		}
-		if ((obj == null) || (this.getClass() != obj.getClass())) {
+		if (obj == null || this.getClass() != obj.getClass()) {
 			return false;
 		}
 		final JobExperience other = (JobExperience) obj;
@@ -129,16 +129,15 @@ public class JobExperience extends AbstractEntity implements Comparable<JobExper
 	public Long getMonthsWorked() {
 		Objects.requireNonNull(this.startYear);
 		Objects.requireNonNull(this.startMonth);
-		if ((!this.stillWorking) && (this.endYear == null || this.endMonth == null)) {
+		if (!this.stillWorking && (this.endYear == null || this.endMonth == null)) {
 			throw new IllegalStateException();
 		}
 		final YearMonth startDate = YearMonth.of(startYear, startMonth);
 		if (this.stillWorking) {
 			return ChronoUnit.MONTHS.between(startDate, LocalDate.now());
-		} else {
-			final YearMonth endDate = YearMonth.of(endYear, endMonth);
-			return ChronoUnit.MONTHS.between(startDate, endDate);
 		}
+		final YearMonth endDate = YearMonth.of(endYear, endMonth);
+		return ChronoUnit.MONTHS.between(startDate, endDate);
 	}
 
 	public Integer getStartMonth() {
@@ -163,7 +162,7 @@ public class JobExperience extends AbstractEntity implements Comparable<JobExper
 		this.companyName = companyName;
 	}
 
-	public void setCurriculum(Curriculum curriculum) {
+	public void setCurriculum(final Curriculum curriculum) {
 		this.curriculum = curriculum;
 	}
 
@@ -171,11 +170,11 @@ public class JobExperience extends AbstractEntity implements Comparable<JobExper
 		this.description = description;
 	}
 
-	public void setEndMonth(Integer endMonth) {
+	public void setEndMonth(final Integer endMonth) {
 		this.endMonth = endMonth;
 	}
 
-	public void setEndYear(Integer endYear) {
+	public void setEndYear(final Integer endYear) {
 		this.endYear = endYear;
 	}
 
@@ -183,11 +182,11 @@ public class JobExperience extends AbstractEntity implements Comparable<JobExper
 		this.jobPosition = jobPosition;
 	}
 
-	public void setStartMonth(Integer startMonth) {
+	public void setStartMonth(final Integer startMonth) {
 		this.startMonth = startMonth;
 	}
 
-	public void setStartYear(Integer startYear) {
+	public void setStartYear(final Integer startYear) {
 		this.startYear = startYear;
 	}
 

@@ -66,25 +66,25 @@ public class CurriculumView extends AbstractView {
 			this.curriculum.setCandidate(this.candidate);
 		}
 		if (this.curriculum.getSkills() == null) {
-			this.curriculum.setSkills(new HashSet<Skill>());
+			this.curriculum.setSkills(new HashSet<>());
 			this.skills = new ArrayList<>();
 		} else {
 			this.skills = mapSkillsToString();
 			Collections.sort(skills);
 		}
 		if (this.curriculum.getEducation() == null) {
-			this.curriculum.setEducation(new HashSet<Education>());
+			this.curriculum.setEducation(new HashSet<>());
 		}
 		if (this.curriculum.getJobExperiences() == null) {
-			this.curriculum.setJobExperiences(new HashSet<JobExperience>());
+			this.curriculum.setJobExperiences(new HashSet<>());
 		}
 		if (this.curriculum.getLanguages() == null) {
-			this.curriculum.setLanguages(new HashSet<Language>());
+			this.curriculum.setLanguages(new HashSet<>());
 		}
 		this.education = new ArrayList<>(this.curriculum.getEducation());
 		this.jobExperiences = new ArrayList<>(this.curriculum.getJobExperiences());
 		this.languages = new ArrayList<>(this.curriculum.getLanguages());
-		this.languageLevels = new ArrayList<String>();
+		this.languageLevels = new ArrayList<>();
 		for (LanguageLevel languageLevel : LanguageLevel.values()) {
 			this.languageLevels.add(languageLevel.name());
 		}

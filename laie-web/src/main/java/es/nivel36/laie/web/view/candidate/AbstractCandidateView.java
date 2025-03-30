@@ -11,12 +11,11 @@ import org.primefaces.model.file.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.candidate.CandidateService;
-import es.nivel36.laie.ejb.core.file.PhysicalFileService;
 import es.nivel36.laie.ejb.core.file.FileUploadException;
 import es.nivel36.laie.ejb.core.file.PhysicalFile;
+import es.nivel36.laie.ejb.core.file.PhysicalFileService;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.tag.TagService;
 import es.nivel36.laie.ejb.user.User;
@@ -67,7 +66,7 @@ public abstract class AbstractCandidateView extends AbstractView {
 		logger.trace("Changing user image");
 		this.fileService.moveFromTemporalFile(this.candidateImage,false);
 	}
-	
+
 	public void uploadImage(final FileUploadEvent event) {
 		Objects.requireNonNull(event);
 		this.imageChanged = true;
@@ -83,7 +82,7 @@ public abstract class AbstractCandidateView extends AbstractView {
 			throw new FileUploadException(e);
 		}
 	}
-	
+
 	public Candidate getCandidate() {
 		return this.candidate;
 	}
@@ -103,7 +102,7 @@ public abstract class AbstractCandidateView extends AbstractView {
 	public void setCandidate(final Candidate candidate) {
 		this.candidate = candidate;
 	}
-	
+
 	public void setRating(Integer rating) {
 		this.rating = rating;
 	}

@@ -25,8 +25,8 @@ public class GuestPreferences implements Serializable {
 	private String profileMode = "popup";
 	private boolean orientationRTL;
 	private String inputStyle = "outlined";
-	private List<TopbarColor> topbarColors = new ArrayList<TopbarColor>();
-	private List<ComponentTheme> componentThemes = new ArrayList<ComponentTheme>();
+	private List<TopbarColor> topbarColors = new ArrayList<>();
+	private List<ComponentTheme> componentThemes = new ArrayList<>();
 
 	@PostConstruct
 	public void init() {

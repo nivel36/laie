@@ -37,7 +37,7 @@ public class StatisticPanel extends AbstractEntity {
 		return appConfig;
 	}
 
-	public void setAppConfig(AppConfig appConfig) {
+	public void setAppConfig(final AppConfig appConfig) {
 		this.appConfig = appConfig;
 	}
 
@@ -45,7 +45,7 @@ public class StatisticPanel extends AbstractEntity {
 		return position;
 	}
 
-	public void setPosition(int position) {
+	public void setPosition(final int position) {
 		this.position = position;
 	}
 
@@ -53,7 +53,7 @@ public class StatisticPanel extends AbstractEntity {
 		return type;
 	}
 
-	public void setType(StatisticPanelType type) {
+	public void setType(final StatisticPanelType type) {
 		this.type = type;
 	}
 
@@ -61,7 +61,7 @@ public class StatisticPanel extends AbstractEntity {
 		return periodicity;
 	}
 
-	public void setPeriodicity(StatisticsPeriodicity periodicity) {
+	public void setPeriodicity(final StatisticsPeriodicity periodicity) {
 		this.periodicity = periodicity;
 	}
 }

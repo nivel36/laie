@@ -24,7 +24,7 @@ public class EditRatingView extends AbstractView {
 	private static final Logger logger = LoggerFactory.getLogger(EditRatingView.class);
 
 	private @Param(required = true) Rating rating;
-	
+
 	private @Param(required = true) Candidate candidate;
 
 	private transient @Inject RatingService ratingService;

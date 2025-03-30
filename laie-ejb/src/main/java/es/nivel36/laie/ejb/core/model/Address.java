@@ -11,40 +11,40 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Table;
 
-@Table(name="ADDRESS")
+@Table(name = "ADDRESS")
 @Embeddable
 public class Address implements Serializable {
 
 	private static final long serialVersionUID = -8221733995443213238L;
 
 	@FullTextField(name = "_city")
-	@KeywordField(sortable=Sortable.YES)
-	@Column(name="CITY", columnDefinition = "TEXT")
+	@KeywordField(sortable = Sortable.YES)
+	@Column(name = "CITY", columnDefinition = "TEXT")
 	private String city;
 
 	@FullTextField(name = "_country")
-	@KeywordField(sortable=Sortable.YES)
-	@Column(name="COUNTRY", columnDefinition = "TEXT")
+	@KeywordField(sortable = Sortable.YES)
+	@Column(name = "COUNTRY", columnDefinition = "TEXT")
 	private String country;
 
-	@Column(name="DOOR", columnDefinition = "TEXT")
+	@Column(name = "DOOR", columnDefinition = "TEXT")
 	private String door;
 
-	@Column(name="NUMBER", columnDefinition = "TEXT")
+	@Column(name = "NUMBER", columnDefinition = "TEXT")
 	private String number;
 
 	@FullTextField(name = "_region")
-	@KeywordField(sortable=Sortable.YES)
-	@Column(name="REGION", columnDefinition = "TEXT")
+	@KeywordField(sortable = Sortable.YES)
+	@Column(name = "REGION", columnDefinition = "TEXT")
 	private String region;
 
-	@Column(name="STOREY", columnDefinition = "TEXT")
+	@Column(name = "STOREY", columnDefinition = "TEXT")
 	private String storey;
 
-	@Column(name="STREET", columnDefinition = "TEXT")
+	@Column(name = "STREET", columnDefinition = "TEXT")
 	private String street;
 
-	@Column(name="ZIP_CODE", columnDefinition = "TEXT")
+	@Column(name = "ZIP_CODE", columnDefinition = "TEXT")
 	private String zipCode;
 
 	@Override
@@ -52,10 +52,7 @@ public class Address implements Serializable {
 		if (this == obj) {
 			return true;
 		}
-		if (obj == null) {
-			return false;
-		}
-		if (this.getClass() != obj.getClass()) {
+		if ((obj == null) || (this.getClass() != obj.getClass())) {
 			return false;
 		}
 		final Address other = (Address) obj;
@@ -104,7 +101,7 @@ public class Address implements Serializable {
 	}
 
 	private boolean isNotEmpty(final String string) {
-		return (string != null) && !"".equals(string.trim());
+		return string != null && !"".equals(string.trim());
 	}
 
 	public void setCity(final String city) {
@@ -141,7 +138,7 @@ public class Address implements Serializable {
 
 	@Override
 	public String toString() {
-		final String eol = System.getProperty("line.separator");
+		final String eol = System.lineSeparator();
 		final StringBuilder sb = new StringBuilder();
 		if (this.isNotEmpty(this.street)) {
 			sb.append(this.street);

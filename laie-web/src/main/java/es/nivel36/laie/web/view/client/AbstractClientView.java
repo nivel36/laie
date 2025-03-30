@@ -20,7 +20,7 @@ public abstract class AbstractClientView extends AbstractView {
 	protected @Param Client client;
 
 	protected @Inject transient ClientService clientService;
-	
+
 	protected @Inject transient UserService userService;
 
 	public List<User> queryOwner(final String query) {
@@ -39,7 +39,7 @@ public abstract class AbstractClientView extends AbstractView {
 		Objects.requireNonNull(clientService);
 		this.clientService = clientService;
 	}
-	
+
 	public void setUserService(final UserService userService) {
 		Objects.requireNonNull(userService);
 		this.userService = userService;

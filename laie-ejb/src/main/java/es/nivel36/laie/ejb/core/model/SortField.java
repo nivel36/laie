@@ -6,7 +6,7 @@ public final class SortField {
 
 	private final boolean asc;
 
-	public SortField(String field, boolean isAsc) {
+	public SortField(final String field, final boolean isAsc) {
 		this.field = field;
 		this.asc = isAsc;
 	}

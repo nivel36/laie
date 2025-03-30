@@ -69,6 +69,7 @@ public class JobSubmissionEvent extends AbstractEntity implements Event {
 		this.setType(JobSubmissionEventType.OTHER);
 	}
 
+	@Override
 	public LocalDateTime getDate() {
 		return this.date;
 	}
@@ -81,14 +82,17 @@ public class JobSubmissionEvent extends AbstractEntity implements Event {
 		return this.notes;
 	}
 
+	@Override
 	public JobSubmissionState getState() {
 		return this.state;
 	}
 
+	@Override
 	public JobSubmissionEventType getType() {
 		return this.type;
 	}
 
+	@Override
 	public User getUser() {
 		return this.user;
 	}
@@ -122,10 +126,7 @@ public class JobSubmissionEvent extends AbstractEntity implements Event {
 		if (this == obj) {
 			return true;
 		}
-		if (!super.equals(obj)) {
-			return false;
-		}
-		if (this.getClass() != obj.getClass()) {
+		if (!super.equals(obj) || (this.getClass() != obj.getClass())) {
 			return false;
 		}
 		final JobSubmissionEvent other = (JobSubmissionEvent) obj;

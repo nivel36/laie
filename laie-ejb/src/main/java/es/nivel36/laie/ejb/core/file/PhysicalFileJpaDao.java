@@ -8,7 +8,6 @@ import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.util.Parameters;
 import jakarta.persistence.NoResultException;
 
-
 public class PhysicalFileJpaDao extends AbstractDao {
 
 	public boolean isOrphanPhysicalFile(final PhysicalFile physicalFile) {
@@ -22,7 +21,7 @@ public class PhysicalFileJpaDao extends AbstractDao {
 			final String namedQuery = "File.findByHashAndBucket";
 			final Parameters parameters = map("hash", hash).and("bucket", bucket);
 			return this.findByQuery(PhysicalFile.class, namedQuery, parameters);
-		} catch (NoResultException e) {
+		} catch (final NoResultException e) {
 			return null;
 		}
 	}

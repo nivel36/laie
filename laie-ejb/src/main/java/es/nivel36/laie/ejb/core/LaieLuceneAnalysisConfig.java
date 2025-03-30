@@ -22,7 +22,7 @@ public class LaieLuceneAnalysisConfig implements LuceneAnalysisConfigurer {
 	 * @param context
 	 */
 	@Override
-	public void configure(LuceneAnalysisConfigurationContext context) {
+	public void configure(final LuceneAnalysisConfigurationContext context) {
 		context.analyzer("spanish").custom().tokenizer(StandardTokenizerFactory.class)
 				.charFilter(HTMLStripCharFilterFactory.class).tokenFilter(LowerCaseFilterFactory.class)
 				.tokenFilter(SnowballPorterFilterFactory.class).param("language", "Spanish")

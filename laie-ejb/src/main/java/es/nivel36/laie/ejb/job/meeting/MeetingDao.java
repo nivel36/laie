@@ -28,11 +28,11 @@ public class MeetingDao extends AbstractDao {
 		final String namedQuery = "Meeting.findMonthdMeetingsByUser";
 		final TypedQuery<Meeting> query = this.em.createNamedQuery(namedQuery, Meeting.class);
 		query.setParameter("email", user.getEmail());
-		LocalDateTime startDate = date.withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0);
-		LocalDateTime endDate = startDate.plusMonths(1).minusSeconds(1);
+		final LocalDateTime startDate = date.withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0);
+		final LocalDateTime endDate = startDate.plusMonths(1).minusSeconds(1);
 		query.setParameter("startDate", startDate);
 		query.setParameter("endDate", endDate);
-		
+
 		return query.getResultList();
 	}
 
@@ -66,7 +66,7 @@ public class MeetingDao extends AbstractDao {
 		return this.findByQuery(Long.class, namedQuery, parameters);
 	}
 
-	public Meeting findMeetingById(long id) {
+	public Meeting findMeetingById(final long id) {
 		return this.em.find(Meeting.class, id);
 	}
 }

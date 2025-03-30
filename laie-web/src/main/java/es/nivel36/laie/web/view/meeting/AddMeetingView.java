@@ -78,7 +78,7 @@ public class AddMeetingView extends AbstractMeetingView {
 		}
 		return sb.toString();
 	}
-	
+
 	public void save() {
 		final LocalTime time = LocalTime.parse(this.meetingHour, DateTimeFormatter.ofPattern("H:mm"));
 		final LocalTime endTime = LocalTime.parse(this.meetingDuration, DateTimeFormatter.ofPattern("H:mm"));

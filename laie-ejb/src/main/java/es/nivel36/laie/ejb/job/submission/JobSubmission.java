@@ -23,17 +23,17 @@ import jakarta.validation.constraints.NotNull;
 public class JobSubmission extends AbstractEntity {
 
 	private static final long serialVersionUID = 7312289648009726566L;
-	
+
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "JOB_SUBMISSION_STATE_ID", nullable = false)
 	private JobSubmissionState state;
-	
+
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "CANDIDATE_ID", nullable = false)
 	private Candidate candidate;
-	
+
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "JOB_OFFER_ID", nullable = false)
@@ -99,7 +99,7 @@ public class JobSubmission extends AbstractEntity {
 		this.candidate = candidate;
 	}
 
-	public void setJobSubmissionEvents(Set<JobSubmissionEvent> jobSubmissionEvents) {
+	public void setJobSubmissionEvents(final Set<JobSubmissionEvent> jobSubmissionEvents) {
 		this.jobSubmissionEvents = jobSubmissionEvents;
 	}
 
@@ -111,7 +111,7 @@ public class JobSubmission extends AbstractEntity {
 		this.jobOffer = jobOffer;
 	}
 
-	public void setMeetings(Set<Meeting> meetings) {
+	public void setMeetings(final Set<Meeting> meetings) {
 		this.meetings = meetings;
 	}
 
@@ -124,10 +124,7 @@ public class JobSubmission extends AbstractEntity {
 		if (this == obj) {
 			return true;
 		}
-		if (obj == null) {
-			return false;
-		}
-		if (this.getClass() != obj.getClass()) {
+		if ((obj == null) || (this.getClass() != obj.getClass())) {
 			return false;
 		}
 		final JobSubmission other = (JobSubmission) obj;

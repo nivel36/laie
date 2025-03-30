@@ -24,7 +24,7 @@ public class Origins implements Serializable {
 	public void init() {
 		this.listOfOrigins = this.candidateService.findCandidateOrigins();
 	}
-	
+
 	public List<Origin> getList() {
 		return this.listOfOrigins;
 	}

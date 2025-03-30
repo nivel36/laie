@@ -86,7 +86,7 @@ public class MeetingService {
 			}
 		}
 	}
-	
+
 	public Meeting updateMeeting(final Meeting meeting) {
 		Objects.requireNonNull(meeting);
 		final Meeting savedMeeting = meetingDao.findMeetingById(meeting.getId());
@@ -113,13 +113,13 @@ public class MeetingService {
 		logger.debug("Find planned meetings by owner {}", owner);
 		return this.meetingDao.findPlannedMeetings(owner, page);
 	}
-	
-	public List<Meeting> findMonthMeetings(final User user, final LocalDateTime date ) {
+
+	public List<Meeting> findMonthMeetings(final User user, final LocalDateTime date) {
 		Objects.requireNonNull(user);
 		logger.debug("Find planned meetings by user {} and year {}/month {}", user, date.getYear(), date.getMonth());
 		return this.meetingDao.findMonthMeetings(user, date);
 	}
-	
+
 	public long countPlannedMeetings(final User owner) {
 		Objects.requireNonNull(owner);
 		logger.debug("Count planned meetings by owner {}", owner);

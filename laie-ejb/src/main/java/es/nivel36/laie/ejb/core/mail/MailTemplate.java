@@ -18,7 +18,7 @@ public class MailTemplate {
 
 	public String buildMessage(final Map<String, String> parameters) {
 		String message = this.messageTemplate;
-		for (final  Map.Entry<String, String> entry : parameters.entrySet()) {
+		for (final Map.Entry<String, String> entry : parameters.entrySet()) {
 			final String value = entry.getValue();
 			message = message.replace("%" + entry.getKey() + "%", value);
 		}

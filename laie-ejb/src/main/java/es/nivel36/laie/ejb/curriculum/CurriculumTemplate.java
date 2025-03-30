@@ -25,7 +25,7 @@ public class CurriculumTemplate extends AbstractEntity {
 	private String description;
 
 	private String screenshoot;
-	
+
 	@NotNull
 	@Column(nullable = false)
 	private String title;
@@ -35,10 +35,7 @@ public class CurriculumTemplate extends AbstractEntity {
 		if (this == obj) {
 			return true;
 		}
-		if (!super.equals(obj)) {
-			return false;
-		}
-		if (this.getClass() != obj.getClass()) {
+		if (!super.equals(obj) || (this.getClass() != obj.getClass())) {
 			return false;
 		}
 		final CurriculumTemplate other = (CurriculumTemplate) obj;
@@ -65,7 +62,7 @@ public class CurriculumTemplate extends AbstractEntity {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = (prime * result) + Objects.hash(this.title);
+		result = prime * result + Objects.hash(this.title);
 		return result;
 	}
 
@@ -73,7 +70,7 @@ public class CurriculumTemplate extends AbstractEntity {
 		this.css = css;
 	}
 
-	public void setDescription(String description) {
+	public void setDescription(final String description) {
 		this.description = description;
 	}
 

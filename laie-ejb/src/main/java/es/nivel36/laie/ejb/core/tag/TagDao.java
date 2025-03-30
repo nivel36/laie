@@ -14,10 +14,8 @@ import es.nivel36.laie.ejb.core.util.Parameters;
 import jakarta.inject.Inject;
 import jakarta.persistence.NoResultException;
 
-
 public class TagDao extends AbstractDao {
-	
-	
+
 	private @Inject SearchFacade searchFacade;
 
 	public Tag findByLabel(final String label) {
@@ -26,11 +24,11 @@ public class TagDao extends AbstractDao {
 		final Parameters parameters = map("label", label);
 		try {
 			return this.findByQuery(Tag.class, namedQuery, parameters);
-		} catch (NoResultException e) {
+		} catch (final NoResultException e) {
 			return null;
 		}
 	}
-	
+
 	public SearchResult<Tag> search(final String searchText, final Page page, final SortField sortField,
 			final String[] searchFacets) {
 		final String[] searchFields = new String[] { "_label" };

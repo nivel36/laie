@@ -31,20 +31,20 @@ public class IndexView extends AbstractView {
 	private @Inject CandidateLazyDataModel candidates;
 	private @Inject JobOfferLazyDataModel jobOffers;
 	private transient @Inject MeetingService meetingService;
-	
+
 	private List<Meeting> meetings;
-	
+
 	@PostConstruct
 	public void init() {
 		logger.trace("Index init");
 		final User user = this.sessionUser.get();
 		this.meetings = this.meetingService.findPlannedMeetings(user, Page.FIRST_TEN_RESULTS);
 	}
-	
+
 	public ActionsByUserLazyDataModel getActions() {
 		return actions;
 	}
-	
+
 	public CandidateLazyDataModel getCandidates() {
 		return this.candidates;
 	}
@@ -56,7 +56,7 @@ public class IndexView extends AbstractView {
 	public List<Meeting> getMeetings() {
 		return this.meetings;
 	}
-	
+
 	public void setMeetingService(final MeetingService meetingService) {
 		Objects.requireNonNull(meetingService);
 		this.meetingService = meetingService;

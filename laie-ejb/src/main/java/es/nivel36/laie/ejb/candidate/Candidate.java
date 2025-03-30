@@ -2,7 +2,6 @@ package es.nivel36.laie.ejb.candidate;
 
 import java.time.LocalDate;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -65,7 +64,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	private String email;
 
 	@Min(0)
-	@Column(name = "EXPECTED_SALARY", scale = 0, precision = 6)
+	@Column(name = "EXPECTED_SALARY")
 	private Integer expectedSalary;
 
 	@OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -111,13 +110,13 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	private PhysicalFile picture;
 
 	@GenericField(sortable = Sortable.YES)
-	@Column(name = "RATING", scale = 0, precision = 1)
+	@Column(name = "RATING")
 	private Integer rating;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "candidate", orphanRemoval = true)
 	private Set<Rating> ratings = new HashSet<>();
 
-	@Column(name = "SALARY", scale = 0, precision = 6)
+	@Column(name = "SALARY")
 	private Integer salary;
 
 	@Column(name = "SKYPE", columnDefinition = "TEXT")
@@ -138,21 +137,6 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 		this.meetings.add(meeting);
 	}
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (obj == null) {
-			return false;
-		}
-		if (this == obj) {
-			return true;
-		}
-		if (this.getClass() != obj.getClass()) {
-			return false;
-		}
-		final Candidate other = (Candidate) obj;
-		return Objects.equals(other.email, this.email);
-	}
-
 	public Address getAddress() {
 		return this.address;
 	}
@@ -165,6 +149,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 		return this.curriculum;
 	}
 
+	@Override
 	public String getEmail() {
 		return this.email;
 	}
@@ -187,6 +172,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 		return this.files;
 	}
 
+	@Override
 	public String getFullName() {
 		if (this.name == null) {
 			return null;
@@ -214,6 +200,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 		return meetings;
 	}
 
+	@Override
 	public String getName() {
 		return this.name;
 	}
@@ -251,17 +238,13 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 		return this.skype;
 	}
 
+	@Override
 	public String getSurname() {
 		return this.surname;
 	}
 
 	public Set<Tag> getTags() {
 		return this.tags;
-	}
-
-	@Override
-	public int hashCode() {
-		return 31 * Objects.hash(this.email);
 	}
 
 	public void removeFile(final File file) {
@@ -304,11 +287,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 		this.infojobsProfileUrl = infojobsProfileUrl;
 	}
 
-	public void setJobSubmission(final Set<JobSubmission> jobSubmissions) {
-		this.jobSubmissions = jobSubmissions;
-	}
-
-	public void setJobSubmissions(Set<JobSubmission> jobSubmissions) {
+	public void setJobSubmissions(final Set<JobSubmission> jobSubmissions) {
 		this.jobSubmissions = jobSubmissions;
 	}
 
@@ -320,7 +299,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 		this.linkedinProfileUrl = linkedinProfileUrl;
 	}
 
-	public void setMeetings(Set<Meeting> meetings) {
+	public void setMeetings(final Set<Meeting> meetings) {
 		this.meetings = meetings;
 	}
 
@@ -349,7 +328,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 		this.rating = rating;
 	}
 
-	public void setRatings(Set<Rating> ratings) {
+	public void setRatings(final Set<Rating> ratings) {
 		this.ratings = ratings;
 	}
 
@@ -365,16 +344,28 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 		this.surname = surname;
 	}
 
-	public void setTags(final List<Tag> tags) {
-		if (tags == null) {
-			this.tags = new HashSet<>();
-		} else {
-			this.tags = new HashSet<>(tags);
-		}
-	}
-
 	public void setTags(final Set<Tag> tags) {
 		this.tags = tags;
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (this == obj) {
+			return true;
+		}
+		if (this.getClass() != obj.getClass()) {
+			return false;
+		}
+		final Candidate other = (Candidate) obj;
+		return Objects.equals(other.email, this.email);
+	}
+
+	@Override
+	public int hashCode() {
+		return 31 * Objects.hash(this.email);
 	}
 
 	@Override

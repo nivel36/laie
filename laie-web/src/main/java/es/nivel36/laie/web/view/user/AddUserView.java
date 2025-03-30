@@ -18,7 +18,7 @@ public class AddUserView extends AbstractUserView {
 	private static final long serialVersionUID = -7291274460311553535L;
 
 	private static final Logger logger = LoggerFactory.getLogger(AddUserView.class);
-	
+
 	@PostConstruct
 	public void init() {
 		logger.trace("New user init");

@@ -21,21 +21,21 @@ import jakarta.inject.Named;
 public class AddRatingRequest extends AbstractView {
 
 	private static final long serialVersionUID = -5291060183292266892L;
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(AddRatingRequest.class);
-	
+
 	private @Param(required = true) Candidate candidate;
-	
+
 	private User requestTo;
-	
+
 	private String notes;
-	
+
 	protected transient @Inject UserService userService;
-	
+
 	public void send() {
 		logger.debug("Send request ACTION performed");
 	}
-	
+
 	public List<User> query(final String query) {
 		logger.trace("Search user with the string {}", query);
 		return this.userService.search(query, Page.FIRST_TEN_RESULTS).hits();

@@ -7,12 +7,13 @@ public enum JobOfferEventType implements EventType {
 	AUTOMATIC_EVENT("automatic_event"), //
 	MANUAL_EVENT("manual_event");
 
-	private String name;
+	private final String name;
 
 	JobOfferEventType(final String name) {
 		this.name = name;
 	}
 
+	@Override
 	public String getName() {
 		return this.name;
 	}

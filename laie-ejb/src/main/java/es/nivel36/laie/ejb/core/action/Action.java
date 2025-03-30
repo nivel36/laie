@@ -70,27 +70,27 @@ public class Action extends AbstractEntity {
 		return user;
 	}
 
-	public void setDate(LocalDateTime date) {
+	public void setDate(final LocalDateTime date) {
 		this.date = date;
 	}
 
-	public void setEntityId(Long entityId) {
+	public void setEntityId(final Long entityId) {
 		this.entityId = entityId;
 	}
 
-	public void setEntityName(String entityName) {
+	public void setEntityName(final String entityName) {
 		this.entityName = entityName;
 	}
 
-	public void setEntityTitle(String entityTitle) {
+	public void setEntityTitle(final String entityTitle) {
 		this.entityTitle = entityTitle;
 	}
 
-	public void setType(ActionType type) {
+	public void setType(final ActionType type) {
 		this.type = type;
 	}
 
-	public void setUser(User user) {
+	public void setUser(final User user) {
 		this.user = user;
 	}
 

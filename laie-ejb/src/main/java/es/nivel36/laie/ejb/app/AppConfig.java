@@ -31,7 +31,7 @@ public class AppConfig extends AbstractEntity {
 		return showUserStatistics;
 	}
 
-	public void setShowUserStatistics(boolean showUserStatistics) {
+	public void setShowUserStatistics(final boolean showUserStatistics) {
 		this.showUserStatistics = showUserStatistics;
 	}
 
@@ -39,7 +39,7 @@ public class AppConfig extends AbstractEntity {
 		return showAppStatistics;
 	}
 
-	public void setShowAppStatistics(boolean showAppStatistics) {
+	public void setShowAppStatistics(final boolean showAppStatistics) {
 		this.showAppStatistics = showAppStatistics;
 	}
 
@@ -47,7 +47,7 @@ public class AppConfig extends AbstractEntity {
 		return statisticsPanels;
 	}
 
-	public void setStatisticsPanels(List<StatisticPanel> statisticsPanels) {
+	public void setStatisticsPanels(final List<StatisticPanel> statisticsPanels) {
 		this.statisticsPanels = statisticsPanels;
 	}
 }

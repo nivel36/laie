@@ -9,7 +9,7 @@ class PublicFileBucket extends AbstractFileBucket {
 	private PublicFileBucket() {
 		super("public", Path.of("public"));
 	}
-	
+
 	public static PublicFileBucket getInstance() {
 		return INSTANCE;
 	}

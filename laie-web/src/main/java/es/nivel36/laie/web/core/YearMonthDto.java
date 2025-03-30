@@ -35,7 +35,7 @@ public class YearMonthDto implements Serializable {
 	public void setYear(final Integer year) {
 		this.year = year;
 	}
-	
+
 	public static YearMonthDto of(final YearMonth yearMonth) {
 		Objects.requireNonNull(yearMonth);
 		final YearMonthDto dto = new YearMonthDto();

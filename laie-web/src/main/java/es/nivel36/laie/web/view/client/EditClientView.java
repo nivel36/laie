@@ -18,8 +18,8 @@ public class EditClientView extends AbstractClientView {
 	private static final long serialVersionUID = 1356969048613753901L;
 
 	private static final Logger logger = LoggerFactory.getLogger(EditClientView.class);
-	
-	
+
+
 	private transient @Inject EditClientPermission permission;
 
 	@PostConstruct

@@ -57,18 +57,20 @@ public class Bookmark extends AbstractEntity {
 
 	@Override
 	public int hashCode() {
-		return 31*Objects.hash(url);
+		return 31 * Objects.hash(url);
 	}
 
 	@Override
 	public boolean equals(final Object obj) {
-		if(obj == null) {
+		if (obj == null) {
 			return false;
 		}
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		final Bookmark other = (Bookmark) obj;
 		return Objects.equals(url, other.url);
 	}

@@ -13,9 +13,9 @@ import org.primefaces.model.file.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import es.nivel36.laie.ejb.core.file.PhysicalFileService;
 import es.nivel36.laie.ejb.core.file.FileUploadException;
 import es.nivel36.laie.ejb.core.file.PhysicalFile;
+import es.nivel36.laie.ejb.core.file.PhysicalFileService;
 import es.nivel36.laie.ejb.user.BadManagerException;
 import es.nivel36.laie.ejb.user.DuplicateEmailException;
 import es.nivel36.laie.ejb.user.User;
@@ -34,11 +34,11 @@ public class ConfigView extends AbstractView {
 	private static final Logger logger = LoggerFactory.getLogger(ConfigView.class);
 
 	public static final String URL = "/config.xhtml";
-	
+
 	private boolean imageChanged;
 	private User user;
 	private PhysicalFile userImage;
-	
+
 	private transient @Inject PhysicalFileService fileService;
 	private transient @Inject UserService userService;
 

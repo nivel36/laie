@@ -11,12 +11,13 @@ public enum JobSubmissionEventType implements EventType {
 	PHONE_CALL("phone_call"), //
 	VIDEO_CALL("video_call");
 
-	private String name;
+	private final String name;
 
 	JobSubmissionEventType(final String name) {
 		this.name = name;
 	}
 
+	@Override
 	public String getName() {
 		return this.name;
 	}

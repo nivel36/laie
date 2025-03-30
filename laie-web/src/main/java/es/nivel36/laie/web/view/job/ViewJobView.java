@@ -172,7 +172,7 @@ public class ViewJobView extends AbstractView {
 			states.add(new SelectItem(nextState.getName(), this.translator.message("job_offer_state." + nextState.getName())));
 		}
 	}
-	
+
 	public List<SelectItem> getStates() {
 		return states;
 	}

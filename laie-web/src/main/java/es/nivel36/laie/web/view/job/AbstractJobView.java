@@ -45,9 +45,9 @@ public abstract class AbstractJobView extends AbstractView {
 	public JobOffer getJobOffer() {
 		return this.jobOffer;
 	}
-	
-	public void addClient() {		
-		this.jobOffer.setAddress(this.jobOffer.getClient().getAddress());		
+
+	public void addClient() {
+		this.jobOffer.setAddress(this.jobOffer.getClient().getAddress());
 	}
 
 	public List<User> getRecruiters() {

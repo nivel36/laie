@@ -21,13 +21,13 @@ public class CurriculumService {
 
 	private @Inject CurriculumDao curriculumDao;
 	private @Inject CurriculumExporter exporter;
-	
-	public void deleteCurriculum(Curriculum curriculum) {
+
+	public void deleteCurriculum(final Curriculum curriculum) {
 		Objects.requireNonNull(curriculum);
 		this.curriculumDao.delete(Curriculum.class, curriculum);
 	}
 
-	public void addCurriculum(Curriculum curriculum) {
+	public void addCurriculum(final Curriculum curriculum) {
 		Objects.requireNonNull(curriculum);
 		normalizeSkills(curriculum);
 		this.curriculumDao.insert(curriculum);

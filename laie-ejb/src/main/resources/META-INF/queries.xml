@@ -105,15 +105,6 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="Client.findAllData">
-		<query><![CDATA[
-			SELECT c
-			FROM Client c
-			LEFT JOIN FETCH c.owner
-			WHERE c.id = :clientId
-		]]></query>
-	</named-query>
-
 	<named-query name="Curriculum.findByCandidate">
 		<query><![CDATA[
 			SELECT c 
@@ -476,44 +467,6 @@
 			WHERE m.datePlanned >= current_date
 			AND :email MEMBER OF m.attendeesEmails
 			ORDER BY m.datePlanned ASC
-		]]></query>
-	</named-query>
-
-	<named-query name="Rating.findAllData">
-		<query><![CDATA[
-			SELECT r 
-			FROM Rating r
-			LEFT JOIN FETCH r.candidate
-			LEFT JOIN FETCH r.user
-			WHERE r.id = :ratingId
-		]]></query>
-	</named-query>
-
-	<named-query name="Rating.findByUser">
-		<query><![CDATA[
-			SELECT r 
-			FROM Rating r
-			LEFT JOIN FETCH r.candidate
-			WHERE r.user = :user
-		]]></query>
-	</named-query>
-
-	<named-query name="Rating.findByCandidate">
-		<query><![CDATA[
-			SELECT r 
-			FROM Rating r
-			LEFT JOIN FETCH r.user
-			WHERE r.candidate = :candidate
-		]]></query>
-	</named-query>
-
-	<named-query name="Rating.findRatingOfCandidateByUser">
-		<query><![CDATA[
-			SELECT r 
-			FROM Rating r
-			LEFT JOIN r.user u
-			WHERE r.candidate = :candidate
-			AND u = :user
 		]]></query>
 	</named-query>
 

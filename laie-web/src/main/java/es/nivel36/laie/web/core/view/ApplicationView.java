@@ -16,13 +16,13 @@ import jakarta.inject.Named;
 @ApplicationScoped
 @Named
 public class ApplicationView extends AbstractView {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(ApplicationView.class);
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private String hostname;
-	
+
 	private List<Language> languages;
 
 	public List<Language> getLanguages() {

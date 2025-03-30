@@ -41,7 +41,7 @@ public class RemoveExpiredTokensSchedule {
 
 	/**
 	 * Inserta una instancia no nula de la clase de tipo <tt>LoginTokenService</tt>.
-	 * 
+	 *
 	 * @param loginTokenDao <tt>LoginTokenService</tt> no nula
 	 */
 	public void setLoginTokenService(final LoginTokenService loginTokenservice) {

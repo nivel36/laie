@@ -16,10 +16,10 @@ import jakarta.inject.Named;
 public class JobOfferStates implements Serializable {
 
 	private static final long serialVersionUID = 4806630306147691470L;
-	
+
 	@Inject
 	private transient JobOfferService jobOfferService;
-	
+
 	@PostConstruct
 	public void init() {
 		this.states = this.jobOfferService.findJobOfferStates();

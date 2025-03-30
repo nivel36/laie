@@ -19,10 +19,7 @@ public class EditJobOfferPermission extends AbstractJobOfferPermission {
 			return true;
 		}
 		final User owner = jobOffer.getOwner();
-		if (owner.equals(user)) {
-			return true;
-		}
-		if (this.sessionUser.isManagerOf(owner)) {
+		if (owner.equals(user) || this.sessionUser.isManagerOf(owner)) {
 			return true;
 		}
 		return false;

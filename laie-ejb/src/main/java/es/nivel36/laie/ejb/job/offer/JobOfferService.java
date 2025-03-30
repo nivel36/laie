@@ -100,7 +100,7 @@ public class JobOfferService {
 		return updatedJobOffer;
 	}
 
-	public JobOfferProcess findJobOfferProcessByName(String name) {
+	public JobOfferProcess findJobOfferProcessByName(final String name) {
 		Objects.requireNonNull(name);
 		logger.debug("Finding job offer process by name {}", name);
 
@@ -157,7 +157,7 @@ public class JobOfferService {
 		return jobOffers;
 	}
 
-	public long countJobOffersByOwnerOrRecruiter(User user) {
+	public long countJobOffersByOwnerOrRecruiter(final User user) {
 		Objects.requireNonNull(user);
 		logger.debug("Counting all job offers for owner or recruiter {}", user);
 

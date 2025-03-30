@@ -19,18 +19,18 @@ public class FileDao extends AbstractDao {
 		final Parameters parameters = map("candidate", candidate);
 		return this.findByQuery(File.class, namedQuery, parameters, page);
 	}
-	
+
 	public long countFilesByCandidate(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
 		final String namedQuery = "File.countByCandidate";
 		final Parameters parameters = map("candidate", candidate);
 		return this.findByQuery(Long.class, namedQuery, parameters);
 	}
-	
+
 	public int deleteFile(final File file) {
 		Objects.requireNonNull(file);
 		final String namedQuery = "File.delete";
-		Query query = this.em.createNamedQuery(namedQuery);
+		final Query query = this.em.createNamedQuery(namedQuery);
 		query.setParameter("file", file);
 		return query.executeUpdate();
 	}

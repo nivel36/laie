@@ -14,10 +14,10 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @ApplicationScoped
 public class N36RememberMeIdentityStore extends AbstractIdentityStore implements RememberMeIdentityStore {
-	
+
 	private @Inject LoginTokenService loginTokenService;
 	private @Inject HttpServletRequest request;
-	
+
 	@Override
 	public CredentialValidationResult validate(final RememberMeCredential rememberMeCredential) {
 		Objects.requireNonNull(rememberMeCredential);

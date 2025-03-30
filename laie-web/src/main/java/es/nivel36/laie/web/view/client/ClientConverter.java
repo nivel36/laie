@@ -15,10 +15,10 @@ public class ClientConverter extends AbstractConverter<Client> {
 	private ClientService clientService;
 
 	@Override
-	protected Client getAsObject(Long id) {	
+	protected Client getAsObject(Long id) {
 		return clientService.findClientById(id);
 	}
-	
+
 	public void setClientService(final ClientService clientService) {
 		Objects.requireNonNull(clientService);
 		this.clientService = clientService;

@@ -40,7 +40,7 @@ public class JobSubmissionService {
 		this.jobSubmissionDao.insert(jobSubmission);
 		this.createdEvent.fire(jobSubmission);
 	}
-	
+
 	public void addJobSubmissions(final JobOffer jobOffer, final List<Candidate> candidates) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(candidates);
@@ -48,7 +48,7 @@ public class JobSubmissionService {
 			this.addJobSubmission(jobOffer, candidate);
 		}
 	}
-	
+
 	public void removeJobSubmission(final JobOffer jobOffer, final Candidate candidate) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(candidate);
@@ -60,14 +60,14 @@ public class JobSubmissionService {
 		logger.debug("Finding job submission with id {}", jobSubmissionId);
 		return this.jobSubmissionDao.findJobSubmission(jobSubmissionId);
 	}
-	
+
 	public List<JobSubmission> findJobSubmissionsByJobOffer(final JobOffer jobOffer, final Page page) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(page);
 		logger.debug("Finding all job submissions for job offer {}", jobOffer);
 		return this.jobSubmissionDao.findJobSubmissionsByJobOffer(jobOffer, page);
 	}
-	
+
 	public long countJobSubmissionsByJobOffer(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer);
 		logger.debug("Counting all job submissions for job offer {}", jobOffer);
@@ -92,39 +92,38 @@ public class JobSubmissionService {
 		logger.debug("Counting approved job submissions for job offer {}", jobOffer);
 		return this.jobSubmissionDao.countApprovedJobSubmissions(jobOffer);
 	}
-	
+
 	public void addJobSubmissionEvent(final JobSubmissionEvent event) {
-	    Objects.requireNonNull(event);
-	    logger.debug("Adding job submission event {}", event);
-	    final JobSubmission jobSubmission = event.getJobSubmission();
-	    boolean stateChanged = false;
-	    
+		Objects.requireNonNull(event);
+		logger.debug("Adding job submission event {}", event);
+		final JobSubmission jobSubmission = event.getJobSubmission();
+		boolean stateChanged = false;
+
 		final JobSubmissionState newState = event.getState();
 		final JobSubmissionState jobState = jobSubmission.getState();
 		if (!newState.equals(jobState)) {
-	        logger.trace("Job submission {} state changed from {} to {}",
-	                     jobSubmission, jobState, newState);
-	        jobSubmission.setState(newState);
-	        stateChanged = true;
-	    }
-	    
-	    this.jobSubmissionDao.update(jobSubmission);
-	    this.jobSubmissionEventDao.addJobSubmissionEvent(event);
-	    
-	    if (stateChanged) {
-	        this.stateChangedEvent.fire(jobSubmission);
-	        if (newState.isApproved()) {
-	            logger.trace("Job submission is approved");
-	            this.completedEvent.fire(jobSubmission);
-	        }
-	    }
+			logger.trace("Job submission {} state changed from {} to {}", jobSubmission, jobState, newState);
+			jobSubmission.setState(newState);
+			stateChanged = true;
+		}
+
+		this.jobSubmissionDao.update(jobSubmission);
+		this.jobSubmissionEventDao.addJobSubmissionEvent(event);
+
+		if (stateChanged) {
+			this.stateChangedEvent.fire(jobSubmission);
+			if (newState.isApproved()) {
+				logger.trace("Job submission is approved");
+				this.completedEvent.fire(jobSubmission);
+			}
+		}
 	}
 
 	public JobSubmissionEvent findJobSubmissionEvent(final long id) {
 		logger.debug("Finding job submission event with id {}", id);
 		return this.jobSubmissionEventDao.findJobSubmissionEventById(id);
 	}
-	
+
 	public List<JobSubmissionEvent> findJobSubmissionEvents(final JobOffer jobOffer, final Page page) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(page);
@@ -145,7 +144,7 @@ public class JobSubmissionService {
 	public void setJobSubmissionCreatedEvent(final Event<JobSubmission> jobSubmissionCreatedEvent) {
 		this.createdEvent = Objects.requireNonNull(jobSubmissionCreatedEvent);
 	}
-	
+
 	public void setJobSubmissionStateChangedEvent(final Event<JobSubmission> jobSubmissionStateChangedEvent) {
 		this.stateChangedEvent = Objects.requireNonNull(jobSubmissionStateChangedEvent);
 	}
@@ -153,7 +152,7 @@ public class JobSubmissionService {
 	public void setJobSubmissionDao(final JobSubmissionDao jobSubmissionDao) {
 		this.jobSubmissionDao = Objects.requireNonNull(jobSubmissionDao);
 	}
-	
+
 	public void setJobSubmissionEventDao(final JobSubmissionEventDao jobSubmissionEventDao) {
 		this.jobSubmissionEventDao = Objects.requireNonNull(jobSubmissionEventDao);
 	}

@@ -32,7 +32,7 @@ public class ActionDao extends AbstractDao {
 		final Long count = this.findByQuery(Long.class, namedQuery, parameters);
 		return count.longValue();
 	}
-	
+
 	public List<Action> findAll(final Page page) {
 		Objects.requireNonNull(page);
 		final String namedQuery = "Action.findAll";

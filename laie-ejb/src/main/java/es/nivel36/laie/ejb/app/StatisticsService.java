@@ -10,26 +10,26 @@ public class StatisticsService {
 
 	public boolean isShowUserStatistics() {
 		final AppConfig appConfig = this.appConfigDao.findAppConfig();
-		return  appConfig.isShowUserStatistics();
+		return appConfig.isShowUserStatistics();
 	}
 
 	public boolean isShowAppStatistics() {
 		final AppConfig appConfig = this.appConfigDao.findAppConfig();
-		return  appConfig.isShowAppStatistics();
-	}
-	
-	public StatisticPanel getStatisticPanel(int number) {
-		final AppConfig appConfig = this.appConfigDao.findAppConfig();
-		return appConfig.getStatisticsPanels().get(number-1);
+		return appConfig.isShowAppStatistics();
 	}
 
-	public void setAppConfigDao(AppConfigDao appConfigDao) {
+	public StatisticPanel getStatisticPanel(final int number) {
+		final AppConfig appConfig = this.appConfigDao.findAppConfig();
+		return appConfig.getStatisticsPanels().get(number - 1);
+	}
+
+	public void setAppConfigDao(final AppConfigDao appConfigDao) {
 		this.appConfigDao = appConfigDao;
 	}
-	
+
 	public void showUserStatistics() {
 		final AppConfig appConfig = this.appConfigDao.findAppConfig();
-		boolean showUserStatistics =  appConfig.isShowUserStatistics();
+		final boolean showUserStatistics = appConfig.isShowUserStatistics();
 		if (showUserStatistics) {
 			return;
 		}
@@ -38,7 +38,7 @@ public class StatisticsService {
 
 	public void hideUserStatistics() {
 		final AppConfig appConfig = this.appConfigDao.findAppConfig();
-		boolean showUserStatistics =  appConfig.isShowUserStatistics();
+		final boolean showUserStatistics = appConfig.isShowUserStatistics();
 		if (!showUserStatistics) {
 			return;
 		}
@@ -47,7 +47,7 @@ public class StatisticsService {
 
 	public void showAppStatistics() {
 		final AppConfig appConfig = this.appConfigDao.findAppConfig();
-		boolean showAppStatistics =  appConfig.isShowAppStatistics();
+		final boolean showAppStatistics = appConfig.isShowAppStatistics();
 		if (showAppStatistics) {
 			return;
 		}
@@ -56,7 +56,7 @@ public class StatisticsService {
 
 	public void hideAppStatistics() {
 		final AppConfig appConfig = this.appConfigDao.findAppConfig();
-		boolean showAppStatistics =  appConfig.isShowAppStatistics();
+		final boolean showAppStatistics = appConfig.isShowAppStatistics();
 		if (!showAppStatistics) {
 			return;
 		}
@@ -65,7 +65,7 @@ public class StatisticsService {
 
 	public void changeStatisticPanel(final StatisticPanel statisticPanel, final int panelNumber) {
 		final AppConfig appConfig = this.appConfigDao.findAppConfig();
-		appConfig.getStatisticsPanels().set(panelNumber-1, statisticPanel);
+		appConfig.getStatisticsPanels().set(panelNumber - 1, statisticPanel);
 		appConfigDao.update(appConfig);
 	}
 }

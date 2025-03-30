@@ -28,7 +28,7 @@ public class PhysicalFileService {
 
 	private @Inject @ConfigurationProperty(value = "file.directory") String fileDirectory;
 
-	public PhysicalFile findById(Long id) {
+	public PhysicalFile findById(final Long id) {
 		Objects.requireNonNull(id);
 		return fileDao.find(PhysicalFile.class, id);
 	}
@@ -88,10 +88,9 @@ public class PhysicalFileService {
 		if (physicalFileInDdbb != null) {
 			deleteFileInFileSystem(physicalFile);
 			return physicalFileInDdbb;
-		} else {
-			this.fileDao.insert(physicalFile);
-			return physicalFile;
 		}
+		this.fileDao.insert(physicalFile);
+		return physicalFile;
 	}
 
 	private PhysicalFile uploadFileToBucket(final FileBucket bucket, final InputStream inputStream) {
@@ -113,7 +112,7 @@ public class PhysicalFileService {
 		return new Sha256DigestedFileWriter().write(path, inputStream);
 	}
 
-	public void moveFromTemporalFile(final PhysicalFile file, boolean publicAccess) {
+	public void moveFromTemporalFile(final PhysicalFile file, final boolean publicAccess) {
 		final FileBucket bucket = publicAccess ? PUBLIC_BUCKET : PRIVATE_BUCKET;
 		final Path relativePath = this.getRelativePath(bucket, file.getUId());
 		final Path absolutePath = this.getAbsolutePath(relativePath);
@@ -125,7 +124,7 @@ public class PhysicalFileService {
 			if (!Files.exists(absolutePath)) {
 				Files.copy(Path.of(file.getAbsolutePath()), absolutePath);
 			}
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			throw new UncheckedIOException(e);
 		}
 		file.setAbsolutePath(absolutePath);

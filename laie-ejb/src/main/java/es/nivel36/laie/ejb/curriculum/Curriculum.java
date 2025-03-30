@@ -25,11 +25,11 @@ import jakarta.validation.constraints.NotNull;
 public class Curriculum implements Identifiable, Serializable {
 
 	private static final long serialVersionUID = 2258938088135732207L;
-	
-	@Id 
-	@Column(name="candidate_id") 
+
+	@Id
+	@Column(name = "candidate_id")
 	private long id;
-	
+
 	@Version
 	private long version;
 
@@ -38,16 +38,16 @@ public class Curriculum implements Identifiable, Serializable {
 	@MapsId
 	private Candidate candidate;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="curriculum", orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "curriculum", orphanRemoval = true)
 	private Set<Education> education = new HashSet<>();
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="curriculum", orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "curriculum", orphanRemoval = true)
 	private Set<JobExperience> jobExperiences = new HashSet<>();
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="curriculum", orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "curriculum", orphanRemoval = true)
 	private Set<Language> languages = new HashSet<>();
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="curriculum",orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "curriculum", orphanRemoval = true)
 	private Set<Skill> skills = new HashSet<>();
 
 	public void addEducation(final Education education) {
@@ -71,10 +71,7 @@ public class Curriculum implements Identifiable, Serializable {
 		if (this == obj) {
 			return true;
 		}
-		if (obj == null) {
-			return false;
-		}
-		if (this.getClass() != obj.getClass()) {
+		if ((obj == null) || (this.getClass() != obj.getClass())) {
 			return false;
 		}
 		final Curriculum other = (Curriculum) obj;
@@ -151,7 +148,7 @@ public class Curriculum implements Identifiable, Serializable {
 		this.education = education;
 	}
 
-	public void setId(long id) {
+	public void setId(final long id) {
 		this.id = id;
 	}
 
@@ -171,7 +168,7 @@ public class Curriculum implements Identifiable, Serializable {
 		this.skills = skills;
 	}
 
-	public void setVersion(long version) {
+	public void setVersion(final long version) {
 		this.version = version;
 	}
 

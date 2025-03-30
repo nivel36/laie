@@ -91,7 +91,7 @@ public class SearchMeetingView extends AbstractView {
 
 		addEvents(meetings);
 	}
-	
+
 	private void addEvents(List<Meeting> meetings) {
 		for(final Meeting meeting: meetings) {
 			DefaultScheduleEvent<?> event = DefaultScheduleEvent.builder().title(meeting.getTitle())

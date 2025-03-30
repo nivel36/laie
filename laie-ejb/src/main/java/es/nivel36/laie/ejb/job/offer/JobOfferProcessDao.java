@@ -8,7 +8,7 @@ import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.util.Parameters;
 
 public class JobOfferProcessDao extends AbstractDao {
-	
+
 	public JobOfferProcess findJobOfferProcessByName(final String name) {
 		Objects.requireNonNull(name);
 		final String namedQuery = "JobOfferProcess.findJobOfferProcessByName";

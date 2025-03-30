@@ -37,7 +37,7 @@ public class Skill extends AbstractEntity implements Comparable<Skill> {
 	}
 
 	@Override
-	public int compareTo(Skill skill) {
+	public int compareTo(final Skill skill) {
 		return this.name.compareTo(skill.name);
 	}
 
@@ -46,7 +46,7 @@ public class Skill extends AbstractEntity implements Comparable<Skill> {
 		if (this == obj) {
 			return true;
 		}
-		if (!super.equals(obj) || (this.getClass() != obj.getClass())) {
+		if (!super.equals(obj) || this.getClass() != obj.getClass()) {
 			return false;
 		}
 		final Skill other = (Skill) obj;
@@ -66,7 +66,7 @@ public class Skill extends AbstractEntity implements Comparable<Skill> {
 		return Objects.hash(this.name);
 	}
 
-	public void setCurriculum(Curriculum curriculum) {
+	public void setCurriculum(final Curriculum curriculum) {
 		this.curriculum = curriculum;
 	}
 

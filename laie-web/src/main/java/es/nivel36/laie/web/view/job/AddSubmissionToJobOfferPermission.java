@@ -19,13 +19,7 @@ public class AddSubmissionToJobOfferPermission extends AbstractJobOfferPermissio
 		}
 		final User user = sessionUser.get();
 		final User owner = jobOffer.getOwner();
-		if (owner.equals(user)) {
-			return true;
-		}
-		if (this.sessionUser.isManagerOf(owner)) {
-			return true;
-		}
-		if (jobOffer.getRecruiters().contains(user)) {
+		if (owner.equals(user) || this.sessionUser.isManagerOf(owner) || jobOffer.getRecruiters().contains(user)) {
 			return true;
 		}
 		return false;

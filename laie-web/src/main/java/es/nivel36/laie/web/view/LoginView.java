@@ -60,7 +60,7 @@ public class LoginView extends AbstractView {
 
 	/**
 	 * Realiza el inicio de sesión del usuario.
-	 * 
+	 *
 	 * Autentica al usuario basándose en su nombre de usuario y contraseña, y carga
 	 * su rol en la sesión.
 	 */
@@ -119,7 +119,7 @@ public class LoginView extends AbstractView {
 
 	/**
 	 * Establece el nombre de usuario.
-	 * 
+	 *
 	 * @param username Nombre de usuario.
 	 */
 	public void setUsername(final String username) {
@@ -128,7 +128,7 @@ public class LoginView extends AbstractView {
 
 	/**
 	 * Establece la contraseña del usuario.
-	 * 
+	 *
 	 * @param password Contraseña del usuario.
 	 */
 	public void setPassword(final String password) {
@@ -137,7 +137,7 @@ public class LoginView extends AbstractView {
 
 	/**
 	 * Establece el servicio de inicio de sesión.
-	 * 
+	 *
 	 * @param loginService El servicio de inicio de sesión.
 	 * @throws NullPointerException si loginService es null.
 	 */

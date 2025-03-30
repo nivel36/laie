@@ -27,14 +27,14 @@ public class TagService {
 		return search(searchText, page, null, null);
 	}
 
-	public SearchResult<Tag> search(final String searchText, final Page page,  final SortField sortOrder,
+	public SearchResult<Tag> search(final String searchText, final Page page, final SortField sortOrder,
 			final String[] searchFacets) {
 		Objects.requireNonNull(page);
 		logger.debug("Search {}, offset {} with limit of {}", searchText, page.getOffset(), page.getLimit());
 		return this.tagDao.search(searchText, page, sortOrder, searchFacets);
 	}
 
-	public void setTagDao(TagDao tagDao) {
+	public void setTagDao(final TagDao tagDao) {
 		this.tagDao = tagDao;
 	}
 }

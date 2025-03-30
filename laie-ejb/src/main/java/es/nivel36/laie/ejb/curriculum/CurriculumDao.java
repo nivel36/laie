@@ -15,7 +15,6 @@ import es.nivel36.laie.ejb.core.model.SortField;
 import jakarta.inject.Inject;
 import jakarta.persistence.NoResultException;
 
-
 public class CurriculumDao extends AbstractDao {
 
 	@Inject
@@ -47,7 +46,7 @@ public class CurriculumDao extends AbstractDao {
 		return this.search(searchText, page, null, null);
 	}
 
-	public SearchResult<Curriculum> search(final String searchText, final Page page,  final SortField sortField,
+	public SearchResult<Curriculum> search(final String searchText, final Page page, final SortField sortField,
 			final String[] searchFacets) {
 		final String[] searchFields = new String[] { "skills.name", "jobExperiences.jobPosition",
 				"jobExperiences.description", "jobExperiences.companyName", "educations.description" };

@@ -23,10 +23,10 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "JOB_SUBMISSION_STATE")
-public class JobSubmissionState  extends AbstractEntity implements EventState {
+public class JobSubmissionState extends AbstractEntity implements EventState {
 
 	private static final long serialVersionUID = -1530029544557152044L;
-	
+
 	@Column(name = "APPROVED")
 	private boolean approved;
 
@@ -40,7 +40,7 @@ public class JobSubmissionState  extends AbstractEntity implements EventState {
 	private boolean declined;
 
 	@OneToMany(mappedBy = "destinationState", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Transition> destinationTransitions = new HashSet<>();
+	private Set<Transition> destinationTransitions = new HashSet<>();
 
 	@Column(name = "FIRST")
 	private boolean first;
@@ -50,7 +50,7 @@ public class JobSubmissionState  extends AbstractEntity implements EventState {
 	@JoinColumn(name = "JOB_OFFER_PROCESS_ID", nullable = false)
 	private JobOfferProcess jobOfferProcess;
 
-    @OneToMany(mappedBy = "state", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "state", fetch = FetchType.LAZY)
 	private Set<JobSubmission> jobSubmissions = new HashSet<>();
 
 	@FullTextField(name = "_name")
@@ -59,7 +59,7 @@ public class JobSubmissionState  extends AbstractEntity implements EventState {
 	private String name;
 
 	@OneToMany(mappedBy = "originState", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Transition> originTransitions = new HashSet<>();
+	private Set<Transition> originTransitions = new HashSet<>();
 
 	@Column(name = "PROGRESS")
 	private int progress;
@@ -69,7 +69,7 @@ public class JobSubmissionState  extends AbstractEntity implements EventState {
 		if (this == obj) {
 			return true;
 		}
-		if (!super.equals(obj) || (this.getClass() != obj.getClass())) {
+		if (!super.equals(obj) || this.getClass() != obj.getClass()) {
 			return false;
 		}
 		final JobSubmissionState other = (JobSubmissionState) obj;
@@ -134,11 +134,11 @@ public class JobSubmissionState  extends AbstractEntity implements EventState {
 		this.approved = approved;
 	}
 
-	public void setBackgroundColor(String backgroundColor) {
+	public void setBackgroundColor(final String backgroundColor) {
 		this.backgroundColor = backgroundColor;
 	}
 
-	public void setColor(String color) {
+	public void setColor(final String color) {
 		this.color = color;
 	}
 
@@ -146,7 +146,7 @@ public class JobSubmissionState  extends AbstractEntity implements EventState {
 		this.declined = declined;
 	}
 
-	public void setDestinationTransitions(Set<Transition> destinationTransitions) {
+	public void setDestinationTransitions(final Set<Transition> destinationTransitions) {
 		this.destinationTransitions = destinationTransitions;
 	}
 
@@ -154,11 +154,11 @@ public class JobSubmissionState  extends AbstractEntity implements EventState {
 		this.first = first;
 	}
 
-	public void setJobOfferProcess(JobOfferProcess jobOfferProcess) {
+	public void setJobOfferProcess(final JobOfferProcess jobOfferProcess) {
 		this.jobOfferProcess = jobOfferProcess;
 	}
 
-	public void setJobSubmissions(Set<JobSubmission> jobSubmissions) {
+	public void setJobSubmissions(final Set<JobSubmission> jobSubmissions) {
 		this.jobSubmissions = jobSubmissions;
 	}
 
@@ -166,11 +166,11 @@ public class JobSubmissionState  extends AbstractEntity implements EventState {
 		this.name = name;
 	}
 
-	public void setOriginTransitions(Set<Transition> originTransitions) {
+	public void setOriginTransitions(final Set<Transition> originTransitions) {
 		this.originTransitions = originTransitions;
 	}
 
-	public void setProgress(int progress) {
+	public void setProgress(final int progress) {
 		this.progress = progress;
 	}
 

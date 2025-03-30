@@ -11,11 +11,11 @@ import jakarta.inject.Inject;
 public class BookmarkService {
 
 	@Inject
-	
+
 	private UserDao userDao;
 
 	@Inject
-	
+
 	private BookmarkDao bookmarkDao;
 
 	public User addBookmark(final Bookmark bookmark, final User user) {

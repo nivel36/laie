@@ -19,32 +19,12 @@ public class Origin extends AbstractEntity {
 	@Column(name = "OTHER", length = 64)
 	private String other;
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (!super.equals(obj)) {
-			return false;
-		}
-		if (this.getClass() != obj.getClass()) {
-			return false;
-		}
-		final Origin otherOrigin = (Origin) obj;
-		return Objects.equals(otherOrigin.code, this.code) && Objects.equals(otherOrigin.other, this.other);
-	}
-
 	public String getCode() {
 		return this.code;
 	}
 
 	public String getOther() {
 		return this.other;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(this.code, this.other);
 	}
 
 	public void setCode(final String code) {
@@ -56,11 +36,27 @@ public class Origin extends AbstractEntity {
 	}
 
 	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!super.equals(obj) || (this.getClass() != obj.getClass())) {
+			return false;
+		}
+		final Origin otherOrigin = (Origin) obj;
+		return Objects.equals(otherOrigin.code, this.code) && Objects.equals(otherOrigin.other, this.other);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.code, this.other);
+	}
+
+	@Override
 	public String toString() {
 		if (this.other != null) {
 			return this.other;
-		} else {
-			return this.code;
 		}
+		return this.code;
 	}
 }

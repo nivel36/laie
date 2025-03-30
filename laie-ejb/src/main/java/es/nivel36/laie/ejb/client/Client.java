@@ -1,5 +1,6 @@
 package es.nivel36.laie.ejb.client;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -48,22 +49,22 @@ public class Client extends AbstractEntity implements Ownerable, Erasable, Audit
 	private String cif;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
-	private Set<Contact> contacts;
+	private Set<Contact> contacts = new HashSet<>();
 
 	@Column(name = "DELETED", nullable = false)
 	private boolean deleted;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
-	private Set<JobOffer> jobOffers;
+	private Set<JobOffer> jobOffers = new HashSet<>();
 
 	@NotNull
-	@Column(name = "NAME", unique = true, nullable = false)
+	@Column(name = "NAME", nullable = false)
 	@FullTextField(name = "_name")
-	@KeywordField(name = "name",  sortable = Sortable.YES)
+	@KeywordField(name = "name", sortable = Sortable.YES)
 	private String name;
 
 	@NotNull
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "OWNER_ID", nullable = false)
 	@IndexedEmbedded(includeDepth = 1)
 	private User owner;

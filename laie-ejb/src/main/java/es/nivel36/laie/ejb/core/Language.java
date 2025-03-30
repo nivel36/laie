@@ -13,7 +13,7 @@ public enum Language {
 		return null;
 	}
 
-	private String code;
+	private final String code;
 
 	Language(final String code) {
 		this.code = code;

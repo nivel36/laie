@@ -22,7 +22,7 @@ public class SubjectDao extends AbstractDao {
 				"_name", "_surname");
 		final List<Contact> contacts = searchFacade.search(Contact.class, Page.of(0, 3), null, query, "_email", "_name",
 				"_surname");
-		final List<Subject> atendees = new ArrayList<Subject>(users);
+		final List<Subject> atendees = new ArrayList<>(users);
 		atendees.addAll(candidates);
 		atendees.addAll(contacts);
 		return atendees;

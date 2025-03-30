@@ -12,7 +12,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class SessionUsers {
 
-	private class SessionValues {
+	private static class SessionValues {
 
 		private LocalDateTime lastAction;
 

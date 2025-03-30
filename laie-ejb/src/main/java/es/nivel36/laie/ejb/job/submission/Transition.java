@@ -30,7 +30,7 @@ public class Transition extends AbstractEntity {
 		return event;
 	}
 
-	public void setEvent(String event) {
+	public void setEvent(final String event) {
 		this.event = event;
 	}
 
@@ -38,7 +38,7 @@ public class Transition extends AbstractEntity {
 		return originState;
 	}
 
-	public void setOriginState(JobSubmissionState originState) {
+	public void setOriginState(final JobSubmissionState originState) {
 		this.originState = originState;
 	}
 
@@ -46,7 +46,7 @@ public class Transition extends AbstractEntity {
 		return destinationState;
 	}
 
-	public void setDestinationState(JobSubmissionState destinationState) {
+	public void setDestinationState(final JobSubmissionState destinationState) {
 		this.destinationState = destinationState;
 	}
 }
