@@ -25,14 +25,14 @@ public class JobSubmissionByCandidateLazyDataModel extends LazyDataModel<JobSubm
 	@Override
 	public int count(final Map<String, FilterMeta> filterBy) {
 		Objects.requireNonNull(candidate);
-		return (int) service.countCandidatesJobSubmissions(candidate);
+		return (int) service.countJobSubmissionsByCandidate(candidate);
 	}
 
 	@Override
 	public List<JobSubmission> load(final int first, final int pageSize, final Map<String, SortMeta> sortBy,
 			Map<String, FilterMeta> filterBy) {
 		Objects.requireNonNull(candidate);
-		return service.findCandidatesJobSubmissions(candidate, Page.of(first, pageSize));
+		return service.findJobSubmissionsByCandidate(candidate, Page.of(first, pageSize));
 	}
 
 	public void setCandidate(final Candidate candidate) {

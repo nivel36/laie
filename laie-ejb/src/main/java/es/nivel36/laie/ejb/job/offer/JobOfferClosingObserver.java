@@ -72,7 +72,7 @@ public class JobOfferClosingObserver {
 
     private boolean isCompleted(final JobOffer jobOffer) {
         int availablepositions = jobOffer.getPositions() - 1; // we are adding a new completed job offer
-        long approvedSubmissionsCount = jobSubmissionService.countApprovedJobCanditures(jobOffer);
+        long approvedSubmissionsCount = jobSubmissionService.countApprovedJobSubmissions(jobOffer);
         return availablepositions == approvedSubmissionsCount;
     }
 

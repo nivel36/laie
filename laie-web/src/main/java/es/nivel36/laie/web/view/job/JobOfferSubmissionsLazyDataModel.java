@@ -25,7 +25,7 @@ public class JobOfferSubmissionsLazyDataModel extends LazyDataModel<JobSubmissio
 	@Override
 	public int count(Map<String, FilterMeta> filterBy) {
 		Objects.requireNonNull(jobOffer);
-		return (int) service.countJobOffersJobCanditures(jobOffer);
+		return (int) service.countJobSubmissionsByJobOffer(jobOffer);
 	}
 
 	@Override

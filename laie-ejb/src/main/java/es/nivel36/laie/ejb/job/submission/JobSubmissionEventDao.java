@@ -1,14 +1,12 @@
 package es.nivel36.laie.ejb.job.submission;
 
-import static es.nivel36.laie.ejb.core.util.Parameters.map;
-
 import java.util.List;
 import java.util.Objects;
 
 import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.core.util.Parameters;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
+import jakarta.persistence.TypedQuery;
 
 public class JobSubmissionEventDao extends AbstractDao {
 
@@ -17,25 +15,28 @@ public class JobSubmissionEventDao extends AbstractDao {
 		this.em.persist(jobSubmissionEvent);
 	}
 
-	public JobSubmissionEvent findJobSubmissionEventById(final long id) {
-		if (id <= 0) {
-			throw new IllegalArgumentException();
+	public JobSubmissionEvent findJobSubmissionEventById(final long jobSubmissionEventId) {
+		if (jobSubmissionEventId <= 0) {
+			throw new IllegalStateException(
+					"Job submission event ID must be greater than zero. Received: " + jobSubmissionEventId);
 		}
-		return this.em.find(JobSubmissionEvent.class, id);
+		return this.em.find(JobSubmissionEvent.class, jobSubmissionEventId);
 	}
 
-	public List<JobSubmissionEvent> findAll(JobOffer jobOffer, Page page) {
+	public List<JobSubmissionEvent> findAll(final JobOffer jobOffer, final Page page) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(page);
-		final String namedQuery = "JobSubmissionEvent.findAllByJobOffer";
-		final Parameters parameters = map("jobOffer", jobOffer);
-		return this.findByQuery(JobSubmissionEvent.class, namedQuery, parameters, page);
+		final String sqlQuery = "SELECT j FROM JobSubmissionEvent j WHERE j.jobSubmission.jobOffer = :jobOffer";
+		final TypedQuery<JobSubmissionEvent> query = this.em.createQuery(sqlQuery, JobSubmissionEvent.class);
+		query.setParameter("jobOffer", jobOffer);
+		return query.getResultList();
 	}
-	
-	public long countAll(JobOffer jobOffer) {
+
+	public long countAll(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer);
-		final String namedQuery = "JobSubmissionEvent.countAllByJobOffer";
-		final Parameters parameters = map("jobOffer", jobOffer);
-		return this.findByQuery(Long.class, namedQuery, parameters);
+		final String sqlQuery = "SELECT COUNT(j) FROM JobSubmissionEvent j WHERE j.jobSubmission.jobOffer = :jobOffer";
+		final TypedQuery<Long> query = this.em.createQuery(sqlQuery, Long.class);
+		query.setParameter("jobOffer", jobOffer);
+		return query.getSingleResult();
 	}
 }

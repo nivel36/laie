@@ -27,10 +27,12 @@ public class JobSubmissionEvent extends AbstractEntity implements Event {
 
 	private static final long serialVersionUID = -5724212902774335888L;
 
+	@NotNull
+	@Column(name = "DATE", nullable = false)
 	@GenericField(sortable = Sortable.YES)
-	@Column(name = "DATE")
 	private LocalDateTime date;
 
+	@NotNull
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "JOB_SUBMISSION_ID")
 	private JobSubmission jobSubmission;
@@ -38,18 +40,20 @@ public class JobSubmissionEvent extends AbstractEntity implements Event {
 	@Column(name = "NOTES", columnDefinition = "TEXT")
 	private String notes;
 
-	@ManyToOne
+	@NotNull
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "JOB_SUBMISSION_STATE_ID")
 	private JobSubmissionState state;
 
 	@NotNull
 	@Enumerated(EnumType.STRING)
-	@Column(name = "TYPE", nullable = false, length = 16)
+	@Column(name = "TYPE", length = 16, nullable = false)
 	private JobSubmissionEventType type;
 
+	@NotNull
 	@ManyToOne
+	@JoinColumn(name = "USER_ID", nullable = false)
 	@IndexedEmbedded(includeDepth = 1)
-	@JoinColumn(name = "USER_ID")
 	private User user;
 
 	public JobSubmissionEvent() {
@@ -63,22 +67,6 @@ public class JobSubmissionEvent extends AbstractEntity implements Event {
 		this.jobSubmission = jobSubmission;
 		this.state = jobSubmission.getState();
 		this.setType(JobSubmissionEventType.OTHER);
-	}
-
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (!super.equals(obj)) {
-			return false;
-		}
-		if (this.getClass() != obj.getClass()) {
-			return false;
-		}
-		final JobSubmissionEvent other = (JobSubmissionEvent) obj;
-		return Objects.equals(this.date, other.date) && Objects.equals(this.type, other.type)
-				&& Objects.equals(this.user, other.user) && Objects.equals(this.jobSubmission, other.jobSubmission);
 	}
 
 	public LocalDateTime getDate() {
@@ -105,11 +93,6 @@ public class JobSubmissionEvent extends AbstractEntity implements Event {
 		return this.user;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(this.date, this.type, this.user, this.jobSubmission);
-	}
-
 	public void setDate(final LocalDateTime date) {
 		this.date = date;
 	}
@@ -132,5 +115,32 @@ public class JobSubmissionEvent extends AbstractEntity implements Event {
 
 	public void setUser(final User user) {
 		this.user = user;
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!super.equals(obj)) {
+			return false;
+		}
+		if (this.getClass() != obj.getClass()) {
+			return false;
+		}
+		final JobSubmissionEvent other = (JobSubmissionEvent) obj;
+		return Objects.equals(this.date, other.date) && Objects.equals(this.type, other.type)
+				&& Objects.equals(this.user, other.user) && Objects.equals(this.jobSubmission, other.jobSubmission);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.date, this.type, this.user, this.jobSubmission);
+	}
+
+	@Override
+	public String toString() {
+		return "JobSubmissionEvent [date=" + date + ", jobSubmission=" + jobSubmission + ", notes=" + notes + ", state="
+				+ state + ", type=" + type + ", user=" + user + "]";
 	}
 }

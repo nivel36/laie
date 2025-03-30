@@ -18,7 +18,7 @@ public class JobSubmissionConverter extends AbstractConverter<JobSubmission> {
 		if (id == null) {
 			return null;
 		}
-		return jobSubmissionService.findJobSubmission(id);
+		return jobSubmissionService.findJobSubmissionById(id);
 	}
 
 	public void setJobSubmissionService(final JobSubmissionService jobSubmissionService) {

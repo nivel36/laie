@@ -23,54 +23,40 @@ import jakarta.validation.constraints.NotNull;
 public class JobSubmission extends AbstractEntity {
 
 	private static final long serialVersionUID = 7312289648009726566L;
-
+	
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "JOB_SUBMISSION_STATE_ID", nullable = false)
+	private JobSubmissionState state;
+	
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "CANDIDATE_ID", nullable = false)
 	private Candidate candidate;
-
-	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "jobSubmission", orphanRemoval = true)
-	private Set<JobSubmissionEvent> jobSubmissionEvents = new HashSet<>();
-
+	
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "JOB_OFFER_ID", nullable = false)
 	private JobOffer jobOffer;
 
-	@OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
-	private Set<Meeting> meetings;
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "jobSubmission", orphanRemoval = true)
+	private Set<JobSubmissionEvent> jobSubmissionEvents = new HashSet<>();
 
-	@NotNull
-	@ManyToOne
-	@JoinColumn(name = "JOB_SUBMISSION_STATE_ID", nullable = false)
-	private JobSubmissionState state;
+	@OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
+	private Set<Meeting> meetings = new HashSet<>();
 
 	public JobSubmission() {
 	}
 
-	public JobSubmission(final Candidate candidate, final JobOffer jobOffer) {
-		this.candidate = candidate;
-		this.jobOffer = jobOffer;
+	public JobSubmission(final Candidate candidate, final JobOffer jobOffer, final JobSubmissionState state) {
+		this.candidate = Objects.requireNonNull(candidate);
+		this.jobOffer = Objects.requireNonNull(jobOffer);
+		this.state = Objects.requireNonNull(state);
 	}
 
 	public void addJobSubmissionEvent(final JobSubmissionEvent jobSubmissionEvent) {
 		Objects.requireNonNull(jobSubmissionEvent);
 		this.jobSubmissionEvents.add(jobSubmissionEvent);
-	}
-
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (this.getClass() != obj.getClass()) {
-			return false;
-		}
-		final JobSubmission other = (JobSubmission) obj;
-		return Objects.equals(this.candidate, other.candidate) && Objects.equals(this.jobOffer, other.jobOffer);
 	}
 
 	public Candidate getCandidate() {
@@ -80,7 +66,6 @@ public class JobSubmission extends AbstractEntity {
 	public Set<JobSubmissionEvent> getJobSubmissionEvents() {
 		return jobSubmissionEvents;
 	}
-
 
 	public Set<Meeting> getJobMeetings() {
 		return this.meetings;
@@ -96,11 +81,6 @@ public class JobSubmission extends AbstractEntity {
 
 	public JobSubmissionState getState() {
 		return this.state;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(this.candidate, this.jobOffer);
 	}
 
 	public boolean hasState(final JobSubmissionState state) {
@@ -137,6 +117,26 @@ public class JobSubmission extends AbstractEntity {
 
 	public void setState(final JobSubmissionState state) {
 		this.state = state;
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (this.getClass() != obj.getClass()) {
+			return false;
+		}
+		final JobSubmission other = (JobSubmission) obj;
+		return Objects.equals(this.candidate, other.candidate) && Objects.equals(this.jobOffer, other.jobOffer);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.candidate, this.jobOffer);
 	}
 
 	@Override

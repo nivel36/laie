@@ -126,7 +126,7 @@ public abstract class AbstractDao {
 		return query.getSingleResult();
 	}
 
-	private void paginate(final Page page, final Query query) {
+	protected void paginate(final Page page, final Query query) {
 		query.setFirstResult(page.getOffset());
 		query.setMaxResults(page.getLimit());
 	}
