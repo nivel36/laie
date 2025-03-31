@@ -13,6 +13,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Indexed
@@ -31,7 +32,7 @@ public class Language extends AbstractEntity implements Comparable<Language> {
 	@Column(name = "LEVEL", nullable = false)
 	private LanguageLevel level;
 
-	@NotNull
+	@NotBlank
 	@FullTextField
 	@Column(name = "NAME", nullable = false)
 	private String name;

@@ -25,7 +25,7 @@ public class UserService {
 
 	public void addUser(final User user) throws DuplicateEmailException, BadManagerException {
 		Objects.requireNonNull(user);
-		logger.debug("Insert user {}", user);
+		logger.debug("Add user {}", user);
 		final String email = user.getEmail();
 		if (this.userDao.checkDuplicateEmail(email)) {
 			throw new DuplicateEmailException();

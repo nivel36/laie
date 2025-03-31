@@ -23,6 +23,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -39,7 +40,7 @@ public class Contact extends AbstractEntity implements Subject, Auditable {
 	private Client client;
 
 	@Email
-	@NotNull
+	@NotBlank
 	@Column(name = "EMAIL", length = 128, nullable = false, unique = true)
 	@FullTextField(name = "_email")
 	@KeywordField(name = "email", sortable = Sortable.YES)
@@ -51,7 +52,7 @@ public class Contact extends AbstractEntity implements Subject, Auditable {
 	@ManyToMany(fetch = FetchType.LAZY)
 	private Set<Meeting> meetings = new HashSet<>();
 
-	@NotNull
+	@NotBlank
 	@Column(name = "NAME", nullable = false, length = 128)
 	@FullTextField(name = "_name")
 	@KeywordField(name = "name", sortable = Sortable.YES)
@@ -63,7 +64,7 @@ public class Contact extends AbstractEntity implements Subject, Auditable {
 	@Column(name = "POSITION", length = 128)
 	private String position;
 
-	@NotNull
+	@NotBlank
 	@Column(name = "SURNAME", nullable = false, length = 128)
 	@FullTextField(name = "_surname")
 	@KeywordField(name = "surname", sortable = Sortable.YES)

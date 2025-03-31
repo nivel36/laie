@@ -27,5 +27,4 @@ public class SubjectDao extends AbstractDao {
 		atendees.addAll(contacts);
 		return atendees;
 	}
-
 }

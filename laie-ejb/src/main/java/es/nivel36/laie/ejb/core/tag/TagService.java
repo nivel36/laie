@@ -20,6 +20,7 @@ public class TagService {
 
 	public Tag findByLabel(final String label) {
 		Objects.requireNonNull(label);
+		logger.debug("Retrieving tag by label {}", label);
 		return tagDao.findByLabel(label);
 	}
 
@@ -35,6 +36,6 @@ public class TagService {
 	}
 
 	public void setTagDao(final TagDao tagDao) {
-		this.tagDao = tagDao;
+		this.tagDao = Objects.requireNonNull(tagDao);
 	}
 }

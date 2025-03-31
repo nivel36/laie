@@ -7,6 +7,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -15,18 +16,18 @@ public class CurriculumTemplate extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;
 
-	@NotNull
+	@NotBlank
 	@Column(nullable = false)
 	@Lob
 	private String css;
 
-	@NotNull
+	@NotBlank
 	@Column(nullable = false)
 	private String description;
 
 	private String screenshoot;
 
-	@NotNull
+	@NotBlank
 	@Column(nullable = false)
 	private String title;
 

@@ -1,7 +1,5 @@
 package es.nivel36.laie.ejb.client;
 
-import static es.nivel36.laie.ejb.core.util.Parameters.map;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -11,10 +9,10 @@ import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.SearchFacade;
 import es.nivel36.laie.ejb.core.model.SortField;
-import es.nivel36.laie.ejb.core.util.Parameters;
 import jakarta.inject.Inject;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 
 public class ContactDao extends AbstractDao {
 
@@ -23,15 +21,26 @@ public class ContactDao extends AbstractDao {
 	public List<Contact> findContactsByClient(final Client client, final Page page) {
 		Objects.requireNonNull(client);
 		Objects.requireNonNull(page);
-		final String namedQuery = "Contact.findByClient";
-		final Parameters parameters = map("client", client);
-		return this.findByQuery(Contact.class, namedQuery, parameters, page);
+		final String jpql = """
+				SELECT c
+				FROM Contact c
+				LEFT JOIN FETCH c.client
+				WHERE c.client = :client
+				""";
+		final TypedQuery<Contact> query = em.createQuery(jpql, Contact.class);
+		query.setParameter("client", client);
+		this.paginate(page, query);
+		return query.getResultList();
 	}
 
 	public int deleteContactByIdAndClientId(final Contact contact, final Client client) {
 		Objects.requireNonNull(client);
-		final String namedQuery = "Contact.deleteByIdAndClientId";
-		final Query query = this.em.createNamedQuery(namedQuery);
+		final String jpql = """
+				DELETE FROM Contact c
+				WHERE c = :contact
+				AND c.client = :client
+				""";
+		final Query query = this.em.createQuery(jpql);
 		query.setParameter("client", client);
 		query.setParameter("contact", contact);
 		return query.executeUpdate();
@@ -39,17 +48,27 @@ public class ContactDao extends AbstractDao {
 
 	public long countContactsByClient(final Client client) {
 		Objects.requireNonNull(client);
-		final String namedQuery = "Contact.countByClient";
-		final Parameters parameters = map("client", client);
-		return this.findByQuery(Long.class, namedQuery, parameters);
+		final String jpql = """
+				SELECT COUNT(c)
+				FROM Contact c
+				WHERE c.client = :client
+				""";
+		final TypedQuery<Long> query = em.createQuery(jpql, Long.class);
+		query.setParameter("client", client);
+		return query.getFirstResult();
 	}
 
 	public Contact findContactByEmail(final String email) {
 		Objects.requireNonNull(email);
 		try {
-			final String namedQuery = "Contact.findByEmail";
-			final Parameters parameters = map("email", email);
-			return this.findByQuery(Contact.class, namedQuery, parameters);
+			final String jpql = """
+					SELECT c
+					FROM Contact c
+					WHERE c.email=:email
+					""";
+			final TypedQuery<Contact> query = em.createQuery(jpql, Contact.class);
+			query.setParameter("email", email);
+			return query.getSingleResult();
 		} catch (final NoResultException e) {
 			return null;
 		}
@@ -63,4 +82,7 @@ public class ContactDao extends AbstractDao {
 		return searchFacade.search(Contact.class, page, sortField, searchFacets, searchText, fields);
 	}
 
+	public void setSearchFacade(final SearchFacade searchFacade) {
+		this.searchFacade = Objects.requireNonNull(searchFacade);
+	}
 }

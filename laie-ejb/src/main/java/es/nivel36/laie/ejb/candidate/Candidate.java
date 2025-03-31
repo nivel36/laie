@@ -38,6 +38,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -58,7 +59,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	private Curriculum curriculum;
 
 	@Email
-	@NotNull
+	@NotBlank
 	@Column(name = "EMAIL", nullable = false)
 	@FullTextField(name = "_email")
 	private String email;
@@ -76,7 +77,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	@OneToMany(mappedBy = "candidate", cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private Set<JobSubmission> jobSubmissions = new HashSet<>();
 
-	@NotNull
+	@NotBlank
 	@Column(name = "JOB_PROFILE", nullable = false, columnDefinition = "TEXT")
 	@FullTextField(name = "_jobProfile")
 	private String jobProfile;
@@ -87,7 +88,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	@ManyToMany(fetch = FetchType.LAZY)
 	private Set<Meeting> meetings = new HashSet<>();
 
-	@NotNull
+	@NotBlank
 	@Column(name = "NAME", nullable = false, columnDefinition = "TEXT")
 	@FullTextField(name = "_name")
 	@GenericField(sortable = Sortable.YES)
@@ -122,7 +123,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	@Column(name = "SKYPE", columnDefinition = "TEXT")
 	private String skype;
 
-	@NotNull
+	@NotBlank
 	@Column(name = "SURNAME", columnDefinition = "TEXT")
 	@FullTextField(name = "_surname")
 	private String surname;

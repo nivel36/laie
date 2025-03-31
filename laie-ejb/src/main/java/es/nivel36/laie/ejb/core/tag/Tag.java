@@ -17,6 +17,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Index;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -30,7 +31,7 @@ public class Tag extends AbstractEntity {
 	@IndexedEmbedded(includeDepth = 1)
 	private Set<Candidate> candidates = new HashSet<>();
 
-	@NotNull
+	@NotBlank
 	@Column(nullable = false, unique = true)
 	@FullTextField(name = "_label")
 	@KeywordField(name = "label", sortable = Sortable.YES)

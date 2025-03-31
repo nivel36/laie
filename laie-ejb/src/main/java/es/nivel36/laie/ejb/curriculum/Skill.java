@@ -11,6 +11,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -25,7 +26,7 @@ public class Skill extends AbstractEntity implements Comparable<Skill> {
 	private Curriculum curriculum;
 
 	@FullTextField
-	@NotNull
+	@NotBlank
 	@Column(name = "NAME", nullable = false)
 	private String name;
 

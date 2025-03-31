@@ -44,7 +44,7 @@ public class CandidateService {
 		if (this.candidateDao.checkDuplicateEmail(email)) {
 			throw new DuplicateEmailException("Email already exists: " + email);
 		}
-		logger.debug("Add candidate {}", candidate);
+		logger.debug("Adding candidate {}", candidate);
 		this.updateTags(candidate);
 		this.candidateDao.insert(candidate);
 		this.createCandidateEvent.fire(candidate);
@@ -70,13 +70,19 @@ public class CandidateService {
 
 	public Candidate updateCandidateRating(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
-		logger.debug("Update rating of candidate {}", candidate);
+		logger.debug("Updating rating of candidate {}", candidate);
 		return updateAndFireEvent(candidate);
 	}
 
+	private Candidate updateAndFireEvent(final Candidate candidate) {
+		final Candidate updatedCandidate = this.candidateDao.update(candidate);
+		this.updateCandidateEvent.fire(updatedCandidate);
+		return updatedCandidate;
+	}
+	
 	public Candidate updateCandidate(final Candidate candidate) throws DuplicateEmailException {
 		Objects.requireNonNull(candidate);
-		logger.debug("Update candidate {}", candidate);
+		logger.debug("Updating candidate {}", candidate);
 
 		final Candidate candidateInDatabase = this.candidateDao.find(Candidate.class, candidate.getId());
 		final String email = candidate.getEmail();
@@ -89,16 +95,10 @@ public class CandidateService {
 		return updateAndFireEvent(candidate);
 	}
 
-	private Candidate updateAndFireEvent(final Candidate candidate) {
-		final Candidate updatedCandidate = this.candidateDao.update(candidate);
-		this.updateCandidateEvent.fire(updatedCandidate);
-		return updatedCandidate;
-	}
-
 	public Candidate changeCandidatesImage(final Candidate candidate, final InputStream image) {
 		Objects.requireNonNull(candidate);
 		Objects.requireNonNull(image);
-		logger.debug("Change image to user {}", candidate);
+		logger.debug("Changing image to user {}", candidate);
 		final PhysicalFile oldImage = candidate.getPicture();
 		final PhysicalFile newImage = this.fileService.uploadFile(image, true);
 		candidate.setPicture(newImage);
@@ -110,32 +110,30 @@ public class CandidateService {
 	}
 
 	public List<Origin> findCandidateOrigins() {
-		logger.debug("Find all candidate origins");
+		logger.debug("Retrieving all candidate origins");
 		return this.candidateDao.findAllOrigins();
 	}
 
 	public List<Candidate> findCandidateByJobOffer(final JobOffer jobOffer, final Page page) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(page);
-		logger.debug("Find candidates by jobOffer {} ", jobOffer);
+		logger.debug("Retrieving candidates by jobOffer {} ", jobOffer);
 		return this.candidateDao.findCandidatesByJobOffer(jobOffer, page);
 	}
 
 	public Candidate findCandidateByEmail(final String email) {
 		Objects.requireNonNull(email);
-		logger.debug("Find candidate by email {} ", email);
+		logger.debug("Retrieving candidate by email {} ", email);
 		return this.candidateDao.findCandidateByEmail(email);
 	}
 
-	public Candidate findCandidateById(final Long id) {
-		Objects.requireNonNull(id);
-		logger.debug("Find candidate by id {}", id);
-		return this.candidateDao.find(Candidate.class, id);
+	public Candidate findCandidateById(final long candidateId) {
+		logger.debug("Retrieving candidate by id {}", candidateId);
+		return this.candidateDao.find(Candidate.class, candidateId);
 	}
 
-	public Candidate findAllCandidateData(final Long candidateId) {
-		Objects.requireNonNull(candidateId);
-		logger.debug("Find candidate data by id {}", candidateId);
+	public Candidate findAllCandidateData(final long candidateId) {
+		logger.debug("Retrieving candidate data by id {}", candidateId);
 		return this.candidateDao.findAllData(candidateId);
 	}
 
@@ -148,7 +146,7 @@ public class CandidateService {
 
 	public long countCandidateFiles(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
-		logger.debug("Count all files {} of candidate {}", candidate);
+		logger.debug("Counting all files {} of candidate {}", candidate);
 		return this.fileDao.countFilesByCandidate(candidate);
 	}
 
@@ -156,7 +154,7 @@ public class CandidateService {
 		Objects.requireNonNull(inputStream);
 		Objects.requireNonNull(candidate);
 		Objects.requireNonNull(filename);
-		logger.debug("Add file {} to candidate {}", filename, candidate);
+		logger.debug("Adding file {} to candidate {}", filename, candidate);
 		final PhysicalFile physicalFile = fileService.uploadFile(inputStream, false);
 		final File file = new File();
 		file.setCreated(LocalDateTime.now());
@@ -171,7 +169,7 @@ public class CandidateService {
 	public void deleteCandidateFile(final File file) {
 		Objects.requireNonNull(file);
 		final Candidate candidate = file.getCandidate();
-		logger.debug("Remove file {} from candidate {}", file, candidate);
+		logger.debug("Removing file {} from candidate {}", file, candidate);
 		this.fileService.removeFile(file.getPhysicalFile());
 		this.fileDao.deleteFile(file);
 		this.updateCandidateEvent.fire(candidate);
@@ -189,17 +187,26 @@ public class CandidateService {
 	}
 
 	public void setTagDao(final TagDao tagDao) {
-		Objects.requireNonNull(tagDao);
-		this.tagDao = tagDao;
+		this.tagDao = Objects.requireNonNull(tagDao);
 	}
 
 	public void setCandidateDao(final CandidateDao candidateDao) {
-		Objects.requireNonNull(candidateDao);
-		this.candidateDao = candidateDao;
+		this.candidateDao = Objects.requireNonNull(candidateDao);;
 	}
 
+	public void setFileDao(final FileDao fileDao) {
+		this.fileDao =  Objects.requireNonNull(fileDao);
+	}
+	
 	public void setFileService(final PhysicalFileService fileService) {
-		Objects.requireNonNull(fileService);
-		this.fileService = fileService;
+		this.fileService = Objects.requireNonNull(fileService);
+	}
+
+	public void setCreateCandidateEvent(final Event<Auditable> createCandidateEvent) {
+		this.createCandidateEvent =  Objects.requireNonNull(createCandidateEvent);
+	}
+
+	public void setUpdateCandidateEvent(final Event<Auditable> updateCandidateEvent) {
+		this.updateCandidateEvent =  Objects.requireNonNull(updateCandidateEvent);
 	}
 }

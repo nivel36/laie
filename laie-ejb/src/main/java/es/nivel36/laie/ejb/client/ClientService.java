@@ -26,7 +26,7 @@ public class ClientService {
 
 	public void addClient(final Client client) throws DuplicateCifException {
 		Objects.requireNonNull(client);
-		logger.debug("Add new client {}", client);
+		logger.debug("Adding new client {}", client);
 		if (client.getCif() != null && this.clientDao.checkDuplicatedCif(client.getCif())) {
 			throw new DuplicateCifException();
 		}
@@ -36,7 +36,7 @@ public class ClientService {
 
 	public Client updateClient(final Client client) throws DuplicateCifException {
 		Objects.requireNonNull(client);
-		logger.debug("Update client {}", client);
+		logger.debug("Updating client {}", client);
 		final Client clientInDatabase = clientDao.find(Client.class, client.getId());
 		if (client.getCif() != null && !client.getCif().equals(clientInDatabase.getCif())) {
 			if (clientDao.checkDuplicatedCif(client.getCif())) {
@@ -50,7 +50,7 @@ public class ClientService {
 
 	public Client findClientById(final Long clientId) {
 		Objects.requireNonNull(clientId);
-		logger.debug("Find client by id {}", clientId);
+		logger.debug("Retrieving client by id {}", clientId);
 		return this.clientDao.find(Client.class, clientId);
 	}
 
@@ -65,8 +65,14 @@ public class ClientService {
 	}
 
 	public void setClientDao(final ClientDao clientDao) {
-		Objects.requireNonNull(clientDao);
-		this.clientDao = clientDao;
+		this.clientDao = Objects.requireNonNull(clientDao);
 	}
 
+	public void setCreateClientEvent(final Event<Auditable> createClientEvent) {
+		this.createClientEvent = Objects.requireNonNull(createClientEvent);
+	}
+
+	public void setUpdateClientEvent(final Event<Auditable> updateClientEvent) {
+		this.updateClientEvent = Objects.requireNonNull(updateClientEvent);
+	}
 }

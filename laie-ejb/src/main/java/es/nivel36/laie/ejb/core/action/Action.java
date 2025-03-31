@@ -12,6 +12,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -28,11 +29,11 @@ public class Action extends AbstractEntity {
 	@Column(name = "ENTITY_ID", nullable = false)
 	private Long entityId;
 
-	@NotNull
+	@NotBlank
 	@Column(name = "ENTITY_NAME", nullable = false)
 	private String entityName;
 
-	@NotNull
+	@NotBlank
 	@Column(name = "ENTITY_TITLE", nullable = false)
 	private String entityTitle;
 

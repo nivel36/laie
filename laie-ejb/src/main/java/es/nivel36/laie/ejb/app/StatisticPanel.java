@@ -8,6 +8,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -19,12 +20,12 @@ public class StatisticPanel extends AbstractEntity {
 	@Column(name = "POSITION", nullable = false)
 	private int position;
 
-	@NotNull
+	@NotBlank
 	@Enumerated(EnumType.STRING)
 	@Column(name = "TYPE", nullable = false)
 	private StatisticPanelType type;
 
-	@NotNull
+	@NotBlank
 	@Enumerated(EnumType.STRING)
 	@Column(name = "PERIODICITY", nullable = false)
 	private StatisticsPeriodicity periodicity;

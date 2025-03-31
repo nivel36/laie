@@ -11,6 +11,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -28,7 +29,7 @@ public class File extends AbstractEntity {
 
 	private String description;
 
-	@NotNull
+	@NotBlank
 	@Column(nullable = false)
 	private String name;
 

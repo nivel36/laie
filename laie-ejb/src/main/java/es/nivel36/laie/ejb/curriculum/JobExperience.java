@@ -15,6 +15,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -29,7 +30,7 @@ public class JobExperience extends AbstractEntity implements Comparable<JobExper
 	private Curriculum curriculum;
 
 	@FullTextField
-	@NotNull
+	@NotBlank
 	@Column(name = "COMPANY_NAME", nullable = false, length = 128)
 	private String companyName;
 
@@ -44,7 +45,7 @@ public class JobExperience extends AbstractEntity implements Comparable<JobExper
 	@Column(name = "END_YEAR", scale = 0, precision = 4)
 	private Integer endYear;
 
-	@NotNull
+	@NotBlank
 	@FullTextField
 	@Column(name = "JOB_POSITION", nullable = false)
 	private String jobPosition;

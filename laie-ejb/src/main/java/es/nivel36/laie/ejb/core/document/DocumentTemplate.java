@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Index;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -19,19 +20,19 @@ public class DocumentTemplate extends AbstractEntity {
 
 	private static final long serialVersionUID = 5175582851805624309L;
 
-	@NotNull
+	@NotBlank
 	@Column(name = "LANGUAGE", nullable = false)
 	private String language;
 
-	@NotNull
+	@NotBlank
 	@Column(name = "NAME", nullable = false)
 	private String name;
 
-	@NotNull
+	@NotBlank
 	@Column(name = "TEXT", columnDefinition = "TEXT", nullable = false)
 	private String text;
 
-	@NotNull
+	@NotBlank
 	@Column(name = "TITLE", nullable = false)
 	private String title;
 

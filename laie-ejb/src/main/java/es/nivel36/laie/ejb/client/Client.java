@@ -28,6 +28,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Indexed
@@ -57,7 +58,7 @@ public class Client extends AbstractEntity implements Ownerable, Erasable, Audit
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true)
 	private Set<JobOffer> jobOffers = new HashSet<>();
 
-	@NotNull
+	@NotBlank
 	@Column(name = "NAME", nullable = false)
 	@FullTextField(name = "_name")
 	@KeywordField(name = "name", sortable = Sortable.YES)

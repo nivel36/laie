@@ -11,6 +11,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -24,7 +25,7 @@ public class Education extends AbstractEntity implements Comparable<Education> {
 	@JoinColumn(name = "CURRICULUM_ID")
 	private Curriculum curriculum;
 
-	@NotNull
+	@NotBlank
 	@Column(name = "DEGREE", nullable = false)
 	private String degree;
 
@@ -32,7 +33,7 @@ public class Education extends AbstractEntity implements Comparable<Education> {
 	@Column(name = "DESCRIPTION", columnDefinition = "TEXT")
 	private String description;
 
-	@NotNull
+	@NotBlank
 	@Column(name = "SCHOOL", nullable = false)
 	private String school;
 

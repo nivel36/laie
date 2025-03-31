@@ -1,36 +1,49 @@
 package es.nivel36.laie.ejb.candidate;
 
-import static es.nivel36.laie.ejb.core.util.Parameters.map;
-
 import java.util.List;
 import java.util.Objects;
 
 import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.core.util.Parameters;
 import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 
 public class FileDao extends AbstractDao {
 
 	public List<File> findFilesByCandidate(final Candidate candidate, final Page page) {
 		Objects.requireNonNull(candidate);
 		Objects.requireNonNull(page);
-		final String namedQuery = "File.findByCandidate";
-		final Parameters parameters = map("candidate", candidate);
-		return this.findByQuery(File.class, namedQuery, parameters, page);
+		final String jpql = """
+				SELECT f
+				FROM File f
+				WHERE f.candidate = :candidate
+				""";
+		final TypedQuery<File> query = this.em.createQuery(jpql, File.class);
+		query.setParameter("candidate", candidate);
+		this.paginate(page, query);
+		return query.getResultList();
 	}
 
 	public long countFilesByCandidate(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
-		final String namedQuery = "File.countByCandidate";
-		final Parameters parameters = map("candidate", candidate);
-		return this.findByQuery(Long.class, namedQuery, parameters);
+		final String jpql = """
+				SELECT COUNT(f)
+				FROM File f
+				WHERE f.candidate = :candidate
+				""";
+		final TypedQuery<Long> query = this.em.createQuery(jpql, Long.class);
+		query.setParameter("candidate", candidate);
+		return query.getSingleResult();
 	}
 
 	public int deleteFile(final File file) {
 		Objects.requireNonNull(file);
-		final String namedQuery = "File.delete";
-		final Query query = this.em.createNamedQuery(namedQuery);
+		final String jpql = """
+				DELETE 
+				FROM File f 
+				WHERE f = :file
+				""";
+		final Query query = this.em.createQuery(jpql);
 		query.setParameter("file", file);
 		return query.executeUpdate();
 	}

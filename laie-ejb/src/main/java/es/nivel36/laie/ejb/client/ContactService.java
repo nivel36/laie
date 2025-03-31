@@ -19,18 +19,17 @@ public class ContactService {
 	private static final Logger logger = LoggerFactory.getLogger(ContactService.class);
 
 	private @Inject ContactDao contactDao;
-
 	private @Inject @Update Event<Auditable> updateClientEvent;
 
 	public void addContact(final Contact contact) {
-		logger.debug("Add contact {}", contact);
+		logger.debug("Adding contact {}", contact);
 		contactDao.insert(contact);
 		this.updateClientEvent.fire(contact.getClient());
 	}
 
 	public Contact updateContact(final Contact contact) {
 		Objects.requireNonNull(contact);
-		logger.debug("Update contact {}", contact);
+		logger.debug("Updating contact {}", contact);
 		final Contact updatedContact = this.contactDao.update(contact);
 		this.updateClientEvent.fire(contact.getClient());
 		return updatedContact;
@@ -38,38 +37,40 @@ public class ContactService {
 
 	public void deleteContact(final Contact contact) {
 		Objects.requireNonNull(contact);
-		logger.debug("Delete contact {}", contact);
+		logger.debug("Deleting contact {}", contact);
 		this.contactDao.deleteContactByIdAndClientId(contact, contact.getClient());
 		this.updateClientEvent.fire(contact.getClient());
 	}
 
 	public Contact findContactByEmail(final String email) {
 		Objects.requireNonNull(email);
-		logger.debug("Find contact by email {}", email);
+		logger.debug("Retrieving contact by email {}", email);
 		return this.contactDao.findContactByEmail(email);
 	}
 
-	public Contact findContactById(final Long contactId) {
-		Objects.requireNonNull(contactId);
-		logger.debug("Find contact by id {}", contactId);
+	public Contact findContactById(final long contactId) {
+		logger.debug("Retrieving contact by id {}", contactId);
 		return this.contactDao.find(Contact.class, contactId);
 	}
 
 	public List<Contact> findContactsByClient(final Client client, final Page page) {
 		Objects.requireNonNull(client);
 		Objects.requireNonNull(page);
-		logger.debug("Find contacts by client {}, offset {} limit of {}", client, page.getOffset(), page.getLimit());
+		logger.debug("Retrieving contacts by client {}, offset {} limit of {}", client, page.getOffset(), page.getLimit());
 		return this.contactDao.findContactsByClient(client, page);
 	}
 
 	public long countContactsByClient(final Client client) {
 		Objects.requireNonNull(client);
-		logger.debug("Count contacts by client {}", client);
+		logger.debug("Counting contacts by client {}", client);
 		return this.contactDao.countContactsByClient(client);
 	}
 
 	public void setContactDao(final ContactDao contactDao) {
-		Objects.requireNonNull(contactDao);
-		this.contactDao = contactDao;
+		this.contactDao = Objects.requireNonNull(contactDao);
+	}
+
+	public void setUpdateClientEvent(final Event<Auditable> updateClientEvent) {
+		this.updateClientEvent = Objects.requireNonNull(updateClientEvent);
 	}
 }

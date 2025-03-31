@@ -1,7 +1,5 @@
 package es.nivel36.laie.ejb.candidate;
 
-import static es.nivel36.laie.ejb.core.util.Parameters.map;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -11,10 +9,10 @@ import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.SearchFacade;
 import es.nivel36.laie.ejb.core.model.SortField;
-import es.nivel36.laie.ejb.core.util.Parameters;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 import jakarta.inject.Inject;
 import jakarta.persistence.NoResultException;
+import jakarta.persistence.TypedQuery;
 
 public class CandidateDao extends AbstractDao {
 
@@ -28,17 +26,41 @@ public class CandidateDao extends AbstractDao {
 	public List<Candidate> findCandidatesByJobOffer(final JobOffer jobOffer, final Page page) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(page);
-		final String namedQuery = "Candidate.findByJobOffer";
-		final Parameters parameters = map("jobOffer", jobOffer);
-		return this.findByQuery(Candidate.class, namedQuery, parameters, page);
+		final String jpql = """
+				SELECT c
+				FROM Candidate c
+				LEFT JOIN c.jobSubmissions jc
+				WHERE jc.jobOffer=:jobOffer
+				""";
+		final TypedQuery<Candidate> query = this.em.createQuery(jpql, Candidate.class);
+		query.setParameter("jobOffer", jobOffer);
+		return query.getResultList();
+	}
+
+	public Candidate findAllData(final long candidateId) {
+		final String jpql = """
+				SELECT c
+				FROM Candidate c
+				LEFT JOIN FETCH c.tags
+				LEFT JOIN FETCH c.owner
+				WHERE c.id = :candidateId
+				""";
+		final TypedQuery<Candidate> query = this.em.createQuery(jpql, Candidate.class);
+		query.setParameter("candidateId", candidateId);
+		return query.getSingleResult();
 	}
 
 	public Candidate findCandidateByEmail(final String email) {
 		Objects.requireNonNull(email);
 		try {
-			final String namedQuery = "Candidate.findByEmail";
-			final Parameters parameters = map("email", email);
-			return this.findByQuery(Candidate.class, namedQuery, parameters);
+			final String jpql = """
+					SELECT c
+					FROM Candidate c
+					WHERE c.email=:email
+					""";
+			final TypedQuery<Candidate> query = this.em.createQuery(jpql, Candidate.class);
+			query.setParameter("email", email);
+			return query.getSingleResult();
 		} catch (final NoResultException e) {
 			return null;
 		}
@@ -58,11 +80,5 @@ public class CandidateDao extends AbstractDao {
 			final String[] searchFacets) {
 		final String[] searchFields = new String[] { "_name", "_surname", "_email" };
 		return searchFacade.search(Candidate.class, page, sortField, searchFacets, searchText, searchFields);
-	}
-
-	public Candidate findAllData(final Long candidateId) {
-		final String namedQuery = "Candidate.findAllData";
-		final Parameters parameters = map("candidateId", candidateId);
-		return this.findByQuery(Candidate.class, namedQuery, parameters);
 	}
 }

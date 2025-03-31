@@ -37,6 +37,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -64,7 +65,7 @@ public class User extends AbstractEntity implements Subject {
     @GenericField(sortable = Sortable.YES)
     private LocalDate dateOfJoin;
 
-    @NotNull
+    @NotBlank
     @Column(name = "EMAIL", length = 128, nullable = false)
     @FullTextField(name = "_email")
     private String email;
@@ -75,7 +76,7 @@ public class User extends AbstractEntity implements Subject {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "owner", orphanRemoval = true)
     private Set<JobOffer> jobOffers = new HashSet<>();
 
-    @NotNull
+    @NotBlank
     @Column(name = "LANGUAGE", nullable = false)
     private String language;
 
@@ -94,7 +95,7 @@ public class User extends AbstractEntity implements Subject {
                inverseJoinColumns = @JoinColumn(name = "MEETING_ID"))
     private Set<Meeting> meetings = new HashSet<>();
 
-    @NotNull
+    @NotBlank
     @Column(name = "NAME", nullable = false, length = 128)
     @FullTextField(name = "_name")
     @KeywordField(sortable = Sortable.YES)
@@ -124,7 +125,7 @@ public class User extends AbstractEntity implements Subject {
     @Column(name = "ROWS_PER_PAGE", nullable = false)
     private Integer rowsPerPage = 10;
 
-    @NotNull
+    @NotBlank
     @Column(name = "SURNAME", nullable = false, length = 128)
     @FullTextField(name = "_surname")
     @KeywordField(sortable = Sortable.YES)

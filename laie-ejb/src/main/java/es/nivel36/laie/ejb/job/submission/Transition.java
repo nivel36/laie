@@ -1,5 +1,7 @@
 package es.nivel36.laie.ejb.job.submission;
 
+import java.util.Objects;
+
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -7,6 +9,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "TRANSITION")
@@ -18,13 +21,25 @@ public class Transition extends AbstractEntity {
 	@Column(name = "EVENT", nullable = false)
 	private String event;
 
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "origin_state_id", nullable = false)
 	private JobSubmissionState originState;
 
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "destination_state_id", nullable = false)
 	private JobSubmissionState destinationState;
+
+	public Transition() {
+	}
+
+	public Transition(final String event, final JobSubmissionState originState,
+			final JobSubmissionState destinationState) {
+		this.event = Objects.requireNonNull(event);
+		this.originState = Objects.requireNonNull(originState);
+		this.destinationState = Objects.requireNonNull(destinationState);
+	}
 
 	public String getEvent() {
 		return event;

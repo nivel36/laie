@@ -11,6 +11,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -18,15 +19,15 @@ public class PhysicalFile extends AbstractEntity {
 
 	private static final long serialVersionUID = -5784130825846473478L;
 
-	@NotNull
+	@NotBlank
 	@Column(nullable = false)
 	private String absolutePath;
 
-	@NotNull
+	@NotBlank
 	@Column(nullable = false)
 	private String bucket;
 
-	@NotNull
+	@NotBlank
 	@Column(nullable = false, unique = true, updatable = false)
 	private String contentHash;
 
@@ -37,11 +38,11 @@ public class PhysicalFile extends AbstractEntity {
 	@OneToMany(fetch = FetchType.LAZY)
 	private Set<File> files;
 
-	@NotNull
+	@NotBlank
 	@Column(nullable = false)
 	private String relativePath;
 
-	@NotNull
+	@NotBlank
 	@Column(nullable = false, unique = true, updatable = false)
 	private String uId;
 

@@ -21,6 +21,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -58,7 +59,7 @@ public class Meeting extends AbstractEntity implements Ownerable {
 	@Column(name = "DESCRIPTION", columnDefinition = "TEXT")
 	private String description;
 
-	@NotNull
+	@NotBlank
 	@Column(name = "TITLE", nullable = false)
 	private String title;
 

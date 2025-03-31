@@ -47,64 +47,6 @@
 		]]></query>
 	</named-query>
 
-	<named-query name="Candidate.findByEmail">
-		<query><![CDATA[
-			SELECT c 
-			FROM Candidate c
-			WHERE c.email = :email
-		]]></query>
-	</named-query>
-
-	<named-query name="Candidate.findByJobOffer">
-		<query><![CDATA[
-			SELECT c 
-			FROM Candidate c
-			LEFT JOIN c.jobSubmissions jc
-			WHERE jc.jobOffer = :jobOffer
-		]]></query>
-	</named-query>
-
-	<named-query name="Candidate.findAllData">
-		<query><![CDATA[
-			SELECT c
-			FROM Candidate c
-			LEFT JOIN FETCH c.tags
-			LEFT JOIN FETCH c.owner
-			WHERE c.id = :candidateId
-		]]></query>
-	</named-query>
-
-	<named-query name="Contact.findByEmail">
-		<query><![CDATA[
-			SELECT c 
-			FROM Contact c 
-			WHERE c.email = :email
-		]]></query>
-	</named-query>
-
-	<named-query name="Contact.findByClient">
-		<query><![CDATA[
-			SELECT c 
-			FROM Contact c 
-			LEFT JOIN FETCH c.client
-			WHERE c.client = :client
-		]]></query>
-	</named-query>
-
-	<named-query name="Contact.countByClient">
-		<query><![CDATA[
-			SELECT COUNT(c) 
-			FROM Contact c 
-			WHERE c.client = :client
-		]]></query>
-	</named-query>
-
-	<named-query name="Contact.deleteByIdAndClientId">
-		<query><![CDATA[
-			DELETE FROM Contact c WHERE c = :contact AND c.client = :client
-		]]></query>
-	</named-query>
-
 	<named-query name="Curriculum.findByCandidate">
 		<query><![CDATA[
 			SELECT c 
@@ -139,45 +81,6 @@
 			FROM DocumentTemplate d 
 			WHERE d.name = :name
 			AND d.language = :language
-		]]></query>
-	</named-query>
-
-	<named-query name="File.findByCandidate">
-		<query><![CDATA[
-			SELECT f 
-			FROM File f 
-			WHERE f.candidate = :candidate
-		]]></query>
-	</named-query>
-
-	<named-query name="File.countByCandidate">
-		<query><![CDATA[
-			SELECT count(f) 
-			FROM File f 
-			WHERE f.candidate = :candidate
-		]]></query>
-	</named-query>
-
-	<named-query name="File.delete">
-		<query><![CDATA[
-			DELETE FROM File f WHERE f = :file
-		]]></query>
-	</named-query>
-
-	<named-query name="File.findByHashAndBucket">
-		<query><![CDATA[
-			SELECT f 
-			FROM PhysicalFile f 
-			WHERE f.contentHash = :hash
-			AND f.bucket = :bucket
-		]]></query>
-	</named-query>
-
-	<named-query name="File.isOrphanPhysicalFile">
-		<query><![CDATA[
-			SELECT CASE WHEN (COUNT(f) > 0) THEN FALSE ELSE TRUE END 
-			FROM File f 
-			WHERE f.physicalFile = :physicalFile
 		]]></query>
 	</named-query>
 
@@ -263,31 +166,6 @@
 			FROM JobSubmission j 
 			WHERE :user MEMBER OF j.jobOffer.recruiters
 			OR j.jobOffer.owner = :user 
-		]]></query>
-	</named-query>
-
-	<named-query
-		name="JobSubmissionState.findFirstJobSubmissionState">
-		<query><![CDATA[
-			SELECT j 
-			FROM JobSubmissionState j 
-			WHERE j.first = true
-		]]></query>
-	</named-query>
-
-	<named-query name="JobSubmissionState.findByName">
-		<query><![CDATA[
-			SELECT j 
-			FROM JobSubmissionState j
-			WHERE j.name = :name
-		]]></query>
-	</named-query>
-
-	<named-query name="JobSubmissionState.findNextStates">
-		<query><![CDATA[
-			SELECT t.destinationState 
-			FROM Transition t 
-			WHERE t.originState = :currentState 
 		]]></query>
 	</named-query>
 
@@ -467,14 +345,6 @@
 			WHERE m.datePlanned >= current_date
 			AND :email MEMBER OF m.attendeesEmails
 			ORDER BY m.datePlanned ASC
-		]]></query>
-	</named-query>
-
-	<named-query name="Tag.findByLabel">
-		<query><![CDATA[
-			SELECT t 
-			FROM Tag t 
-			WHERE t.label = :label
 		]]></query>
 	</named-query>
 </entity-mappings>

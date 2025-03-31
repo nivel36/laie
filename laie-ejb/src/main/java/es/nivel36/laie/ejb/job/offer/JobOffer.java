@@ -34,6 +34,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -114,7 +115,7 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	@Column(name = "STATE")
 	private JobOfferState state;
 
-	@NotNull
+	@NotBlank
 	@Column(name = "TITLE", nullable = false)
 	@FullTextField(name = "_title")
 	@KeywordField(sortable = Sortable.YES)
