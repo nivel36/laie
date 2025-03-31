@@ -27,18 +27,18 @@ public class JobSubmissionStateService {
 	}
 
 	public JobSubmissionState findInitialState() {
-		logger.debug("Retrieving job submission initial state");
+		logger.debug("Finding job submission initial state");
 		return this.jobSubmissionStateDao.findInitialState();
 	}
 
 	public List<JobSubmissionState> findAll() {
-		logger.debug("Retrieving all job submission states");
+		logger.debug("Finding all job submission states");
 		return jobSubmissionStateDao.findAll(JobSubmissionState.class, Page.ALL_RESULTS);
 	}
 
 	public JobSubmissionState findByName(final String name) {
 		Objects.requireNonNull(name);
-		logger.debug("Retrieving job submission state by name {}", name);
+		logger.debug("Finding job submission state by name {}", name);
 		return jobSubmissionStateDao.findByName(name);
 	}
 
@@ -55,7 +55,7 @@ public class JobSubmissionStateService {
 
 	public List<JobSubmissionState> findNextStates(final JobSubmissionState state) {
 		Objects.requireNonNull(state);
-		logger.debug("Retrieving next job jobSubmission states of state {}", state);
+		logger.debug("Finding next job jobSubmission states of state {}", state);
 		return jobSubmissionStateDao.findNextStates(state);
 	}
 

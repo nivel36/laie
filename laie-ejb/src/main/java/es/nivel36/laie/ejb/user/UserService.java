@@ -25,7 +25,7 @@ public class UserService {
 
 	public void addUser(final User user) throws DuplicateEmailException, BadManagerException {
 		Objects.requireNonNull(user);
-		logger.debug("Add user {}", user);
+		logger.debug("Adding user {}", user);
 		final String email = user.getEmail();
 		if (this.userDao.checkDuplicateEmail(email)) {
 			throw new DuplicateEmailException();
@@ -44,14 +44,14 @@ public class UserService {
 			throw new BadManagerException("User cannot be their own manager");
 		}
 		if (this.userDao.isSubordinateUser(user, manager)) {
-			logger.warn("The user {} is already managing {}", user, manager);
-			throw new BadManagerException("The user is already managing the new manager");
+			logger.warn("User {} is already managing {}", user, manager);
+			throw new BadManagerException("User is already managing this manager");
 		}
 	}
 
 	public User updateUser(final User user) throws DuplicateEmailException, BadManagerException {
 		Objects.requireNonNull(user);
-		logger.debug("Update user {}", user);
+		logger.debug("Updating user {}", user);
 		final User userInDatabase = this.userDao.find(User.class, user.getId());
 
 		// Check if the e-mail has been modified and is being used by another user.
@@ -94,7 +94,7 @@ public class UserService {
 			throws BadManagerException {
 		// Deleting manager
 		if (newManager == null && oldManager != null) {
-			logger.debug("Delete manager to user {}", user);
+			logger.debug("Removing manager from user {}", user);
 			user.setManager(null);
 			return;
 		}
@@ -106,15 +106,15 @@ public class UserService {
 		}
 
 		// Updating manager
-		logger.debug("Change manager from {} to {} of user {}", oldManager, newManager, user);
+		logger.debug("Changing manager from {} to {} of user {}", oldManager, newManager, user);
 
 		if (user.equals(newManager)) {
 			logger.warn("User {} cannot be their own manager", user);
 			throw new BadManagerException("User cannot be their own manager");
 		}
 		if (this.userDao.isSubordinateUser(user, newManager)) {
-			logger.warn("The user {} is already managing {}", user, newManager);
-			throw new BadManagerException("The user is already managing the new manager");
+			logger.warn("User {} is already managing {}", user, newManager);
+			throw new BadManagerException("User is already managing this manager");
 		}
 	}
 
@@ -127,29 +127,25 @@ public class UserService {
 		user.setPicture(newImage);
 		final User updatedUser = userDao.update(user);
 		if (oldImage != null) {
-			logger.trace("Remove user {} old image", user);
+			logger.trace("Removing user {} old image", user);
 			this.fileService.removeFile(oldImage);
 		}
 		return updatedUser;
 	}
 
-	public User findUserById(final Long id) {
-		Objects.requireNonNull(id);
-		logger.debug("Find user by id {}", id);
+	public User findUserById(final long id) {
+		logger.debug("Finding user by id {}", id);
 		return this.userDao.find(User.class, id);
 	}
 
 	public User findUserByEmail(final String email) {
 		Objects.requireNonNull(email);
-		logger.debug("Find user by email {}", email);
+		logger.debug("Finding user by email {}", email);
 		return this.userDao.findUserByEmail(email);
 	}
 
 	public User findAllUserData(final long userId) {
-		if (userId <= 0) {
-			throw new IllegalStateException("User ID must be greater than zero. Received: " + userId);
-		}
-		logger.debug("Find all user data by user id {}", userId);
+		logger.debug("Finding all user data by user id {}", userId);
 		return this.userDao.findAllUserData(userId);
 	}
 

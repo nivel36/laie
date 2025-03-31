@@ -48,6 +48,23 @@ import jakarta.validation.constraints.NotNull;
 public class Candidate extends AbstractEntity implements Ownerable, Subject, Auditable {
 
 	private static final long serialVersionUID = -7470903145789563432L;
+	
+	@NotBlank
+	@Column(name = "NAME", nullable = false, columnDefinition = "TEXT")
+	@FullTextField(name = "_name")
+	@GenericField(sortable = Sortable.YES)
+	private String name;
+	
+	@NotBlank
+	@Column(name = "SURNAME", columnDefinition = "TEXT")
+	@FullTextField(name = "_surname")
+	private String surname;
+	
+	@Email
+	@NotBlank
+	@Column(name = "EMAIL", nullable = false)
+	@FullTextField(name = "_email")
+	private String email;
 
 	@Embedded
 	private Address address;
@@ -57,12 +74,6 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 
 	@OneToOne(mappedBy = "candidate")
 	private Curriculum curriculum;
-
-	@Email
-	@NotBlank
-	@Column(name = "EMAIL", nullable = false)
-	@FullTextField(name = "_email")
-	private String email;
 
 	@Min(0)
 	@Column(name = "EXPECTED_SALARY")
@@ -87,12 +98,6 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	private Set<Meeting> meetings = new HashSet<>();
-
-	@NotBlank
-	@Column(name = "NAME", nullable = false, columnDefinition = "TEXT")
-	@FullTextField(name = "_name")
-	@GenericField(sortable = Sortable.YES)
-	private String name;
 
 	@ManyToOne
 	@JoinColumn(name = "ORIGIN_ID")
@@ -122,11 +127,6 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 
 	@Column(name = "SKYPE", columnDefinition = "TEXT")
 	private String skype;
-
-	@NotBlank
-	@Column(name = "SURNAME", columnDefinition = "TEXT")
-	@FullTextField(name = "_surname")
-	private String surname;
 
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
 	@JoinTable(name = "CANDIDATE_TAG", joinColumns = @JoinColumn(name = "CANDIDATE_ID"), inverseJoinColumns = @JoinColumn(name = "TAG_ID"))

@@ -1,6 +1,7 @@
 package es.nivel36.laie.web.view.job;
 
 import java.time.LocalDate;
+import java.util.stream.Collectors;
 
 import org.omnifaces.cdi.Param;
 import org.omnifaces.util.Faces;
@@ -47,7 +48,7 @@ public class AddJobView extends AbstractJobView {
 
 	public void save() {
 		if (canAddJobOfferToClient()) {
-			this.jobOffer.setRecruiters(recruiters);
+			this.jobOffer.setRecruiters(recruiters.stream().collect(Collectors.toSet()));
 			this.jobOfferService.addJobOffer(this.jobOffer);
 			Faces.redirect(ViewJobView.getUrl(this.jobOffer.getId()));
 		} else {

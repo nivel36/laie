@@ -110,30 +110,30 @@ public class CandidateService {
 	}
 
 	public List<Origin> findCandidateOrigins() {
-		logger.debug("Retrieving all candidate origins");
+		logger.debug("Finding all candidate origins");
 		return this.candidateDao.findAllOrigins();
 	}
 
 	public List<Candidate> findCandidateByJobOffer(final JobOffer jobOffer, final Page page) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(page);
-		logger.debug("Retrieving candidates by jobOffer {} ", jobOffer);
+		logger.debug("Finding candidates by jobOffer {} ", jobOffer);
 		return this.candidateDao.findCandidatesByJobOffer(jobOffer, page);
 	}
 
 	public Candidate findCandidateByEmail(final String email) {
 		Objects.requireNonNull(email);
-		logger.debug("Retrieving candidate by email {} ", email);
+		logger.debug("Finding candidate by email {} ", email);
 		return this.candidateDao.findCandidateByEmail(email);
 	}
 
 	public Candidate findCandidateById(final long candidateId) {
-		logger.debug("Retrieving candidate by id {}", candidateId);
+		logger.debug("Finding candidate by id {}", candidateId);
 		return this.candidateDao.find(Candidate.class, candidateId);
 	}
 
 	public Candidate findAllCandidateData(final long candidateId) {
-		logger.debug("Retrieving candidate data by id {}", candidateId);
+		logger.debug("Finding candidate data by id {}", candidateId);
 		return this.candidateDao.findAllData(candidateId);
 	}
 

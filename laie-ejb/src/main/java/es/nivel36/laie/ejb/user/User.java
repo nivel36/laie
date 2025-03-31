@@ -48,6 +48,18 @@ import jakarta.validation.constraints.NotNull;
 public class User extends AbstractEntity implements Subject {
 
 	private static final long serialVersionUID = -3719561601581901723L;
+	
+    @NotBlank
+    @Column(name = "NAME", nullable = false, length = 128)
+    @FullTextField(name = "_name")
+    @KeywordField(sortable = Sortable.YES)
+    private String name;
+    
+    @NotBlank
+    @Column(name = "SURNAME", nullable = false, length = 128)
+    @FullTextField(name = "_surname")
+    @KeywordField(sortable = Sortable.YES)
+    private String surname;
 
 	@ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "PERSON_BOOKMARK",
@@ -95,12 +107,6 @@ public class User extends AbstractEntity implements Subject {
                inverseJoinColumns = @JoinColumn(name = "MEETING_ID"))
     private Set<Meeting> meetings = new HashSet<>();
 
-    @NotBlank
-    @Column(name = "NAME", nullable = false, length = 128)
-    @FullTextField(name = "_name")
-    @KeywordField(sortable = Sortable.YES)
-    private String name;
-
     @Column(name = "PHONE_NUMBER", length = 12)
     private String phoneNumber;
 
@@ -124,12 +130,6 @@ public class User extends AbstractEntity implements Subject {
     @NotNull
     @Column(name = "ROWS_PER_PAGE", nullable = false)
     private Integer rowsPerPage = 10;
-
-    @NotBlank
-    @Column(name = "SURNAME", nullable = false, length = 128)
-    @FullTextField(name = "_surname")
-    @KeywordField(sortable = Sortable.YES)
-    private String surname;
 
     @OneToMany(mappedBy = "manager", fetch = FetchType.LAZY)
     private Set<User> team = new HashSet<>();

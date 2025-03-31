@@ -140,6 +140,16 @@ public class Client extends AbstractEntity implements Ownerable, Erasable, Audit
 	public void setPhoneNumber(final String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
+	
+	@Override
+	public String getEntityTitle() {
+		return this.name;
+	}
+
+	@Override
+	public String getEntityName() {
+		return "CLIENT";
+	}
 
 	@Override
 	public boolean equals(final Object obj) {
@@ -164,15 +174,5 @@ public class Client extends AbstractEntity implements Ownerable, Erasable, Audit
 	@Override
 	public String toString() {
 		return this.name;
-	}
-
-	@Override
-	public String getEntityTitle() {
-		return this.name;
-	}
-
-	@Override
-	public String getEntityName() {
-		return "CLIENT";
 	}
 }

@@ -27,7 +27,7 @@ import jakarta.inject.Inject;
 @Stateless
 public class JobOfferService {
 
-	private static final Logger logger = LoggerFactory.getLogger(JobOffer.class);
+	private static final Logger logger = LoggerFactory.getLogger(JobOfferService.class);
 
 	private @Inject JobOfferDao jobOfferDao;
 	private @Inject JobOfferProcessDao jobOfferProcessDao;
@@ -45,14 +45,14 @@ public class JobOfferService {
 		this.jobOfferDao.insert(jobOffer);
 
 		final User owner = jobOffer.getOwner();
-		final JobOfferEvent newEvent = this.builJobOfferEvent(jobOffer, JobOfferState.CREATED, null, owner);
+		final JobOfferEvent newEvent = this.buildJobOfferEvent(jobOffer, JobOfferState.CREATED, null, owner);
 		jobOfferDao.addJobOfferEvent(newEvent);
 
 		this.createdEvent.fire(jobOffer);
 		logger.debug("Job offer {} added successfully", jobOffer);
 	}
 
-	private JobOfferEvent builJobOfferEvent(final JobOffer jobOffer, final JobOfferState newState, final String notes,
+	private JobOfferEvent buildJobOfferEvent(final JobOffer jobOffer, final JobOfferState newState, final String notes,
 			final User user) {
 		final JobOfferEvent newStateEvent = new JobOfferEvent();
 		newStateEvent.setDate(LocalDateTime.now());
@@ -69,7 +69,7 @@ public class JobOfferService {
 		logger.debug("Updating job offer {}", jobOffer);
 
 		final JobOffer oldJobOffer = this.findJobOfferById(jobOffer.getId());
-		if (jobOffer.getState().equals(oldJobOffer.getState())) {
+		if (!jobOffer.getState().equals(oldJobOffer.getState())) {
 			throw new IllegalStateException("Cannot change the state of a job offer through an update");
 		}
 
@@ -85,7 +85,7 @@ public class JobOfferService {
 		Objects.requireNonNull(newState);
 		logger.debug("Changing state of job offer {} to {}", jobOffer, newState);
 
-		final JobOfferEvent newStateEvent = this.builJobOfferEvent(jobOffer, newState, notes, user);
+		final JobOfferEvent newStateEvent = this.buildJobOfferEvent(jobOffer, newState, notes, user);
 		this.jobOfferDao.addJobOfferEvent(newStateEvent);
 		jobOffer.setState(newState);
 		if (newState.isCloseState()) {
@@ -102,7 +102,7 @@ public class JobOfferService {
 
 	public JobOfferProcess findJobOfferProcessByName(final String name) {
 		Objects.requireNonNull(name);
-		logger.debug("Finding job offer process by name {}", name);
+		logger.debug("Retrieving job offer process by name {}", name);
 
 		final JobOfferProcess jobOfferProcess = this.jobOfferProcessDao.findJobOfferProcessByName(name);
 		logger.debug("Job offer process for name {} found: {}", name, jobOfferProcess);
@@ -111,7 +111,7 @@ public class JobOfferService {
 
 	public JobOffer findJobOfferById(final Long id) {
 		Objects.requireNonNull(id);
-		logger.debug("Finding job offer by id {}", id);
+		logger.debug("Retrieving job offer by id {}", id);
 
 		final JobOffer jobOffer = this.jobOfferDao.find(JobOffer.class, id);
 		logger.debug("Job offer found for id {}: {}", id, jobOffer);
@@ -120,7 +120,7 @@ public class JobOfferService {
 
 	public JobOffer findJobOfferData(final Long id) {
 		Objects.requireNonNull(id);
-		logger.debug("Finding job offer data by id {}", id);
+		logger.debug("Retrieving job offer data by id {}", id);
 
 		final JobOffer jobOfferData = this.jobOfferDao.findJobOfferData(id);
 		logger.debug("Job offer data found for id {}: {}", id, jobOfferData);
@@ -130,7 +130,7 @@ public class JobOfferService {
 	public List<JobOffer> findJobOffersByCandidate(final Candidate candidate, final Page page) {
 		Objects.requireNonNull(candidate);
 		Objects.requireNonNull(page);
-		logger.debug("Finding all job offers for candidate {}", candidate);
+		logger.debug("Retrieving all job offers for candidate {}", candidate);
 
 		final List<JobOffer> jobOffers = this.jobOfferDao.findJobOffersByCandidate(candidate, page);
 		logger.debug("Job offers found for candidate {}: {}", candidate, jobOffers);
@@ -140,7 +140,7 @@ public class JobOfferService {
 	public List<JobOffer> findJobOffersByClient(final Client client, final Page page) {
 		Objects.requireNonNull(client);
 		Objects.requireNonNull(page);
-		logger.debug("Finding all job offers for client {}", client);
+		logger.debug("Retrieving all job offers for client {}", client);
 
 		final List<JobOffer> jobOffers = this.jobOfferDao.findJobOffersByClient(client, page);
 		logger.debug("Job offers found for client {}: {}", client, jobOffers);
@@ -150,7 +150,7 @@ public class JobOfferService {
 	public List<JobOffer> findJobOffersByOwnerOrRecruiter(final User user, final Page page) {
 		Objects.requireNonNull(user);
 		Objects.requireNonNull(page);
-		logger.debug("Finding all job offers for owner or recruiter {}", user);
+		logger.debug("Retrieving all job offers for owner or recruiter {}", user);
 
 		final List<JobOffer> jobOffers = this.jobOfferDao.findJobOffersByOwnerOrRecruiter(user, page);
 		logger.debug("Job offers found for owner or recruiter {}: {}", user, jobOffers);
@@ -169,7 +169,7 @@ public class JobOfferService {
 	public List<JobOfferProcess> findJobOfferProcess() {
 		logger.debug("Finding all job offer processes");
 
-		final List<JobOfferProcess> jobOfferProcesses = this.jobOfferDao.findJobOfferProcess();
+		final List<JobOfferProcess> jobOfferProcesses = this.jobOfferProcessDao.findJobOfferProcess();
 		logger.debug("Job offer processes found: {}", jobOfferProcesses);
 		return jobOfferProcesses;
 	}
@@ -257,32 +257,26 @@ public class JobOfferService {
 	}
 
 	public void setCompletedEvent(final Event<JobOffer> completedEvent) {
-		Objects.requireNonNull(completedEvent);
-		this.completedEvent = completedEvent;
+		this.completedEvent = Objects.requireNonNull(completedEvent);
 	}
 
 	public void setCreatedEvent(final Event<JobOffer> createdEvent) {
-		Objects.requireNonNull(createdEvent);
-		this.createdEvent = createdEvent;
+		this.createdEvent = Objects.requireNonNull(createdEvent);
 	}
 
 	public void setJobOfferProcessDao(final JobOfferProcessDao jobOfferProcessDao) {
-		Objects.requireNonNull(jobOfferProcessDao);
-		this.jobOfferProcessDao = jobOfferProcessDao;
+		this.jobOfferProcessDao = Objects.requireNonNull(jobOfferProcessDao);
 	}
 
 	public void setUpdateEvent(final Event<JobOffer> updateEvent) {
-		Objects.requireNonNull(updateEvent);
-		this.updateEvent = updateEvent;
+		this.updateEvent = Objects.requireNonNull(updateEvent);
 	}
 
 	public void setStateChangedEvent(final Event<JobOffer> stateChangedEvent) {
-		Objects.requireNonNull(stateChangedEvent);
-		this.stateChangedEvent = stateChangedEvent;
+		this.stateChangedEvent = Objects.requireNonNull(stateChangedEvent);
 	}
 
 	public void setJobOfferDao(final JobOfferDao jobOfferDao) {
-		Objects.requireNonNull(jobOfferDao);
-		this.jobOfferDao = jobOfferDao;
+		this.jobOfferDao = Objects.requireNonNull(jobOfferDao);
 	}
 }

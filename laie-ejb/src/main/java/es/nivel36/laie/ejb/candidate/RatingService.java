@@ -20,31 +20,31 @@ public class RatingService {
 	private @Inject CandidateService candidateService;
 
 	public Rating findAllRatingData(final long ratingId) {
-		logger.debug("Retrieving all rating data for ratingId {}", ratingId);
+		logger.debug("Finding all rating data for ratingId {}", ratingId);
 		return this.ratingDao.findAllData(ratingId);
 	}
 
 	public Rating findRatingByCandidateAndUser(final Candidate candidate, final User user) {
 		Objects.requireNonNull(candidate);
 		Objects.requireNonNull(user);
-		logger.debug("Retrieving rating for candidate {} and user {}", candidate, user);
+		logger.debug("Finding rating for candidate {} and user {}", candidate, user);
 		return this.ratingDao.findRatingOfCandidateByUser(candidate, user);
 	}
 
 	public List<Rating> findRatingsByCandidate(final Candidate candidate, final Page page) {
 		Objects.requireNonNull(candidate);
-		logger.debug("Retrieving ratings for candidate {}", candidate);
+		logger.debug("Finding ratings for candidate {}", candidate);
 		return this.ratingDao.findRatingsByCandidate(candidate, page);
 	}
 
 	public List<Rating> findRatingsByUser(final User user, final Page page) {
 		Objects.requireNonNull(user);
-		logger.debug("Retrieving ratings for user {}", user);
+		logger.debug("Finding ratings for user {}", user);
 		return this.ratingDao.findRatingsByUser(user, page);
 	}
 
 	public Rating findRatingById(final long ratingId) {
-		logger.debug("Retrieving rating by id {}", ratingId);
+		logger.debug("Finding rating by id {}", ratingId);
 		return this.ratingDao.find(Rating.class, ratingId);
 	}
 

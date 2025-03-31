@@ -20,7 +20,7 @@ public class TagService {
 
 	public Tag findByLabel(final String label) {
 		Objects.requireNonNull(label);
-		logger.debug("Retrieving tag by label {}", label);
+		logger.debug("Finding tag by label {}", label);
 		return tagDao.findByLabel(label);
 	}
 

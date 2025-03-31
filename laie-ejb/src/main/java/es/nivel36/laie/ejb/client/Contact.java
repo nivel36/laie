@@ -57,18 +57,18 @@ public class Contact extends AbstractEntity implements Subject, Auditable {
 	@FullTextField(name = "_name")
 	@KeywordField(name = "name", sortable = Sortable.YES)
 	protected String name;
+	
+	@NotBlank
+	@Column(name = "SURNAME", nullable = false, length = 128)
+	@FullTextField(name = "_surname")
+	@KeywordField(name = "surname", sortable = Sortable.YES)
+	protected String surname;
 
 	@Column(name = "PHONE_NUMBER", length = 12)
 	protected String phoneNumber;
 
 	@Column(name = "POSITION", length = 128)
 	private String position;
-
-	@NotBlank
-	@Column(name = "SURNAME", nullable = false, length = 128)
-	@FullTextField(name = "_surname")
-	@KeywordField(name = "surname", sortable = Sortable.YES)
-	protected String surname;
 
 	public void addMeeting(final Meeting meeting) {
 		Objects.requireNonNull(meeting);

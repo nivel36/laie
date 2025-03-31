@@ -44,19 +44,19 @@ public class ContactService {
 
 	public Contact findContactByEmail(final String email) {
 		Objects.requireNonNull(email);
-		logger.debug("Retrieving contact by email {}", email);
+		logger.debug("Finding contact by email {}", email);
 		return this.contactDao.findContactByEmail(email);
 	}
 
 	public Contact findContactById(final long contactId) {
-		logger.debug("Retrieving contact by id {}", contactId);
+		logger.debug("Finding contact by id {}", contactId);
 		return this.contactDao.find(Contact.class, contactId);
 	}
 
 	public List<Contact> findContactsByClient(final Client client, final Page page) {
 		Objects.requireNonNull(client);
 		Objects.requireNonNull(page);
-		logger.debug("Retrieving contacts by client {}, offset {} limit of {}", client, page.getOffset(), page.getLimit());
+		logger.debug("Finding contacts by client {}, offset {} limit of {}", client, page.getOffset(), page.getLimit());
 		return this.contactDao.findContactsByClient(client, page);
 	}
 

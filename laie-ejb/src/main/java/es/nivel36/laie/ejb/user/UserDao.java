@@ -72,10 +72,6 @@ public class UserDao extends AbstractDao {
 	}
 
 	public User findAllUserData(final long userId) {
-		if (userId <= 0) {
-			throw new IllegalStateException(
-					"User ID must be greater than zero. Received: " + userId);
-		}
 		final String jpql = """
 					SELECT u
 					FROM User u
@@ -89,8 +85,8 @@ public class UserDao extends AbstractDao {
 		return query.getSingleResult();
 	}
 
-	public boolean isSubordinateUser(final User user, final User subordinate) {
-		Objects.requireNonNull(user);
+	public boolean isSubordinateUser(final User manager, final User subordinate) {
+		Objects.requireNonNull(manager);
 		Objects.requireNonNull(subordinate);
 		final String jpql = """
 					SELECT CASE WHEN (COUNT(u) > 0) THEN TRUE ELSE FALSE END
@@ -100,7 +96,7 @@ public class UserDao extends AbstractDao {
 					AND u = :subordinate
 				""";
 		final TypedQuery<Boolean> query = this.em.createQuery(jpql, Boolean.class);
-		query.setParameter("manager", user);
+		query.setParameter("manager", manager);
 		query.setParameter("subordinate", subordinate);
 		return query.getSingleResult();
 	}
@@ -137,7 +133,7 @@ public class UserDao extends AbstractDao {
 	private void updateUserClosures(final User user) {
 		final User userInDatabase = this.em.find(User.class, user.getId());
 		if (userInDatabase == null) {
-			logger.warn("User doesn't exists");
+			logger.warn("User doesn't exist");
 			throw new IllegalStateException();
 		}
 		final User newManager = user.getManager();
@@ -174,7 +170,7 @@ public class UserDao extends AbstractDao {
 	}
 
 	private void insertUserClosure(final User ancestor, final User descendant, final int pathLength) {
-		logger.trace("Insert in user closure table. Ancestor {}, descendant {}, pathLength {}", ancestor,
+		logger.trace("Insert into user closure table. Ancestor {}, descendant {}, pathLength {}", ancestor,
 				descendant, pathLength);
 		final UserClosure newUserClosure = new UserClosure(ancestor, descendant, pathLength);
 		this.em.persist(newUserClosure);

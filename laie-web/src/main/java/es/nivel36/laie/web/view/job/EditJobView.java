@@ -1,5 +1,7 @@
 package es.nivel36.laie.web.view.job;
 
+import java.util.stream.Collectors;
+
 import org.omnifaces.util.Faces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,7 +53,7 @@ public class EditJobView extends AbstractJobView {
 	public void save() {
 		logger.debug("Save job offer action performed");
 		if (canAddJobOfferToClient()) {
-			jobOffer.setRecruiters(recruiters);
+			this.jobOffer.setRecruiters(recruiters.stream().collect(Collectors.toSet()));
 			this.jobOfferService.updateJobOfferData(jobOffer);
 			Faces.redirect(ViewJobView.getUrl(this.jobOffer.getId()));
 		} else {
@@ -67,7 +69,7 @@ public class EditJobView extends AbstractJobView {
 	}
 
 	public void next() {
-		jobOffer.setRecruiters(recruiters);
+		this.jobOffer.setRecruiters(recruiters.stream().collect(Collectors.toSet()));
 		this.jobOffer = this.jobOfferService.updateJobOfferData(jobOffer);
 		Faces.redirect("/job/editDetails.xhtml?jobOffer=" + this.jobOffer.getId());
 	}

@@ -2,7 +2,6 @@ package es.nivel36.laie.ejb.job.offer;
 
 import java.time.LocalDate;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -39,7 +38,7 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Indexed
-@Table(name = "JOB_OFFER")
+@Table(name = "JOB_OFFER",  uniqueConstraints = {})
 public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 
 	private static final long serialVersionUID = 1529439068651089035L;
@@ -73,10 +72,10 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	@JoinColumn(name = "JOB_OFFER_PROCESS_ID", nullable = false)
 	private JobOfferProcess jobOfferProcess;
 
-	@Column(name = "MAX_SALARY", scale = 0, precision = 6)
+	@Column(name = "MAX_SALARY")
 	private Integer maxSalary;
 
-	@Column(name = "MIN_SALARY", scale = 0, precision = 6)
+	@Column(name = "MIN_SALARY")
 	private Integer minSalary;
 
 	@NotNull
@@ -93,17 +92,18 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	@Column(name = "COMPLETION_DATE")
 	private LocalDate completionDate;
 
+	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "OWNER_ID", nullable = false)
-	@NotNull
 	@IndexedEmbedded(includeDepth = 1)
 	private User owner;
 
 	@NotNull
-	@Column(name = "POSITIONS", scale = 0, precision = 1)
-	private Integer positions = 1;
+	@Column(name = "POSITIONS", nullable = false)
+	private int positions = 1;
 
-	@Column(name = "PUBLISHED")
+	@NotNull
+	@Column(name = "PUBLISHED", nullable = false)
 	private boolean published;
 
 	@ManyToMany
@@ -112,7 +112,7 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 
 	@NotNull
 	@Enumerated(EnumType.STRING)
-	@Column(name = "STATE")
+	@Column(name = "STATE", nullable = false)
 	private JobOfferState state;
 
 	@NotBlank
@@ -120,19 +120,6 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	@FullTextField(name = "_title")
 	@KeywordField(sortable = Sortable.YES)
 	private String title;
-
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if ((obj == null) || (this.getClass() != obj.getClass())) {
-			return false;
-		}
-		final JobOffer other = (JobOffer) obj;
-		return Objects.equals(this.openDate, other.openDate) && Objects.equals(this.title, other.title)
-				&& Objects.equals(this.positions, other.positions);
-	}
 
 	public Address getAddress() {
 		return this.address;
@@ -226,11 +213,6 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 		return false;
 	}
 
-	@Override
-	public int hashCode() {
-		return 31 * Objects.hash(this.openDate, this.title, this.positions);
-	}
-
 	public boolean hasState(final JobOfferState state) {
 		if (this.state == null) {
 			return state == null;
@@ -307,13 +289,6 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 		this.published = published;
 	}
 
-	public void setRecruiters(final List<User> users) {
-		if (users == null || users.isEmpty()) {
-			return;
-		}
-		this.recruiters = new HashSet<>(users);
-	}
-
 	public void setRecruiters(final Set<User> recruiters) {
 		this.recruiters = recruiters;
 	}
@@ -324,6 +299,24 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 
 	public void setTitle(final String title) {
 		this.title = title;
+	}
+	
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if ((obj == null) || (this.getClass() != obj.getClass())) {
+			return false;
+		}
+		final JobOffer other = (JobOffer) obj;
+		return Objects.equals(this.openDate, other.openDate) && Objects.equals(this.title, other.title)
+				&& Objects.equals(this.positions, other.positions);
+	}
+	
+	@Override
+	public int hashCode() {
+		return 31 * Objects.hash(this.openDate, this.title, this.positions);
 	}
 
 	@Override

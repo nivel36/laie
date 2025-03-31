@@ -34,6 +34,7 @@ public class CandidateDao extends AbstractDao {
 				""";
 		final TypedQuery<Candidate> query = this.em.createQuery(jpql, Candidate.class);
 		query.setParameter("jobOffer", jobOffer);
+		this.paginate(page, query);
 		return query.getResultList();
 	}
 
