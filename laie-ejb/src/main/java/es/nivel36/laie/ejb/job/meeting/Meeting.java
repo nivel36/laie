@@ -68,22 +68,6 @@ public class Meeting extends AbstractEntity implements Ownerable {
 		this.attendeesEmails.add(email);
 	}
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (obj == null) {
-			return false;
-		}
-		if (this == obj) {
-			return true;
-		}
-		if (!super.equals(obj) || (this.getClass() != obj.getClass())) {
-			return false;
-		}
-		final Meeting other = (Meeting) obj;
-		return Objects.equals(this.datePlanned, other.datePlanned) && Objects.equals(this.title, other.title)
-				&& Objects.equals(this.description, other.description);
-	}
-
 	public Set<String> getAttendeesEmails() {
 		return this.attendeesEmails;
 	}
@@ -117,16 +101,6 @@ public class Meeting extends AbstractEntity implements Ownerable {
 		return this.title;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(this.datePlanned, this.title, this.description);
-	}
-
-	public void removeAttendee(final String email) {
-		Objects.requireNonNull(email, "Email can't be null");
-		this.attendeesEmails.remove(email);
-	}
-
 	public void setAttendeesEmails(final Set<String> attendeesEmails) {
 		this.attendeesEmails = attendeesEmails;
 	}
@@ -158,5 +132,31 @@ public class Meeting extends AbstractEntity implements Ownerable {
 
 	public void setTitle(final String title) {
 		this.title = title;
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (this == obj) {
+			return true;
+		}
+		if (!super.equals(obj) || (this.getClass() != obj.getClass())) {
+			return false;
+		}
+		final Meeting other = (Meeting) obj;
+		return Objects.equals(this.datePlanned, other.datePlanned) && Objects.equals(this.title, other.title)
+				&& Objects.equals(this.owner, other.owner);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.datePlanned, this.title, this.owner);
+	}
+
+	@Override
+	public String toString() {
+		return title + "(" + this.datePlanned + ")";
 	}
 }
