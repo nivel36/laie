@@ -40,11 +40,13 @@ import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-@Entity
 @Indexed
-@Table(name = "PERSON", indexes = {
-		@Index(name = "UX_PERSON_EMAIL", columnList = "EMAIL", unique = true) }, uniqueConstraints = {
-				@UniqueConstraint(name = "UQ_PERSON_EMAIL", columnNames = { "EMAIL" }) })
+@Entity
+@Table(name = "PERSON", 
+	indexes = {
+		@Index(name = "UX_PERSON_EMAIL", columnList = "EMAIL", unique = true) }, 
+	uniqueConstraints = {
+		@UniqueConstraint(name = "UQ_PERSON_EMAIL", columnNames = { "EMAIL" })})
 public class User extends AbstractEntity implements Subject {
 
 	private static final long serialVersionUID = -3719561601581901723L;

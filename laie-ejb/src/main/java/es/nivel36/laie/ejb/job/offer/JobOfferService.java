@@ -49,7 +49,7 @@ public class JobOfferService {
 		jobOfferDao.addJobOfferEvent(newEvent);
 
 		this.createdEvent.fire(jobOffer);
-		logger.debug("Job offer {} added successfully", jobOffer);
+		logger.trace("Job offer {} added successfully", jobOffer);
 	}
 
 	private JobOfferEvent buildJobOfferEvent(final JobOffer jobOffer, final JobOfferState newState, final String notes,
@@ -75,7 +75,7 @@ public class JobOfferService {
 
 		final JobOffer updatedJobOffer = this.jobOfferDao.update(jobOffer);
 		this.updateEvent.fire(jobOffer);
-		logger.debug("Job offer {} updated successfully", jobOffer);
+		logger.trace("Job offer {} updated successfully", jobOffer);
 		return updatedJobOffer;
 	}
 
@@ -96,7 +96,7 @@ public class JobOfferService {
 		if (newState.isCloseState()) {
 			this.completedEvent.fire(jobOffer);
 		}
-		logger.debug("State of job offer {} changed to {}", jobOffer, newState);
+		logger.trace("State of job offer {} changed to {}", jobOffer, newState);
 		return updatedJobOffer;
 	}
 
@@ -105,7 +105,7 @@ public class JobOfferService {
 		logger.debug("Retrieving job offer process by name {}", name);
 
 		final JobOfferProcess jobOfferProcess = this.jobOfferProcessDao.findJobOfferProcessByName(name);
-		logger.debug("Job offer process for name {} found: {}", name, jobOfferProcess);
+		logger.trace("Job offer process for name {} found: {}", name, jobOfferProcess);
 		return jobOfferProcess;
 	}
 
@@ -114,7 +114,7 @@ public class JobOfferService {
 		logger.debug("Retrieving job offer by id {}", id);
 
 		final JobOffer jobOffer = this.jobOfferDao.find(JobOffer.class, id);
-		logger.debug("Job offer found for id {}: {}", id, jobOffer);
+		logger.trace("Job offer found for id {}: {}", id, jobOffer);
 		return jobOffer;
 	}
 
@@ -123,7 +123,7 @@ public class JobOfferService {
 		logger.debug("Retrieving job offer data by id {}", id);
 
 		final JobOffer jobOfferData = this.jobOfferDao.findJobOfferData(id);
-		logger.debug("Job offer data found for id {}: {}", id, jobOfferData);
+		logger.trace("Job offer data found for id {}: {}", id, jobOfferData);
 		return jobOfferData;
 	}
 
@@ -133,7 +133,7 @@ public class JobOfferService {
 		logger.debug("Retrieving all job offers for candidate {}", candidate);
 
 		final List<JobOffer> jobOffers = this.jobOfferDao.findJobOffersByCandidate(candidate, page);
-		logger.debug("Job offers found for candidate {}: {}", candidate, jobOffers);
+		logger.trace("Job offers found for candidate {}: {}", candidate, jobOffers);
 		return jobOffers;
 	}
 
@@ -143,7 +143,7 @@ public class JobOfferService {
 		logger.debug("Retrieving all job offers for client {}", client);
 
 		final List<JobOffer> jobOffers = this.jobOfferDao.findJobOffersByClient(client, page);
-		logger.debug("Job offers found for client {}: {}", client, jobOffers);
+		logger.trace("Job offers found for client {}: {}", client, jobOffers);
 		return jobOffers;
 	}
 
@@ -153,7 +153,7 @@ public class JobOfferService {
 		logger.debug("Retrieving all job offers for owner or recruiter {}", user);
 
 		final List<JobOffer> jobOffers = this.jobOfferDao.findJobOffersByOwnerOrRecruiter(user, page);
-		logger.debug("Job offers found for owner or recruiter {}: {}", user, jobOffers);
+		logger.trace("Job offers found for owner or recruiter {}: {}", user, jobOffers);
 		return jobOffers;
 	}
 
@@ -162,7 +162,7 @@ public class JobOfferService {
 		logger.debug("Counting all job offers for owner or recruiter {}", user);
 
 		final long count = this.jobOfferDao.countJobOffersByOwnerOrRecruiter(user);
-		logger.debug("Total job offers for owner or recruiter {}: {}", user, count);
+		logger.trace("Total job offers for owner or recruiter {}: {}", user, count);
 		return count;
 	}
 
@@ -170,7 +170,7 @@ public class JobOfferService {
 		logger.debug("Finding all job offer processes");
 
 		final List<JobOfferProcess> jobOfferProcesses = this.jobOfferProcessDao.findJobOfferProcess();
-		logger.debug("Job offer processes found: {}", jobOfferProcesses);
+		logger.trace("Job offer processes found: {}", jobOfferProcesses);
 		return jobOfferProcesses;
 	}
 
@@ -178,7 +178,7 @@ public class JobOfferService {
 		logger.debug("Finding all job offer states");
 
 		final List<JobOfferState> jobOfferStates = Arrays.asList(JobOfferState.values());
-		logger.debug("Job offer states found: {}", jobOfferStates);
+		logger.trace("Job offer states found: {}", jobOfferStates);
 		return jobOfferStates;
 	}
 
@@ -186,7 +186,7 @@ public class JobOfferService {
 		logger.debug("Finding all job offers to close");
 
 		final List<JobOffer> jobOffers = jobOfferDao.findJobOffersToClose();
-		logger.debug("Job offers to close found: {}", jobOffers);
+		logger.trace("Job offers to close found: {}", jobOffers);
 
 		return jobOffers;
 	}
@@ -195,7 +195,7 @@ public class JobOfferService {
 		logger.debug("Finding all job offers to open");
 
 		final List<JobOffer> jobOffers = jobOfferDao.findJobOffersToOpen();
-		logger.debug("Job offers to open found: {}", jobOffers);
+		logger.trace("Job offers to open found: {}", jobOffers);
 		return jobOffers;
 	}
 
@@ -204,7 +204,7 @@ public class JobOfferService {
 		logger.debug("Counting job offer events for job offer {}", jobOffer);
 
 		final long count = jobOfferDao.countJobOfferEventsByJobOffer(jobOffer);
-		logger.debug("Total job offer events for job offer {}: {}", jobOffer, count);
+		logger.trace("Total job offer events for job offer {}: {}", jobOffer, count);
 		return count;
 	}
 
@@ -213,7 +213,7 @@ public class JobOfferService {
 		logger.debug("Counting job offers for client {}", client);
 
 		final long count = jobOfferDao.countJobOffersByClient(client);
-		logger.debug("Total job offers for client {}: {}", client, count);
+		logger.trace("Total job offers for client {}: {}", client, count);
 		return count;
 	}
 
@@ -223,7 +223,7 @@ public class JobOfferService {
 		logger.debug("Finding job offer events for job offer {} with pagination", jobOffer);
 
 		final List<JobOfferEvent> jobOfferEvents = jobOfferDao.findJobOfferEventsByJobOffer(jobOffer, page);
-		logger.debug("Job offer events found for job offer {}: {}", jobOffer, jobOfferEvents);
+		logger.trace("Job offer events found for job offer {}: {}", jobOffer, jobOfferEvents);
 		return jobOfferEvents;
 	}
 
@@ -233,7 +233,7 @@ public class JobOfferService {
 		logger.debug("Finding recruiters for job offer {} with pagination", jobOffer);
 
 		final List<User> recruiters = jobOfferDao.findRecruitersByJobOffer(jobOffer, page);
-		logger.debug("Recruiters found for job offer {}: {}", jobOffer, recruiters);
+		logger.trace("Recruiters found for job offer {}: {}", jobOffer, recruiters);
 		return recruiters;
 	}
 
@@ -241,7 +241,7 @@ public class JobOfferService {
 		logger.debug("Searching job offers with text '{}' and pagination", searchText);
 
 		final SearchResult<JobOffer> searchResult = this.search(searchText, page, null, null);
-		logger.debug("Search results found for text '{}': {}", searchText, searchResult);
+		logger.trace("Search results found for text '{}': {}", searchText, searchResult);
 		return searchResult;
 	}
 
@@ -251,7 +251,7 @@ public class JobOfferService {
 		logger.debug("Searching job offers with text '{}', pagination, sorting, and facets", searchText);
 
 		final SearchResult<JobOffer> searchResult = this.jobOfferDao.search(searchText, page, sortField, searchFacets);
-		logger.debug("Search results found for text '{}', sort field '{}', and facets '{}': {}", searchText, sortField,
+		logger.trace("Search results found for text '{}', sort field '{}', and facets '{}': {}", searchText, sortField,
 				Arrays.toString(searchFacets), searchResult);
 		return searchResult;
 	}
