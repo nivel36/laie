@@ -91,7 +91,7 @@ public class ViewUserView extends AbstractView {
 		this.editable = this.sessionUser.isAdmin() || loggedUser;
 		this.actions.setUser(user);
 		this.jobOffers.setUser(user);
-		this.meetings = this.meetingService.findPlannedMeetings(user, Page.of(0, 5));
+		this.meetings = this.meetingService.findFutureMeetingsByOwner(user, Page.of(0, 5));
 	}
 
 	public boolean isEditable() {

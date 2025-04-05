@@ -58,7 +58,7 @@ public class JobOfferClosingObserver {
 	 * @throws NullPointerException if jobSubmission is null.
 	 */
 	public void handleJobSubmissionCompleted(@Observes @JobSubmissionCompletedEvent final JobSubmission jobSubmission) {
-		Objects.requireNonNull(jobSubmission, "JobSubmission cannot be null");
+		Objects.requireNonNull(jobSubmission);
 		logger.debug("Handling the completion of the job submission {}", jobSubmission);
 		final JobOffer jobOffer = jobSubmission.getJobOffer();
 		if (this.isCompleted(jobOffer)) {
@@ -87,8 +87,7 @@ public class JobOfferClosingObserver {
 	 * @throws NullPointerException if jobOfferService is null.
 	 */
 	public void setJobOfferService(final JobOfferService jobOfferService) {
-		Objects.requireNonNull(jobOfferService, "JobOfferService cannot be null");
-		this.jobOfferService = jobOfferService;
+		this.jobOfferService = Objects.requireNonNull(jobOfferService);
 	}
 
 	/**
@@ -101,7 +100,6 @@ public class JobOfferClosingObserver {
 	 * @throws NullPointerException if jobSubmissionService is null.
 	 */
 	public void setJobSubmissionService(final JobSubmissionService jobSubmissionService) {
-		Objects.requireNonNull(jobSubmissionService, "JobSubmissionService cannot be null");
-		this.jobSubmissionService = jobSubmissionService;
+		this.jobSubmissionService = Objects.requireNonNull(jobSubmissionService);
 	}
 }

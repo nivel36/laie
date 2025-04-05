@@ -15,20 +15,35 @@ import es.nivel36.laie.ejb.user.User;
 import jakarta.inject.Inject;
 import jakarta.persistence.TypedQuery;
 
+/**
+ * This DAO class is responsible for managing <tt>JobOffer</tt> entities and
+ * their related data. It provides persistence and query operations using JPA,
+ * including job offer events and associations with users, clients, and
+ * candidates. It also supports full-text search through the
+ * <tt>SearchFacade</tt>.
+ */
 public class JobOfferDao extends AbstractDao {
 
 	private @Inject SearchFacade searchFacade;
 
+	/**
+	 * Persists a new <tt>JobOfferEvent</tt> in the database.
+	 *
+	 * @param jobOfferEvent the <tt>JobOfferEvent</tt> to persist. Cannot be null.
+	 * @throws NullPointerException if <tt>jobOfferEvent</tt> is null.
+	 */
 	public void addJobOfferEvent(final JobOfferEvent jobOfferEvent) {
 		Objects.requireNonNull(jobOfferEvent);
 		em.persist(jobOfferEvent);
 	}
 
-	public JobOfferState findFirstJobOfferState() {
-		final String namedQuery = "JobOfferState.findFirst";
-		return this.findByQuery(JobOfferState.class, namedQuery, null);
-	}
-
+	/**
+	 * Retrieves a <tt>JobOffer</tt> by ID, including its recruiters, client, and
+	 * owner.
+	 *
+	 * @param jobOfferId the ID of the job offer to retrieve.
+	 * @return the <tt>JobOffer</tt> with its associated data.
+	 */
 	public JobOffer findJobOfferData(final long jobOfferId) {
 		final String jpql = """
 				SELECT j
@@ -43,6 +58,15 @@ public class JobOfferDao extends AbstractDao {
 		return query.getSingleResult();
 	}
 
+	/**
+	 * Finds job offers in which a given candidate has submitted applications.
+	 *
+	 * @param candidate the <tt>Candidate</tt> to search for. Cannot be null.
+	 * @param page      the <tt>Page</tt> object to control pagination. Cannot be
+	 *                  null.
+	 * @return a list of <tt>JobOffer</tt> instances associated with the candidate.
+	 * @throws NullPointerException if any parameter is null.
+	 */
 	public List<JobOffer> findJobOffersByCandidate(final Candidate candidate, final Page page) {
 		Objects.requireNonNull(candidate);
 		Objects.requireNonNull(page);
@@ -58,6 +82,15 @@ public class JobOfferDao extends AbstractDao {
 		return query.getResultList();
 	}
 
+	/**
+	 * Finds job offers associated with a specific client.
+	 *
+	 * @param client the <tt>Client</tt> whose job offers to retrieve. Cannot be
+	 *               null.
+	 * @param page   the <tt>Page</tt> object to control pagination. Cannot be null.
+	 * @return a list of <tt>JobOffer</tt> instances owned by the client.
+	 * @throws NullPointerException if any parameter is null.
+	 */
 	public List<JobOffer> findJobOffersByClient(final Client client, final Page page) {
 		Objects.requireNonNull(client);
 		Objects.requireNonNull(page);
@@ -74,6 +107,14 @@ public class JobOfferDao extends AbstractDao {
 		return query.getResultList();
 	}
 
+	/**
+	 * Finds job offers in which a user is either the owner or a recruiter.
+	 *
+	 * @param user the <tt>User</tt> to search job offers for. Cannot be null.
+	 * @param page the <tt>Page</tt> object to control pagination. Cannot be null.
+	 * @return a list of <tt>JobOffer</tt> instances related to the user.
+	 * @throws NullPointerException if any parameter is null.
+	 */
 	public List<JobOffer> findJobOffersByOwnerOrRecruiter(final User user, final Page page) {
 		Objects.requireNonNull(user);
 		Objects.requireNonNull(page);
@@ -91,6 +132,14 @@ public class JobOfferDao extends AbstractDao {
 		return query.getResultList();
 	}
 
+	/**
+	 * Counts the number of job offers in which a user is either the owner or a
+	 * recruiter.
+	 *
+	 * @param user the <tt>User</tt> to count job offers for. Cannot be null.
+	 * @return the number of job offers related to the user.
+	 * @throws NullPointerException if <tt>user</tt> is null.
+	 */
 	public long countJobOffersByOwnerOrRecruiter(final User user) {
 		Objects.requireNonNull(user);
 		final String jpql = """
@@ -104,6 +153,13 @@ public class JobOfferDao extends AbstractDao {
 		return query.getSingleResult();
 	}
 
+	/**
+	 * Counts the number of events associated with a specific job offer.
+	 *
+	 * @param jobOffer the <tt>JobOffer</tt> whose events to count. Cannot be null.
+	 * @return the number of events linked to the job offer.
+	 * @throws NullPointerException if <tt>jobOffer</tt> is null.
+	 */
 	public long countJobOfferEventsByJobOffer(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer);
 		final String jpql = """
@@ -116,6 +172,13 @@ public class JobOfferDao extends AbstractDao {
 		return query.getSingleResult();
 	}
 
+	/**
+	 * Counts the number of job offers associated with a specific client.
+	 *
+	 * @param client the <tt>Client</tt> whose job offers to count. Cannot be null.
+	 * @return the number of job offers owned by the client.
+	 * @throws NullPointerException if <tt>client</tt> is null.
+	 */
 	public long countJobOffersByClient(final Client client) {
 		Objects.requireNonNull(client);
 		final String jpql = """
@@ -128,6 +191,17 @@ public class JobOfferDao extends AbstractDao {
 		return query.getSingleResult();
 	}
 
+	/**
+	 * Retrieves all events linked to a specific job offer, including related user
+	 * and client data.
+	 *
+	 * @param jobOffer the <tt>JobOffer</tt> whose events to retrieve. Cannot be
+	 *                 null.
+	 * @param page     the <tt>Page</tt> object to control pagination. Cannot be
+	 *                 null.
+	 * @return a list of <tt>JobOfferEvent</tt> instances related to the job offer.
+	 * @throws NullPointerException if any parameter is null.
+	 */
 	public List<JobOfferEvent> findJobOfferEventsByJobOffer(final JobOffer jobOffer, final Page page) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(page);
@@ -145,6 +219,17 @@ public class JobOfferDao extends AbstractDao {
 		return query.getResultList();
 	}
 
+	/**
+	 * Retrieves all recruiters associated with a given job offer.
+	 *
+	 * @param jobOffer the <tt>JobOffer</tt> to retrieve recruiters for. Cannot be
+	 *                 null.
+	 * @param page     the <tt>Page</tt> object to control pagination. Cannot be
+	 *                 null.
+	 * @return a list of <tt>User</tt> instances who are recruiters for the job
+	 *         offer.
+	 * @throws NullPointerException if any parameter is null.
+	 */
 	public List<User> findRecruitersByJobOffer(final JobOffer jobOffer, final Page page) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(page);
@@ -159,9 +244,15 @@ public class JobOfferDao extends AbstractDao {
 		return query.getResultList();
 	}
 
+	/**
+	 * Retrieves job offers that are scheduled to be opened today or earlier and are
+	 * still in <tt>CREATED</tt> state.
+	 *
+	 * @return a list of <tt>JobOffer</tt> instances ready to be opened.
+	 */
 	public List<JobOffer> findJobOffersToOpen() {
 		final String jpql = """
-				SELECT j 
+				SELECT j
 				FROM JobOffer j
 				WHERE j.openDate <=	CURRENT_DATE
 				AND j.state=:state
@@ -171,6 +262,12 @@ public class JobOfferDao extends AbstractDao {
 		return query.getResultList();
 	}
 
+	/**
+	 * Retrieves job offers that are past their close date and thus are candidates
+	 * for closure.
+	 *
+	 * @return a list of <tt>JobOffer</tt> instances ready to be closed.
+	 */
 	public List<JobOffer> findJobOffersToClose() {
 		final String jpql = """
 				SELECT j
@@ -181,9 +278,30 @@ public class JobOfferDao extends AbstractDao {
 		return query.getResultList();
 	}
 
+	/**
+	 * Performs a full-text search on job offers using a text query, pagination,
+	 * sorting, and facets.
+	 *
+	 * @param searchText   the text to search for.
+	 * @param page         the <tt>Page</tt> object to control pagination.
+	 * @param sortField    the <tt>SortField</tt> to sort the results.
+	 * @param searchFacets an array of facet filters to apply to the search.
+	 * @return the <tt>SearchResult</tt> containing matching job offers.
+	 */
 	public SearchResult<JobOffer> search(final String searchText, final Page page, final SortField sortField,
 			final String[] searchFacets) {
 		final String[] searchFields = new String[] { "_title", "client._name" };
 		return searchFacade.search(JobOffer.class, page, sortField, searchFacets, searchText, searchFields);
+	}
+
+	/**
+	 * Sets the <tt>SearchFacade</tt>. This method should be used for setting or
+	 * replacing the search component, primarily for testing purposes.
+	 *
+	 * @param searchFacade the <tt>SearchFacade</tt> to be set. Cannot be null.
+	 * @throws NullPointerException if <tt>searchFacade</tt> is null.
+	 */
+	public void setSearchFacade(final SearchFacade searchFacade) {
+		this.searchFacade = Objects.requireNonNull(searchFacade);
 	}
 }

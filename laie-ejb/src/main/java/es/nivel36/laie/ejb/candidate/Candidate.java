@@ -155,30 +155,12 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 		return this.email;
 	}
 
-	@Override
-	public String getEntityName() {
-		return "CANDIDATE";
-	}
-
-	@Override
-	public String getEntityTitle() {
-		return this.getFullName();
-	}
-
 	public Integer getExpectedSalary() {
 		return this.expectedSalary;
 	}
 
 	public Set<File> getFiles() {
 		return this.files;
-	}
-
-	@Override
-	public String getFullName() {
-		if (this.name == null) {
-			return null;
-		}
-		return new StringBuilder(this.name).append(" ").append(this.surname).toString();
 	}
 
 	public String getInfojobsProfileUrl() {
@@ -347,6 +329,24 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 
 	public void setTags(final Set<Tag> tags) {
 		this.tags = tags;
+	}
+	
+	@Override
+	public String getFullName() {
+		if (this.name == null) {
+			return null;
+		}
+		return new StringBuilder(this.name).append(" ").append(this.surname).toString();
+	}
+	
+	@Override
+	public String getEntityName() {
+		return "CANDIDATE";
+	}
+
+	@Override
+	public String getEntityTitle() {
+		return this.getFullName();
 	}
 
 	@Override

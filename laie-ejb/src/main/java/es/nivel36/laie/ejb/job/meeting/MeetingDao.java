@@ -1,14 +1,11 @@
 package es.nivel36.laie.ejb.job.meeting;
 
-import static es.nivel36.laie.ejb.core.util.Parameters.map;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
 import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.core.util.Parameters;
 import es.nivel36.laie.ejb.user.User;
 import jakarta.persistence.TypedQuery;
 
@@ -17,56 +14,94 @@ public class MeetingDao extends AbstractDao {
 	public List<Meeting> findByAttendeesEmail(final String email, final Page page) {
 		Objects.requireNonNull(email);
 		Objects.requireNonNull(page);
-		final String namedQuery = "Meeting.findByAttendeesEmail";
-		final Parameters parameters = map("email", email);
-		return this.findByQuery(Meeting.class, namedQuery, parameters, page);
+		final String jpql = """
+				SELECT m
+				FROM Meeting m
+				WHERE m.datePlanned >= current_date
+				AND :email MEMBER OF m.attendeesEmails
+				ORDER BY m.datePlanned ASC
+				""";
+		final TypedQuery<Meeting> query = this.em.createQuery(jpql, Meeting.class);
+		query.setParameter("email", email);
+		this.paginate(page, query);
+		return query.getResultList();
 	}
 
-	public List<Meeting> findMonthMeetings(final User user, final LocalDateTime date) {
+	public List<Meeting> findMonthMeetingsByUser(final User user, final LocalDateTime date) {
 		Objects.requireNonNull(user);
 		Objects.requireNonNull(date);
-		final String namedQuery = "Meeting.findMonthdMeetingsByUser";
-		final TypedQuery<Meeting> query = this.em.createNamedQuery(namedQuery, Meeting.class);
+		final String jpql = """
+				SELECT m
+				FROM Meeting m
+				WHERE m.datePlanned >= :startDate
+				AND m.datePlanned <= :endDate
+				AND :email MEMBER OF m.attendeesEmails
+				ORDER BY m.datePlanned ASC
+				""";
+		final TypedQuery<Meeting> query = this.em.createQuery(jpql, Meeting.class);
 		query.setParameter("email", user.getEmail());
 		final LocalDateTime startDate = date.withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0);
 		final LocalDateTime endDate = startDate.plusMonths(1).minusSeconds(1);
 		query.setParameter("startDate", startDate);
 		query.setParameter("endDate", endDate);
-
 		return query.getResultList();
 	}
 
 	public List<Meeting> findConductedMeetings(final User owner, final Page page) {
 		Objects.requireNonNull(owner);
 		Objects.requireNonNull(page);
-		final String namedQuery = "Meeting.findConductedByOwner";
-		final Parameters parameters = map("owner", owner).and("now", LocalDateTime.now());
-		return this.findByQuery(Meeting.class, namedQuery, parameters, page);
+		final String jpql = """
+				SELECT m
+				FROM Meeting m
+				WHERE m.owner = :owner
+				AND m.datePlanned < current_date
+				ORDER BY m.datePlanned ASC
+				""";
+		final TypedQuery<Meeting> query = this.em.createQuery(jpql, Meeting.class);
+		query.setParameter("owner", owner);
+		this.paginate(page, query);
+		return query.getResultList();
 	}
 
 	public long countConductedMeetings(final User owner) {
 		Objects.requireNonNull(owner);
-		final String namedQuery = "Meeting.countConductedByOwner";
-		final Parameters parameters = map("owner", owner).and("now", LocalDateTime.now());
-		return this.findByQuery(Long.class, namedQuery, parameters);
+		final String jpql = """
+				SELECT COUNT(m)
+				FROM Meeting m
+				WHERE m.owner = :owner
+				AND m.datePlanned < current_date
+				""";
+		final TypedQuery<Long> query = this.em.createQuery(jpql, Long.class);
+		query.setParameter("owner", owner);
+		return query.getSingleResult();
 	}
 
-	public List<Meeting> findPlannedMeetings(final User owner, final Page page) {
+	public List<Meeting> findFutureMeetings(final User owner, final Page page) {
 		Objects.requireNonNull(owner);
 		Objects.requireNonNull(page);
-		final String namedQuery = "Meeting.findPlannedByOwner";
-		final Parameters parameters = map("owner", owner);
-		return this.findByQuery(Meeting.class, namedQuery, parameters, page);
+		final String jpql = """
+				SELECT m
+				FROM Meeting m
+				WHERE m.owner = :owner 
+				AND m.datePlanned >= current_date
+				ORDER BY m.datePlanned ASC
+				""";
+		final TypedQuery<Meeting> query = this.em.createQuery(jpql, Meeting.class);
+		query.setParameter("owner", owner);
+		this.paginate(page, query);
+		return query.getResultList();
 	}
 
-	public long countPlannedMeetings(final User owner) {
+	public long countFutureMeetings(final User owner) {
 		Objects.requireNonNull(owner);
-		final String namedQuery = "Meeting.countPlannedMeetings";
-		final Parameters parameters = map("owner", owner).and("now", LocalDateTime.now());
-		return this.findByQuery(Long.class, namedQuery, parameters);
-	}
-
-	public Meeting findMeetingById(final long id) {
-		return this.em.find(Meeting.class, id);
+		final String jpql = """
+				SELECT COUNT(m) 
+				FROM Meeting m
+				WHERE m.owner = :owner
+				AND m.datePlanned >= current_date
+				""";
+		final TypedQuery<Long> query = this.em.createQuery(jpql, Long.class);
+		query.setParameter("owner", owner);
+		return query.getSingleResult();
 	}
 }

@@ -86,7 +86,7 @@ public class SearchMeetingView extends AbstractView {
 
 	@PostConstruct
 	public void init() {
-		List<Meeting> meetings = this.meetingService.findMonthMeetings(sessionUser.get(), LocalDateTime.now());
+		List<Meeting> meetings = this.meetingService.findMonthMeetingsByUser(sessionUser.get(), LocalDateTime.now());
 		eventModel = new DefaultScheduleModel();
 
 		addEvents(meetings);

@@ -24,12 +24,12 @@ public class MeetingsByUserLazyDataModel extends LazyDataModel<Meeting> {
 
 	@Override
 	public int count(Map<String, FilterMeta> filterBy) {
-		return (int) meetingService.countPlannedMeetings(this.user);
+		return (int) meetingService.countFutureMeetingsByOwner(this.user);
 	}
 
 	@Override
 	public List<Meeting> load(int first, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) {
-		return meetingService.findPlannedMeetings(this.user, Page.of(first, pageSize));
+		return meetingService.findFutureMeetingsByOwner(this.user, Page.of(first, pageSize));
 	}
 
 	public void setMeetingService(final MeetingService meetingService) {

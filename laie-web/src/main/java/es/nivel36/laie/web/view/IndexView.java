@@ -39,7 +39,7 @@ public class IndexView extends AbstractView implements PageView {
 	public void init() {
 		logger.trace("Index init");
 		final User user = this.sessionUser.get();
-		this.meetings = this.meetingService.findPlannedMeetings(user, Page.FIRST_TEN_RESULTS);
+		this.meetings = this.meetingService.findFutureMeetingsByOwner(user, Page.FIRST_TEN_RESULTS);
 	}
 
 	public ActionsByUserLazyDataModel getActions() {

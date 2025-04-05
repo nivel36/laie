@@ -90,11 +90,6 @@ public class AbstractMeetingView extends AbstractView {
 		this.attendees.remove(person);
 	}
 
-	public List<Subject> searchPerson(final String query) {
-		logger.trace("Searching for person with the string {}", query);
-		return meetingService.searchPerson(query);
-	}
-
 	public Subject getAttendee() {
 		return this.attendee;
 	}
