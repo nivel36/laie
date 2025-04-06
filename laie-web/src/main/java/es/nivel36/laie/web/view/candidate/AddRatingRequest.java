@@ -38,7 +38,7 @@ public class AddRatingRequest extends AbstractView {
 
 	public List<User> query(final String query) {
 		logger.trace("Search user with the string {}", query);
-		return this.userService.search(query, Page.FIRST_TEN_RESULTS).hits();
+		return this.userService.searchUsers(query, Page.FIRST_TEN_RESULTS).hits();
 	}
 
 	public User getRequestTo() {

@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.omnifaces.cdi.Param;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.client.Contact;
@@ -22,26 +20,15 @@ public class AbstractMeetingView extends AbstractView {
 
 	private static final long serialVersionUID = -3589921939264190541L;
 
-	private static final Logger logger = LoggerFactory.getLogger(AbstractMeetingView.class);
-
-	protected Subject attendee;
-
-	protected List<Subject> attendees;
-
-	protected List<String> durations;
-
-	protected List<String> hours;
-
 	protected @Param Meeting meeting;
-
+	protected Subject attendee;
+	protected List<Subject> attendees;
+	protected List<String> durations;
+	protected List<String> hours;
 	protected LocalDate meetingDate;
-
 	protected String meetingDuration;
-
 	protected String meetingHour;
-
 	protected List<MeetingType> meetingTypes;
-
 	protected transient @Inject MeetingService meetingService;
 
 	protected List<String> initHours() {

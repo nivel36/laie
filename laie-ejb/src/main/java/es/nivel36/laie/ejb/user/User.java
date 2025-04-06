@@ -140,6 +140,33 @@ public class User extends AbstractEntity implements Subject {
 		Objects.requireNonNull(meeting);
 		this.meetings.add(meeting);
 	}
+	
+	public void removeMeeting(final Meeting meeting) {
+		Objects.requireNonNull(meeting);
+		this.meetings.remove(meeting);
+	}
+	
+	public void addBookmark(final Bookmark bookmark) {
+		Objects.requireNonNull(bookmark);
+		this.bookmarks.add(bookmark);
+	}
+	
+	public void removeBookmark(final Bookmark bookmark) {
+		Objects.requireNonNull(bookmark);
+		this.bookmarks.remove(bookmark);
+	}
+	
+	public boolean isManaged() {
+		return this.manager != null;
+	}
+	
+	@Override
+	public String getFullName() {
+		if (this.name == null) {
+			return null;
+		}
+		return new StringBuilder(this.name).append(" ").append(this.surname).toString();
+	}
 
 	public Set<Bookmark> getBookmarks() {
 		return bookmarks;
@@ -160,14 +187,6 @@ public class User extends AbstractEntity implements Subject {
 	@Override
 	public String getEmail() {
 		return this.email;
-	}
-
-	@Override
-	public String getFullName() {
-		if (this.name == null) {
-			return null;
-		}
-		return new StringBuilder(this.name).append(" ").append(this.surname).toString();
 	}
 
 	public Set<JobSubmissionEvent> getJobSubmissionEvents() {
@@ -230,15 +249,6 @@ public class User extends AbstractEntity implements Subject {
 
 	public Set<User> getTeam() {
 		return team;
-	}
-
-	public boolean isManaged() {
-		return this.manager != null;
-	}
-
-	public void removeMeeting(final Meeting meeting) {
-		Objects.requireNonNull(meeting);
-		this.meetings.remove(meeting);
 	}
 
 	public void setBookmarks(final Set<Bookmark> bookmarks) {

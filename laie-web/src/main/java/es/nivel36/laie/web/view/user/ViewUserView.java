@@ -51,7 +51,7 @@ public class ViewUserView extends AbstractView {
 	private User findUser() {
 		try {
 			final Long id = Long.parseLong(userId);
-			final User user = this.userService.findAllUserData(id);
+			final User user = this.userService.findUserDetailsById(id);
 			if (user == null) {
 				throw new IllegalPageStateException();
 			}

@@ -16,11 +16,8 @@ import jakarta.inject.Inject;
 public class SubjectService {
 
 	private @Inject SubjectDao subjectDao;
-
 	private @Inject UserDao userDao;
-
 	private @Inject CandidateDao candidateDao;
-
 	private @Inject ContactDao contactDao;
 
 	public Subject findByEmail(final String email) {

@@ -67,7 +67,7 @@ public class SessionUser implements Serializable {
 	}
 
 	private void loadUserData(final String email) {
-		this.user = this.userService.findUserByEmail(email);
+		this.user = this.userService.findSessionUserData(email);
 		this.locale = Locale.of(this.user.getLanguage());
 		this.team = this.userService.findSubordinateUsers(user);
 		this.bookmarks = new ArrayList<>(this.user.getBookmarks());

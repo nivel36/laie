@@ -35,9 +35,9 @@ public class UserDao extends AbstractDao {
 		return em.merge(user);
 	}
 
-	public boolean checkDuplicateEmail(final String email) {
+	public boolean emailExists(final String email) {
 		Objects.requireNonNull(email);
-		return this.checkDuplicateField(User.class, "email", email);
+		return this.fieldExists(User.class, "email", email);
 	}
 
 	public List<User> findSubordinateUsers(final User user) {
@@ -53,8 +53,8 @@ public class UserDao extends AbstractDao {
 		query.setParameter("user", user);
 		return query.getResultList();
 	}
-
-	public User findUserByEmail(final String email) {
+	
+	public User findSessionUserData(final String email) {
 		Objects.requireNonNull(email);
 		try {
 			final String jpql = """
@@ -71,7 +71,23 @@ public class UserDao extends AbstractDao {
 		}
 	}
 
-	public User findAllUserData(final long userId) {
+	public User findUserByEmail(final String email) {
+		Objects.requireNonNull(email);
+		try {
+			final String jpql = """
+						SELECT u
+						FROM User u
+						WHERE u.email = :email
+					""";
+			final TypedQuery<User> query = this.em.createQuery(jpql, User.class);
+			query.setParameter("email", email);
+			return query.getSingleResult();
+		} catch (final NoResultException e) {
+			return null;
+		}
+	}
+
+	public User findUserDetailsById(final long userId) {
 		final String jpql = """
 					SELECT u
 					FROM User u
@@ -101,7 +117,7 @@ public class UserDao extends AbstractDao {
 		return query.getSingleResult();
 	}
 
-	public SearchResult<User> search(final String searchText, final Page page, final SortField sortField,
+	public SearchResult<User> searchUsers(final String searchText, final Page page, final SortField sortField,
 			final String[] searchFacets) {
 		final String[] searchFields = new String[] { "_name", "_surname", "_email" };
 		return searchFacade.search(User.class, page, sortField, searchFacets, searchText, searchFields);
@@ -111,7 +127,7 @@ public class UserDao extends AbstractDao {
 	// USER CLOSURES
 	///////////////////////////////////////////////////////////////////////////
 
-	private List<UserClosure> findAncestorsUserClosures(final User user) {
+	private List<UserClosure> findUserAncestorClosures(final User user) {
 		final String jpql = """
 					SELECT uc
 					FROM UserClosure uc
@@ -124,7 +140,7 @@ public class UserDao extends AbstractDao {
 
 	private void deleteUserClosures(final User user) {
 		logger.trace("Delete user closures for user {}", user.getEmail());
-		final List<UserClosure> userClosures = this.findAncestorsUserClosures(user);
+		final List<UserClosure> userClosures = this.findUserAncestorClosures(user);
 		for (final UserClosure userClosure : userClosures) {
 			this.delete(UserClosure.class, userClosure);
 		}
@@ -138,31 +154,31 @@ public class UserDao extends AbstractDao {
 		}
 		final User newManager = user.getManager();
 		final User oldManager = userInDatabase.getManager();
-		if (this.isAddingManager(newManager, oldManager)) {
+		if (this.isManagerBeingAdded(newManager, oldManager)) {
 			this.insertUserClosures(user);
-		} else if (this.isRemovingManager(newManager, oldManager)) {
+		} else if (this.isManagerBeingRemoved(newManager, oldManager)) {
 			this.deleteUserClosures(userInDatabase);
-		} else if (this.isChangingManager(newManager, oldManager)) {
+		} else if (this.isManagerChanging(newManager, oldManager)) {
 			this.deleteUserClosures(userInDatabase);
 			this.insertUserClosures(user);
 		}
 	}
 
-	private boolean isRemovingManager(final User newManager, final User oldManager) {
+	private boolean isManagerBeingRemoved(final User newManager, final User oldManager) {
 		return oldManager != null && newManager == null;
 	}
 
-	private boolean isAddingManager(final User newManager, final User oldManager) {
+	private boolean isManagerBeingAdded(final User newManager, final User oldManager) {
 		return oldManager == null && newManager != null;
 	}
 
-	private boolean isChangingManager(final User newManager, final User oldManager) {
+	private boolean isManagerChanging(final User newManager, final User oldManager) {
 		return oldManager != null && newManager != null && !newManager.equals(oldManager);
 	}
 
 	private void insertUserClosures(final User user) {
 		logger.trace("Insert user closures for user {}", user.getEmail());
-		final List<UserClosure> userClosures = this.findAncestorsUserClosures(user.getManager());
+		final List<UserClosure> userClosures = this.findUserAncestorClosures(user.getManager());
 		for (final UserClosure userClosure : userClosures) {
 			this.insertUserClosure(userClosure.getAncestor(), user, userClosure.getPathLength() + 1);
 		}

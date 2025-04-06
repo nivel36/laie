@@ -32,7 +32,7 @@ public abstract class AbstractUserView extends AbstractView {
 
 	public List<User> queryManager(final String query) {
 		logger.trace("Search manager with the string {}", query);
-		return this.userService.search(query, Page.FIRST_TEN_RESULTS).hits();
+		return this.userService.searchUsers(query, Page.FIRST_TEN_RESULTS).hits();
 	}
 
 	protected String viewUserUrl() {

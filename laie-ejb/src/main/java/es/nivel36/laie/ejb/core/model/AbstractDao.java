@@ -49,7 +49,7 @@ public abstract class AbstractDao {
 		}
 	}
 
-	protected <E extends Identifiable> boolean checkDuplicateField(final Class<E> type, final String fieldName,
+	protected <E extends Identifiable> boolean fieldExists(final Class<E> type, final String fieldName,
 			final Object fieldValue) {
 		final CriteriaBuilder cb = this.em.getCriteriaBuilder();
 		final CriteriaQuery<E> cq = cb.createQuery(type);

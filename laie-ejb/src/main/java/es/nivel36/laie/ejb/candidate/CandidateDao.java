@@ -20,7 +20,7 @@ public class CandidateDao extends AbstractDao {
 
 	public boolean checkDuplicateEmail(final String email) {
 		Objects.requireNonNull(email);
-		return this.checkDuplicateField(Candidate.class, "email", email);
+		return this.fieldExists(Candidate.class, "email", email);
 	}
 
 	public List<Candidate> findCandidatesByJobOffer(final JobOffer jobOffer, final Page page) {

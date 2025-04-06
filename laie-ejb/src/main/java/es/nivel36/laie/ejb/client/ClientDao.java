@@ -16,7 +16,7 @@ public class ClientDao extends AbstractDao {
 
 	public boolean checkDuplicatedCif(final String cif) {
 		Objects.requireNonNull(cif);
-		return this.checkDuplicateField(Client.class, "cif", cif);
+		return this.fieldExists(Client.class, "cif", cif);
 	}
 
 	public SearchResult<Client> search(final String searchText, final Page page, final SortField sortField,

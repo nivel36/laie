@@ -24,7 +24,7 @@ public abstract class AbstractClientView extends AbstractView {
 	protected @Inject transient UserService userService;
 
 	public List<User> queryOwner(final String query) {
-		return this.userService.search(query, Page.FIRST_TEN_RESULTS).hits();
+		return this.userService.searchUsers(query, Page.FIRST_TEN_RESULTS).hits();
 	}
 
 	public Client getClient() {

@@ -20,7 +20,7 @@ public class UserLazyDataModel extends AbstractLazyDataModel<User> {
 	@Override
 	protected SearchResult<User> search(String searchText, Page page, SortField sortField,
 			String[] searchFilter) {
-		return userService.search(searchText, page, sortField, searchFilter);
+		return userService.searchUsers(searchText, page, sortField, searchFilter);
 	}
 
 	@Override
