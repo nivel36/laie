@@ -31,24 +31,31 @@ public class ViewUserView extends AbstractView {
 
 	public static final String URL = "/user/view.xhtml";
 
-	public static String getUrl(long userId) {
-		return URL + "?user=" + userId;
-	}
-
 	private @Param(required = true, name = "user") String userId;
 	private User user;
 	private boolean editable;
 	private List<User> team;
-
+	private List<Meeting> meetings;
 	private boolean loggedUser;
+
 	private @Inject ActionsByUserLazyDataModel actions;
 	private @Inject JobOffersByOwnerOrRecruiterLazyDataModel jobOffers;
 	private transient @Inject MeetingService meetingService;
-	private List<Meeting> meetings;
-
 	private transient @Inject UserService userService;
+	
+	@PostConstruct
+	public void init() {
+		logger.trace("User {} init", this.userId);
+		this.user = loadUser();
+		this.team = new ArrayList<>(this.user.getTeam());
+		this.loggedUser = this.sessionUser.get().equals(this.user);
+		this.editable = this.sessionUser.isAdmin() || loggedUser;
+		this.actions.setUser(user);
+		this.jobOffers.setUser(user);
+		this.meetings = this.meetingService.findFutureMeetingsByOwner(user, Page.of(0, 5));
+	}
 
-	private User findUser() {
+	private User loadUser() {
 		try {
 			final Long id = Long.parseLong(userId);
 			final User user = this.userService.findUserDetailsById(id);
@@ -66,7 +73,6 @@ public class ViewUserView extends AbstractView {
 	}
 
 	public JobOffersByOwnerOrRecruiterLazyDataModel getJobOffers() {
-		Objects.requireNonNull(jobOffers);
 		return this.jobOffers;
 	}
 
@@ -82,18 +88,6 @@ public class ViewUserView extends AbstractView {
 		return this.user;
 	}
 
-	@PostConstruct
-	public void init() {
-		logger.trace("User {} init", this.userId);
-		this.user = findUser();
-		this.team = new ArrayList<>(this.user.getTeam());
-		this.loggedUser = this.sessionUser.get().equals(this.user);
-		this.editable = this.sessionUser.isAdmin() || loggedUser;
-		this.actions.setUser(user);
-		this.jobOffers.setUser(user);
-		this.meetings = this.meetingService.findFutureMeetingsByOwner(user, Page.of(0, 5));
-	}
-
 	public boolean isEditable() {
 		return this.editable;
 	}
@@ -101,23 +95,28 @@ public class ViewUserView extends AbstractView {
 	public boolean isLoggedUser() {
 		return loggedUser;
 	}
-
-	public void setActions(ActionsByUserLazyDataModel actions) {
-		Objects.requireNonNull(actions);
-		this.actions = actions;
-	}
-
-	public void setJobOffers(JobOffersByOwnerOrRecruiterLazyDataModel jobOffers) {
-		Objects.requireNonNull(jobOffers);
-		this.jobOffers = jobOffers;
-	}
-
+	
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 
+	public void setActions(final ActionsByUserLazyDataModel actions) {
+		this.actions = Objects.requireNonNull(actions);
+	}
+
+	public void setJobOffers(final JobOffersByOwnerOrRecruiterLazyDataModel jobOffers) {
+		this.jobOffers = Objects.requireNonNull(jobOffers);
+	}
+
 	public void setUserService(final UserService userService) {
-		Objects.requireNonNull(userService);
-		this.userService = userService;
+		this.userService = Objects.requireNonNull(userService);
+	}
+	
+	public void setMeetingService(final MeetingService meetingService) {
+		this.meetingService = Objects.requireNonNull(meetingService);
+	}
+	
+	public static String getUrl(long userId) {
+		return URL + "?user=" + userId;
 	}
 }

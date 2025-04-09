@@ -14,12 +14,12 @@ public class UserConverter extends AbstractConverter<User> {
 	private @Inject UserService userService;
 
 	@Override
-	protected User getAsObject(Long id) {
+	protected User getAsObject(final Long id) {
+		Objects.requireNonNull(id);
 		return userService.findUserById(id);
 	}
 
 	public void setUserService(final UserService userService) {
-		Objects.requireNonNull(userService);
-		this.userService = userService;
+		this.userService = Objects.requireNonNull(userService);
 	}
 }

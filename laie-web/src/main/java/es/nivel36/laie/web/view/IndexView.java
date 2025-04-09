@@ -11,7 +11,6 @@ import es.nivel36.laie.ejb.job.meeting.Meeting;
 import es.nivel36.laie.ejb.job.meeting.MeetingService;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.web.core.view.AbstractView;
-import es.nivel36.laie.web.core.view.PageView;
 import es.nivel36.laie.web.view.action.ActionsByUserLazyDataModel;
 import es.nivel36.laie.web.view.candidate.CandidateLazyDataModel;
 import es.nivel36.laie.web.view.job.JobOfferLazyDataModel;
@@ -22,7 +21,7 @@ import jakarta.inject.Named;
 
 @Named
 @ViewScoped
-public class IndexView extends AbstractView implements PageView { 
+public class IndexView extends AbstractView { 
 
 	private static final long serialVersionUID = 469723251635970418L;
 	private static final Logger logger = LoggerFactory.getLogger(IndexView.class);
@@ -76,10 +75,5 @@ public class IndexView extends AbstractView implements PageView {
 
 	public void setMeetings(final List<Meeting> meetings) {
 		this.meetings = Objects.requireNonNull(meetings);
-	}
-
-	@Override
-	public String getUrl() {
-		return URL;
 	}
 }

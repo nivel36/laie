@@ -1,5 +1,6 @@
 package es.nivel36.laie.web.core.view;
 
+import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
@@ -13,33 +14,41 @@ import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
 
-@ApplicationScoped
 @Named
-public class ApplicationView extends AbstractView {
+@ApplicationScoped
+public class ApplicationView implements Serializable {
 
+	private static final long serialVersionUID = 44020436095563616L;
 	private static final Logger log = LoggerFactory.getLogger(ApplicationView.class);
 
-	private static final long serialVersionUID = 1L;
-
 	private String hostname;
-
 	private List<Language> languages;
-
-	public List<Language> getLanguages() {
-		return languages;
-	}
 
 	@PostConstruct
 	public void init() {
-		this.languages = Arrays.asList(Language.values());
+		log.info("Application view init");
+		this.languages = this.loadLanguages();
+		this.hostname = this.loadHostname();
+	}
+
+	private List<Language> loadLanguages() {
+		return Arrays.asList(Language.values());
+	}
+
+	private String loadHostname() {
 		try {
-			hostname = InetAddress.getLocalHost().getHostName();
+			return InetAddress.getLocalHost().getHostName();
 		} catch (UnknownHostException e) {
-			log.error("No se puede comprovar el nombre del host", e);
+			log.error("Unable to check host name", e);
+			return null;
 		}
 	}
 
 	public String getHostname() {
 		return hostname;
+	}
+
+	public List<Language> getLanguages() {
+		return languages;
 	}
 }
