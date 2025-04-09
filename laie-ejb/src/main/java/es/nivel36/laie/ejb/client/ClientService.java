@@ -27,7 +27,7 @@ public class ClientService {
 	public void addClient(final Client client) throws DuplicateCifException {
 		Objects.requireNonNull(client);
 		logger.debug("Adding new client {}", client);
-		if (client.getCif() != null && this.clientDao.checkDuplicatedCif(client.getCif())) {
+		if (client.getCif() != null && this.clientDao.cifExists(client.getCif())) {
 			throw new DuplicateCifException();
 		}
 		this.clientDao.insert(client);
@@ -39,7 +39,7 @@ public class ClientService {
 		logger.debug("Updating client {}", client);
 		final Client clientInDatabase = clientDao.find(Client.class, client.getId());
 		if (client.getCif() != null && !client.getCif().equals(clientInDatabase.getCif())) {
-			if (clientDao.checkDuplicatedCif(client.getCif())) {
+			if (clientDao.cifExists(client.getCif())) {
 				throw new DuplicateCifException();
 			}
 		}
@@ -60,7 +60,7 @@ public class ClientService {
 	public SearchResult<Client> search(final String searchText, final Page page, final SortField sortField,
 			final String[] searchFacets) {
 		Objects.requireNonNull(page);
-		return this.clientDao.search(searchText, page, sortField, searchFacets);
+		return this.clientDao.searchClients(searchText, page, sortField, searchFacets);
 	}
 
 	public void setClientDao(final ClientDao clientDao) {

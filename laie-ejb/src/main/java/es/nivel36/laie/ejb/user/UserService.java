@@ -1,6 +1,5 @@
 package es.nivel36.laie.ejb.user;
 
-import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -60,7 +59,7 @@ public class UserService {
 		// Check if the e-mail has been modified and is being used by another user.
 		final String newEmail = user.getEmail();
 		final String oldEmail = userInDatabase.getEmail();
-		this.checkDuplicateEmail(newEmail, oldEmail);
+		this.emailExists(newEmail, oldEmail);
 
 		// Check if the manager has changed and if he/she meets the requirements to be
 		// the new manager.
@@ -77,7 +76,7 @@ public class UserService {
 
 	}
 
-	private void checkDuplicateEmail(final String newEmail, final String oldEmail) throws DuplicateEmailException {
+	private void emailExists(final String newEmail, final String oldEmail) throws DuplicateEmailException {
 		if (!newEmail.equals(oldEmail)) {
 			if (this.userDao.emailExists(newEmail)) {
 				throw new DuplicateEmailException();
@@ -122,22 +121,6 @@ public class UserService {
 					newManager, user);
 			throw new BadManagerException("User is already managing this manager");
 		}
-	}
-
-	public User changeUserImage(final User user, final InputStream image) {
-		Objects.requireNonNull(user);
-		Objects.requireNonNull(image);
-		logger.debug("Updating image for user {}", user);
-		final PhysicalFile newImage = this.fileService.uploadFile(image, true);
-		final PhysicalFile oldImage = user.getPicture();
-		user.setPicture(newImage);
-		final User updatedUser = userDao.update(user);
-		if (oldImage != null) {
-			logger.trace("Removing user {} old image", user);
-			this.fileService.removeFile(oldImage);
-		}
-		logger.trace("Image for user {} updated successfully", user);
-		return updatedUser;
 	}
 
 	public User findUserById(final long userId) {

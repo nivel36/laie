@@ -7,6 +7,7 @@ import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jakarta.inject.Inject;
 import jakarta.persistence.CacheStoreMode;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.FlushModeType;
@@ -24,6 +25,7 @@ public abstract class AbstractDao {
 	private static final String CACHE_STORE_MODE = "jakarta.persistence.cache.storeMode";
 
 	protected @PersistenceContext(unitName = "laie") EntityManager em;
+	protected @Inject SearchFacade searchFacade;
 
 	public <E extends Identifiable> void insert(final E entity) {
 		Objects.requireNonNull(entity);
@@ -139,5 +141,9 @@ public abstract class AbstractDao {
 			logger.trace("Paramtrize query with key {} value={}", entry.getKey(), entry.getValue());
 			query.setParameter(entry.getKey(), entry.getValue());
 		}
+	}
+	
+	public void setSearchFacade(final SearchFacade searchFacade) {
+		this.searchFacade = Objects.requireNonNull(searchFacade);
 	}
 }

@@ -9,17 +9,13 @@ import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.core.model.SearchFacade;
 import es.nivel36.laie.ejb.core.model.SortField;
-import jakarta.inject.Inject;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 
 public class UserDao extends AbstractDao {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserDao.class);
-
-	private @Inject SearchFacade searchFacade;
 
 	public void insert(final User user) {
 		Objects.requireNonNull(user);
