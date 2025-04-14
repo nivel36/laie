@@ -7,16 +7,12 @@ import org.hibernate.search.engine.search.query.SearchResult;
 
 import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.core.model.SearchFacade;
 import es.nivel36.laie.ejb.core.model.SortField;
-import jakarta.inject.Inject;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 
 public class ContactDao extends AbstractDao {
-
-	private @Inject SearchFacade searchFacade;
 
 	public List<Contact> findContactsByClient(final Client client, final Page page) {
 		Objects.requireNonNull(client);
@@ -80,9 +76,5 @@ public class ContactDao extends AbstractDao {
 		Objects.requireNonNull(page);
 		final String[] fields = new String[] { "_name", "_surname, _email" };
 		return searchFacade.search(Contact.class, page, sortField, searchFacets, searchText, fields);
-	}
-
-	public void setSearchFacade(final SearchFacade searchFacade) {
-		this.searchFacade = Objects.requireNonNull(searchFacade);
 	}
 }

@@ -8,6 +8,7 @@ import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 
 public class JobSubmissionDao extends AbstractDao {
@@ -21,21 +22,13 @@ public class JobSubmissionDao extends AbstractDao {
 		this.em.remove(jobSubmission);
 	}
 
-	public JobSubmission findJobSubmission(final long jobSubmissionId) {
-		if (jobSubmissionId <= 0) {
-			throw new IllegalStateException(
-					"Job submission ID must be greater than zero. Received: " + jobSubmissionId);
-		}
-		return em.find(JobSubmission.class, jobSubmissionId);
-	}
-
 	public long countApprovedJobSubmissions(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer);
 		final String jpql = """
-					SELECT COUNT(j)
-					FROM JobSubmission j
-					LEFT JOIN j.jobOffer
-					WHERE j.jobOffer = :jobOffer AND j.state.approved = true
+				SELECT COUNT(j)
+				FROM JobSubmission j
+				LEFT JOIN j.jobOffer
+				WHERE j.jobOffer = :jobOffer AND j.state.approved = true
 				""";
 		final TypedQuery<Long> query = this.em.createQuery(jpql, Long.class);
 		query.setParameter("jobOffer", jobOffer);
@@ -45,30 +38,34 @@ public class JobSubmissionDao extends AbstractDao {
 	public JobSubmission findJobSubmissionByJobOfferAndCandidate(final JobOffer jobOffer, final Candidate candidate) {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(candidate);
-		final String jpql = """
+		try {
+			final String jpql = """
 					SELECT j
 					FROM JobSubmission j
 					LEFT JOIN FETCH j.candidate
 					LEFT JOIN FETCH j.jobOffer
 					WHERE j.jobOffer = :jobOffer AND j.candidate = :candidate
-				""";
-		final TypedQuery<JobSubmission> query = this.em.createQuery(jpql, JobSubmission.class);
-		query.setParameter("jobOffer", jobOffer);
-		query.setParameter("candidate", candidate);
-		return query.getSingleResult();
+					""";
+			final TypedQuery<JobSubmission> query = this.em.createQuery(jpql, JobSubmission.class);
+			query.setParameter("jobOffer", jobOffer);
+			query.setParameter("candidate", candidate);
+			return query.getSingleResult();
+		} catch (final NoResultException e) {
+			return null;
+		}
 	}
 
 	public List<JobSubmission> findJobSubmissionsByCandidate(final Candidate candidate, final Page page) {
 		Objects.requireNonNull(candidate);
 		Objects.requireNonNull(page);
 		final String jpql = """
-					SELECT j
-					FROM JobSubmission j
-					LEFT JOIN FETCH j.candidate
-					LEFT JOIN FETCH j.jobOffer
-					LEFT JOIN FETCH j.jobOffer.client
-					LEFT JOIN FETCH j.state
-					WHERE j.candidate = :candidate
+				SELECT j
+				FROM JobSubmission j
+				LEFT JOIN FETCH j.candidate
+				LEFT JOIN FETCH j.jobOffer
+				LEFT JOIN FETCH j.jobOffer.client
+				LEFT JOIN FETCH j.state
+				WHERE j.candidate = :candidate
 				""";
 		final TypedQuery<JobSubmission> query = this.em.createQuery(jpql, JobSubmission.class);
 		query.setParameter("candidate", candidate);
@@ -79,9 +76,9 @@ public class JobSubmissionDao extends AbstractDao {
 	public long countJobSubmissionsByCandidate(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
 		final String jpql = """
-					SELECT COUNT(j)
-					FROM JobSubmission j
-					WHERE j.candidate = :candidate
+				SELECT COUNT(j)
+				FROM JobSubmission j
+				WHERE j.candidate = :candidate
 				""";
 		final TypedQuery<Long> query = this.em.createQuery(jpql, Long.class);
 		query.setParameter("candidate", candidate);
@@ -92,11 +89,11 @@ public class JobSubmissionDao extends AbstractDao {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(page);
 		final String jpql = """
-					SELECT j
-					FROM JobSubmission j
-					LEFT JOIN FETCH j.candidate
-					LEFT JOIN FETCH j.jobOffer
-					WHERE j.jobOffer = :jobOffer
+				SELECT j
+				FROM JobSubmission j
+				LEFT JOIN FETCH j.candidate
+				LEFT JOIN FETCH j.jobOffer
+				WHERE j.jobOffer = :jobOffer
 				""";
 		final TypedQuery<JobSubmission> query = this.em.createQuery(jpql, JobSubmission.class);
 		query.setParameter("jobOffer", jobOffer);
@@ -107,9 +104,9 @@ public class JobSubmissionDao extends AbstractDao {
 	public long countJobSubmissionsByJobOffer(final JobOffer jobOffer) {
 		Objects.requireNonNull(jobOffer);
 		final String jpql = """
-					SELECT COUNT(j)
-					FROM JobSubmission j
-					WHERE j.jobOffer = :jobOffer
+				SELECT COUNT(j)
+				FROM JobSubmission j
+				WHERE j.jobOffer = :jobOffer
 				""";
 		final TypedQuery<Long> query = this.em.createQuery(jpql, Long.class);
 		query.setParameter("jobOffer", jobOffer);

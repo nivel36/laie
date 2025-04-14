@@ -25,6 +25,7 @@ import es.nivel36.laie.ejb.user.DuplicateEmailException;
 import jakarta.ejb.Stateless;
 import jakarta.enterprise.event.Event;
 import jakarta.inject.Inject;
+import jakarta.persistence.EntityNotFoundException;
 
 @Stateless
 public class CandidateService {
@@ -48,6 +49,7 @@ public class CandidateService {
 		this.updateTags(candidate);
 		this.candidateDao.insert(candidate);
 		this.createCandidateEvent.fire(candidate);
+		logger.trace("Candidate {} added successfully", candidate);
 	}
 
 	private void updateTags(final Candidate candidate) {
@@ -79,12 +81,15 @@ public class CandidateService {
 		this.updateCandidateEvent.fire(updatedCandidate);
 		return updatedCandidate;
 	}
-	
+
 	public Candidate updateCandidate(final Candidate candidate) throws DuplicateEmailException {
 		Objects.requireNonNull(candidate);
 		logger.debug("Updating candidate {}", candidate);
 
 		final Candidate candidateInDatabase = this.candidateDao.find(Candidate.class, candidate.getId());
+		if (candidateInDatabase == null) {
+			throw new EntityNotFoundException(String.format("Candidate %s not found", candidate));
+		}
 		final String email = candidate.getEmail();
 		if (!candidateInDatabase.getEmail().equals(email)) {
 			if (this.candidateDao.checkDuplicateEmail(email)) {
@@ -98,12 +103,12 @@ public class CandidateService {
 	public Candidate changeCandidatesImage(final Candidate candidate, final InputStream image) {
 		Objects.requireNonNull(candidate);
 		Objects.requireNonNull(image);
-		logger.debug("Changing image to user {}", candidate);
+		logger.debug("Changing image to candidate {}", candidate);
 		final PhysicalFile oldImage = candidate.getPicture();
 		final PhysicalFile newImage = this.fileService.uploadFile(image, true);
 		candidate.setPicture(newImage);
 		if (oldImage != null) {
-			logger.trace("Remove user {} old image", candidate);
+			logger.trace("Removing candidate {} old image", candidate);
 			this.fileService.removeFile(oldImage);
 		}
 		return updateAndFireEvent(candidate);
@@ -140,13 +145,13 @@ public class CandidateService {
 	public List<File> findCandidateFiles(final Candidate candidate, final Page page) {
 		Objects.requireNonNull(candidate);
 		Objects.requireNonNull(page);
-		logger.debug("Find all files {} of candidate {}", candidate);
+		logger.debug("Find all files of candidate {}", candidate);
 		return this.fileDao.findFilesByCandidate(candidate, page);
 	}
 
 	public long countCandidateFiles(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
-		logger.debug("Counting all files {} of candidate {}", candidate);
+		logger.debug("Counting all files of candidate {}", candidate);
 		return this.fileDao.countFilesByCandidate(candidate);
 	}
 
@@ -191,22 +196,22 @@ public class CandidateService {
 	}
 
 	public void setCandidateDao(final CandidateDao candidateDao) {
-		this.candidateDao = Objects.requireNonNull(candidateDao);;
+		this.candidateDao = Objects.requireNonNull(candidateDao);
 	}
 
 	public void setFileDao(final FileDao fileDao) {
-		this.fileDao =  Objects.requireNonNull(fileDao);
+		this.fileDao = Objects.requireNonNull(fileDao);
 	}
-	
+
 	public void setFileService(final PhysicalFileService fileService) {
 		this.fileService = Objects.requireNonNull(fileService);
 	}
 
 	public void setCreateCandidateEvent(final Event<Auditable> createCandidateEvent) {
-		this.createCandidateEvent =  Objects.requireNonNull(createCandidateEvent);
+		this.createCandidateEvent = Objects.requireNonNull(createCandidateEvent);
 	}
 
 	public void setUpdateCandidateEvent(final Event<Auditable> updateCandidateEvent) {
-		this.updateCandidateEvent =  Objects.requireNonNull(updateCandidateEvent);
+		this.updateCandidateEvent = Objects.requireNonNull(updateCandidateEvent);
 	}
 }

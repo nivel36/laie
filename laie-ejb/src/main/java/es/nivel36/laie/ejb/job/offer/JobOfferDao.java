@@ -9,10 +9,8 @@ import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.client.Client;
 import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.core.model.SearchFacade;
 import es.nivel36.laie.ejb.core.model.SortField;
 import es.nivel36.laie.ejb.user.User;
-import jakarta.inject.Inject;
 import jakarta.persistence.TypedQuery;
 
 /**
@@ -23,19 +21,6 @@ import jakarta.persistence.TypedQuery;
  * <tt>SearchFacade</tt>.
  */
 public class JobOfferDao extends AbstractDao {
-
-	private @Inject SearchFacade searchFacade;
-
-	/**
-	 * Persists a new <tt>JobOfferEvent</tt> in the database.
-	 *
-	 * @param jobOfferEvent the <tt>JobOfferEvent</tt> to persist. Cannot be null.
-	 * @throws NullPointerException if <tt>jobOfferEvent</tt> is null.
-	 */
-	public void addJobOfferEvent(final JobOfferEvent jobOfferEvent) {
-		Objects.requireNonNull(jobOfferEvent);
-		em.persist(jobOfferEvent);
-	}
 
 	/**
 	 * Retrieves a <tt>JobOffer</tt> by ID, including its recruiters, client, and
@@ -292,16 +277,5 @@ public class JobOfferDao extends AbstractDao {
 			final String[] searchFacets) {
 		final String[] searchFields = new String[] { "_title", "client._name" };
 		return searchFacade.search(JobOffer.class, page, sortField, searchFacets, searchText, searchFields);
-	}
-
-	/**
-	 * Sets the <tt>SearchFacade</tt>. This method should be used for setting or
-	 * replacing the search component, primarily for testing purposes.
-	 *
-	 * @param searchFacade the <tt>SearchFacade</tt> to be set. Cannot be null.
-	 * @throws NullPointerException if <tt>searchFacade</tt> is null.
-	 */
-	public void setSearchFacade(final SearchFacade searchFacade) {
-		this.searchFacade = Objects.requireNonNull(searchFacade);
 	}
 }

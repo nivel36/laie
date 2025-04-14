@@ -30,6 +30,7 @@ public class JobOfferService {
 	private static final Logger logger = LoggerFactory.getLogger(JobOfferService.class);
 
 	private @Inject JobOfferDao jobOfferDao;
+	private @Inject JobOfferEventDao jobOfferEventDao;
 	private @Inject JobOfferProcessDao jobOfferProcessDao;
 	private @Inject @Update @JobOfferCompletedEvent Event<JobOffer> completedEvent;
 	private @Inject @Create @JobOfferCreatedEvent Event<JobOffer> createdEvent;
@@ -46,7 +47,7 @@ public class JobOfferService {
 
 		final User owner = jobOffer.getOwner();
 		final JobOfferEvent newEvent = this.buildJobOfferEvent(jobOffer, JobOfferState.CREATED, null, owner);
-		jobOfferDao.addJobOfferEvent(newEvent);
+		jobOfferEventDao.insert(newEvent);
 
 		this.createdEvent.fire(jobOffer);
 		logger.trace("Job offer {} added successfully", jobOffer);
@@ -86,7 +87,7 @@ public class JobOfferService {
 		logger.debug("Changing state of job offer {} to {}", jobOffer, newState);
 
 		final JobOfferEvent newStateEvent = this.buildJobOfferEvent(jobOffer, newState, notes, user);
-		this.jobOfferDao.addJobOfferEvent(newStateEvent);
+		this.jobOfferEventDao.insert(newStateEvent);
 		jobOffer.setState(newState);
 		if (newState.isCloseState()) {
 			jobOffer.setCompletionDate(LocalDate.now());
@@ -278,5 +279,9 @@ public class JobOfferService {
 
 	public void setJobOfferDao(final JobOfferDao jobOfferDao) {
 		this.jobOfferDao = Objects.requireNonNull(jobOfferDao);
+	}
+	
+	public void setJobOfferEventDao(final JobOfferEventDao jobOfferEventDao) {
+		this.jobOfferEventDao = Objects.requireNonNull(jobOfferEventDao);
 	}
 }

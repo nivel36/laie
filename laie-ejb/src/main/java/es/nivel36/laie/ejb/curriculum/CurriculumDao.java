@@ -1,7 +1,5 @@
 package es.nivel36.laie.ejb.curriculum;
 
-import static es.nivel36.laie.ejb.core.util.Parameters.map;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -10,20 +8,27 @@ import org.hibernate.search.engine.search.query.SearchResult;
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.core.model.SearchFacade;
 import es.nivel36.laie.ejb.core.model.SortField;
-import jakarta.inject.Inject;
 import jakarta.persistence.NoResultException;
+import jakarta.persistence.TypedQuery;
 
 public class CurriculumDao extends AbstractDao {
-
-	@Inject
-	private SearchFacade searchFacade;
 
 	public Curriculum findByCandidate(final Candidate candidate) {
 		Objects.requireNonNull(candidate);
 		try {
-			return this.findByQuery(Curriculum.class, "Curriculum.findByCandidate", map("candidate", candidate));
+			final String jpql = """
+					SELECT c
+					FROM Curriculum c
+					LEFT JOIN FETCH c.education
+					LEFT JOIN FETCH c.jobExperiences
+					LEFT JOIN FETCH c.languages
+					LEFT JOIN FETCH c.skills
+					WHERE c.candidate = :candidate
+					""";
+			final TypedQuery<Curriculum> query = this.em.createQuery(jpql, Curriculum.class);
+			query.setParameter("candidate", candidate);
+			return query.getSingleResult();
 		} catch (final NoResultException e) {
 			return null;
 		}
@@ -32,7 +37,14 @@ public class CurriculumDao extends AbstractDao {
 	public Skill findSkill(final String name) {
 		Objects.requireNonNull(name);
 		try {
-			return this.findByQuery(Skill.class, "Curriculum.Skill.findByName", map("name", name));
+			final String jpql = """
+					SELECT s
+					FROM Skill s
+					WHERE s.name = :name
+					""";
+			final TypedQuery<Skill> query = this.em.createQuery(jpql, Skill.class);
+			query.setParameter("name", name);
+			return query.getSingleResult();
 		} catch (final NoResultException e) {
 			return null;
 		}

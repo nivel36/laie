@@ -22,9 +22,7 @@ public class ActionService {
 	private static final Logger logger = LoggerFactory.getLogger(ActionService.class);
 
 	private @Inject ActionDao actionDao;
-
 	private @Resource SessionContext sessionContext;
-
 	private @Inject UserService userService;
 
 	public void createAction(@Create @Observes final Auditable auditedEntity) {
@@ -54,7 +52,7 @@ public class ActionService {
 		action.setEntityTitle(auditedEntity.getEntityTitle());
 		action.setEntityId(auditedEntity.getId());
 		action.setUser(user);
-		actionDao.insertAction(action);
+		actionDao.insert(action);
 	}
 
 	private String loggedUser() {
@@ -86,7 +84,6 @@ public class ActionService {
 	}
 
 	public void setSessionContext(final SessionContext sessionContext) {
-		Objects.requireNonNull(sessionContext);
-		this.sessionContext = sessionContext;
+		this.sessionContext = Objects.requireNonNull(sessionContext);
 	}
 }

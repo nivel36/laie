@@ -10,12 +10,15 @@ import jakarta.faces.event.PhaseId;
 import jakarta.faces.event.PhaseListener;
 import jakarta.inject.Inject;
 
+/**
+ * Class that intercepts all user actions to update the last action performed by
+ * the user.
+ */
 public class UpdateSessionPhaseListener implements PhaseListener {
 
 	private static final long serialVersionUID = -118131663560399880L;
 
-	@Inject
-	private transient SessionUsers sessionUsers;
+	private transient @Inject SessionUsers sessionUsers;
 
 	@Override
 	public void afterPhase(final PhaseEvent event) {
@@ -37,5 +40,4 @@ public class UpdateSessionPhaseListener implements PhaseListener {
 	public PhaseId getPhaseId() {
 		return PhaseId.RESTORE_VIEW;
 	}
-
 }

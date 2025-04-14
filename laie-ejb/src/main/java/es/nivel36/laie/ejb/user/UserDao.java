@@ -39,11 +39,11 @@ public class UserDao extends AbstractDao {
 	public List<User> findSubordinateUsers(final User user) {
 		Objects.requireNonNull(user);
 		final String jpql = """
-					SELECT u
-					FROM UserClosure uc
-					JOIN uc.descendant u
-					WHERE uc.ancestor = :user
-					AND uc.pathLength > 0
+				SELECT u
+				FROM UserClosure uc
+				JOIN uc.descendant u
+				WHERE uc.ancestor = :user
+				AND uc.pathLength > 0
 				""";
 		final TypedQuery<User> query = this.em.createQuery(jpql, User.class);
 		query.setParameter("user", user);
@@ -54,10 +54,10 @@ public class UserDao extends AbstractDao {
 		Objects.requireNonNull(email);
 		try {
 			final String jpql = """
-						SELECT u
-						FROM User u
-						LEFT JOIN FETCH u.bookmarks
-						WHERE u.email = :email
+					SELECT u
+					FROM User u
+					LEFT JOIN FETCH u.bookmarks
+					WHERE u.email = :email
 					""";
 			final TypedQuery<User> query = this.em.createQuery(jpql, User.class);
 			query.setParameter("email", email);
@@ -71,9 +71,9 @@ public class UserDao extends AbstractDao {
 		Objects.requireNonNull(email);
 		try {
 			final String jpql = """
-						SELECT u
-						FROM User u
-						WHERE u.email = :email
+					SELECT u
+					FROM User u
+					WHERE u.email = :email
 					""";
 			final TypedQuery<User> query = this.em.createQuery(jpql, User.class);
 			query.setParameter("email", email);
@@ -85,12 +85,12 @@ public class UserDao extends AbstractDao {
 
 	public User findUserDetailsById(final long userId) {
 		final String jpql = """
-					SELECT u
-					FROM User u
-					LEFT JOIN FETCH u.manager
-					LEFT JOIN FETCH u.team
-					LEFT JOIN FETCH u.picture
-					WHERE u.id = :userId
+				SELECT u
+				FROM User u
+				LEFT JOIN FETCH u.manager
+				LEFT JOIN FETCH u.team
+				LEFT JOIN FETCH u.picture
+				WHERE u.id = :userId
 				""";
 		final TypedQuery<User> query = this.em.createQuery(jpql, User.class);
 		query.setParameter("userId", userId);
@@ -101,11 +101,11 @@ public class UserDao extends AbstractDao {
 		Objects.requireNonNull(manager);
 		Objects.requireNonNull(subordinate);
 		final String jpql = """
-					SELECT CASE WHEN (COUNT(u) > 0) THEN TRUE ELSE FALSE END
-					FROM UserClosure uc
-					JOIN uc.descendant u
-					WHERE uc.ancestor = :manager
-					AND u = :subordinate
+				SELECT CASE WHEN (COUNT(u) > 0) THEN TRUE ELSE FALSE END
+				FROM UserClosure uc
+				JOIN uc.descendant u
+				WHERE uc.ancestor = :manager
+				AND u = :subordinate
 				""";
 		final TypedQuery<Boolean> query = this.em.createQuery(jpql, Boolean.class);
 		query.setParameter("manager", manager);
@@ -125,9 +125,9 @@ public class UserDao extends AbstractDao {
 
 	private List<UserClosure> findUserAncestorClosures(final User user) {
 		final String jpql = """
-					SELECT uc
-					FROM UserClosure uc
-					WHERE uc.descendant = :user
+				SELECT uc
+				FROM UserClosure uc
+				WHERE uc.descendant = :user
 				""";
 		final TypedQuery<UserClosure> query = this.em.createQuery(jpql, UserClosure.class);
 		query.setParameter("user", user);

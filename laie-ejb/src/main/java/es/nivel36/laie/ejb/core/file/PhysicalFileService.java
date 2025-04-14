@@ -56,7 +56,7 @@ public class PhysicalFileService {
 		final boolean isOrphan = this.fileDao.isOrphanPhysicalFile(file);
 		if (isOrphan) {
 			this.deleteFileInFileSystem(file);
-			this.fileDao.deletePhysicalFile(file);
+			this.fileDao.delete(PhysicalFile.class, file);
 		}
 	}
 

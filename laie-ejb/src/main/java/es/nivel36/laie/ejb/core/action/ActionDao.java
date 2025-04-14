@@ -1,47 +1,59 @@
 package es.nivel36.laie.ejb.core.action;
 
-import static es.nivel36.laie.ejb.core.util.Parameters.map;
-
 import java.util.List;
 import java.util.Objects;
 
 import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
-import es.nivel36.laie.ejb.core.util.Parameters;
 import es.nivel36.laie.ejb.user.User;
+import jakarta.persistence.TypedQuery;
 
 public class ActionDao extends AbstractDao {
-
-	public void insertAction(final Action action) {
-		Objects.requireNonNull(action);
-		super.insert(action);
-	}
 
 	public List<Action> findAllByUser(final User user, final Page page) {
 		Objects.requireNonNull(user);
 		Objects.requireNonNull(page);
-		final String namedQuery = "Action.findByUser";
-		final Parameters parameters = map("user", user);
-		return this.findByQuery(Action.class, namedQuery, parameters, page);
+		final String jpql = """
+				SELECT a
+				FROM Action a
+				LEFT JOIN FETCH a.user
+				WHERE a.user = :user
+				ORDER BY a.date DESC
+				""";
+		final TypedQuery<Action> query = this.em.createQuery(jpql, Action.class);
+		this.paginate(page, query);
+		return query.getResultList();
 	}
 
 	public long countAllByUser(final User user) {
 		Objects.requireNonNull(user);
-		final String namedQuery = "Action.countByUser";
-		final Parameters parameters = map("user", user);
-		final Long count = this.findByQuery(Long.class, namedQuery, parameters);
-		return count.longValue();
+		final String jpql = """
+				SELECT count(a)
+				FROM Action a
+				WHERE a.user = :user
+				""";
+		final TypedQuery<Long> query = this.em.createQuery(jpql, Long.class);
+		return query.getSingleResult();
 	}
 
 	public List<Action> findAll(final Page page) {
 		Objects.requireNonNull(page);
-		final String namedQuery = "Action.findAll";
-		return this.findByQuery(Action.class, namedQuery, null, page);
+		final String jpql = """
+				SELECT a
+				FROM Action a
+				ORDER BY a.date DESC
+				""";
+		final TypedQuery<Action> query = this.em.createQuery(jpql, Action.class);
+		this.paginate(page, query);
+		return query.getResultList();
 	}
 
 	public long countAll() {
-		final String namedQuery = "Action.countAll";
-		final Long count = this.findByQuery(Long.class, namedQuery, null);
-		return count.longValue();
+		final String jpql = """
+				SELECT count(a)
+				FROM Action a
+				""";
+		final TypedQuery<Long> query = this.em.createQuery(jpql, Long.class);
+		return query.getSingleResult();
 	}
 }

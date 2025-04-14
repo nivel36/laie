@@ -17,25 +17,25 @@ public class StatisticsService {
 
 	public boolean isShowUserStatistics() {
 		logger.debug("Check if user statistics are shown");
-		final AppConfig appConfig = this.appConfigDao.findAppConfig();
+		final AppConfig appConfig = this.appConfigDao.find(AppConfig.class, 1L);
 		return appConfig.isShowUserStatistics();
 	}
 
 	public boolean isShowAppStatistics() {
 		logger.debug("Check if app statistics are shown");
-		final AppConfig appConfig = this.appConfigDao.findAppConfig();
+		final AppConfig appConfig = this.appConfigDao.find(AppConfig.class, 1L);
 		return appConfig.isShowAppStatistics();
 	}
 
 	public StatisticPanel getStatisticPanel(final int number) {
 		logger.debug("Get statistic panel number {}", number);
-		final AppConfig appConfig = this.appConfigDao.findAppConfig();
+		final AppConfig appConfig = this.appConfigDao.find(AppConfig.class, 1L);
 		return appConfig.getStatisticsPanels().get(number - 1);
 	}
 
 	public void showUserStatistics() {
 		logger.debug("Show user statistics");
-		final AppConfig appConfig = this.appConfigDao.findAppConfig();
+		final AppConfig appConfig = this.appConfigDao.find(AppConfig.class, 1L);
 		final boolean showUserStatistics = appConfig.isShowUserStatistics();
 		if (showUserStatistics) {
 			logger.trace("User statistics already shown");
@@ -46,7 +46,7 @@ public class StatisticsService {
 
 	public void hideUserStatistics() {
 		logger.debug("Hide user statistics");
-		final AppConfig appConfig = this.appConfigDao.findAppConfig();
+		final AppConfig appConfig = this.appConfigDao.find(AppConfig.class, 1L);
 		final boolean showUserStatistics = appConfig.isShowUserStatistics();
 		if (!showUserStatistics) {
 			logger.trace("User statistics already hidden");
@@ -57,7 +57,7 @@ public class StatisticsService {
 
 	public void showAppStatistics() {
 		logger.debug("Show app statistics");
-		final AppConfig appConfig = this.appConfigDao.findAppConfig();
+		final AppConfig appConfig = this.appConfigDao.find(AppConfig.class, 1L);
 		final boolean showAppStatistics = appConfig.isShowAppStatistics();
 		if (showAppStatistics) {
 			logger.trace("App statistics already shown");
@@ -68,7 +68,7 @@ public class StatisticsService {
 
 	public void hideAppStatistics() {
 		logger.debug("Hide app statistics");
-		final AppConfig appConfig = this.appConfigDao.findAppConfig();
+		final AppConfig appConfig = this.appConfigDao.find(AppConfig.class, 1L);
 		final boolean showAppStatistics = appConfig.isShowAppStatistics();
 		if (!showAppStatistics) {
 			logger.trace("App statistics already hidden");
@@ -80,7 +80,7 @@ public class StatisticsService {
 	public void changeStatisticPanel(final StatisticPanel statisticPanel, final int panelNumber) {
 		Objects.requireNonNull(statisticPanel);
 		logger.debug("Change statistic panel number {} to {}", panelNumber, statisticPanel);
-		final AppConfig appConfig = this.appConfigDao.findAppConfig();
+		final AppConfig appConfig = this.appConfigDao.find(AppConfig.class, 1L);
 		appConfig.getStatisticsPanels().set(panelNumber - 1, statisticPanel);
 	}
 

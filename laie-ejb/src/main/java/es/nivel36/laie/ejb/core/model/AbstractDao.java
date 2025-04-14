@@ -142,7 +142,14 @@ public abstract class AbstractDao {
 			query.setParameter(entry.getKey(), entry.getValue());
 		}
 	}
-	
+
+	/**
+	 * Sets the <tt>SearchFacade</tt>. This method should be used for setting or
+	 * replacing the search component, primarily for testing purposes.
+	 *
+	 * @param searchFacade the <tt>SearchFacade</tt> to be set. Cannot be null.
+	 * @throws NullPointerException if <tt>searchFacade</tt> is null.
+	 */
 	public void setSearchFacade(final SearchFacade searchFacade) {
 		this.searchFacade = Objects.requireNonNull(searchFacade);
 	}

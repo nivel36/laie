@@ -79,4 +79,14 @@ public class BookmarkService {
 	public void setUserDao(final UserDao userDao) {
 		this.userDao = Objects.requireNonNull(userDao);
 	}
+
+	/**
+	 * Sets the bookmark DAO used for managing bookmark entities
+	 *
+	 * @param bookamarkDao the BookamarkDao instance to set; must not be null
+	 * @throws NullPointerException if the provided bookamarkDao is null
+	 */
+	public void setBookmarkDao(BookmarkDao bookmarkDao) {
+		this.bookmarkDao = Objects.requireNonNull(bookmarkDao);
+	}
 }

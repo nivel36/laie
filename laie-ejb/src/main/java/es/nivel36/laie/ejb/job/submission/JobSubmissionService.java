@@ -32,7 +32,7 @@ public class JobSubmissionService {
 		Objects.requireNonNull(jobOffer);
 		Objects.requireNonNull(candidate);
 		if (!jobOffer.isOpen()) {
-			throw new IllegalStateException("Job offer is not open");
+			throw new IllegalStateException(String.format("Job offer %s is not open", jobOffer));
 		}
 		logger.debug("Adding job submission for candidate {} to job offer {}", candidate.getFullName(), jobOffer);
 		final JobSubmissionState firstState = this.jobSubmissionStateService.findInitialState();
@@ -58,7 +58,7 @@ public class JobSubmissionService {
 
 	public JobSubmission findJobSubmissionById(final long jobSubmissionId) {
 		logger.debug("Finding job submission with id {}", jobSubmissionId);
-		return this.jobSubmissionDao.findJobSubmission(jobSubmissionId);
+		return this.jobSubmissionDao.find(JobSubmission.class, jobSubmissionId);
 	}
 
 	public List<JobSubmission> findJobSubmissionsByJobOffer(final JobOffer jobOffer, final Page page) {
@@ -108,7 +108,7 @@ public class JobSubmissionService {
 		}
 
 		this.jobSubmissionDao.update(jobSubmission);
-		this.jobSubmissionEventDao.addJobSubmissionEvent(event);
+		this.jobSubmissionEventDao.insert(event);
 
 		if (stateChanged) {
 			this.stateChangedEvent.fire(jobSubmission);
@@ -121,7 +121,7 @@ public class JobSubmissionService {
 
 	public JobSubmissionEvent findJobSubmissionEvent(final long id) {
 		logger.debug("Finding job submission event with id {}", id);
-		return this.jobSubmissionEventDao.findJobSubmissionEventById(id);
+		return this.jobSubmissionEventDao.find(JobSubmissionEvent.class, id);
 	}
 
 	public List<JobSubmissionEvent> findJobSubmissionEvents(final JobOffer jobOffer, final Page page) {

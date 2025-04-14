@@ -3,7 +3,6 @@
 	xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
 	version="3.0">
 	<persistence-unit name="laie" transaction-type="JTA">
-		<mapping-file>/META-INF/queries.xml</mapping-file>
 		<shared-cache-mode>ALL</shared-cache-mode>
 		<properties>
 			<property name="jakarta.persistence.schema-generation.database.action" value="create" />

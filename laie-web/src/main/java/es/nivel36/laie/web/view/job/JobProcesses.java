@@ -27,7 +27,6 @@ public class JobProcesses {
 	}
 
 	public void setJobOfferService(final JobOfferService jobOfferService) {
-		Objects.requireNonNull(jobOfferService);
-		this.jobOfferService = jobOfferService;
+		this.jobOfferService = Objects.requireNonNull(jobOfferService);
 	}
 }
