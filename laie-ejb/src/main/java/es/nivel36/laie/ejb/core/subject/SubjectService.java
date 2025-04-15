@@ -42,4 +42,22 @@ public class SubjectService {
 		Objects.requireNonNull(query);
 		return subjectDao.searchSubject(query);
 	}
+
+	public void setSubjectDao(SubjectDao subjectDao) {
+		this.subjectDao = Objects.requireNonNull(subjectDao);
+	}
+
+	public void setUserDao(UserDao userDao) {
+		this.userDao = Objects.requireNonNull(userDao);
+	}
+
+	public void setCandidateDao(CandidateDao candidateDao) {
+		this.candidateDao = Objects.requireNonNull(candidateDao);
+	}
+
+	public void setContactDao(ContactDao contactDao) {
+		this.contactDao = Objects.requireNonNull(contactDao);
+	}
+	
+	
 }

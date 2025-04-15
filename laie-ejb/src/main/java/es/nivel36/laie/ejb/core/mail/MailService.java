@@ -24,12 +24,9 @@ import jakarta.mail.internet.MimeMessage;
 public class MailService {
 
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass().getName());
-
-	@Resource(lookup = "java:jboss/mail/Default")
-	private Session mailSession;
-
-	@Inject
-	private MailTemplateService mailTemplateService;
+	
+	private @Resource(lookup = "java:jboss/mail/Default") Session mailSession;
+	private @Inject MailTemplateService mailTemplateService;
 
 	private MimeMessage buildMessage(final Mail mail) throws MessagingException {
 		final MimeMessage message = new MimeMessage(this.mailSession);
@@ -63,6 +60,10 @@ public class MailService {
 	}
 
 	public void setMailSession(final Session mailSession) {
-		this.mailSession = mailSession;
+		this.mailSession = Objects.requireNonNull(mailSession);
+	}
+
+	public void setMailTemplateService(MailTemplateService mailTemplateService) {
+		this.mailTemplateService = Objects.requireNonNull(mailTemplateService);
 	}
 }

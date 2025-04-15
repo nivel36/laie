@@ -14,8 +14,15 @@ public class CandidateStaticsService extends AbstractStaticsService {
 	public long countCandidates(final LocalDate start, final LocalDate end) {
 		final LocalDateTime startDate = start.atStartOfDay();
 		final LocalDateTime endDate = end.atStartOfDay();
-		final String sql = "SELECT COUNT(a) FROM Action a WHERE a.type = 'CREATE' AND a.entityName = 'CANDIDATE' AND a.date <= :endDate AND a.date > :startDate";
-		final TypedQuery<Long> query = em.createQuery(sql, Long.class);
+		final String jpql = """
+				SELECT COUNT(a) 
+				FROM Action a 
+				WHERE a.type = 'CREATE' 
+				AND a.entityName = 'CANDIDATE' 
+				AND a.date <= :endDate 
+				AND a.date > :startDate
+				"""; 
+		final TypedQuery<Long> query = em.createQuery(jpql, Long.class);
 		query.setParameter("endDate", endDate);
 		query.setParameter("startDate", startDate);
 		return query.getSingleResult();
@@ -33,8 +40,16 @@ public class CandidateStaticsService extends AbstractStaticsService {
 	public long countUsersCandidates(final User user, final LocalDate start, final LocalDate end) {
 		final LocalDateTime startDate = start.atStartOfDay();
 		final LocalDateTime endDate = end.atStartOfDay();
-		final String sql = "SELECT COUNT(a) FROM Action a WHERE a.type = 'CREATE' AND a.entityName = 'CANDIDATE' AND a.date <= :endDate AND a.date > :startDate AND a.user = :user";
-		final TypedQuery<Long> query = em.createQuery(sql, Long.class);
+		final String jpql = """
+				SELECT COUNT(a) 
+				FROM Action a 
+				WHERE a.type = 'CREATE' 
+				AND a.entityName = 'CANDIDATE' 
+				AND a.date <= :endDate 
+				AND a.date > :startDate 
+				AND a.user = :user
+				"""; 
+		final TypedQuery<Long> query = em.createQuery(jpql, Long.class);
 		query.setParameter("endDate", endDate);
 		query.setParameter("startDate", startDate);
 		query.setParameter("user", user);

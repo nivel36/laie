@@ -96,7 +96,6 @@ public class DocumentTemplateService {
 	}
 
 	public void setDocumentDao(final DocumentTemplateDao documentTemplateDao) {
-		Objects.requireNonNull(documentTemplateDao);
-		this.documentTemplateDao = documentTemplateDao;
+		this.documentTemplateDao = Objects.requireNonNull(documentTemplateDao);
 	}
 }

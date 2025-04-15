@@ -12,13 +12,13 @@ public class MailTemplateService {
 
 	private Map<String, MailTemplate> templates;
 
-	public MailTemplate findMailTemplate(final String templateName) {
-		Objects.requireNonNull(templateName);
-		return this.templates.get(templateName);
-	}
-
 	@PostConstruct
 	public void init() {
 		this.templates = new HashMap<>();
+	}
+	
+	public MailTemplate findMailTemplate(final String templateName) {
+		Objects.requireNonNull(templateName);
+		return this.templates.get(templateName);
 	}
 }

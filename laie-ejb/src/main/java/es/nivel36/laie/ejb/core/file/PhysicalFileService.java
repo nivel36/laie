@@ -19,13 +19,10 @@ import jakarta.inject.Inject;
 public class PhysicalFileService {
 
 	private static final FileBucket TEMP_BUCKET = TemporalFileBucket.getInstance();
-
 	private static final FileBucket PRIVATE_BUCKET = PrivateFileBucket.getInstance();
-
 	private static final FileBucket PUBLIC_BUCKET = PublicFileBucket.getInstance();
 
 	private @Inject PhysicalFileJpaDao fileDao;
-
 	private @Inject @ConfigurationProperty(value = "file.directory") String fileDirectory;
 
 	public PhysicalFile findById(final Long id) {
@@ -129,5 +126,13 @@ public class PhysicalFileService {
 		}
 		file.setAbsolutePath(absolutePath);
 		file.setBucket(bucket.getName());
+	}
+
+	public void setFileDao(PhysicalFileJpaDao fileDao) {
+		this.fileDao = Objects.requireNonNull(fileDao);
+	}
+
+	public void setFileDirectory(String fileDirectory) {
+		this.fileDirectory = Objects.requireNonNull(fileDirectory);
 	}
 }

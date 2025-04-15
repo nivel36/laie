@@ -86,4 +86,12 @@ public class ActionService {
 	public void setSessionContext(final SessionContext sessionContext) {
 		this.sessionContext = Objects.requireNonNull(sessionContext);
 	}
+
+	public void setActionDao(final ActionDao actionDao) {
+		this.actionDao = Objects.requireNonNull(actionDao);
+	}
+
+	public void setUserService(final UserService userService) {
+		this.userService = Objects.requireNonNull(userService);
+	}
 }

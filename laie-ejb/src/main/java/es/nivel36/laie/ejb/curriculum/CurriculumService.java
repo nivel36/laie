@@ -78,7 +78,10 @@ public class CurriculumService {
 	}
 
 	public void setCurriculumDao(final CurriculumDao curriculumDao) {
-		Objects.requireNonNull(curriculumDao);
-		this.curriculumDao = curriculumDao;
+		this.curriculumDao = Objects.requireNonNull(curriculumDao);
+	}
+
+	public void setExporter(final CurriculumExporter exporter) {
+		this.exporter = Objects.requireNonNull(exporter);
 	}
 }

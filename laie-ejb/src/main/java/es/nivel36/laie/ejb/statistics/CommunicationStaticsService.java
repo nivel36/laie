@@ -14,8 +14,17 @@ public class CommunicationStaticsService extends AbstractStaticsService {
 	public long countMessages(final LocalDate start, final LocalDate end) {
 		final LocalDateTime startDate = start.atStartOfDay();
 		final LocalDateTime endDate = end.atStartOfDay();
-		final String sql = "SELECT COUNT(j) FROM JobSubmissionEvent j WHERE j.type = 'EMAIL' OR j.type = 'MESSAGE' OR j.type = 'PHONE_CALL' OR j.type = 'VIDEO_CALL' AND j.date < :endDate AND j.date > :startDate";
-		final TypedQuery<Long> query = em.createQuery(sql, Long.class);
+		final String jpql = """
+				SELECT COUNT(j) 
+				FROM JobSubmissionEvent j 
+				WHERE j.type = 'EMAIL' 
+				OR j.type = 'MESSAGE' 
+				OR j.type = 'PHONE_CALL' 
+				OR j.type = 'VIDEO_CALL' 
+				AND j.date < :endDate 
+				AND j.date > :startDate
+				"""; 
+		final TypedQuery<Long> query = em.createQuery(jpql, Long.class);
 		query.setParameter("startDate", startDate);
 		query.setParameter("endDate", endDate);
 		return query.getSingleResult();
@@ -33,8 +42,17 @@ public class CommunicationStaticsService extends AbstractStaticsService {
 	public long countUsersMessages(final User user, final LocalDate start, final LocalDate end) {
 		final LocalDateTime startDate = start.atStartOfDay();
 		final LocalDateTime endDate = end.atStartOfDay();
-		final String sql = "SELECT COUNT(j) FROM JobSubmissionEvent j WHERE j.type = 'EMAIL' OR j.type = 'MESSAGE' OR j.type = 'PHONE_CALL' OR j.type = 'VIDEO_CALL' AND j.date < :endDate AND j.date > :startDate and j.user = :user";
-		final TypedQuery<Long> query = em.createQuery(sql, Long.class);
+		final String jpql = """
+				SELECT COUNT(j) 
+				FROM JobSubmissionEvent j 
+				WHERE j.type = 'EMAIL' 
+				OR j.type = 'MESSAGE' 
+				OR j.type = 'PHONE_CALL' 
+				OR j.type = 'VIDEO_CALL' 
+				AND j.date < :endDate 
+				AND j.date > :startDate and j.user = :user
+				""";  
+		final TypedQuery<Long> query = em.createQuery(jpql, Long.class);
 		query.setParameter("startDate", startDate);
 		query.setParameter("endDate", endDate);
 		query.setParameter("user", user);

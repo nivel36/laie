@@ -11,8 +11,14 @@ import jakarta.persistence.TypedQuery;
 public class JobOfferStatisticsService extends AbstractStaticsService {
 
 	public long countActiveJobOffers(final LocalDate start, final LocalDate end) {
-		final String sql = "SELECT COUNT(j) FROM JobOffer j WHERE j.openDate <= :end AND (j.completionDate IS NULL OR j.completionDate > :start)";
-		final TypedQuery<Long> query = em.createQuery(sql, Long.class);
+		final String jpql = """
+				SELECT COUNT(j)
+				FROM JobOffer j 
+				WHERE j.openDate <= :end 
+				AND (j.completionDate IS NULL 
+				OR j.completionDate > :start)
+				""";
+		final TypedQuery<Long> query = em.createQuery(jpql, Long.class);
 		query.setParameter("start", start);
 		query.setParameter("end", end);
 		return query.getSingleResult();
@@ -28,8 +34,13 @@ public class JobOfferStatisticsService extends AbstractStaticsService {
 	}
 
 	public long countClosedJobOffers(final LocalDate start, final LocalDate end) {
-		final String sql = "SELECT COUNT(j) FROM JobOffer j WHERE j.completionDate <= :end AND j.completionDate > :start";
-		final TypedQuery<Long> query = em.createQuery(sql, Long.class);
+		final String jpql = """
+				SELECT COUNT(j) 
+				FROM JobOffer j 
+				WHERE j.completionDate <= :end 
+				AND j.completionDate > :start
+				""";
+		final TypedQuery<Long> query = em.createQuery(jpql, Long.class);
 		query.setParameter("start", start);
 		query.setParameter("end", end);
 		return query.getSingleResult();
@@ -45,9 +56,13 @@ public class JobOfferStatisticsService extends AbstractStaticsService {
 	}
 
 	public long countUsersActiveJobOffers(final User user, final LocalDate start, final LocalDate end) {
-
-		final String sql = "SELECT COUNT(j) FROM JobOffer j WHERE j.openDate <= :end AND (j.completionDate IS NULL OR j.completionDate > :start and j.owner = :user)";
-		final TypedQuery<Long> query = em.createQuery(sql, Long.class);
+		final String jpql = """
+				SELECT COUNT(j) 
+				FROM JobOffer j 
+				WHERE j.openDate <= :end 
+				AND (j.completionDate IS NULL OR j.completionDate > :start and j.owner = :user)
+				"""; 
+		final TypedQuery<Long> query = em.createQuery(jpql, Long.class);
 		query.setParameter("start", start);
 		query.setParameter("end", end);
 		query.setParameter("user", user);
@@ -64,8 +79,14 @@ public class JobOfferStatisticsService extends AbstractStaticsService {
 	}
 
 	public long countUsersClosedJobOffers(final User user, final LocalDate start, final LocalDate end) {
-		final String sql = "SELECT COUNT(j) FROM JobOffer j WHERE j.completionDate <= :end AND j.completionDate > :start AND j.owner = :user";
-		final TypedQuery<Long> query = em.createQuery(sql, Long.class);
+		final String jpql = """
+				SELECT COUNT(j) 
+				FROM JobOffer j 
+				WHERE j.completionDate <= :end 
+				AND j.completionDate > :start 
+				AND j.owner = :user
+				"""; 
+		final TypedQuery<Long> query = em.createQuery(jpql, Long.class);
 		query.setParameter("start", start);
 		query.setParameter("end", end);
 		query.setParameter("user", user);
