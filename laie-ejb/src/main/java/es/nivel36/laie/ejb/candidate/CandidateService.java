@@ -187,7 +187,7 @@ public class CandidateService {
 	 * @return list of {@link Origin} entities
 	 */
 	public List<Origin> findCandidateOrigins() {
-		logger.debug("Retrieving all Candidate origins");
+		logger.debug("Finding all Candidate origins");
 		final List<Origin> origins = this.candidateDao.findAllOrigins();
 		logger.trace("Origins found: {}", origins);
 		return origins;
@@ -203,7 +203,7 @@ public class CandidateService {
 	public List<Candidate> findCandidateByJobOffer(final JobOffer jobOffer, final Page page) {
 		Objects.requireNonNull(jobOffer, "JobOffer must not be null");
 		Objects.requireNonNull(page, "Page must not be null");
-		logger.debug("Retrieving Candidates for JobOffer: {}", jobOffer);
+		logger.debug("Finding Candidates for JobOffer: {}", jobOffer);
 		final List<Candidate> list = this.candidateDao.findCandidatesByJobOffer(jobOffer, page);
 		logger.trace("Candidates found for JobOffer {}: {}", jobOffer, list);
 		return list;
@@ -217,7 +217,7 @@ public class CandidateService {
 	 */
 	public Candidate findCandidateByEmail(final String email) {
 		Objects.requireNonNull(email, "Email must not be null");
-		logger.debug("Retrieving Candidate by email: {}", email);
+		logger.debug("Finding Candidate by email: {}", email);
 		final Candidate cand = this.candidateDao.findCandidateByEmail(email);
 		logger.trace("Candidate {} found for email {}.", cand, email);
 		return cand;
@@ -230,7 +230,7 @@ public class CandidateService {
 	 * @return the matching {@link Candidate}, or null if not found
 	 */
 	public Candidate findCandidateById(final long candidateId) {
-		logger.debug("Retrieving Candidate by ID: {}", candidateId);
+		logger.debug("Finding Candidate by ID: {}", candidateId);
 		final Candidate cand = this.candidateDao.find(Candidate.class, candidateId);
 		logger.trace("Candidate {} found for ID {}.", cand, candidateId);
 		return cand;
@@ -245,7 +245,7 @@ public class CandidateService {
 	 * @throws NullPointerException if candidateId is null
 	 */
 	public Candidate findAllCandidateData(final long candidateId) {
-		logger.debug("Retrieving all Candidate data for ID: {}", candidateId);
+		logger.debug("Finding all Candidate data for ID: {}", candidateId);
 		final Candidate cand = this.candidateDao.findAllData(candidateId);
 		logger.trace("Full Candidate data {} retrieved for ID {}.", cand, candidateId);
 		return cand;
@@ -264,7 +264,7 @@ public class CandidateService {
 	public List<es.nivel36.laie.ejb.candidate.File> findCandidateFiles(final Candidate candidate, final Page page) {
 		Objects.requireNonNull(candidate, "Candidate must not be null");
 		Objects.requireNonNull(page, "Page must not be null");
-		logger.debug("Retrieving files for Candidate: {}", candidate);
+		logger.debug("Finding files for Candidate: {}", candidate);
 		final List<es.nivel36.laie.ejb.candidate.File> files = this.fileDao.findFilesByCandidate(candidate, page);
 		logger.trace("Files {} retrieved for Candidate {}.", files, candidate);
 		return files;

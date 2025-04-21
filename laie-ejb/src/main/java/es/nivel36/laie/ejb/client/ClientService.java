@@ -18,8 +18,9 @@ import jakarta.inject.Inject;
 /**
  * Stateless EJB service for managing Client entities.
  * <p>
- * Provides methods to add, update, find, and search Clients, firing appropriate
- * creation and update events for auditing purposes.
+ * Provides methods for adding, updating, finding and searching Clients. For
+ * data consistency reasons, there is no way to delete a client. <br/>
+ * This class triggers client creation and update events.
  */
 @Stateless
 public class ClientService {
@@ -33,13 +34,12 @@ public class ClientService {
 	/**
 	 * Adds a new Client to the system.
 	 * <p>
-	 * Validates that the Client is not null and that its CIF does not already
-	 * exist. Fires a creation event after successful insertion.
+	 * A client can only be added if its CIF is not in use. <br/>
+	 * Fires a creation event after successful insertion.
 	 *
 	 * @param client the {@link Client} to add; must not be null
 	 * @throws NullPointerException  if client is null
-	 * @throws DuplicateCifException if client.getCif() is not null and already
-	 *                               exists
+	 * @throws DuplicateCifException if client's CIF is not null and already exists
 	 */
 	public void addClient(final Client client) throws DuplicateCifException {
 		Objects.requireNonNull(client, "Client must not be null");
@@ -55,8 +55,8 @@ public class ClientService {
 	/**
 	 * Updates an existing Client.
 	 * <p>
-	 * Validates that the Client is not null, checks for CIF duplication if changed,
-	 * performs the update and fires an update event.
+	 * Checks for CIF duplication if changed.<br/>
+	 * Fires an update event.
 	 *
 	 * @param client the {@link Client} to update; must not be null
 	 * @return the updated {@link Client}

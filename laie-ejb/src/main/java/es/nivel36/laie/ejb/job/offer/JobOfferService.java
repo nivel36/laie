@@ -103,7 +103,7 @@ public class JobOfferService {
 
 	public JobOfferProcess findJobOfferProcessByName(final String name) {
 		Objects.requireNonNull(name);
-		logger.debug("Retrieving job offer process by name {}", name);
+		logger.debug("Finding job offer process by name {}", name);
 
 		final JobOfferProcess jobOfferProcess = this.jobOfferProcessDao.findJobOfferProcessByName(name);
 		logger.trace("Job offer process for name {} found: {}", name, jobOfferProcess);
@@ -112,7 +112,7 @@ public class JobOfferService {
 
 	public JobOffer findJobOfferById(final Long id) {
 		Objects.requireNonNull(id);
-		logger.debug("Retrieving job offer by id {}", id);
+		logger.debug("Finding job offer by id {}", id);
 
 		final JobOffer jobOffer = this.jobOfferDao.find(JobOffer.class, id);
 		logger.trace("Job offer found for id {}: {}", id, jobOffer);
@@ -121,7 +121,7 @@ public class JobOfferService {
 
 	public JobOffer findJobOfferData(final Long id) {
 		Objects.requireNonNull(id);
-		logger.debug("Retrieving job offer data by id {}", id);
+		logger.debug("Finding job offer data by id {}", id);
 
 		final JobOffer jobOfferData = this.jobOfferDao.findJobOfferData(id);
 		logger.trace("Job offer data found for id {}: {}", id, jobOfferData);
@@ -131,7 +131,7 @@ public class JobOfferService {
 	public List<JobOffer> findJobOffersByCandidate(final Candidate candidate, final Page page) {
 		Objects.requireNonNull(candidate);
 		Objects.requireNonNull(page);
-		logger.debug("Retrieving all job offers for candidate {}", candidate);
+		logger.debug("Finding all job offers for candidate {}", candidate);
 
 		final List<JobOffer> jobOffers = this.jobOfferDao.findJobOffersByCandidate(candidate, page);
 		logger.trace("Job offers found for candidate {}: {}", candidate, jobOffers);
@@ -141,7 +141,7 @@ public class JobOfferService {
 	public List<JobOffer> findJobOffersByClient(final Client client, final Page page) {
 		Objects.requireNonNull(client);
 		Objects.requireNonNull(page);
-		logger.debug("Retrieving all job offers for client {}", client);
+		logger.debug("Finding all job offers for client {}", client);
 
 		final List<JobOffer> jobOffers = this.jobOfferDao.findJobOffersByClient(client, page);
 		logger.trace("Job offers found for client {}: {}", client, jobOffers);
@@ -151,7 +151,7 @@ public class JobOfferService {
 	public List<JobOffer> findJobOffersByOwnerOrRecruiter(final User user, final Page page) {
 		Objects.requireNonNull(user);
 		Objects.requireNonNull(page);
-		logger.debug("Retrieving all job offers for owner or recruiter {}", user);
+		logger.debug("Finding all job offers for owner or recruiter {}", user);
 
 		final List<JobOffer> jobOffers = this.jobOfferDao.findJobOffersByOwnerOrRecruiter(user, page);
 		logger.trace("Job offers found for owner or recruiter {}: {}", user, jobOffers);

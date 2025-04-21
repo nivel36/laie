@@ -32,8 +32,9 @@ public class UserService {
 	/**
 	 * Adds a new User to the system.
 	 * <p>
-	 * Validates that the User is not null, the email is unique, and the manager (if
-	 * provided) is valid. Fires exceptions if business rules are violated.
+	 * To register the user, your email address must not have been used by a
+	 * previous user and the manager (if provided) is not the User itself and not a
+	 * subordinate of the User.
 	 *
 	 * @param user the {@link User} to add; must not be null
 	 * @throws NullPointerException    if user is null
@@ -57,13 +58,6 @@ public class UserService {
 		logger.trace("User {} added successfully.", user);
 	}
 
-	/**
-	 * Validates that a User's manager is not the User itself and not a subordinate
-	 * of the User.
-	 *
-	 * @param user the {@link User} whose manager is being validated
-	 * @throws BadManagerException if manager is invalid
-	 */
 	private void validateManagerForUser(final User user) throws BadManagerException {
 		Objects.requireNonNull(user, "User must not be null");
 		final User manager = user.getManager();
@@ -81,8 +75,9 @@ public class UserService {
 	/**
 	 * Updates an existing User.
 	 * <p>
-	 * Validates that the User is not null, email uniqueness, manager changes, and
-	 * file removal if the profile picture changed.
+	 * To update the user, your email address must not have been used by a
+	 * previous user and the manager (if provided) is not the User itself and not a
+	 * subordinate of the User.
 	 *
 	 * @param user the {@link User} to update; must not be null
 	 * @return the updated {@link User}
@@ -118,13 +113,6 @@ public class UserService {
 		return updated;
 	}
 
-	/**
-	 * Checks if two picture references differ (added, removed, or changed).
-	 *
-	 * @param picture     the new picture
-	 * @param pictureInDb the existing picture in database
-	 * @return true if pictures differ, false otherwise
-	 */
 	private boolean hasPictureChanged(final PhysicalFile picture, final PhysicalFile pictureInDb) {
 		if ((picture == null) != (pictureInDb == null)) {
 			return true;
@@ -135,15 +123,6 @@ public class UserService {
 		return !picture.equals(pictureInDb);
 	}
 
-	/**
-	 * Handles logic for changing a User's manager, including removal, no-change,
-	 * and assignment.
-	 *
-	 * @param user       the {@link User} being updated
-	 * @param oldManager the current manager
-	 * @param newManager the manager to assign
-	 * @throws BadManagerException if newManager is invalid
-	 */
 	private void changeUserManager(final User user, final User oldManager, final User newManager)
 			throws BadManagerException {
 		// Removing manager
@@ -195,7 +174,7 @@ public class UserService {
 	 */
 	public User findSessionUserData(final String email) {
 		Objects.requireNonNull(email, "Email must not be null");
-		logger.debug("Retrieving session User data by email: {}", email);
+		logger.debug("Finding session User data by email: {}", email);
 		final User user = this.userDao.findSessionUserData(email);
 		logger.trace("Session User data {} found for email {}.", user, email);
 		return user;
@@ -223,7 +202,7 @@ public class UserService {
 	 * @return the detailed {@link User} information
 	 */
 	public User findUserDetailsById(final long userId) {
-		logger.debug("Retrieving User details by ID: {}", userId);
+		logger.debug("Finding User details by ID: {}", userId);
 		final User user = this.userDao.findUserDetailsById(userId);
 		logger.trace("User details {} found for ID {}.", user, userId);
 		return user;
