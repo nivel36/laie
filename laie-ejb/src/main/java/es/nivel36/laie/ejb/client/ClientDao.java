@@ -19,6 +19,6 @@ public class ClientDao extends AbstractDao {
 			final String[] searchFacets) {
 		Objects.requireNonNull(page);
 		final String[] fields = new String[] { "_name", "_cif" };
-		return searchFacade.search(Client.class, page, sortField, searchFacets, searchText, fields);
+		return this.searchFacade.search(Client.class, page, sortField, searchFacets, searchText, fields);
 	}
 }

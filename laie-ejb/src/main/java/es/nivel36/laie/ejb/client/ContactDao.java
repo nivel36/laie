@@ -23,7 +23,7 @@ public class ContactDao extends AbstractDao {
 				LEFT JOIN FETCH c.client
 				WHERE c.client = :client
 				""";
-		final TypedQuery<Contact> query = em.createQuery(jpql, Contact.class);
+		final TypedQuery<Contact> query = this.em.createQuery(jpql, Contact.class);
 		query.setParameter("client", client);
 		this.paginate(page, query);
 		return query.getResultList();
@@ -49,7 +49,7 @@ public class ContactDao extends AbstractDao {
 				FROM Contact c
 				WHERE c.client = :client
 				""";
-		final TypedQuery<Long> query = em.createQuery(jpql, Long.class);
+		final TypedQuery<Long> query = this.em.createQuery(jpql, Long.class);
 		query.setParameter("client", client);
 		return query.getFirstResult();
 	}
@@ -62,7 +62,7 @@ public class ContactDao extends AbstractDao {
 					FROM Contact c
 					WHERE c.email=:email
 					""";
-			final TypedQuery<Contact> query = em.createQuery(jpql, Contact.class);
+			final TypedQuery<Contact> query = this.em.createQuery(jpql, Contact.class);
 			query.setParameter("email", email);
 			return query.getSingleResult();
 		} catch (final NoResultException e) {
@@ -75,6 +75,6 @@ public class ContactDao extends AbstractDao {
 		Objects.requireNonNull(searchText);
 		Objects.requireNonNull(page);
 		final String[] fields = new String[] { "_name", "_surname, _email" };
-		return searchFacade.search(Contact.class, page, sortField, searchFacets, searchText, fields);
+		return this.searchFacade.search(Contact.class, page, sortField, searchFacets, searchText, fields);
 	}
 }

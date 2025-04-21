@@ -140,7 +140,7 @@ public class Client extends AbstractEntity implements Ownerable, Erasable, Audit
 	public void setPhoneNumber(final String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-	
+
 	@Override
 	public String getEntityTitle() {
 		return this.name;

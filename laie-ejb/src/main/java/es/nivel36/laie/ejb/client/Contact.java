@@ -57,7 +57,7 @@ public class Contact extends AbstractEntity implements Subject, Auditable {
 	@FullTextField(name = "_name")
 	@KeywordField(name = "name", sortable = Sortable.YES)
 	protected String name;
-	
+
 	@NotBlank
 	@Column(name = "SURNAME", nullable = false, length = 128)
 	@FullTextField(name = "_surname")
@@ -85,11 +85,11 @@ public class Contact extends AbstractEntity implements Subject, Auditable {
 		if (this == obj) {
 			return true;
 		}
-		if (!super.equals(obj) || (getClass() != obj.getClass())) {
+		if (!super.equals(obj) || (this.getClass() != obj.getClass())) {
 			return false;
 		}
 		final Contact other = (Contact) obj;
-		return Objects.equals(email, other.email);
+		return Objects.equals(this.email, other.email);
 	}
 
 	public Client getClient() {
@@ -114,7 +114,7 @@ public class Contact extends AbstractEntity implements Subject, Auditable {
 	}
 
 	public Set<Meeting> getMeetings() {
-		return meetings;
+		return this.meetings;
 	}
 
 	@Override
@@ -138,7 +138,7 @@ public class Contact extends AbstractEntity implements Subject, Auditable {
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		final int result = prime * Objects.hash(email);
+		final int result = prime * Objects.hash(this.email);
 		return result;
 	}
 

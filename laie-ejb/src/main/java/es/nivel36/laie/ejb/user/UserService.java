@@ -15,6 +15,12 @@ import es.nivel36.laie.ejb.core.model.SortField;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 
+/**
+ * Stateless EJB service for managing User entities.
+ * <p>
+ * Provides methods to add, update, find, and search Users, handle file uploads,
+ * and enforce business rules such as email uniqueness and manager assignments.
+ */
 @Stateless
 public class UserService {
 
@@ -23,178 +29,290 @@ public class UserService {
 	private @Inject PhysicalFileService fileService;
 	private @Inject UserDao userDao;
 
+	/**
+	 * Adds a new User to the system.
+	 * <p>
+	 * Validates that the User is not null, the email is unique, and the manager (if
+	 * provided) is valid. Fires exceptions if business rules are violated.
+	 *
+	 * @param user the {@link User} to add; must not be null
+	 * @throws NullPointerException    if user is null
+	 * @throws DuplicateEmailException if email already exists
+	 * @throws BadManagerException     if assigned manager is invalid
+	 */
 	public void addUser(final User user) throws DuplicateEmailException, BadManagerException {
-		Objects.requireNonNull(user);
-		logger.debug("Adding user {}", user);
+		Objects.requireNonNull(user, "User must not be null");
+		logger.debug("Adding new User: {}", user);
+
 		final String email = user.getEmail();
 		if (this.userDao.emailExists(email)) {
-			throw new DuplicateEmailException();
+			throw new DuplicateEmailException("Email already exists: " + email);
 		}
 
 		if (user.getManager() != null) {
 			this.validateManagerForUser(user);
 		}
+
 		this.userDao.insert(user);
-		logger.trace("User {} added successfully", user);
+		logger.trace("User {} added successfully.", user);
 	}
 
+	/**
+	 * Validates that a User's manager is not the User itself and not a subordinate
+	 * of the User.
+	 *
+	 * @param user the {@link User} whose manager is being validated
+	 * @throws BadManagerException if manager is invalid
+	 */
 	private void validateManagerForUser(final User user) throws BadManagerException {
+		Objects.requireNonNull(user, "User must not be null");
 		final User manager = user.getManager();
 		if (user.equals(manager)) {
-			logger.warn("User {} cannot be their own manager", user);
+			logger.warn("User {} cannot be their own manager.", user);
 			throw new BadManagerException("User cannot be their own manager");
 		}
 		if (this.userDao.isSubordinateUser(user, manager)) {
-			logger.warn("Cannot assign manager {} to user {} because the manager is subordinate to the user", manager,
+			logger.warn("Cannot assign manager {} to user {} because the manager is subordinate to the user.", manager,
 					user);
 			throw new BadManagerException("User is already managing this manager");
 		}
 	}
 
+	/**
+	 * Updates an existing User.
+	 * <p>
+	 * Validates that the User is not null, email uniqueness, manager changes, and
+	 * file removal if the profile picture changed.
+	 *
+	 * @param user the {@link User} to update; must not be null
+	 * @return the updated {@link User}
+	 * @throws NullPointerException    if user is null
+	 * @throws DuplicateEmailException if new email already exists
+	 * @throws BadManagerException     if new manager is invalid
+	 */
 	public User updateUser(final User user) throws DuplicateEmailException, BadManagerException {
-		Objects.requireNonNull(user);
-		logger.debug("Updating user {}", user);
-		final User userInDatabase = this.userDao.find(User.class, user.getId());
+		Objects.requireNonNull(user, "User must not be null");
+		logger.debug("Updating User: {}", user);
 
-		// Check if the e-mail has been modified and is being used by another user.
+		final User persisted = this.userDao.find(User.class, user.getId());
+
+		// Check email uniqueness
 		final String newEmail = user.getEmail();
-		final String oldEmail = userInDatabase.getEmail();
-		this.emailExists(newEmail, oldEmail);
-
-		// Check if the manager has changed and if he/she meets the requirements to be
-		// the new manager.
-		this.changeUserManager(userInDatabase, userInDatabase.getManager(), user.getManager());
-
-		final PhysicalFile picture = user.getPicture();
-		final PhysicalFile pictureInDatabase = userInDatabase.getPicture();
-		if (hasPictureChanged(picture, pictureInDatabase) && pictureInDatabase != null) {
-			this.fileService.removeFile(pictureInDatabase);
+		final String oldEmail = persisted.getEmail();
+		if (!newEmail.equals(oldEmail) && this.userDao.emailExists(newEmail)) {
+			throw new DuplicateEmailException("Email already exists: " + newEmail);
 		}
-		final User updatedUser = this.userDao.update(user);
-		logger.trace("User {} updated successfully", updatedUser);
-		return updatedUser;
 
+		// Validate manager change
+		this.changeUserManager(user, persisted.getManager(), user.getManager());
+
+		// Handle picture replacement
+		final PhysicalFile newPic = user.getPicture();
+		final PhysicalFile oldPic = persisted.getPicture();
+		if (this.hasPictureChanged(newPic, oldPic) && (oldPic != null)) {
+			this.fileService.removeFile(oldPic);
+		}
+
+		final User updated = this.userDao.update(user);
+		logger.trace("User {} updated successfully.", updated);
+		return updated;
 	}
 
-	private void emailExists(final String newEmail, final String oldEmail) throws DuplicateEmailException {
-		if (!newEmail.equals(oldEmail)) {
-			if (this.userDao.emailExists(newEmail)) {
-				throw new DuplicateEmailException();
-			}
-		}
-	}
-
-	private boolean hasPictureChanged(final PhysicalFile picture, final PhysicalFile pictureInDatabase) {
-		if (picture == null != (pictureInDatabase == null)) {
+	/**
+	 * Checks if two picture references differ (added, removed, or changed).
+	 *
+	 * @param picture     the new picture
+	 * @param pictureInDb the existing picture in database
+	 * @return true if pictures differ, false otherwise
+	 */
+	private boolean hasPictureChanged(final PhysicalFile picture, final PhysicalFile pictureInDb) {
+		if ((picture == null) != (pictureInDb == null)) {
 			return true;
 		}
-		if (picture == null && pictureInDatabase == null) {
+		if (picture == null) {
 			return false;
 		}
-		return !pictureInDatabase.equals(picture);
+		return !picture.equals(pictureInDb);
 	}
 
+	/**
+	 * Handles logic for changing a User's manager, including removal, no-change,
+	 * and assignment.
+	 *
+	 * @param user       the {@link User} being updated
+	 * @param oldManager the current manager
+	 * @param newManager the manager to assign
+	 * @throws BadManagerException if newManager is invalid
+	 */
 	private void changeUserManager(final User user, final User oldManager, final User newManager)
 			throws BadManagerException {
-		// Deleting manager
-		if (newManager == null && oldManager != null) {
-			logger.debug("Removing manager from user {}", user);
+		// Removing manager
+		if ((newManager == null) && (oldManager != null)) {
+			logger.debug("Removing manager from User: {}", user);
 			user.setManager(null);
 			return;
 		}
 
-		// No changes
-		if (newManager == null && oldManager == null || newManager.equals(oldManager)) {
-			logger.debug("Manager not changed");
+		// No change
+		if (((newManager == null) && (oldManager == null)) || newManager.equals(oldManager)) {
+			logger.debug("Manager not changed for User: {}", user);
 			return;
 		}
 
-		// Updating manager
-		logger.debug("Changing manager from {} to {} of user {}", oldManager, newManager, user);
+		// Assigning new manager
+		logger.debug("Changing manager from {} to {} for User: {}", oldManager, newManager, user);
 
 		if (user.equals(newManager)) {
-			logger.warn("User {} cannot be their own manager", user);
+			logger.warn("User {} cannot be their own manager.", user);
 			throw new BadManagerException("User cannot be their own manager");
 		}
 		if (this.userDao.isSubordinateUser(user, newManager)) {
-			logger.warn("Cannot assign manager {} to user {} because the manager is subordinate to the user",
+			logger.warn("Cannot assign manager {} to User {} because the manager is subordinate to the user.",
 					newManager, user);
 			throw new BadManagerException("User is already managing this manager");
 		}
 	}
 
+	/**
+	 * Finds a User by its unique identifier.
+	 *
+	 * @param userId the ID of the User to find
+	 * @return the {@link User} with the given ID, or null if not found
+	 */
 	public User findUserById(final long userId) {
-		logger.debug("Retrieving user by id {}", userId);
+		logger.debug("Finding User by ID: {}", userId);
 		final User user = this.userDao.find(User.class, userId);
-		logger.trace("User {} found by id {}", user, userId);
+		logger.trace("User {} found with ID {}.", user, userId);
 		return user;
 	}
-	
+
+	/**
+	 * Retrieves session-specific data for a User by email.
+	 *
+	 * @param email the email of the User; must not be null
+	 * @return the {@link User} session data
+	 * @throws NullPointerException if email is null
+	 */
 	public User findSessionUserData(final String email) {
-		Objects.requireNonNull(email);
-		logger.debug("Retrieving session user data by mail {}", email);
+		Objects.requireNonNull(email, "Email must not be null");
+		logger.debug("Retrieving session User data by email: {}", email);
 		final User user = this.userDao.findSessionUserData(email);
-		logger.trace("Session User data {} found by mail{}", user, email);
+		logger.trace("Session User data {} found for email {}.", user, email);
 		return user;
 	}
 
+	/**
+	 * Finds a User by email.
+	 *
+	 * @param email the email of the User; must not be null
+	 * @return the {@link User} with the given email, or null if not found
+	 * @throws NullPointerException if email is null
+	 */
 	public User findUserByEmail(final String email) {
-		Objects.requireNonNull(email);
-		logger.debug("Retrieving user by email {}", email);
+		Objects.requireNonNull(email, "Email must not be null");
+		logger.debug("Finding User by email: {}", email);
 		final User user = this.userDao.findUserByEmail(email);
-		logger.trace("User {} found by email {}", user, email);
+		logger.trace("User {} found with email {}.", user, email);
 		return user;
 	}
 
+	/**
+	 * Retrieves detailed User information by ID.
+	 *
+	 * @param userId the ID of the User; must not be null
+	 * @return the detailed {@link User} information
+	 */
 	public User findUserDetailsById(final long userId) {
-		logger.debug("Retrieving user details by user id {}", userId);
+		logger.debug("Retrieving User details by ID: {}", userId);
 		final User user = this.userDao.findUserDetailsById(userId);
-		logger.trace("User details of user {} found by id {}", user, userId);
+		logger.trace("User details {} found for ID {}.", user, userId);
 		return user;
 	}
 
+	/**
+	 * Finds Subordinate Users for a given User.
+	 *
+	 * @param user the {@link User} whose subordinates to retrieve; must not be null
+	 * @return list of subordinate Users
+	 * @throws NullPointerException if user is null
+	 */
 	public List<User> findSubordinateUsers(final User user) {
-		Objects.requireNonNull(user);
-		logger.debug("Retrieving subordinate users of user {}", user);
-		final List<User> users = this.userDao.findSubordinateUsers(user);
-		logger.trace("Subordinate users {} of user {} found ", users, user);
-		return users;
+		Objects.requireNonNull(user, "User must not be null");
+		logger.debug("Finding subordinate Users of User: {}", user);
+		final List<User> subs = this.userDao.findSubordinateUsers(user);
+		logger.trace("Subordinate Users {} found for User {}.", subs, user);
+		return subs;
 	}
 
+	/**
+	 * Checks if one User is subordinate to another.
+	 *
+	 * @param user    the {@link User} to check; must not be null
+	 * @param manager the {@link User} manager; must not be null
+	 * @return true if user is subordinate to manager, false otherwise
+	 * @throws NullPointerException if either argument is null
+	 */
 	public boolean isSubordinateUser(final User user, final User manager) {
-		Objects.requireNonNull(user);
-		Objects.requireNonNull(manager);
-		logger.debug("Checking if user {} is subordinate of {}", user, manager);
-		boolean isSubordinateUser = this.userDao.isSubordinateUser(user, manager);
-		if (isSubordinateUser) {
-			logger.trace("User {} is subordinate user of {}", user, manager);
-		} else {
-			logger.trace("User {} isn't subordinate user of {}", user, manager);
-		}
-		return isSubordinateUser;
+		Objects.requireNonNull(user, "User must not be null");
+		Objects.requireNonNull(manager, "Manager must not be null");
+		logger.debug("Checking if User {} is subordinate to {}", user, manager);
+		final boolean result = this.userDao.isSubordinateUser(user, manager);
+		logger.trace(result ? "User {} is subordinate to {}." : "User {} is not subordinate to {}.", user, manager);
+		return result;
 	}
 
+	/**
+	 * Searches for Users matching the given text with pagination.
+	 *
+	 * @param searchText the text to search for; may be null to retrieve all Users
+	 * @param page       the {@link Page} object containing pagination settings;
+	 *                   must not be null
+	 * @return a {@link SearchResult} of matching Users
+	 */
 	public SearchResult<User> searchUsers(final String searchText, final Page page) {
 		return this.searchUsers(searchText, page, null, null);
 	}
 
+	/**
+	 * Searches for Users matching the given text with pagination, sorting, and
+	 * facets.
+	 *
+	 * @param searchText   the text to search for; may be null to retrieve all Users
+	 * @param page         the {@link Page} object containing pagination settings;
+	 *                     must not be null
+	 * @param sortField    the {@link SortField} to order results by; may be null
+	 * @param searchFacets an array of facets to apply; may be null
+	 * @return a {@link SearchResult} of matching Users
+	 * @throws NullPointerException if page is null
+	 */
 	public SearchResult<User> searchUsers(final String searchText, final Page page, final SortField sortField,
 			final String[] searchFacets) {
-		Objects.requireNonNull(page);
-		logger.debug("Executing user search with searchText: '{}', page: {}, sortField: {}, searchFacets: {}",
-				searchText, page, sortField, (searchFacets != null ? Arrays.toString(searchFacets) : "none"));
+		Objects.requireNonNull(page, "Page must not be null");
+		logger.debug("Searching Users with text: '{}', page: {}, sortField: {}, facets: {}", searchText, page,
+				sortField, (searchFacets != null ? Arrays.toString(searchFacets) : "none"));
 
 		final SearchResult<User> result = this.userDao.searchUsers(searchText, page, sortField, searchFacets);
-		logger.trace("User search completed with searchText: '{}'. Total results: {}.", searchText,
-				result.total().hitCount());
+		logger.trace("User search completed with text '{}' and total hits: {}.", searchText, result.total().hitCount());
 		return result;
 	}
 
+	/**
+	 * Sets the UserDao instance, primarily for testing.
+	 *
+	 * @param userDao the dao to set; must not be null
+	 * @throws NullPointerException if userDao is null
+	 */
 	public void setUserDao(final UserDao userDao) {
-		this.userDao = Objects.requireNonNull(userDao);
+		this.userDao = Objects.requireNonNull(userDao, "UserDao must not be null");
 	}
 
+	/**
+	 * Sets the PhysicalFileService instance, primarily for testing.
+	 *
+	 * @param fileService the file service to set; must not be null
+	 * @throws NullPointerException if fileService is null
+	 */
 	public void setFileService(final PhysicalFileService fileService) {
-		this.fileService = Objects.requireNonNull(fileService);
+		this.fileService = Objects.requireNonNull(fileService, "FileService must not be null");
 	}
 }

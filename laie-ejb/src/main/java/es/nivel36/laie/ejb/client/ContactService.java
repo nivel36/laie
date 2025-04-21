@@ -23,7 +23,7 @@ public class ContactService {
 
 	public void addContact(final Contact contact) {
 		logger.debug("Adding contact {}", contact);
-		contactDao.insert(contact);
+		this.contactDao.insert(contact);
 		this.updateClientEvent.fire(contact.getClient());
 	}
 
