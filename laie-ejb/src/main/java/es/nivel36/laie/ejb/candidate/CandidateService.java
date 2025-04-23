@@ -39,20 +39,12 @@ public class CandidateService {
 
 	private static final Logger logger = LoggerFactory.getLogger(CandidateService.class);
 
-	@Inject
-	private CandidateDao candidateDao;
-	@Inject
-	private PhysicalFileService fileService;
-	@Inject
-	private TagDao tagDao;
-	@Inject
-	private FileDao fileDao;
-	@Inject
-	@Create
-	private Event<Auditable> createCandidateEvent;
-	@Inject
-	@Update
-	private Event<Auditable> updateCandidateEvent;
+	private @Inject CandidateDao candidateDao;
+	private @Inject PhysicalFileService fileService;
+	private @Inject TagDao tagDao;
+	private @Inject FileDao fileDao;
+	private @Inject @Create Event<Auditable> createCandidateEvent;
+	private @Inject @Update Event<Auditable> updateCandidateEvent;
 
 	/**
 	 * Adds a new Candidate.

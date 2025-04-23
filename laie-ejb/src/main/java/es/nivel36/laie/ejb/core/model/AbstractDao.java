@@ -1,16 +1,10 @@
 package es.nivel36.laie.ejb.core.model;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jakarta.inject.Inject;
-import jakarta.persistence.CacheStoreMode;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.FlushModeType;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
@@ -18,32 +12,69 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 
+/**
+ * Base class for Data Access Objects (DAO) providing generic CRUD operations
+ * and queries using the Criteria API.
+ * <p>
+ * Subclasses should define the persistence unit via {@code @PersistenceContext}
+ * and may optionally inject a {@link SearchFacade} for advanced search
+ * capabilities.
+ * </p>
+ */
 public abstract class AbstractDao {
 
-	private static final Logger logger = LoggerFactory.getLogger(AbstractDao.class);
-
-	private static final String CACHE_STORE_MODE = "jakarta.persistence.cache.storeMode";
-
+	/**
+	 * EntityManager for interacting with the persistence context.
+	 */
 	protected @PersistenceContext(unitName = "laie") EntityManager em;
+
+	/**
+	 * Optional component for advanced search operations.
+	 */
 	protected @Inject SearchFacade searchFacade;
 
+	/**
+	 * Persists the given entity in the database.
+	 *
+	 * @param <E>    the type of the entity implementing {@link Identifiable}
+	 * @param entity the entity instance to persist; must not be {@code null}
+	 * @throws NullPointerException if {@code entity} is {@code null}
+	 */
 	public <E extends Identifiable> void insert(final E entity) {
-		Objects.requireNonNull(entity);
+		Objects.requireNonNull(entity, "Entity must not be null");
 		this.em.persist(entity);
 	}
 
+	/**
+	 * Merges the state of the given entity into the current persistence context.
+	 *
+	 * @param <E>    the type of the entity implementing {@link Identifiable}
+	 * @param entity the entity instance with changes; must not be {@code null}
+	 * @return the managed instance of the entity
+	 * @throws NullPointerException if {@code entity} is {@code null}
+	 */
 	public <E extends Identifiable> E update(final E entity) {
-		Objects.requireNonNull(entity);
+		Objects.requireNonNull(entity, "Entity must not be null");
 		return this.em.merge(entity);
 	}
 
+	/**
+	 * Removes the given entity from the database.
+	 *
+	 * @param <T>    the type of the entity implementing {@link Identifiable}
+	 * @param type   the class of the entity; must not be {@code null}
+	 * @param entity the entity instance to remove; must not be {@code null}
+	 * @throws NullPointerException  if {@code type} or {@code entity} is
+	 *                               {@code null}
+	 * @throws IllegalStateException if the entity's identifier is less than or
+	 *                               equal to zero
+	 */
 	public <T extends Identifiable> void delete(final Class<T> type, final T entity) {
-		Objects.requireNonNull(entity);
-		Objects.requireNonNull(type);
-		if (entity.getId() == 0) {
-			throw new IllegalStateException();
+		Objects.requireNonNull(type, "Entity type must not be null");
+		Objects.requireNonNull(entity, "Entity must not be null");
+		if (entity.getId() <= 0) {
+			throw new IllegalStateException("Entity identifier is not valid");
 		}
-		logger.debug("Delete entity class {} with id {}", type, entity.getId());
 		if (this.em.contains(entity)) {
 			this.em.remove(entity);
 		} else {
@@ -51,106 +82,111 @@ public abstract class AbstractDao {
 		}
 	}
 
+	/**
+	 * Checks whether at least one entity of the given type exists with the
+	 * specified field value.
+	 *
+	 * @param <E>        the type of the entity implementing {@link Identifiable}
+	 * @param type       the class of the entity; must not be {@code null}
+	 * @param fieldName  the field name to check; must not be {@code null}
+	 * @param fieldValue the value to compare; may be {@code null}
+	 * @return {@code true} if an entity with the given field value exists;
+	 *         {@code false} otherwise
+	 * @throws NullPointerException if {@code type} or {@code fieldName} is
+	 *                              {@code null}
+	 */
 	protected <E extends Identifiable> boolean fieldExists(final Class<E> type, final String fieldName,
 			final Object fieldValue) {
-		final CriteriaBuilder cb = this.em.getCriteriaBuilder();
-		final CriteriaQuery<E> cq = cb.createQuery(type);
+		Objects.requireNonNull(type, "Entity type must not be null");
+		Objects.requireNonNull(fieldName, "Field name must not be null");
+
+		final CriteriaBuilder cb = em.getCriteriaBuilder();
+		final CriteriaQuery<Long> cq = cb.createQuery(Long.class);
 		final Root<E> root = cq.from(type);
-		cq.select(root).where(cb.equal(root.get(fieldName), fieldValue));
-		cq.select(root.get(fieldName));
-		final List<E> elements = this.findByCriteria(cq, new Page(0, 1));
-		return elements.size() > 0;
+
+		cq.select(cb.count(root)).where(cb.equal(root.get(fieldName), fieldValue));
+
+		final Long count = em.createQuery(cq).getSingleResult();
+		return count != null && count > 0;
 	}
 
-	public <E> E find(final Class<E> type, final Long id) {
-		Objects.requireNonNull(type);
-		Objects.requireNonNull(id);
-		logger.debug("Find entity of class {} with id", type, id);
+	/**
+	 * Finds an entity by its primary key.
+	 *
+	 * @param <E>  the type of the entity
+	 * @param type the class of the entity; must not be {@code null}
+	 * @param id   the primary key of the entity
+	 * @return the found entity instance or {@code null} if not found
+	 * @throws NullPointerException if {@code type} is {@code null}
+	 */
+	public <E> E find(final Class<E> type, final long id) {
+		Objects.requireNonNull(type, "Entity type must not be null");
 		return em.find(type, id);
 	}
 
+	/**
+	 * Retrieves all entities of the given type with pagination.
+	 *
+	 * @param <E>  the type of the entity
+	 * @param type the class of the entity; must not be {@code null}
+	 * @param page the pagination parameters; must not be {@code null}
+	 * @return a list of entities for the requested page
+	 * @throws NullPointerException if {@code type} or {@code page} is {@code null}
+	 */
 	public <E> List<E> findAll(final Class<E> type, final Page page) {
-		Objects.requireNonNull(type);
-		logger.debug("Find all entities of class {}", type);
+		Objects.requireNonNull(type, "Entity type must not be null");
+		Objects.requireNonNull(page, "Page must not be null");
+
 		final CriteriaBuilder cb = this.em.getCriteriaBuilder();
 		final CriteriaQuery<E> cq = cb.createQuery(type);
 		final Root<E> root = cq.from(type);
-		final CriteriaQuery<E> all = cq.select(root);
-		return this.findByCriteria(all, page);
+		final CriteriaQuery<E> selectAll = cq.select(root);
+
+		return this.findByCriteria(selectAll, page);
 	}
 
+	/**
+	 * Executes a CriteriaQuery with pagination.
+	 *
+	 * @param <E>  the result type of the query
+	 * @param cq   the {@link CriteriaQuery} to execute; must not be {@code null}
+	 * @param page the pagination parameters; must not be {@code null}
+	 * @return a list of query results
+	 * @throws NullPointerException if {@code cq} or {@code page} is {@code null}
+	 */
 	protected <E> List<E> findByCriteria(final CriteriaQuery<E> cq, final Page page) {
-		Objects.requireNonNull(cq);
-		Objects.requireNonNull(page);
-		logger.debug("Find entities by criteria");
+		Objects.requireNonNull(cq, "CriteriaQuery must not be null");
+		Objects.requireNonNull(page, "Page must not be null");
+
 		final TypedQuery<E> query = this.em.createQuery(cq);
-		query.setHint(CACHE_STORE_MODE, CacheStoreMode.REFRESH);
 		this.paginate(page, query);
 		return query.getResultList();
 	}
 
-	protected <E> E findByQuery(final Class<E> entityClass, final String namedQuery,
-			final Map<String, Object> parameters) {
-		return this.findByQuery(entityClass, namedQuery, parameters, FlushModeType.AUTO);
-	}
-
-	protected <E> E findByQuery(final Class<E> entityClass, final String namedQuery,
-			final Map<String, Object> parameters, final FlushModeType flusModeType) {
-		Objects.requireNonNull(entityClass);
-		Objects.requireNonNull(namedQuery);
-		logger.debug("Find entity {} by named query {}", entityClass, namedQuery);
-		final TypedQuery<E> query = this.em.createNamedQuery(namedQuery, entityClass);
-		query.setHint(CACHE_STORE_MODE, CacheStoreMode.REFRESH);
-		query.setFlushMode(flusModeType);
-		this.parametrize(parameters, query);
-		return query.getSingleResult();
-	}
-
-	protected <E> List<E> findByQuery(final Class<E> entityClass, final String namedQuery,
-			final Map<String, Object> parameters, final Page page) {
-		Objects.requireNonNull(entityClass);
-		Objects.requireNonNull(namedQuery);
-		Objects.requireNonNull(page);
-		logger.debug("Find entities {} by named query {}", entityClass, namedQuery);
-		final TypedQuery<E> query = this.em.createNamedQuery(namedQuery, entityClass);
-		query.setHint(CACHE_STORE_MODE, CacheStoreMode.REFRESH);
-		this.parametrize(parameters, query);
-		this.paginate(page, query);
-		return query.getResultList();
-	}
-
-	protected Object findByQuery(final String namedQuery, final Map<String, Object> parameters) {
-		Objects.requireNonNull(namedQuery);
-		logger.debug("Find entity by named query {}", namedQuery);
-		final Query query = this.em.createNamedQuery(namedQuery);
-		query.setHint(CACHE_STORE_MODE, CacheStoreMode.REFRESH);
-		this.parametrize(parameters, query);
-		return query.getSingleResult();
-	}
-
+	/**
+	 * Applies pagination parameters to a JPA query.
+	 *
+	 * @param page  the pagination parameters; must not be {@code null}
+	 * @param query the {@link Query} or {@link TypedQuery}; must not be
+	 *              {@code null}
+	 * @throws NullPointerException if {@code page} or {@code query} is {@code null}
+	 */
 	protected void paginate(final Page page, final Query query) {
+		Objects.requireNonNull(page, "Page must not be null");
+		Objects.requireNonNull(query, "Query must not be null");
+
 		query.setFirstResult(page.getOffset());
 		query.setMaxResults(page.getLimit());
 	}
 
-	private void parametrize(final Map<String, Object> parameters, final Query query) {
-		if (parameters == null) {
-			return;
-		}
-		for (final Map.Entry<String, Object> entry : parameters.entrySet()) {
-			logger.trace("Paramtrize query with key {} value={}", entry.getKey(), entry.getValue());
-			query.setParameter(entry.getKey(), entry.getValue());
-		}
-	}
-
 	/**
-	 * Sets the <tt>SearchFacade</tt>. This method should be used for setting or
-	 * replacing the search component, primarily for testing purposes.
+	 * Sets the SearchFacade component, mainly for testing purposes.
 	 *
-	 * @param searchFacade the <tt>SearchFacade</tt> to be set. Cannot be null.
-	 * @throws NullPointerException if <tt>searchFacade</tt> is null.
+	 * @param searchFacade the {@link SearchFacade} instance to set; must not be
+	 *                     {@code null}
+	 * @throws NullPointerException if {@code searchFacade} is {@code null}
 	 */
 	public void setSearchFacade(final SearchFacade searchFacade) {
-		this.searchFacade = Objects.requireNonNull(searchFacade);
+		this.searchFacade = Objects.requireNonNull(searchFacade, "SearchFacade must not be null");
 	}
 }
