@@ -23,6 +23,7 @@ public class ActionDao extends AbstractDao {
 				ORDER BY a.date DESC
 				""";
 		final TypedQuery<Action> query = this.em.createQuery(jpql, Action.class);
+		query.setParameter("user", user);
 		this.paginate(page, query);
 		return query.getResultList();
 	}
@@ -35,6 +36,7 @@ public class ActionDao extends AbstractDao {
 				WHERE a.user = :user
 				""";
 		final TypedQuery<Long> query = this.em.createQuery(jpql, Long.class);
+		query.setParameter("user", user);
 		return query.getSingleResult();
 	}
 

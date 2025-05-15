@@ -14,6 +14,7 @@ import java.util.UUID;
 import es.nivel36.laie.ejb.core.util.ConfigurationProperty;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
+import jakarta.persistence.NoResultException;
 
 @Stateless
 public class PhysicalFileService {
@@ -81,13 +82,15 @@ public class PhysicalFileService {
 		final PhysicalFile physicalFile = uploadFileToBucket(bucket, inputStream);
 		final String contentHash = physicalFile.getContentHash();
 		final String bucketName = bucket.getName();
-		final PhysicalFile physicalFileInDdbb = this.fileDao.findPhysicalFileByHashAndBucket(contentHash, bucketName);
-		if (physicalFileInDdbb != null) {
+		try {
+			final PhysicalFile physicalFileInDdbb = this.fileDao.findPhysicalFileByHashAndBucket(contentHash,
+					bucketName);
 			deleteFileInFileSystem(physicalFile);
 			return physicalFileInDdbb;
+		} catch (NoResultException e) {
+			this.fileDao.insert(physicalFile);
+			return physicalFile;
 		}
-		this.fileDao.insert(physicalFile);
-		return physicalFile;
 	}
 
 	private PhysicalFile uploadFileToBucket(final FileBucket bucket, final InputStream inputStream) {
