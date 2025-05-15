@@ -5,8 +5,10 @@ import java.util.Objects;
 
 import es.nivel36.laie.ejb.core.Language;
 import es.nivel36.laie.ejb.core.model.AbstractDao;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.TypedQuery;
 
+@ApplicationScoped
 public class DocumentTemplateDao extends AbstractDao {
 
 	public DocumentTemplate findDocumentTemplateByNameAndLanguage(final String name, final Language language) {

@@ -7,8 +7,10 @@ import java.util.Objects;
 import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.user.User;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.TypedQuery;
 
+@ApplicationScoped
 public class MeetingDao extends AbstractDao {
 
 	public List<Meeting> findByAttendeesEmail(final String email, final Page page) {

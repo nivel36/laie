@@ -9,9 +9,11 @@ import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.SortField;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 
+@ApplicationScoped
 public class CurriculumDao extends AbstractDao {
 
 	public Curriculum findByCandidate(final Candidate candidate) {

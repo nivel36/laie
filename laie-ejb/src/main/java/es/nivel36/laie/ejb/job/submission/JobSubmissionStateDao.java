@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.Objects;
 
 import es.nivel36.laie.ejb.core.model.AbstractDao;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.TypedQuery;
 
+@ApplicationScoped
 public class JobSubmissionStateDao extends AbstractDao {
 	
 	public JobSubmissionState findInitialState() {

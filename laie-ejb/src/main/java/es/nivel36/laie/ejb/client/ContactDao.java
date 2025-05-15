@@ -8,10 +8,12 @@ import org.hibernate.search.engine.search.query.SearchResult;
 import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.SortField;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 
+@ApplicationScoped
 public class ContactDao extends AbstractDao {
 
 	public List<Contact> findContactsByClient(final Client client, final Page page) {

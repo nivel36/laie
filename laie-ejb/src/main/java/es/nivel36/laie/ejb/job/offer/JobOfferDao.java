@@ -11,6 +11,7 @@ import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.SortField;
 import es.nivel36.laie.ejb.user.User;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.TypedQuery;
 
 /**
@@ -20,6 +21,7 @@ import jakarta.persistence.TypedQuery;
  * candidates. It also supports full-text search through the
  * <tt>SearchFacade</tt>.
  */
+@ApplicationScoped
 public class JobOfferDao extends AbstractDao {
 
 	/**

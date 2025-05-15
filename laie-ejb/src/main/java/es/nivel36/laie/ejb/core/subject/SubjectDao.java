@@ -8,7 +8,9 @@ import es.nivel36.laie.ejb.client.Contact;
 import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.user.User;
+import jakarta.enterprise.context.ApplicationScoped;
 
+@ApplicationScoped
 public class SubjectDao extends AbstractDao {
 
 	public List<Subject> searchSubject(final String query) {

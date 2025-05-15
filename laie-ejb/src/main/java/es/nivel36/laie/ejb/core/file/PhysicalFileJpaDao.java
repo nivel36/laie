@@ -1,8 +1,10 @@
 package es.nivel36.laie.ejb.core.file;
 
 import es.nivel36.laie.ejb.core.model.AbstractDao;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.TypedQuery;
 
+@ApplicationScoped
 public class PhysicalFileJpaDao extends AbstractDao {
 
 	public boolean isOrphanPhysicalFile(final PhysicalFile physicalFile) {

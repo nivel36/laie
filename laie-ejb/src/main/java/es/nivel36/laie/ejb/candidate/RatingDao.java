@@ -6,9 +6,11 @@ import java.util.Objects;
 import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.user.User;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 
+@ApplicationScoped
 public class RatingDao extends AbstractDao {
 
 	public List<Rating> findRatingsByCandidate(final Candidate candidate, final Page page) {

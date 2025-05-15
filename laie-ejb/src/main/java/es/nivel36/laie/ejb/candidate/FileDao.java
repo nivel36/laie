@@ -5,9 +5,11 @@ import java.util.Objects;
 
 import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 
+@ApplicationScoped
 public class FileDao extends AbstractDao {
 
 	public List<File> findFilesByCandidate(final Candidate candidate, final Page page) {

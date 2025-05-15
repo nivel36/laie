@@ -7,7 +7,9 @@ import org.hibernate.search.engine.search.query.SearchResult;
 import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.SortField;
+import jakarta.enterprise.context.ApplicationScoped;
 
+@ApplicationScoped
 public class ClientDao extends AbstractDao {
 
 	public boolean cifExists(final String cif) {

@@ -10,10 +10,12 @@ import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.SearchFacade;
 import es.nivel36.laie.ejb.core.model.SortField;
 import es.nivel36.laie.ejb.job.offer.JobOffer;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 
+@ApplicationScoped
 public class CandidateDao extends AbstractDao {
 
 	private @Inject SearchFacade searchFacade;

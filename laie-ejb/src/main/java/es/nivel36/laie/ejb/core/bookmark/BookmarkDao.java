@@ -3,6 +3,7 @@ package es.nivel36.laie.ejb.core.bookmark;
 import java.util.Objects;
 
 import es.nivel36.laie.ejb.core.model.AbstractDao;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 
@@ -11,6 +12,7 @@ import jakarta.persistence.TypedQuery;
  *
  * @see Bookmark
  */
+@ApplicationScoped
 public class BookmarkDao extends AbstractDao {
 
 	/**
