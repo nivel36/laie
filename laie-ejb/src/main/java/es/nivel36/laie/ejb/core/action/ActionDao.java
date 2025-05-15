@@ -6,8 +6,10 @@ import java.util.Objects;
 import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.user.User;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.TypedQuery;
 
+@ApplicationScoped
 public class ActionDao extends AbstractDao {
 
 	public List<Action> findAllByUser(final User user, final Page page) {
