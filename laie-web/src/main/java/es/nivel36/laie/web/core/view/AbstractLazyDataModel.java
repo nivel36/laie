@@ -68,5 +68,4 @@ public abstract class AbstractLazyDataModel<T extends Identifiable> extends Lazy
 	public int count(Map<String, FilterMeta> filterBy) {
 		return 0;
 	}
-
 }

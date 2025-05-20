@@ -74,7 +74,7 @@ public class ContactService {
 	public void deleteContact(final Contact contact) {
 		Objects.requireNonNull(contact, "Contact must not be null");
 		logger.debug("Deleting contact {}", contact);
-		this.contactDao.deleteContactByIdAndClientId(contact, contact.getClient());
+		this.contactDao.delete(Contact.class, contact);
 		this.updateClientEvent.fire(contact.getClient());
 		logger.trace("Contact {} deleted successfully.", contact);
 	}

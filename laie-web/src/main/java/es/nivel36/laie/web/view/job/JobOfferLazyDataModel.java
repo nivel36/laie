@@ -1,5 +1,6 @@
 package es.nivel36.laie.web.view.job;
 
+import java.util.Objects;
 
 import org.hibernate.search.engine.search.query.SearchResult;
 
@@ -17,13 +18,18 @@ public class JobOfferLazyDataModel extends AbstractLazyDataModel<JobOffer> {
 	private transient @Inject JobOfferService jobOfferService;
 
 	@Override
-	protected SearchResult<JobOffer> search(String searchText, Page page, SortField sortField,
-			String[] searchFilter) {
+	protected SearchResult<JobOffer> search(final String searchText, final Page page, final SortField sortField,
+			final String[] searchFilter) {
 		return jobOfferService.search(searchText, page, sortField, searchFilter);
 	}
 
 	@Override
-	protected JobOffer find(Long id) {
+	protected JobOffer find(final Long id) {
+		Objects.requireNonNull(id);
 		return jobOfferService.findJobOfferById(id);
+	}
+
+	public void setJobOfferService(final JobOfferService jobOfferService) {
+		this.jobOfferService = Objects.requireNonNull(jobOfferService);
 	}
 }

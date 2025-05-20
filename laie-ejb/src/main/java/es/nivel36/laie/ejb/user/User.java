@@ -42,124 +42,150 @@ import jakarta.validation.constraints.NotNull;
 
 @Indexed
 @Entity
-@Table(name = "PERSON", 
-	indexes = {
-		@Index(name = "UX_PERSON_EMAIL", columnList = "EMAIL", unique = true) }, 
-	uniqueConstraints = {
-		@UniqueConstraint(name = "UQ_PERSON_EMAIL", columnNames = { "EMAIL" })})
+@Table(name = "PERSON", indexes = {
+		@Index(name = "UX_PERSON_EMAIL", columnList = "EMAIL", unique = true) }, uniqueConstraints = {
+				@UniqueConstraint(name = "UQ_PERSON_EMAIL", columnNames = { "EMAIL" }) })
 public class User extends AbstractEntity implements Subject {
 
 	private static final long serialVersionUID = -3719561601581901723L;
-	
-    @NotBlank
-    @Column(name = "NAME", nullable = false, length = 128)
-    @FullTextField(name = "_name")
-    @KeywordField(sortable = Sortable.YES)
-    private String name;
-    
-    @NotBlank
-    @Column(name = "SURNAME", nullable = false, length = 128)
-    @FullTextField(name = "_surname")
-    @KeywordField(sortable = Sortable.YES)
-    private String surname;
+
+	/**
+	 * El nombre del usuario. No puede ser {@code null} ni estar vacío.
+	 */
+	@NotBlank
+	@Column(name = "NAME", nullable = false)
+	@FullTextField(name = "_name")
+	@KeywordField(sortable = Sortable.YES)
+	private String name;
+
+	/**
+	 * El nombre del usuario. No puede ser {@code null} ni estar vacío.
+	 */
+	@NotBlank
+	@Column(name = "SURNAME", nullable = false, length = 128)
+	@FullTextField(name = "_surname")
+	@KeywordField(sortable = Sortable.YES)
+	private String surname;
+
+	/**
+	 * Los {@code Bookmark} de un usuario. Un usuaio puede tener un máximo de
+	 * bookmarks marcado por la propiedad {@code laie.user.max_bookmarks}. Si se
+	 * alcanza ese límite, el bookmark no se pueden añadir más.
+	 */
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "PERSON_BOOKMARK", joinColumns = @JoinColumn(name = "PERSON_ID"), inverseJoinColumns = @JoinColumn(name = "BOOKMARK_ID"))
+	private Set<Bookmark> bookmarks = new HashSet<>();
+
+	/**
+	 * Los candidatos de los que el usuario es el responsable. Solo el responsable,
+	 * o un usuario administrador, puede cambiar los datos del candidato.
+	 */
+	@OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
+	private Set<Candidate> candidates = new HashSet<>();
+
+	/**
+	 * Los clientes de los que el usuario es el responsable. Solo el responsable, o
+	 * un usuario administrador, puede cambiar los datos del cliente.
+	 */
+	@OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
+	private Set<Client> clients = new HashSet<>();
+
+	/**
+	 * La fecha en la que el usuario se registró. No puede ser {@code null}.
+	 */
+	@Column(name = "DATE_OF_JOIN")
+	@GenericField(sortable = Sortable.YES)
+	private LocalDate dateOfJoin;
+
+	/**
+	 * El correo electrónico del usuario. Este dato se utiliza como clave natural
+	 * del usuario, por lo que no pueden existir dos usuarios con el mismo correo
+	 * electrónico. No puede ser {@code null} ni estar vacío.
+	 */
+	@NotBlank
+	@Column(name = "EMAIL", length = 128, nullable = false)
+	@FullTextField(name = "_email")
+	private String email;
+
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = false)
+	private Set<JobSubmissionEvent> jobSubmissionEvents = new HashSet<>();
+
+	/**
+	 * Las ofertas de empleo de las que el usuario es el responsable. Solo el responsable, o
+	 * un usuario administrador, puede cambiar los datos de la oferta de empleo.
+	 */
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "owner", orphanRemoval = true)
+	private Set<JobOffer> jobOffers = new HashSet<>();
+
+	/**
+	 * El idioma del usuario. Ha de estar en formato ISO 963-1. No puede ser {@code null}
+	 */
+	@NotBlank
+	@Column(name = "LANGUAGE", nullable = false)
+	private String language;
+
+	@GenericField(sortable = Sortable.YES)
+	@Column(name = "LAST_CONNECTION")
+	private LocalDateTime lastConnection;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "MANAGER_ID")
+	@IndexedEmbedded(includeDepth = 1)
+	private User manager;
 
 	@ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "PERSON_BOOKMARK",
-               joinColumns = @JoinColumn(name = "PERSON_ID"),
-               inverseJoinColumns = @JoinColumn(name = "BOOKMARK_ID"))
-    private Set<Bookmark> bookmarks = new HashSet<>();
+	@JoinTable(name = "PERSON_MEETING", joinColumns = @JoinColumn(name = "PERSON_ID"), inverseJoinColumns = @JoinColumn(name = "MEETING_ID"))
+	private Set<Meeting> meetings = new HashSet<>();
 
-    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
-    private Set<Candidate> candidates = new HashSet<>();
+	@Column(name = "PHONE_NUMBER", length = 12)
+	private String phoneNumber;
 
-    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
-    private Set<Client> clients = new HashSet<>();
+	@ManyToOne
+	@JoinColumn(name = "PICTURE_ID")
+	private PhysicalFile picture;
 
-    @Column(name = "DATE_OF_JOIN")
-    @GenericField(sortable = Sortable.YES)
-    private LocalDate dateOfJoin;
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	private Set<Rating> ratings = new HashSet<>();
 
-    @NotBlank
-    @Column(name = "EMAIL", length = 128, nullable = false)
-    @FullTextField(name = "_email")
-    private String email;
+	@ManyToMany
+	@JoinTable(name = "JOB_PERSON", joinColumns = @JoinColumn(name = "PERSON_ID"), inverseJoinColumns = @JoinColumn(name = "JOB_ID"))
+	private Set<JobOffer> recruiterOfJobOffers = new HashSet<>();
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = false)
-    private Set<JobSubmissionEvent> jobSubmissionEvents = new HashSet<>();
+	@Enumerated(EnumType.STRING)
+	@Column(name = "ROLE", nullable = false, length = 16)
+	private Role role;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "owner", orphanRemoval = true)
-    private Set<JobOffer> jobOffers = new HashSet<>();
+	@NotNull
+	@Column(name = "ROWS_PER_PAGE", nullable = false)
+	private Integer rowsPerPage = 10;
 
-    @NotBlank
-    @Column(name = "LANGUAGE", nullable = false)
-    private String language;
-
-    @GenericField(sortable = Sortable.YES)
-    @Column(name = "LAST_CONNECTION")
-    private LocalDateTime lastConnection;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "MANAGER_ID")
-    @IndexedEmbedded(includeDepth = 1)
-    private User manager;
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "PERSON_MEETING",
-               joinColumns = @JoinColumn(name = "PERSON_ID"),
-               inverseJoinColumns = @JoinColumn(name = "MEETING_ID"))
-    private Set<Meeting> meetings = new HashSet<>();
-
-    @Column(name = "PHONE_NUMBER", length = 12)
-    private String phoneNumber;
-
-    @ManyToOne
-    @JoinColumn(name = "PICTURE_ID")
-    private PhysicalFile picture;
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private Set<Rating> ratings = new HashSet<>();
-
-    @ManyToMany
-    @JoinTable(name = "JOB_PERSON",
-               joinColumns = @JoinColumn(name = "PERSON_ID"),
-               inverseJoinColumns = @JoinColumn(name = "JOB_ID"))
-    private Set<JobOffer> recruiterOfJobOffers = new HashSet<>();
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "ROLE", nullable = false, length = 16)
-    private Role role;
-
-    @NotNull
-    @Column(name = "ROWS_PER_PAGE", nullable = false)
-    private Integer rowsPerPage = 10;
-
-    @OneToMany(mappedBy = "manager", fetch = FetchType.LAZY)
-    private Set<User> team = new HashSet<>();
+	@OneToMany(mappedBy = "manager", fetch = FetchType.LAZY)
+	private Set<User> team = new HashSet<>();
 
 	public void addMeeting(final Meeting meeting) {
 		Objects.requireNonNull(meeting);
 		this.meetings.add(meeting);
 	}
-	
+
 	public void removeMeeting(final Meeting meeting) {
 		Objects.requireNonNull(meeting);
 		this.meetings.remove(meeting);
 	}
-	
+
 	public void addBookmark(final Bookmark bookmark) {
 		Objects.requireNonNull(bookmark);
 		this.bookmarks.add(bookmark);
 	}
-	
+
 	public void removeBookmark(final Bookmark bookmark) {
 		Objects.requireNonNull(bookmark);
 		this.bookmarks.remove(bookmark);
 	}
-	
+
 	public boolean isManaged() {
 		return this.manager != null;
 	}
-	
+
 	@Override
 	public String getFullName() {
 		if (this.name == null) {

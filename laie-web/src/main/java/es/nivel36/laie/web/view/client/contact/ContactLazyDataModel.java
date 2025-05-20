@@ -19,9 +19,7 @@ public class ContactLazyDataModel extends LazyDataModel<Contact> {
 	private static final long serialVersionUID = -4218300046788680778L;
 
 	private Client client;
-
-	@Inject
-	private transient ContactService contactService;
+	private @Inject transient ContactService contactService;
 
 	@Override
 	public int count(final Map<String, FilterMeta> filterBy) {
@@ -35,14 +33,23 @@ public class ContactLazyDataModel extends LazyDataModel<Contact> {
 		Objects.requireNonNull(client);
 		return contactService.findContactsByClient(client, Page.of(first, pageSize));
 	}
+	
+	@Override
+    public Contact getRowData(String rowKey) {
+		return contactService.findContactById(Long.parseLong(rowKey));
+      }
+
+    @Override
+    public String getRowKey(Contact contact) {
+        return String.valueOf(contact.getId());
+    }
 
 	public void setClient(final Client client) {
 		this.client = client;
 	}
 
 	public void setContactService(final ContactService contactService) {
-		Objects.requireNonNull(contactService);
-		this.contactService = contactService;
+		this.contactService = Objects.requireNonNull(contactService);
 	}
-
+		
 }

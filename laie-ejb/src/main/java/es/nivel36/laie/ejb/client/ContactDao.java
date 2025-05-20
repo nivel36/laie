@@ -9,8 +9,6 @@ import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.SortField;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.persistence.NoResultException;
-import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 
 @ApplicationScoped
@@ -31,19 +29,6 @@ public class ContactDao extends AbstractDao {
 		return query.getResultList();
 	}
 
-	public int deleteContactByIdAndClientId(final Contact contact, final Client client) {
-		Objects.requireNonNull(client);
-		final String jpql = """
-				DELETE FROM Contact c
-				WHERE c = :contact
-				AND c.client = :client
-				""";
-		final Query query = this.em.createQuery(jpql);
-		query.setParameter("client", client);
-		query.setParameter("contact", contact);
-		return query.executeUpdate();
-	}
-
 	public long countContactsByClient(final Client client) {
 		Objects.requireNonNull(client);
 		final String jpql = """
@@ -53,30 +38,26 @@ public class ContactDao extends AbstractDao {
 				""";
 		final TypedQuery<Long> query = this.em.createQuery(jpql, Long.class);
 		query.setParameter("client", client);
-		return query.getFirstResult();
+		return query.getSingleResult();
 	}
 
 	public Contact findContactByEmail(final String email) {
 		Objects.requireNonNull(email);
-		try {
-			final String jpql = """
-					SELECT c
-					FROM Contact c
-					WHERE c.email=:email
-					""";
-			final TypedQuery<Contact> query = this.em.createQuery(jpql, Contact.class);
-			query.setParameter("email", email);
-			return query.getSingleResult();
-		} catch (final NoResultException e) {
-			return null;
-		}
+		final String jpql = """
+				SELECT c
+				FROM Contact c
+				WHERE c.email=:email
+				""";
+		final TypedQuery<Contact> query = this.em.createQuery(jpql, Contact.class);
+		query.setParameter("email", email);
+		return query.getSingleResult();
 	}
 
 	public SearchResult<Contact> search(final String searchText, final Page page, final SortField sortField,
 			final String[] searchFacets) {
 		Objects.requireNonNull(searchText);
 		Objects.requireNonNull(page);
-		final String[] fields = new String[] { "_name", "_surname, _email" };
+		final String[] fields = new String[] { "_name", "_surname", "_email" };
 		return this.searchFacade.search(Contact.class, page, sortField, searchFacets, searchText, fields);
 	}
 }

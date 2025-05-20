@@ -20,6 +20,10 @@ import jakarta.inject.Inject;
  * <p>
  * Provides methods to add, update, find, and search Users, handle file uploads,
  * and enforce business rules such as email uniqueness and manager assignments.
+ * <p>
+ * It does not provide any method for deleting users. If you wish to delete a
+ * user's information, you must use the anonymize function. This is done to
+ * maintain the referential integrity between tables.
  */
 @Stateless
 public class UserService {
@@ -75,8 +79,8 @@ public class UserService {
 	/**
 	 * Updates an existing User.
 	 * <p>
-	 * To update the user, your email address must not have been used by a
-	 * previous user and the manager (if provided) is not the User itself and not a
+	 * To update the user, your email address must not have been used by a previous
+	 * user and the manager (if provided) is not the User itself and not a
 	 * subordinate of the User.
 	 *
 	 * @param user the {@link User} to update; must not be null
