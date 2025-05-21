@@ -21,13 +21,10 @@ public abstract class AbstractJobView extends AbstractView {
 	private static final long serialVersionUID = 3680467978756165892L;
 
 	protected @Param JobOffer jobOffer;
-
 	protected transient List<User> recruiters = new ArrayList<>();
 
 	protected transient @Inject ClientService clientService;
-
 	protected transient @Inject JobOfferService jobOfferService;
-
 	protected transient @Inject UserService userService;
 
 	public List<Client> completeClient(final String query) {
@@ -63,12 +60,10 @@ public abstract class AbstractJobView extends AbstractView {
 	}
 
 	public void setJobOfferService(final JobOfferService jobOfferService) {
-		Objects.requireNonNull(jobOfferService);
-		this.jobOfferService = jobOfferService;
+		this.jobOfferService = Objects.requireNonNull(jobOfferService);
 	}
 
 	public void setUserService(final UserService userService) {
-		Objects.requireNonNull(userService);
-		this.userService = userService;
+		this.userService = Objects.requireNonNull(userService);
 	}
 }

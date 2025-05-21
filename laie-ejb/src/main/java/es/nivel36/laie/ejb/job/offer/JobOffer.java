@@ -38,14 +38,14 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Indexed
-@Table(name = "JOB_OFFER",  uniqueConstraints = {})
+@Table(name = "JOB_OFFER", uniqueConstraints = {})
 public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 
 	private static final long serialVersionUID = 1529439068651089035L;
 
 	@Embedded
 	@IndexedEmbedded(includeDepth = 1)
-	private Address address;
+	private Address address = new Address();
 
 	@ManyToOne
 	@JoinColumn(name = "CLIENT_ID", nullable = false)
@@ -300,7 +300,7 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 	public void setTitle(final String title) {
 		this.title = title;
 	}
-	
+
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
@@ -313,7 +313,7 @@ public class JobOffer extends AbstractEntity implements Ownerable, Auditable {
 		return Objects.equals(this.openDate, other.openDate) && Objects.equals(this.title, other.title)
 				&& Objects.equals(this.positions, other.positions);
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return 31 * Objects.hash(this.openDate, this.title, this.positions);
