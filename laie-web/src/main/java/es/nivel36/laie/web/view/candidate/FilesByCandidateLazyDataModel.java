@@ -9,11 +9,11 @@ import org.primefaces.model.SortMeta;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.candidate.CandidateService;
-import es.nivel36.laie.ejb.candidate.File;
+import es.nivel36.laie.ejb.candidate.CandidateFileAttachment;
 import es.nivel36.laie.ejb.core.model.Page;
 import jakarta.inject.Inject;
 
-public class FilesByCandidateLazyDataModel extends LazyDataModel<File> {
+public class FilesByCandidateLazyDataModel extends LazyDataModel<CandidateFileAttachment> {
 
 	private static final long serialVersionUID = -4871133088132391207L;
 
@@ -30,7 +30,7 @@ public class FilesByCandidateLazyDataModel extends LazyDataModel<File> {
 	}
 
 	@Override
-	public List<File> load(int first, int pageSize, Map<String, SortMeta> sortBy,
+	public List<CandidateFileAttachment> load(int first, int pageSize, Map<String, SortMeta> sortBy,
 			Map<String, FilterMeta> filterBy) {
 		return candidateService.findCandidateFiles(candidate, Page.of(first, pageSize));
 	}

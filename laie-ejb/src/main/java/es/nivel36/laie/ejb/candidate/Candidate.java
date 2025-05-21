@@ -80,7 +80,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 	private Integer expectedSalary;
 
 	@OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<File> files = new HashSet<>();
+	private Set<CandidateFileAttachment> files = new HashSet<>();
 
 	@Column(name = "INFOJOBS_PROFILE_URL", columnDefinition = "TEXT")
 	private String infojobsProfileUrl;
@@ -159,7 +159,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 		return this.expectedSalary;
 	}
 
-	public Set<File> getFiles() {
+	public Set<CandidateFileAttachment> getFiles() {
 		return this.files;
 	}
 
@@ -230,7 +230,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 		return this.tags;
 	}
 
-	public void removeFile(final File file) {
+	public void removeFile(final CandidateFileAttachment file) {
 		Objects.requireNonNull(file);
 		this.files.remove(file);
 		file.setCandidate(null);
@@ -262,7 +262,7 @@ public class Candidate extends AbstractEntity implements Ownerable, Subject, Aud
 		this.expectedSalary = expectedSalary;
 	}
 
-	public void setFiles(final Set<File> files) {
+	public void setFiles(final Set<CandidateFileAttachment> files) {
 		this.files = files;
 	}
 

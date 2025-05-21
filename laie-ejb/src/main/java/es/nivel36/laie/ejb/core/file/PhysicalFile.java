@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Set;
 
-import es.nivel36.laie.ejb.candidate.File;
+import es.nivel36.laie.ejb.candidate.CandidateFileAttachment;
 import es.nivel36.laie.ejb.core.model.AbstractEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,7 +36,7 @@ public class PhysicalFile extends AbstractEntity {
 	private LocalDateTime created;
 
 	@OneToMany(fetch = FetchType.LAZY)
-	private Set<File> files;
+	private Set<CandidateFileAttachment> files;
 
 	@NotBlank
 	@Column(nullable = false)
@@ -62,7 +62,7 @@ public class PhysicalFile extends AbstractEntity {
 		return this.created;
 	}
 
-	public Set<File> getFiles() {
+	public Set<CandidateFileAttachment> getFiles() {
 		return files;
 	}
 
@@ -98,7 +98,7 @@ public class PhysicalFile extends AbstractEntity {
 		this.created = created;
 	}
 
-	public void setFiles(final Set<File> files) {
+	public void setFiles(final Set<CandidateFileAttachment> files) {
 		this.files = files;
 	}
 

@@ -12,15 +12,15 @@ import jakarta.persistence.TypedQuery;
 @ApplicationScoped
 public class FileDao extends AbstractDao {
 
-	public List<File> findFilesByCandidate(final Candidate candidate, final Page page) {
+	public List<CandidateFileAttachment> findFilesByCandidate(final Candidate candidate, final Page page) {
 		Objects.requireNonNull(candidate);
 		Objects.requireNonNull(page);
 		final String jpql = """
 				SELECT f
-				FROM File f
+				FROM CandidateFileAttachment f
 				WHERE f.candidate = :candidate
 				""";
-		final TypedQuery<File> query = this.em.createQuery(jpql, File.class);
+		final TypedQuery<CandidateFileAttachment> query = this.em.createQuery(jpql, CandidateFileAttachment.class);
 		query.setParameter("candidate", candidate);
 		this.paginate(page, query);
 		return query.getResultList();
@@ -30,7 +30,7 @@ public class FileDao extends AbstractDao {
 		Objects.requireNonNull(candidate);
 		final String jpql = """
 				SELECT COUNT(f)
-				FROM File f
+				FROM CandidateFileAttachment f
 				WHERE f.candidate = :candidate
 				""";
 		final TypedQuery<Long> query = this.em.createQuery(jpql, Long.class);
@@ -38,11 +38,11 @@ public class FileDao extends AbstractDao {
 		return query.getSingleResult();
 	}
 
-	public int deleteFile(final File file) {
+	public int deleteFile(final CandidateFileAttachment file) {
 		Objects.requireNonNull(file);
 		final String jpql = """
 				DELETE 
-				FROM File f 
+				FROM CandidateFileAttachment f 
 				WHERE f = :file
 				""";
 		final Query query = this.em.createQuery(jpql);

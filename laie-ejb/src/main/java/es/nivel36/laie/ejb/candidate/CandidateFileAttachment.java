@@ -15,7 +15,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-public class File extends AbstractEntity {
+public class CandidateFileAttachment extends AbstractEntity {
 
 	private static final long serialVersionUID = -2983690237456593632L;
 
@@ -47,7 +47,7 @@ public class File extends AbstractEntity {
 		if (!super.equals(obj) || (getClass() != obj.getClass())) {
 			return false;
 		}
-		final File other = (File) obj;
+		final CandidateFileAttachment other = (CandidateFileAttachment) obj;
 		return Objects.equals(created, other.created) && Objects.equals(name, other.name)
 				&& publicAccess == other.publicAccess;
 	}

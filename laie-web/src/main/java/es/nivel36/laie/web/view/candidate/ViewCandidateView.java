@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import es.nivel36.laie.ejb.candidate.Candidate;
 import es.nivel36.laie.ejb.candidate.CandidateService;
-import es.nivel36.laie.ejb.candidate.File;
+import es.nivel36.laie.ejb.candidate.CandidateFileAttachment;
 import es.nivel36.laie.ejb.candidate.Rating;
 import es.nivel36.laie.ejb.candidate.RatingService;
 import es.nivel36.laie.ejb.core.bookmark.Bookmark;
@@ -139,13 +139,13 @@ public class ViewCandidateView extends AbstractView {
 		Faces.redirect(AddMeetingView.URL);
 	}
 
-	public void openFile(final File file) throws IOException {
+	public void openFile(final CandidateFileAttachment file) throws IOException {
 		try (final InputStream is = this.fileUploadService.downloadFile(file.getPhysicalFile())) {
 			Faces.sendFile(is, file.getName(), true);
 		}
 	}
 
-	public void removeFile(final File file) {
+	public void removeFile(final CandidateFileAttachment file) {
 		this.candidateService.deleteCandidateFile(file);
 	}
 

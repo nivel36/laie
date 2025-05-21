@@ -249,15 +249,16 @@ public class CandidateService {
 	 * @param candidate the {@link Candidate} whose files are to be retrieved; must
 	 *                  not be null
 	 * @param page      the pagination parameters; must not be null
-	 * @return a {@link List} of {@link File} instances belonging to the Candidate,
-	 *         possibly empty but never null
+	 * @return a {@link List} of {@link CandidateFileAttachment} instances belonging
+	 *         to the Candidate, possibly empty but never null
 	 * @throws NullPointerException if either argument is null
 	 */
-	public List<es.nivel36.laie.ejb.candidate.File> findCandidateFiles(final Candidate candidate, final Page page) {
+	public List<CandidateFileAttachment> findCandidateFiles(final Candidate candidate, final Page page) {
 		Objects.requireNonNull(candidate, "Candidate must not be null");
 		Objects.requireNonNull(page, "Page must not be null");
 		logger.debug("Finding files for Candidate: {}", candidate);
-		final List<es.nivel36.laie.ejb.candidate.File> files = this.fileDao.findFilesByCandidate(candidate, page);
+		final List<es.nivel36.laie.ejb.candidate.CandidateFileAttachment> files = this.fileDao
+				.findFilesByCandidate(candidate, page);
 		logger.trace("Files {} retrieved for Candidate {}.", files, candidate);
 		return files;
 	}
@@ -279,7 +280,11 @@ public class CandidateService {
 	}
 
 	/**
-	 * Adds a new file to a Candidate’s profile.
+	 * Adds a new file to a Candidate’s profile. If the file already exists, but is
+	 * not attached to this candidate, a link to the existing file is created and a
+	 * copy is not stored.
+	 * <p>
+	 * If the file is already attached to the user, no duplicate is added.
 	 *
 	 * @param candidate   the {@link Candidate} to receive the new file; must not be
 	 *                    null
@@ -294,7 +299,15 @@ public class CandidateService {
 		Objects.requireNonNull(filename, "Filename must not be null");
 		logger.debug("Adding file '{}' to Candidate: {}", filename, candidate);
 		final PhysicalFile pf = this.fileService.uploadFile(inputStream, false);
-		final es.nivel36.laie.ejb.candidate.File file = new es.nivel36.laie.ejb.candidate.File();
+		final List<CandidateFileAttachment> files = this.findCandidateFiles(candidate, Page.ALL_RESULTS);
+		for (final CandidateFileAttachment file : files) {
+			if (file.getPhysicalFile().equals(pf)) {
+				// We have a duplicated file. Nothing to do
+				logger.warn("File '{}' is duplicated", filename);
+				return;
+			}
+		}
+		final CandidateFileAttachment file = new CandidateFileAttachment();
 		file.setCreated(LocalDateTime.now());
 		file.setName(filename);
 		file.setPublicAccess(false);
@@ -308,10 +321,11 @@ public class CandidateService {
 	/**
 	 * Deletes an existing file from a Candidate’s profile.
 	 *
-	 * @param file the {@link File} entity to delete; must not be null
+	 * @param file the {@link CandidateFileAttachment} entity to delete; must not be
+	 *             null
 	 * @throws NullPointerException if file is null
 	 */
-	public void deleteCandidateFile(final es.nivel36.laie.ejb.candidate.File file) {
+	public void deleteCandidateFile(final CandidateFileAttachment file) {
 		Objects.requireNonNull(file, "File must not be null");
 		final Candidate candidate = file.getCandidate();
 		logger.debug("Deleting file '{}' from Candidate: {}", file.getName(), candidate);
