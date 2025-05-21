@@ -301,8 +301,6 @@ public class CandidateService {
 		file.setPhysicalFile(pf);
 		file.setCandidate(candidate);
 		this.fileDao.insert(file);
-		candidate.getFiles().add(file);
-		this.candidateDao.update(candidate);
 		this.updateCandidateEvent.fire(candidate);
 		logger.trace("File '{}' added successfully to Candidate {}.", filename, candidate);
 	}
