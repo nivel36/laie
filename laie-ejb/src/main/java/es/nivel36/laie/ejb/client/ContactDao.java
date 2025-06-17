@@ -9,6 +9,7 @@ import es.nivel36.laie.ejb.core.model.AbstractDao;
 import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.SortField;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 
 @ApplicationScoped
@@ -43,14 +44,18 @@ public class ContactDao extends AbstractDao {
 
 	public Contact findContactByEmail(final String email) {
 		Objects.requireNonNull(email);
-		final String jpql = """
-				SELECT c
-				FROM Contact c
-				WHERE c.email=:email
-				""";
-		final TypedQuery<Contact> query = this.em.createQuery(jpql, Contact.class);
-		query.setParameter("email", email);
-		return query.getSingleResult();
+		try {
+			final String jpql = """
+					SELECT c
+					FROM Contact c
+					WHERE c.email=:email
+					""";
+			final TypedQuery<Contact> query = this.em.createQuery(jpql, Contact.class);
+			query.setParameter("email", email);
+			return query.getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
 	}
 
 	public SearchResult<Contact> search(final String searchText, final Page page, final SortField sortField,

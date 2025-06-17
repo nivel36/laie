@@ -15,7 +15,7 @@ import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.ejb.user.UserService;
 import es.nivel36.laie.web.core.IllegalPageStateException;
 import es.nivel36.laie.web.core.view.AbstractView;
-import es.nivel36.laie.web.view.action.ActionsByUserLazyDataModel;
+import es.nivel36.laie.web.view.action.ActionsLazyDataModel;
 import es.nivel36.laie.web.view.job.JobOffersByOwnerOrRecruiterLazyDataModel;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
@@ -38,7 +38,7 @@ public class ViewUserView extends AbstractView {
 	private List<Meeting> meetings;
 	private boolean loggedUser;
 
-	private @Inject ActionsByUserLazyDataModel actions;
+	private @Inject ActionsLazyDataModel actions;
 	private @Inject JobOffersByOwnerOrRecruiterLazyDataModel jobOffers;
 	private transient @Inject MeetingService meetingService;
 	private transient @Inject UserService userService;
@@ -68,7 +68,7 @@ public class ViewUserView extends AbstractView {
 		}
 	}
 
-	public ActionsByUserLazyDataModel getActions() {
+	public ActionsLazyDataModel getActions() {
 		return actions;
 	}
 
@@ -100,7 +100,7 @@ public class ViewUserView extends AbstractView {
 		this.userId = userId;
 	}
 
-	public void setActions(final ActionsByUserLazyDataModel actions) {
+	public void setActions(final ActionsLazyDataModel actions) {
 		this.actions = Objects.requireNonNull(actions);
 	}
 

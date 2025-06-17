@@ -35,6 +35,7 @@ public abstract class AbstractCandidateView extends AbstractView {
 	protected boolean imageChanged;
 	protected Integer rating;
 	protected transient List<String> tags;
+	
 	protected transient @Inject CandidateService candidateService;
 	protected transient @Inject PhysicalFileService fileService;
 	protected transient @Inject TagService tagService;
@@ -112,17 +113,14 @@ public abstract class AbstractCandidateView extends AbstractView {
 	}
 
 	public void setCandidateService(final CandidateService candidateService) {
-		Objects.requireNonNull(candidateService);
-		this.candidateService = candidateService;
+		this.candidateService = Objects.requireNonNull(candidateService);
 	}
 
 	public void setFileService(final PhysicalFileService fileService) {
-		Objects.requireNonNull(fileService);
-		this.fileService = fileService;
+		this.fileService = Objects.requireNonNull(fileService);
 	}
 
 	public void setTagService(final TagService tagService) {
-		Objects.requireNonNull(tagService);
-		this.tagService = tagService;
+		this.tagService = Objects.requireNonNull(tagService);
 	}
 }

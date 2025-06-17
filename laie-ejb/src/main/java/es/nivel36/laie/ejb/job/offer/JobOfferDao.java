@@ -12,6 +12,7 @@ import es.nivel36.laie.ejb.core.model.Page;
 import es.nivel36.laie.ejb.core.model.SortField;
 import es.nivel36.laie.ejb.user.User;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 
 /**
@@ -32,17 +33,21 @@ public class JobOfferDao extends AbstractDao {
 	 * @return the <tt>JobOffer</tt> with its associated data.
 	 */
 	public JobOffer findJobOfferData(final long jobOfferId) {
-		final String jpql = """
-				SELECT j
-				FROM JobOffer j
-				LEFT JOIN FETCH j.recruiters
-				LEFT JOIN FETCH j.client
-				LEFT JOIN FETCH j.owner
-				WHERE j.id=:jobOfferId
-					""";
-		final TypedQuery<JobOffer> query = this.em.createQuery(jpql, JobOffer.class);
-		query.setParameter("jobOfferId", jobOfferId);
-		return query.getSingleResult();
+		try {
+			final String jpql = """
+					SELECT j
+					FROM JobOffer j
+					LEFT JOIN FETCH j.recruiters
+					LEFT JOIN FETCH j.client
+					LEFT JOIN FETCH j.owner
+					WHERE j.id=:jobOfferId
+						""";
+			final TypedQuery<JobOffer> query = this.em.createQuery(jpql, JobOffer.class);
+			query.setParameter("jobOfferId", jobOfferId);
+			return query.getSingleResult();
+		} catch (final NoResultException e) {
+			return null;
+		}
 	}
 
 	/**

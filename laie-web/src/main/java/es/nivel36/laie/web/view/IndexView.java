@@ -11,7 +11,7 @@ import es.nivel36.laie.ejb.job.meeting.Meeting;
 import es.nivel36.laie.ejb.job.meeting.MeetingService;
 import es.nivel36.laie.ejb.user.User;
 import es.nivel36.laie.web.core.view.AbstractView;
-import es.nivel36.laie.web.view.action.ActionsByUserLazyDataModel;
+import es.nivel36.laie.web.view.action.ActionsLazyDataModel;
 import es.nivel36.laie.web.view.candidate.CandidateLazyDataModel;
 import es.nivel36.laie.web.view.job.JobOfferLazyDataModel;
 import jakarta.annotation.PostConstruct;
@@ -27,7 +27,7 @@ public class IndexView extends AbstractView {
 	private static final Logger logger = LoggerFactory.getLogger(IndexView.class);
 	public static final String URL = "/index.xhtml";
 
-	private transient @Inject ActionsByUserLazyDataModel actions;
+	private transient @Inject ActionsLazyDataModel actions;
 	private transient @Inject CandidateLazyDataModel candidates;
 	private transient @Inject JobOfferLazyDataModel jobOffers;
 	private transient @Inject MeetingService meetingService;
@@ -41,7 +41,7 @@ public class IndexView extends AbstractView {
 		this.meetings = this.meetingService.findFutureMeetingsByOwner(user, Page.FIRST_TEN_RESULTS);
 	}
 
-	public ActionsByUserLazyDataModel getActions() {
+	public ActionsLazyDataModel getActions() {
 		return actions;
 	}
 
@@ -61,7 +61,7 @@ public class IndexView extends AbstractView {
 		this.meetingService = Objects.requireNonNull(meetingService);
 	}
 
-	public void setActions(final ActionsByUserLazyDataModel actions) {
+	public void setActions(final ActionsLazyDataModel actions) {
 		this.actions = Objects.requireNonNull(actions);
 	}
 

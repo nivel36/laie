@@ -41,16 +41,20 @@ public class CandidateDao extends AbstractDao {
 	}
 
 	public Candidate findAllData(final long candidateId) {
-		final String jpql = """
-				SELECT c
-				FROM Candidate c
-				LEFT JOIN FETCH c.tags
-				LEFT JOIN FETCH c.owner
-				WHERE c.id = :candidateId
-				""";
-		final TypedQuery<Candidate> query = this.em.createQuery(jpql, Candidate.class);
-		query.setParameter("candidateId", candidateId);
-		return query.getSingleResult();
+		try {
+			final String jpql = """
+					SELECT c
+					FROM Candidate c
+					LEFT JOIN FETCH c.tags
+					LEFT JOIN FETCH c.owner
+					WHERE c.id = :candidateId
+					""";
+			final TypedQuery<Candidate> query = this.em.createQuery(jpql, Candidate.class);
+			query.setParameter("candidateId", candidateId);
+			return query.getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
 	}
 
 	public Candidate findCandidateByEmail(final String email) {

@@ -5,11 +5,12 @@ import java.util.Objects;
 
 import es.nivel36.laie.ejb.core.model.AbstractDao;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 
 @ApplicationScoped
 public class JobSubmissionStateDao extends AbstractDao {
-	
+
 	public JobSubmissionState findInitialState() {
 		final String jpql = """
 				SELECT j
@@ -22,14 +23,18 @@ public class JobSubmissionStateDao extends AbstractDao {
 
 	public JobSubmissionState findByName(final String name) {
 		Objects.requireNonNull(name);
-		final String jpql = """
-				SELECT j
-				FROM JobSubmissionState j
-				WHERE j.name = :name
-				""";
-		final TypedQuery<JobSubmissionState> query = this.em.createQuery(jpql, JobSubmissionState.class);
-		query.setParameter("name", name);
-		return query.getSingleResult();
+		try {
+			final String jpql = """
+					SELECT j
+					FROM JobSubmissionState j
+					WHERE j.name = :name
+					""";
+			final TypedQuery<JobSubmissionState> query = this.em.createQuery(jpql, JobSubmissionState.class);
+			query.setParameter("name", name);
+			return query.getSingleResult();
+		} catch (final NoResultException e) {
+			return null;
+		}
 	}
 
 	public List<JobSubmissionState> findNextStates(final JobSubmissionState currentState) {

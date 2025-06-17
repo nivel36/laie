@@ -1,6 +1,7 @@
 package es.nivel36.laie.web.core.security;
 
 import java.util.Map;
+import java.util.Objects;
 
 import es.nivel36.laie.ejb.core.SessionUsers;
 import jakarta.faces.context.ExternalContext;
@@ -39,5 +40,9 @@ public class UpdateSessionPhaseListener implements PhaseListener {
 	@Override
 	public PhaseId getPhaseId() {
 		return PhaseId.RESTORE_VIEW;
+	}
+
+	public void setSessionUsers(SessionUsers sessionUsers) {
+		this.sessionUsers = Objects.requireNonNull(sessionUsers);
 	}
 }

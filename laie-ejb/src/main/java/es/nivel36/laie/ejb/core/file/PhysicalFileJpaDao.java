@@ -2,6 +2,7 @@ package es.nivel36.laie.ejb.core.file;
 
 import es.nivel36.laie.ejb.core.model.AbstractDao;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 
 @ApplicationScoped
@@ -19,15 +20,19 @@ public class PhysicalFileJpaDao extends AbstractDao {
 	}
 
 	public PhysicalFile findPhysicalFileByHashAndBucket(final String hash, final String bucket) {
-		final String jpql = """
-				SELECT f
-				FROM PhysicalFile f
-				WHERE f.contentHash = :hash
-				AND f.bucket = :bucket
-				""";
-		final TypedQuery<PhysicalFile> query = this.em.createQuery(jpql, PhysicalFile.class);
-		query.setParameter("hash", hash);
-		query.setParameter("bucket", bucket);
-		return query.getSingleResult();
+		try {
+			final String jpql = """
+					SELECT f
+					FROM PhysicalFile f
+					WHERE f.contentHash = :hash
+					AND f.bucket = :bucket
+					""";
+			final TypedQuery<PhysicalFile> query = this.em.createQuery(jpql, PhysicalFile.class);
+			query.setParameter("hash", hash);
+			query.setParameter("bucket", bucket);
+			return query.getSingleResult();
+		} catch (final NoResultException e) {
+			return null;
+		}
 	}
 }

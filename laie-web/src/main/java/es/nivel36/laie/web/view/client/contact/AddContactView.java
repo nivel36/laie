@@ -25,13 +25,9 @@ public class AddContactView extends AbstractView {
 
 	private static final Logger logger = LoggerFactory.getLogger(AddContactView.class);
 
-	@Param
-	private Client client;
-
+	private @Param Client client;
 	private Contact contact;
-
-	@Inject
-	private transient ContactService contactService;
+	private transient @Inject ContactService contactService;
 
 	@PostConstruct
 	public void init() {
@@ -59,7 +55,6 @@ public class AddContactView extends AbstractView {
 	}
 
 	public void setContactService(final ContactService contactService) {
-		Objects.requireNonNull(contactService);
-		this.contactService = contactService;
+		this.contactService = Objects.requireNonNull(contactService);
 	}
 }

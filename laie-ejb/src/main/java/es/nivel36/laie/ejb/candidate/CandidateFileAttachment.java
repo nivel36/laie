@@ -39,19 +39,6 @@ public class CandidateFileAttachment extends AbstractEntity {
 
 	private boolean publicAccess;
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (!super.equals(obj) || (getClass() != obj.getClass())) {
-			return false;
-		}
-		final CandidateFileAttachment other = (CandidateFileAttachment) obj;
-		return Objects.equals(created, other.created) && Objects.equals(name, other.name)
-				&& publicAccess == other.publicAccess;
-	}
-
 	public Candidate getCandidate() {
 		return candidate;
 	}
@@ -77,11 +64,6 @@ public class CandidateFileAttachment extends AbstractEntity {
 
 	public PhysicalFile getPhysicalFile() {
 		return this.physicalFile;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(created, name, publicAccess);
 	}
 
 	public boolean isPublicAccess() {
@@ -110,6 +92,24 @@ public class CandidateFileAttachment extends AbstractEntity {
 
 	public void setPublicAccess(final boolean publicAccess) {
 		this.publicAccess = publicAccess;
+	}
+	
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!super.equals(obj) || (getClass() != obj.getClass())) {
+			return false;
+		}
+		final CandidateFileAttachment other = (CandidateFileAttachment) obj;
+		return Objects.equals(created, other.created) && Objects.equals(name, other.name)
+				&& publicAccess == other.publicAccess;
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(created, name, publicAccess);
 	}
 
 	@Override

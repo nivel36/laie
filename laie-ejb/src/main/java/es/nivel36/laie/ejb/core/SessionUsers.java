@@ -44,19 +44,25 @@ public class SessionUsers {
 	}
 
 	public Set<String> getSessionId(final String username) {
+		Objects.requireNonNull(username);
 		return this.onlineUsers.get(username).sessionIds;
 	}
 
 	public boolean isOnline(final String username) {
+		Objects.requireNonNull(username);
 		return this.onlineUsers.containsKey(username);
 	}
 
 	public void add(final String username, final String sessionId) {
+		Objects.requireNonNull(username);
+		Objects.requireNonNull(sessionId);
 		final SessionValues values = new SessionValues(sessionId);
 		this.onlineUsers.put(username, values);
 	}
 
 	public void remove(final String username, final String sessionId) {
+		Objects.requireNonNull(username);
+		Objects.requireNonNull(sessionId);
 		final SessionValues sessionValues = this.onlineUsers.get(username);
 		sessionValues.sessionIds.remove(sessionId);
 		if (sessionValues.sessionIds.isEmpty()) {

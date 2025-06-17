@@ -51,7 +51,7 @@ public class UserDao extends AbstractDao {
 		query.setParameter("user", user);
 		return query.getResultList();
 	}
-	
+
 	public User findSessionUserData(final String email) {
 		Objects.requireNonNull(email);
 		try {
@@ -86,17 +86,21 @@ public class UserDao extends AbstractDao {
 	}
 
 	public User findUserDetailsById(final long userId) {
-		final String jpql = """
-				SELECT u
-				FROM User u
-				LEFT JOIN FETCH u.manager
-				LEFT JOIN FETCH u.team
-				LEFT JOIN FETCH u.picture
-				WHERE u.id = :userId
-				""";
-		final TypedQuery<User> query = this.em.createQuery(jpql, User.class);
-		query.setParameter("userId", userId);
-		return query.getSingleResult();
+		try {
+			final String jpql = """
+					SELECT u
+					FROM User u
+					LEFT JOIN FETCH u.manager
+					LEFT JOIN FETCH u.team
+					LEFT JOIN FETCH u.picture
+					WHERE u.id = :userId
+					""";
+			final TypedQuery<User> query = this.em.createQuery(jpql, User.class);
+			query.setParameter("userId", userId);
+			return query.getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
 	}
 
 	public boolean isSubordinateUser(final User manager, final User subordinate) {
@@ -184,8 +188,8 @@ public class UserDao extends AbstractDao {
 	}
 
 	private void insertUserClosure(final User ancestor, final User descendant, final int pathLength) {
-		logger.trace("Insert into user closure table. Ancestor {}, descendant {}, pathLength {}", ancestor,
-				descendant, pathLength);
+		logger.trace("Insert into user closure table. Ancestor {}, descendant {}, pathLength {}", ancestor, descendant,
+				pathLength);
 		final UserClosure newUserClosure = new UserClosure(ancestor, descendant, pathLength);
 		this.em.persist(newUserClosure);
 	}

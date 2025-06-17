@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import es.nivel36.login.LoginToken.TokenType;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 
@@ -23,28 +22,20 @@ public class AccountService {
 		Objects.requireNonNull(tokenHash);
 		Objects.requireNonNull(type);
 		logger.debug("Find account by tokenHash {} and type {}", tokenHash, type);
-		try {
-			final String namedQuery = "Account.findByTokenHashAndType";
-			final TypedQuery<Account> query = em.createNamedQuery(namedQuery, Account.class);
-			query.setParameter("tokenHash", tokenHash);
-			query.setParameter("type", type);
-			return query.getSingleResult();
-		} catch (final NoResultException e) {
-			return null;
-		}
+		final String namedQuery = "Account.findByTokenHashAndType";
+		final TypedQuery<Account> query = em.createNamedQuery(namedQuery, Account.class);
+		query.setParameter("tokenHash", tokenHash);
+		query.setParameter("type", type);
+		return query.getSingleResult();
 	}
 
 	public Account findAccount(final String email) {
 		Objects.requireNonNull(email);
 		logger.debug("Find account by username {}", email);
-		try {
-			final String namedQuery = "Account.findAccount";
-			final TypedQuery<Account> query = em.createNamedQuery(namedQuery, Account.class);
-			query.setParameter("email", email);
-			return query.getSingleResult();
-		} catch (final NoResultException e) {
-			return null;
-		}
+		final String namedQuery = "Account.findAccount";
+		final TypedQuery<Account> query = em.createNamedQuery(namedQuery, Account.class);
+		query.setParameter("email", email);
+		return query.getSingleResult();
 	}
 
 	public void changePassword(final String email, final String oldPassword, final String newPassword) {

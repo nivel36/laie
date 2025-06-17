@@ -64,15 +64,19 @@ public class RatingDao extends AbstractDao {
 	}
 
 	public Rating findAllData(final long ratingId) {
-		final String jpql = """
-				SELECT r
-				From Rating r
-				LEFT JOIN FETCH	r.candidate
-				LEFT JOIN FETCH	r.user
-				WHERE r.id = :ratingId
-				""";
-		final TypedQuery<Rating> query = em.createQuery(jpql, Rating.class);
-		query.setParameter("ratingId", ratingId);
-		return query.getSingleResult();
+		try {
+			final String jpql = """
+					SELECT r
+					From Rating r
+					LEFT JOIN FETCH	r.candidate
+					LEFT JOIN FETCH	r.user
+					WHERE r.id = :ratingId
+					""";
+			final TypedQuery<Rating> query = em.createQuery(jpql, Rating.class);
+			query.setParameter("ratingId", ratingId);
+			return query.getSingleResult();
+		} catch (final NoResultException e) {
+			return null;
+		}
 	}
 }
