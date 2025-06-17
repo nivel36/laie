@@ -69,17 +69,17 @@ public class Account implements Serializable {
 		return CriptoUtil.digestPassword(password, this.salt);
 	}
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (!super.equals(obj) || (this.getClass() != obj.getClass())) {
-			return false;
-		}
-		final Account other = (Account) obj;
-		return Objects.equals(this.hashPassword, other.hashPassword) && Objects.equals(this.salt, other.salt);
-	}
+        @Override
+        public boolean equals(final Object obj) {
+                if (this == obj) {
+                        return true;
+                }
+                if (!super.equals(obj) || (this.getClass() != obj.getClass())) {
+                        return false;
+                }
+                final Account other = (Account) obj;
+                return Objects.equals(this.hashPassword, other.hashPassword) && java.util.Arrays.equals(this.salt, other.salt);
+        }
 
 	public void expire() {
 		this.expired = LocalDate.now();
@@ -111,10 +111,10 @@ public class Account implements Serializable {
 		return this.username;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(this.hashPassword, this.salt);
-	}
+        @Override
+        public int hashCode() {
+                return 31 * Objects.hashCode(this.hashPassword) + java.util.Arrays.hashCode(this.salt);
+        }
 
 	public boolean isExpired() {
 		return this.expired != null;
@@ -147,7 +147,7 @@ public class Account implements Serializable {
 		this.role = role;
 	}
 
-	public void setUserName(final String username) {
-		this.username = username;
-	}
+        public void setUsername(final String username) {
+                this.username = username;
+        }
 }
